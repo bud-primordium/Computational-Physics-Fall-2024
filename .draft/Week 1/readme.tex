@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+\usepackage[top=1cm, bottom=2cm, left=1cm, right=1cm]{geometry}
+\usepackage{ctex}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{listings}
+\usepackage{xcolor,xparse}
+\usepackage{realboxes}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{pifont}
+
+\definecolor{cmdbg}{rgb}{0.9,0.9,0.9}
+\lstset{%
+	basicstyle=\ttfamily,
+	breaklines = true,
+	backgroundcolor=\color{cmdbg},
+}
+\DeclareDocumentCommand{\ccmd}{v}{% 参数 v 表示工作方法类似于 \verb
+    \Colorbox{cmdbg}{\csname lstinline\endcsname!#1!}%
+}
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {% 这里是环境的开始部分 \begin{breakablealgorithm}
+   \begin{center} % 居中显示
+     \refstepcounter{algorithm}% 增加算法计数器
+     \hrule height.8pt depth0pt \kern2pt% 插入一条 0.8pt 高的水平线和 2pt 间距
+     \renewcommand{\caption}[2][\relax]{% 重定义 \caption 命令，接收参数依次为目录中的标题（可选）与正文中的标题
+       {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}% 显示算法编号和标题
+       \ifx\relax##1\relax % 如果没有传递可选参数 #1
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}% 默认将正文中的标题直接添加到目录中
+       \else % 如果传递了可选参数 #1
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}% 将自定义的目录标题添加到目录中
+       \fi
+       \kern2pt\hrule\kern2pt % 再插入一条水平线
+     }
+  }{% 这里是环境的结束部分 \end{breakablealgorithm}
+     \kern2pt\hrule\relax % 再次插入一条水平线，结束
+   \end{center}
+  }
+\makeatother
+
+
+\author{杨远青 22300190015}
+\title{计算物理作业1}
+
+\begin{document}
+\maketitle
+
+
+\section{题目 1：五次幂丢番图方程}
+\subsection{题目描述}
+Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c^5 + d^5 = e^5 \) within the range \([0, 200]\).
+\subsection{程序描述}
+题目要求解
+本程序源文件为WheatstoneBridge.py，在终端进入当前目录，使用命令
+\Colorbox{cmdbg}{\lstinline[language=bash]|python -u WheatstoneBridge.py|}
+运行本程序。运行时请保证此程序与题目一SketchFunction.py在同一文件夹下，且Python第三方库Numpy已安装。程序开发环境为Python3.9.6，可在Python3.8以上版本中运行。
+
+\subsection{伪代码}
+高斯消去法的伪代码如下所示
+\begin{breakablealgorithm}
+    \caption{Gaussian Elimination Method}
+    \begin{algorithmic}[1]
+        \Require $R$: Matrix(float, shape=(n, n+1))
+        \Ensure $i$: Array(float, len=n)
+        \For{$i \gets 1$ \textbf{to} $n$}
+        \State $m \gets$ the index of $max(abs(R[i:n, i]))$\Comment(Pivot the matrix)
+        \State swap row $i$ and row $m$ of the $R$
+        \State $R_i \gets R_i / R_{ii}$ \Comment(Let the first element in this line equals 1)
+        \For{$j \gets i+1$ \textbf{to} $n$}
+        \State $R_j \gets R_j-R_i*R_{ji}$ \Comment(Produce the upper triangular matrix)
+        \EndFor
+        \EndFor
+        \For{$i \gets n$ \textbf{to} $1$}
+        \For{$j \gets 1$ \textbf{to} $i$}
+        \State $R_j \gets R_j-R_i*R_{ji}$ \Comment(Produce the diagonal matrix)
+        \EndFor
+        \EndFor
+        \State $i \gets$ the last column of $R$
+        \State \Return $i$
+    \end{algorithmic}
+\end{breakablealgorithm}
+
+\subsection{输入输出实例}
+对于本程序，首先需要用户输入电路中六个电阻$(r_s,r_a,r_x,r_1,r_2,r_3)$的数值，通过这些电阻值写出增广矩阵$\boldsymbol{R}|\boldsymbol{v}$，将该增广矩阵带入高斯消去法中即可求得电流$\boldsymbol{i}$，等效电阻$r_e=v_0/i_1$。下列表格为在相应输入电阻下的运算结果
+
+\begin{table}[ht!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|}\hline
+             & \multicolumn{6}{|c|}{Input} & \multicolumn{1}{|c|}{Output}\\\hline
+            Index & $r_s$ & $r_a$ & $r_x$ & $r_1$ & $r_2$ & $r_3$ & $r_e$\\\hline
+            \ding{172} & $4$ & $0$ & $5$ & $5$ & $7$ & $7$ & $10.00$\\\hline
+            \ding{173} & $4$ & $100$ & $5$ & $5$ & $7$ & $7$ & $10.00$\\\hline
+            \ding{174} & $1$ & $100$ & $5$ & $5$ & $7$ & $7$ & $7.00$\\\hline
+            \ding{175} & $4$ & $100$ & $3$ & $5$ & $7$ & $2$ & $7.53$\\\hline
+            \ding{176} & $4$ & $0$ & $3$ & $5$ & $7$ & $2$ & $7.43$\\\hline
+        \end{tabular}
+        \caption{问题二的结果实例}
+    \end{center}
+\end{table}
+
+对比表格\ding{172}与\ding{173}可以看出，在电桥平衡的情况下，改变电流计阻值$r_a$并不会影响电路整体的等效电阻；对比表格\ding{173}与\ding{174}可以看出，电源内阻$r_s$的大小会直接影响电路电阻大小，$r_s$的变化量就是$r_e$的变化量，从物理上看这也是显然的；对比表格\ding{175}与\ding{176}可以看出，在电桥不平衡的情况下，改变电流计阻值会影响等效电阻$r_e$的大小，但在$r_a$变化较大的情况下，$r_e$变化仍较小。图\ref{fig:q2}是程序运行的实际截图。
+
+
+\end{document}
