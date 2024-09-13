@@ -18,6 +18,8 @@ __pycache__/
 *.swp
 *.tmp
 *.aux
+*.synctex
+*.synctex(busy)
 *.synctex.gz
 
 # 忽略编译工具生成的文件

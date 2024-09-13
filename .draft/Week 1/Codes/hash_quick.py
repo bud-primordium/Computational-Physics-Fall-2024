@@ -1,56 +1,51 @@
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 def find_diophantine_solution(limit):
-    # 初始化两个哈希表
-    ab_sum_table = {}
-    e_power_table = {}
+    # 预计算每个整数的五次幂并存储与其相关的索引
+    power_5 = {i**5: i for i in range(1, limit)}
 
-    # 记录开始时间
-    start_time = time.time()
+    # 使用字典存储两个数的五次幂之和与其索引的映射
+    sum2 = {}
 
-    # 构建 a^5 + b^5 的哈希表
-    build_ab_table_start = time.time()
-    for a in range(1, limit):
-        for b in range(a, limit):
-            power_sum = a**5 + b**5
-            if power_sum not in ab_sum_table:
-                ab_sum_table[power_sum] = [(a, b)]
-            else:
-                ab_sum_table[power_sum].append((a, b))
-    build_ab_table_end = time.time()
+    # 定义函数以并行计算五次幂之和
+    def compute_sum(i):
+        results = {}
+        a5 = i**5
+        for j in range(i, limit):
+            results[a5 + j**5] = (i, j)
+        return results
 
-    # 构建 e^5 的哈希表
-    build_e_table_start = time.time()
-    for e in range(1, limit):
-        e_power_table[e] = e**5
-    build_e_table_end = time.time()
+    # 使用线程池并行构建 sum2 字典
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(compute_sum, i) for i in range(1, limit)]
+        for future in futures:
+            sum2.update(future.result())
 
-    # 查找 c^5 + d^5 的组合是否能匹配 a^5 + b^5
-    find_solution_start = time.time()
-    for c in range(1, limit):
-        for d in range(c, limit):
-            cd_sum = c**5 + d**5
-            for e, e_power in e_power_table.items():
-                if (e_power - cd_sum) in ab_sum_table:
-                    for (a, b) in ab_sum_table[e_power - cd_sum]:
-                        find_solution_end = time.time()
-                        total_time = find_solution_end - start_time
-
-                        # 输出结果和时间
-                        print(f"构建 a^5 + b^5 表的时间: {build_ab_table_end - build_ab_table_start:.6f} 秒")
-                        print(f"构建 e^5 表的时间: {build_e_table_end - build_e_table_start:.6f} 秒")
-                        print(f"查找解的时间: {find_solution_end - find_solution_start:.6f} 秒")
-                        print(f"总时间: {total_time:.6f} 秒")
-                        print(f"找到解: {a}^5 + {b}^5 + {c}^5 + {d}^5 = {e}^5")
-                        return (a, b, c, d, e)
-
-    print("未找到解")
+    # 对 sum2 的键进行排序，以便后续快速查找
+    sk = sorted(sum2.keys())
+    
+    # 遍历所有的五次幂，查找是否存在符合条件的五个数字
+    for p in sorted(power_5.keys()):
+        for s in sk:
+            if p <= s:
+                break  # 终止循环，优化性能
+            if p - s in sum2:
+                return (power_5[p], sum2[s], sum2[p-s])
     return None
 
+start_time = time.time()
 # 设定搜索范围
-limit = 250
+limit = 200
+# 调用函数查找解
 result = find_diophantine_solution(limit)
+# 计时
+total_time = time.time() - start_time
+
+# 输出结果和时间
 if result:
-    print("解为：", result)
+    e, (a, b), (c, d)= result
+    print(f"解为：{a}^5 + {b}^5 + {c}^5 + {d}^5 = {e}^5")
 else:
     print("未找到解")
+print(f"总时间: {total_time:.6f} 秒")

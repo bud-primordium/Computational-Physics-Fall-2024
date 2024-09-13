@@ -53,7 +53,7 @@ def optimized_find_diophantine_solution(limit):
 
 # 测量运行时间
 start_time = time.time()
-limit = 1000  # 设置一个合理的 limit
+limit = 200  # 设置一个合理的 limit
 result = optimized_find_diophantine_solution(limit)
 end_time = time.time()
 print(f"优化方案运行时间: {end_time - start_time:.6f} 秒")

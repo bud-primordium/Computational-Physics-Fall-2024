@@ -1,0 +1,90 @@
+\subsection{题目描述}
+Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c^5 + d^5 = e^5 \) within the range \([0, 200]\).
+\subsection{程序描述}
+该方程的第一个解在1967年被Lander 和 Parkin 使用一台CDC 6600计算机找到，他们发现了 \( 27^5 + 84^5 + 110^5 + 133^5 = 144^5 \)。
+这个解同时还证伪了欧拉幂和猜想（即k次幂至少需要另外k个k次幂才能表示,k大于等于2）。参考Diophantine Equation--5th Powers（https://mathworld.wolfram.com/DiophantineEquation5thPowers.html）
+第二个解是J. Frye在2004年使用分布式并行计算找到的，\( 55^5 + 3183^5 + 28969^5 + 85282^5 = 85359^5 \)
+题目要求解满足 \( a^5 + b^5 + c^5 + d^5 = e^5 \) 的整数解，其中 \( 0 \leq a \leq b \leq c \leq d < e \leq 200 \)。我们可以通过暴力搜索（brute-force）的方法来解决这个问题，即遍历所有可能的 \( a, b, c, d, e \) 组合，检查是否满足方程。
+在$brute_force.90$中我们便使用了这个方案，伪代码见
+
+但是这种方法的时间复杂度为 \( O(N^5) \)，其中 \( N = 200 \)。我们可以通过一些技巧来减少搜索的时间复杂度。
+\subsection{伪代码}
+
+\begin{algorithm}[H]
+    \caption{Brute-force solution to the Diophantine equation}
+    \KwIn{$N$: Integer (the upper bound, $N = 200$)}
+    \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$\tcp*{where $0 \leq a \leq b \leq c \leq d < e \leq N$}}
+    \For{$a \gets 0$ \KwTo $N$}{
+        \For{$b \gets a$ \KwTo $N$ }{
+            \For{$c \gets b$ \KwTo $N$}{
+                \For{$d \gets c$ \KwTo $N$}{
+                    \For{$e \gets d + 1$ \KwTo $N$}{
+                        \If{$a^5 + b^5 + c^5 + d^5 = e^5$\tcp*{Check if the tuple is a solution}}{
+
+                            solutions.append($(a, b, c, d, e)$)
+                            \tcp*{Store the solution tuple}
+                        }
+                    }
+                }
+            }
+        }
+    }
+    \Return $solutions$\tcp*[r]{Return the list of solution tuples}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+    \caption{Mod30 trick for solving the Diophantine equation}
+    \KwIn{$N$: Integer (the upper bound, $N = 200$)}
+    \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$\tcp*{where $1 \leq a \leq b \leq c \leq d < e \leq N$}}
+    \For{$a \gets 1$ \KwTo $N$}{
+        \For{$b \gets a$ \KwTo $N$}{
+            \For{$c \gets b$ \KwTo $N$}{
+                \For{$d \gets c$ \KwTo $N$}{
+                    $r\_left \gets \text{mod}(a + b + c + d, 30)$ \tcp*{Compute remainder for $e$}
+                    \For{$e \gets d + \text{mod}(r\_left - d, 30)$ \KwTo $N$, step $30$}{
+                        \If{$a^5 + b^5 + c^5 + d^5 = e^5$}{
+                            solutions.append($(a, b, c, d, e)$)
+                            \tcp*{Store the solution tuple}
+                        }
+                    }
+                }
+            }
+        }
+    }
+    \Return $solutions$\tcp*[r]{Return the list of solution tuples}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{Reverse Mod30 Trick for Solving the Diophantine Equation}
+    \KwIn{$N$: Integer (the upper bound, $N = 200$)}
+    \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$\tcp*{where $1 \leq a \leq b \leq c \leq d < e \leq N$}}
+
+    \For{$e \gets N$ \KwTo $1$}{
+        \For{$d \gets e$ \KwTo $1$}{
+            \For{$c \gets d$ \KwTo $1$}{
+                \For{$b \gets c$ \KwTo $1$}{
+                    $a\_min \gets \text{mod}(e - d - c - b, 30)$ \tcp*{Compute minimal $a$ using modular arithmetic}
+                    \If{$a\_min \leq 0$}{
+                        $a\_min \gets a\_min + 30$ \tcp*{Adjust $a\_min$ to fit within the modulus}
+                    }
+                    \For{$a \gets a\_min$ \KwTo $b$, step $30$}{
+                        \If{$a^5 + b^5 + c^5 + d^5 = e^5$}{
+                            solutions.append($(a, b, c, d, e)$)
+                            \tcp*{Store the solution tuple}
+                        }
+                    }
+                }
+            }
+        }
+    }
+    \Return $solutions$\tcp*[r]{Return the list of solution tuples}
+\end{algorithm}
+
+
+
+
+
+
+
+\subsection{输入输出实例}

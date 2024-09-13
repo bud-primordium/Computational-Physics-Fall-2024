@@ -44,7 +44,7 @@ def find_diophantine_solution(limit):
     return None
 
 # 设定搜索范围
-limit = 300
+limit = 200
 result = find_diophantine_solution(limit)
 if result:
     print("解为：", result)
