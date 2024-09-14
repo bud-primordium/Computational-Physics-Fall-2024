@@ -1,76 +1,7 @@
 \subsection{题目描述}
-Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c^5 + d^5 = e^5 \) within the range \([0, 200]\).
+
 \subsection{程序描述}
 
 \subsection{伪代码}
-第一种的伪代码如下所示
-\begin{breakablealgorithm}
-    \caption{暴力破解方法求解24点问题（固定$n=4$）}
-
-    \begin{algorithmic}[1]
-        \Require $numbers$: Array(Integer, len=4) \Comment{输入的四个正整数}
-        \Ensure $solutions$: List(String) \Comment{所有可行的运算方案}
-        
-        \State $solutions \gets$ 空列表
-        
-        \Function{BruteForce24}{$nums, expr$}
-            \If{$len(nums) = 1$}
-                \If{$abs(nums[0] - 24) < \epsilon$} \Comment{允许一定的浮点误差}
-                    \State $solutions.\text{append}(expr)$
-                \EndIf
-                \State \Return
-            \EndIf
-            
-            \For{$i \gets 0$ \textbf{to} $len(nums) - 1$}
-                \For{$j \gets 0$ \textbf{to} $len(nums) - 1$}
-                    \If{$i = j$}
-                        \State \textbf{continue}
-                    \EndIf
-                    
-                    \State $a \gets nums[i]$
-                    \State $b \gets nums[j]$
-                    
-                    \State $remaining \gets []$
-                    \For{$k \gets 0$ \textbf{to} $len(nums) - 1$}
-                        \If{$k \neq i$ \textbf{and} $k \neq j$}
-                            \State $remaining.\text{append}(nums[k])$
-                        \EndIf
-                    \EndFor
-                    
-                    \For{$op \in \{+, -, *, /\}$}
-                        \If{$op = +$}
-                            \State $result \gets a + b$
-                            \State $newExpr \gets "(" + expr[i] + "+" + expr[j] + ")"$
-                        \ElsIf{$op = -$}
-                            \State $result \gets a - b$
-                            \State $newExpr \gets "(" + expr[i] + "-" + expr[j] + ")"$
-                        \ElsIf{$op = *$}
-                            \State $result \gets a * b$
-                            \State $newExpr \gets "(" + expr[i] + "*" + expr[j] + ")"$
-                        \ElsIf{$op = /$ \textbf{and} $b \neq 0$}
-                            \State $result \gets a / b$
-                            \State $newExpr \gets "(" + expr[i] + "/" + expr[j] + ")"$
-                        \EndIf
-                        
-                        \State $newNums \gets remaining + [result]$
-                        \State $newExprStr \gets "(" + expr[i] + " " + op + " " + expr[j] + ")"$
-                        
-                        \State \Call{BruteForce24}{$newNums, newExprStr$}
-                    \EndFor
-                \EndFor
-            \EndFor
-        \EndFunction
-        
-        \State $initialExpr \gets [\text{str}(num) \text{ for } num \text{ in } numbers]$
-        \For{$i \gets 0$ \textbf{to} $len(numbers) - 1$}
-            \State $expr \gets \text{initialExpr}[i]$
-            \State $remaining \gets [numbers[k] \text{ for } k \text{ in } 0 \text{ to } len(numbers)-1 \text{ if } k \neq i]$
-            \State \Call{BruteForce24}{$remaining, expr$}
-        \EndFor
-        \State \Return $solutions$
-    \end{algorithmic}
-    
-\end{breakablealgorithm}
 
 \subsection{输入输出实例}
-对于本程序，首先需要用户输入电路中六个电阻$(r_s,r_a,r_x,r_1,r_2,r_3)$的数值，通过这些电阻值写出增广矩阵$\boldsymbol{R}|\boldsymbol{v}$，将该增广矩阵带入高斯消去法中即可求得电流$\boldsymbol{i}$，等效电阻$r_e=v_0/i_1$。下列表格为在相应输入电阻下的运算结果

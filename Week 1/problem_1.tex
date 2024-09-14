@@ -25,10 +25,10 @@ Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c
 
 为了解决这个问题，我们首先采用暴力搜索的方法，遍历所有可能的 \(a, b, c, d, e\) 组合，并逐一检查是否满足方程。在 \texttt{brute\_force.f90} 中实现了这一方法，其伪代码见算法 \ref{alg:24_bf}。该程序的运行时间达到了8.953秒，速度较为缓慢。
 
-在网络上寻找更优解法时，我偶然发现了一个专门讨论整数幂方程的论坛：\href{http://euler.free.fr/}{Euler Free}。该论坛提到可以通过数论优化的方法。注意到方程中的 \(x^5\) 是齐次的，首先想到费马小定理：
+在网络上寻找更优解法时，我偶然发现了一个专门讨论整数幂方程的论坛：\href{http://euler.free.fr/}{Euler Free}。该论坛提到可以通过数论优化的方法。注意到方程中的 \(x^5\) 是齐次的，首先注意到到费马小定理：
 
 \[
-    a^p \equiv a \pmod{p}, \quad \text{where } p \text{ is a prime number}.
+    a^{p-1} \equiv 1 \pmod{p}, \quad \gcd(a,p)=1.
 \]
 
 基于此，在搜索时可以将步长扩大到5。然而，进一步查阅Lander和Parkin的论文后，未能找到有效的进一步启发。
@@ -39,7 +39,8 @@ Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c
     a^5 \equiv a \pmod{30}
 \]
 
-这意味着在搜索时可以将步长扩展到30。具体而言，对于 \(n = 2, 3, 5\)，我们可以分别讨论奇偶性和模数的同余关系：
+这意味着在搜索时可以将步长扩展到30。（昨天使用这个问题测试过了ChatGPT o1 pre，它枚举证明了所有情况。）
+具体而言，对于 \(n = 2, 3, 5\)，我们可以分别讨论奇偶性和模数的同余关系：
 - 对于 \(n = 2\)，由于奇偶性，显然有 \(a^5 \equiv a \pmod{2}\)。
 
 - 对于 \(n = 3\)：
@@ -59,20 +60,28 @@ Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c
 
 - 若 \(5 \mid a\)，则 \(a \equiv 0 \pmod{5}\)，因此 \(a^5 \equiv 0 \pmod{5}\)。
 
-根据中国剩余定理，我们得出：
+根据剩余定理，我们立马可以得出：
 $a^5 \equiv a \pmod{30}$
 
 利用这个技巧，我们得到了算法 \ref{alg:24_mod30}，经测试，其Fortran实现的运行时间缩短至0.797秒。
 此外，通过反向查找，即从 \(e\) 开始，结合mod30技巧，我们进一步优化了算法，得到了算法 \ref{alg:24_mod30_reverse}，运行时间进一步缩短至0.438秒。
 
-尽管运行时间有所改善，但mod30技巧只是常数级别的优化，不能显著加快找到第二个非平凡解的速度。为了进一步降低算法的复杂度，我们尝试将暴力搜索的时间复杂度从 \(\mathcal{O}(N^5)\) 降低至 \(\mathcal{O}(N^3)\) 。最自然的想法是使用哈希表和分治法。遗憾的是，Fortran对哈希表的支持较为有限，通常需要依赖外部库，而我对其实现原理尚不完全理解。
+尽管运行时间有所改善，但mod30技巧只是常数级别的优化，不能显著加快找到第二个非平凡解的速度。为了进一步降低算法的复杂度，我们尝试将暴力搜索的时间复杂度从 \(\mathcal{O}(N^5)\) 降低至 \(\mathcal{O}(N^3)\) 。
+最自然的想法是使用哈希表和分治法，即借助Hash Table存储单个元素的幂和双元素幂和的键对，将线性搜索的 \(\mathcal{O}(N)\)成本转嫁到建表操作上，再分治匹配。
 
-因此，我决定使用Python进行对比研究，并通过哈希法和gpt建议的多线程进一步优化，最终将运行时间从3.929s加速到了0.056s。
+遗憾的是，Fortran对哈希表的支持较为有限，通常需要依赖外部库，而我对其实现原理尚不完全理解。
+在C++中借助llu(unsigned long long int)构造大质数，似乎可以减少碰撞并建立一个简易的Hash Table,并借助拓展的牛顿法快速求五次根
+,据此对$a,b,c,d$的搜索剪枝,可惜这两个技巧我并没成功在Fortran中复现。
 
-Codes文件夹中有算法1-3的Fortran实现，其目录内使用\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o brute_force -brute_force.f90|}等命令可以编译执行。
-gfortran -o algorithm2 algorithm2.f90
-gfortran -o algorithm3 algorithm3.f90
- |}
+不过我决定使用Python进行关于哈希表加速的对比研究，因为其内置了优化后的字典类型，并通过gpt建议的多线程进一步优化，最终将运行时间从3.929s加速到了0.056s。
+
+Codes文件夹中有算法1-3的Fortran实现，其目录内使用
+\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o brute_force -brute_force.f90|}
+\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o mod30 -mod30_trick.f90|}
+\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o mod30v2 -mod30_trick_reverse.f90|}
+等命令可以编译。
+编译选项$-o$后面的程序名可自选，再执行即可。
+
 以及算法4/5的Python实现，其目录内使用\Colorbox{cmdbg}{\lstinline[language=bash]|python -u brute_force.py|}、\Colorbox{cmdbg}{\lstinline[language=bash]|python -u hash_quick.py|}编译后运行。
 \subsection{伪代码}
 
