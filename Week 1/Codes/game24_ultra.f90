@@ -34,7 +34,7 @@ module game24_module
 contains
 
     !-----------------------------------------------------------------------
-    ! ! Function: calculate_total_calls
+    ! ! Aborted function: calculate_total_calls
     ! ! Description:
     ! !   Estimates the total number of recursive calls for a given n,
     ! !   considering commutativity (addition and multiplication).
@@ -358,7 +358,7 @@ end subroutine update_progress_bar
 
 end module game24_module
 
-program game24_promax
+program game24_ultra
     use game24_module
     implicit none
 
@@ -492,4 +492,4 @@ program game24_promax
 
     print *, 'Exiting the game...'
 
-end program game24_promax
+end program game24_ultra
