@@ -1,90 +1,220 @@
 \subsection{题目描述}
 Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c^5 + d^5 = e^5 \) within the range \([0, 200]\).
 \subsection{程序描述}
-该方程的第一个解在1967年被Lander 和 Parkin 使用一台CDC 6600计算机找到，他们发现了 \( 27^5 + 84^5 + 110^5 + 133^5 = 144^5 \)。
-这个解同时还证伪了欧拉幂和猜想（即k次幂至少需要另外k个k次幂才能表示,k大于等于2）。参考Diophantine Equation--5th Powers（https://mathworld.wolfram.com/DiophantineEquation5thPowers.html）
-第二个解是J. Frye在2004年使用分布式并行计算找到的，\( 55^5 + 3183^5 + 28969^5 + 85282^5 = 85359^5 \)
-题目要求解满足 \( a^5 + b^5 + c^5 + d^5 = e^5 \) 的整数解，其中 \( 0 \leq a \leq b \leq c \leq d < e \leq 200 \)。我们可以通过暴力搜索（brute-force）的方法来解决这个问题，即遍历所有可能的 \( a, b, c, d, e \) 组合，检查是否满足方程。
-在$brute_force.90$中我们便使用了这个方案，伪代码见
 
-但是这种方法的时间复杂度为 \( O(N^5) \)，其中 \( N = 200 \)。我们可以通过一些技巧来减少搜索的时间复杂度。
+1967年，Lander和Parkin使用CDC 6600计算机首次找到方程
+
+\[
+    a^5 + b^5 + c^5 + d^5 = e^5
+\]
+
+的一个解，即
+
+\[
+    27^5 + 84^5 + 110^5 + 133^5 = 144^5
+\]
+
+这个解也推翻了欧拉的幂和猜想（即至少需要 \(k\) 个 \(k\) 次幂才能表示另一 \(k\) 次幂的和，且 \(k \geq 2\)）。相关参考资料可参见 \href{https://mathworld.wolfram.com/DiophantineEquation5thPowers.html}{Diophantine Equation—5th Powers}。
+2004年，J. Frye使用分布式并行计算找到了第二个解：
+
+\[
+    55^5 + 3183^5 + 28969^5 + 85282^5 = 85359^5
+\]
+
+题目要求我们找到所有满足$0 \leq a \leq b \leq c \leq d < e \leq 200 $的整数解
+
+为了解决这个问题，我们首先采用暴力搜索的方法，遍历所有可能的 \(a, b, c, d, e\) 组合，并逐一检查是否满足方程。在 \texttt{brute\_force.f90} 中实现了这一方法，其伪代码见算法 \ref{alg:24_bf}。该程序的运行时间达到了8.953秒，速度较为缓慢。
+
+在网络上寻找更优解法时，我偶然发现了一个专门讨论整数幂方程的论坛：\href{http://euler.free.fr/}{Euler Free}。该论坛提到可以通过数论优化的方法。注意到方程中的 \(x^5\) 是齐次的，首先想到费马小定理：
+
+\[
+    a^p \equiv a \pmod{p}, \quad \text{where } p \text{ is a prime number}.
+\]
+
+基于此，在搜索时可以将步长扩大到5。然而，进一步查阅Lander和Parkin的论文后，未能找到有效的进一步启发。
+在Rosetta Code网站上，我发现了C语言中使用的\href{https://rosettacode.org/wiki/Euler%27s_sum_of_powers_conjecture#C}{Mod30 Trick}，这让我意识到可以进一步扩展费马小定理的应用范围。
+即我们可以证明：
+
+\[
+    a^5 \equiv a \pmod{30}
+\]
+
+这意味着在搜索时可以将步长扩展到30。具体而言，对于 \(n = 2, 3, 5\)，我们可以分别讨论奇偶性和模数的同余关系：
+- 对于 \(n = 2\)，由于奇偶性，显然有 \(a^5 \equiv a \pmod{2}\)。
+
+- 对于 \(n = 3\)：
+- 若 \(\gcd(a, 3) = 1\)，则 \(a^2 \equiv 1 \pmod{3}\)，因此
+
+\[
+    a^5 = a \cdot (a^2)^2 \equiv a \cdot 1^2 \equiv a \pmod{3}
+\]
+
+- 若 \(3 \mid a\)，则 \(a \equiv 0 \pmod{3}\)，因此 \(a^5 \equiv 0 \pmod{3}\)。
+- 对于 \(n = 5\)：
+- 若 \(\gcd(a, 5) = 1\)，则 \(a^4 \equiv 1 \pmod{5}\)，因此
+
+\[
+    a^5 = a \cdot a^4 \equiv a \cdot 1 \equiv a \pmod{5}
+\]
+
+- 若 \(5 \mid a\)，则 \(a \equiv 0 \pmod{5}\)，因此 \(a^5 \equiv 0 \pmod{5}\)。
+
+根据中国剩余定理，我们得出：
+$a^5 \equiv a \pmod{30}$
+
+利用这个技巧，我们得到了算法 \ref{alg:24_mod30}，经测试，其Fortran实现的运行时间缩短至0.797秒。
+此外，通过反向查找，即从 \(e\) 开始，结合mod30技巧，我们进一步优化了算法，得到了算法 \ref{alg:24_mod30_reverse}，运行时间进一步缩短至0.438秒。
+
+尽管运行时间有所改善，但mod30技巧只是常数级别的优化，不能显著加快找到第二个非平凡解的速度。为了进一步降低算法的复杂度，我们尝试将暴力搜索的时间复杂度从 \(\mathcal{O}(N^5)\) 降低至 \(\mathcal{O}(N^3)\) 。最自然的想法是使用哈希表和分治法。遗憾的是，Fortran对哈希表的支持较为有限，通常需要依赖外部库，而我对其实现原理尚不完全理解。
+
+因此，我决定使用Python进行对比研究，并通过哈希法和gpt建议的多线程进一步优化，最终将运行时间从3.929s加速到了0.056s。
+
+Codes文件夹中有算法1-3的Fortran实现，其目录内使用\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o brute_force -brute_force.f90|}等命令可以编译执行。
+gfortran -o algorithm2 algorithm2.f90
+gfortran -o algorithm3 algorithm3.f90
+ |}
+以及算法4/5的Python实现，其目录内使用\Colorbox{cmdbg}{\lstinline[language=bash]|python -u brute_force.py|}、\Colorbox{cmdbg}{\lstinline[language=bash]|python -u hash_quick.py|}编译后运行。
 \subsection{伪代码}
 
 \begin{algorithm}[H]
     \caption{Brute-force solution to the Diophantine equation}
+    \label{alg:24_bf}
     \KwIn{$N$: Integer (the upper bound, $N = 200$)}
-    \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$\tcp*{where $0 \leq a \leq b \leq c \leq d < e \leq N$}}
-    \For{$a \gets 0$ \KwTo $N$}{
-        \For{$b \gets a$ \KwTo $N$ }{
-            \For{$c \gets b$ \KwTo $N$}{
-                \For{$d \gets c$ \KwTo $N$}{
-                    \For{$e \gets d + 1$ \KwTo $N$}{
-                        \If{$a^5 + b^5 + c^5 + d^5 = e^5$\tcp*{Check if the tuple is a solution}}{
-
-                            solutions.append($(a, b, c, d, e)$)
-                            \tcp*{Store the solution tuple}
+    \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$ where $0 \leq a \leq b \leq c \leq d < e \leq N$}
+    \For{$a \leftarrow 0$ \KwTo $N$}{
+    \For{$b \leftarrow a$ \KwTo $N$}{
+        \For{$c \leftarrow b$ \KwTo $N$}{
+            \For{$d \leftarrow c$ \KwTo $N$}{
+                \For{$e \leftarrow d + 1$ \KwTo $N$}{
+                    \If{$a^5 + b^5 + c^5 + d^5 = e^5$}{
+                        $solutions.\text{append}((a, b, c, d, e))$ \tcp*[r]{Store the solution tuple}
                         }
                     }
                 }
             }
         }
     }
-    \Return $solutions$\tcp*[r]{Return the list of solution tuples}
+    \Return{$solutions$}
 \end{algorithm}
 
-
-\begin{algorithm}[H]
-    \caption{Mod30 trick for solving the Diophantine equation}
-    \KwIn{$N$: Integer (the upper bound, $N = 200$)}
-    \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$\tcp*{where $1 \leq a \leq b \leq c \leq d < e \leq N$}}
-    \For{$a \gets 1$ \KwTo $N$}{
-        \For{$b \gets a$ \KwTo $N$}{
-            \For{$c \gets b$ \KwTo $N$}{
-                \For{$d \gets c$ \KwTo $N$}{
-                    $r\_left \gets \text{mod}(a + b + c + d, 30)$ \tcp*{Compute remainder for $e$}
-                    \For{$e \gets d + \text{mod}(r\_left - d, 30)$ \KwTo $N$, step $30$}{
-                        \If{$a^5 + b^5 + c^5 + d^5 = e^5$}{
-                            solutions.append($(a, b, c, d, e)$)
-                            \tcp*{Store the solution tuple}
+\begin{minipage}{0.48\textwidth}
+    \begin{algorithm}[H]
+        \caption{Mod30 trick for solving the Diophantine equation}
+        \label{alg:24_mod30}
+        \KwIn{$N$: Integer (the upper bound, $N = 200$)}
+        \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$ where $1 \leq a \leq b \leq c \leq d < e \leq N$}
+        \For{$a \leftarrow 1$ \KwTo $N$}{
+        \For{$b \leftarrow a$ \KwTo $N$}{
+            \For{$c \leftarrow b$ \KwTo $N$}{
+                \For{$d \leftarrow c$ \KwTo $N$}{
+                    $r\_left \leftarrow \text{mod}(a + b + c + d, 30)$ \tcp*[r]{Compute remainder for $e$}
+                    $e\_start \leftarrow d + ((r\_left - d) \bmod 30)$ \tcp*[r]{Ensure $e \geq d$ and $a+b+c+d \equiv e \pmod{30}$}
+                    \For{$e \leftarrow e\_start$ \KwTo $N$}{
+                        \If{$(e - e\_start) \bmod 30 = 0$}{\tcp{Increase the step size to 30}
+                            \If{$a^5 + b^5 + c^5 + d^5 = e^5$}{
+                                $solutions.\text{append}((a, b, c, d, e))$
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-    }
-    \Return $solutions$\tcp*[r]{Return the list of solution tuples}
-\end{algorithm}
-
-\begin{algorithm}[H]
-    \caption{Reverse Mod30 Trick for Solving the Diophantine Equation}
-    \KwIn{$N$: Integer (the upper bound, $N = 200$)}
-    \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$\tcp*{where $1 \leq a \leq b \leq c \leq d < e \leq N$}}
-
-    \For{$e \gets N$ \KwTo $1$}{
-        \For{$d \gets e$ \KwTo $1$}{
-            \For{$c \gets d$ \KwTo $1$}{
-                \For{$b \gets c$ \KwTo $1$}{
-                    $a\_min \gets \text{mod}(e - d - c - b, 30)$ \tcp*{Compute minimal $a$ using modular arithmetic}
+        \Return{$solutions$}
+    \end{algorithm}
+\end{minipage}
+\begin{minipage}{0.48\textwidth}
+    \begin{algorithm}[H]
+        \caption{Reverse Mod30 trick for solving the Diophantine equation}
+        \label{alg:24_mod30_reverse}
+        \KwIn{$N$: Integer (the upper bound, $N = 200$)}
+        \KwOut{$solutions$: List of tuples $(a, b, c, d, e)$ where $1 \leq a \leq b \leq c \leq d < e \leq N$}
+        \For{$e \leftarrow N$ \KwTo $1$}{
+        \For{$d \leftarrow e$ \KwTo $1$}{
+            \For{$c \leftarrow d$ \KwTo $1$}{
+                \For{$b \leftarrow c$ \KwTo $1$}{
+                    $a\_min \leftarrow (e - d - c - b) \bmod 30$ \tcp*[r]{Compute minimal $a$ using modular arithmetic}
                     \If{$a\_min \leq 0$}{
-                        $a\_min \gets a\_min + 30$ \tcp*{Adjust $a\_min$ to fit within the modulus}
+                        $a\_min \leftarrow a\_min + 30$ \tcp*[r]{Adjust $a\_min$ to fit within the modulus}
                     }
-                    \For{$a \gets a\_min$ \KwTo $b$, step $30$}{
-                        \If{$a^5 + b^5 + c^5 + d^5 = e^5$}{
-                            solutions.append($(a, b, c, d, e)$)
-                            \tcp*{Store the solution tuple}
+                    \For{$a \leftarrow a\_min$ \KwTo $b$}{
+                        \If{$(a - a\_min) \bmod 30 = 0$}{
+                            \If{$a^5 + b^5 + c^5 + d^5 = e^5$}{
+                                $solutions.\text{append}((a, b, c, d, e))$
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+        \Return{$solutions$}
+    \end{algorithm}
+\end{minipage}
+\begin{algorithm}[H]
+    \caption{Brute-force solution using a single hash}
+    \label{alg:py_brute_force}
+    \KwIn{$limit$：Upper bound}
+    \KwOut{$solution$：Tuple $(a, b, c, d, e)$ or \texttt{None}}
+    $pow\_5 \leftarrow [n^5 \text{ for } n \text{ in } [0, limit]]$ \tcp*[r]{List of $n^5$ values}
+    $pow5\_to\_n \leftarrow \{n^5: n \text{ for } n \text{ in } [0, limit]\}$ \tcp*[r]{Dictionary mapping $n^5$ to $n$}
+    \For{$a \leftarrow 1$ \KwTo $limit$}{
+        \For{$b \leftarrow a$ \KwTo $limit$}{
+            \For{$c \leftarrow b$ \KwTo $limit$}{
+                \For{$d \leftarrow c$ \KwTo $limit$}{
+                    $pow\_5\_sum \leftarrow pow\_5[a] + pow\_5[b] + pow\_5[c] + pow\_5[d]$
+                    \If{$pow\_5\_sum$ in $pow5\_to\_n$}{
+                        $e \leftarrow pow5\_to\_n[pow\_5\_sum]$
+                        \Return{$(a, b, c, d, e)$}
+                    }
+                }
+            }
+        }
     }
-    \Return $solutions$\tcp*[r]{Return the list of solution tuples}
+    \Return{\texttt{None}}
 \end{algorithm}
 
+\begin{algorithm}[H]
+    \caption{Parallel brute-force solution using double hash}
+    \label{alg:py_hash_quick}
+    \KwIn{$limit$: Upper bound}
+    \KwOut{$solution$: Tuple $(a, b, c, d, e)$ or \texttt{None}}
+    $power\_5 \leftarrow \{i^5: i \text{ in } [1, limit]\}$ \tcp*[r]{Dictionary of fifth powers}
+    $sum2 \leftarrow \{\}$ \tcp*[r]{Dictionary to store sums of two fifth powers}
+    \For{$i \leftarrow 1$ \KwTo $limit$ \tcp*[f]{Parallelized computation}}{
+        $a5 \leftarrow i^5$
+        \For{$j \leftarrow i$ \KwTo $limit$}{
+            $sum2[a5 + j^5] \leftarrow (i, j)$
+        }
+    }
+    $sk \leftarrow$ sorted keys of $sum2$
+    \ForEach{$p$ in sorted($power\_5$.keys())}{
+        \ForEach{$s$ in $sk$}{
+            \If{$p \leq s$}{
+                \textbf{break} \tcp*[r]{Exit the loop early if no further solutions are possible}
+            }
+            \If{$p - s$ in $sum2$}{
+                \Return{$(power\_5[p], sum2[s], sum2[p - s])$}
+            }
+        }
+    }
+    \Return{\texttt{None}}
+\end{algorithm}
 
+\subsection{输入输出示例}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Figs/comparison_f90.png}
+    \caption{程序运行结果}
+    \label{fig:output_f90}
+\end{figure}
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Figs/comparison_py.png}
+    \caption{程序运行结果}
+    \label{fig:output_py}
+\end{figure}
 
-
-
-\subsection{输入输出实例}
+\end{document}
