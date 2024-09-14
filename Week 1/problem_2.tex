@@ -1,7 +1,16 @@
 \subsection{题目描述}
-
+The 24-point game is one of the main puzzle games I played as a child.
+The game involves drawing four cards from a deck of playing cards and using any of the operations addition, subtraction, multiplication, and division on the four cards to make the result 24.
+For example, using the numbers 2, 3, 4, and 6, the calculation $(((4+6)-2)*3)=24$ yields 24, and the fastest to figure it out wins. Please use Fortran90 programming to solve the solutions for the 24-point game.
 \subsection{程序描述}
+本题作为递归回溯基本功的经典考题(\href{https://leetcode.com/problems/24-game/description/}{LeetCode $679$}),兼具考察算法知识与编程语言掌握情况的双重作用。
+递归回溯最暴力的思路是：从给定的$n$个数中有序取2个数进行四则运算，得到8种运算结果与剩余元素组成8种新的序列，然后对新序列递归调用自身，直到序列中只剩下一个数，判断是否为$24$。不难发现，这样的路径数为
+\[
+T(n) = 8^{n-1} \binom{n}{2} \binom{n-1}{2}\cdots \binom{2}{2} = 4^{n-1} \cdot n!(n-1)!
+\]
+对于$T(4)=9216$，搜索空间尚可接受，若是$n$再大些，不剪枝实在难受。
 
+第一个朴素的想法是借助表达式树，即$n$个数作为$n$片叶子的二叉树结构种类，可以用$Catalan$数$C_n$表示。更具体说，为
 \subsection{伪代码}
 
 \subsection{输入输出实例}

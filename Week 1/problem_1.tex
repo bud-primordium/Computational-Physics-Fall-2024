@@ -64,7 +64,7 @@ Find all integer solutions to the \textbf{Diophantine equation} \( a^5 + b^5 + c
 $a^5 \equiv a \pmod{30}$
 
 利用这个技巧，我们得到了算法 \ref{alg:24_mod30}，经测试，其Fortran实现的运行时间缩短至0.797秒。
-此外，通过反向查找，即从 \(e\) 开始，结合mod30技巧，我们进一步优化了算法，得到了算法 \ref{alg:24_mod30_reverse}，运行时间进一步缩短至0.438秒。
+此外，通过反向查找，即从 \(e\) 开始，结合Mod30 Trick，我们进一步优化了算法，得到了算法 \ref{alg:24_mod30_reverse}，运行时间进一步缩短至0.438秒。
 
 尽管运行时间有所改善，但mod30技巧只是常数级别的优化，不能显著加快找到第二个非平凡解的速度。为了进一步降低算法的复杂度，我们尝试将暴力搜索的时间复杂度从 \(\mathcal{O}(N^5)\) 降低至 \(\mathcal{O}(N^3)\) 。
 最自然的想法是使用哈希表和分治法，即借助Hash Table存储单个元素的幂和双元素幂和的键对，将线性搜索的 \(\mathcal{O}(N)\)成本转嫁到建表操作上，再分治匹配。
@@ -76,14 +76,17 @@ $a^5 \equiv a \pmod{30}$
 不过我决定使用Python进行关于哈希表加速的对比研究，因为其内置了优化后的字典类型，并通过gpt建议的多线程进一步优化，最终将运行时间从3.929s加速到了0.056s。
 
 Codes文件夹中有算法1-3的Fortran实现，其目录内使用
-\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o brute_force -brute_force.f90|}
-\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o mod30 -mod30_trick.f90|}
-\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o mod30v2 -mod30_trick_reverse.f90|}
+\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o brute_force brute_force.f90|}
+\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o mod30 mod30_trick.f90|}
+\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -o mod30v2 mod30_trick_reverse.f90|}
 等命令可以编译。
-编译选项$-o$后面的程序名可自选，再执行即可。
+编译选项$-o$后面的程序名可自选，再执行即可。如果是在Windows下，可以直接使用\Colorbox{cmdbg}{\lstinline[language=bash]|brute_force.exe|}、\Colorbox{cmdbg}{\lstinline[language=bash]|mod30.exe|}、\Colorbox{cmdbg}{\lstinline[language=bash]|mod30v2.exe|}运行。
 
-以及算法4/5的Python实现，其目录内使用\Colorbox{cmdbg}{\lstinline[language=bash]|python -u brute_force.py|}、\Colorbox{cmdbg}{\lstinline[language=bash]|python -u hash_quick.py|}编译后运行。
+以及算法4、5的Python实现，其目录内使用\Colorbox{cmdbg}{\lstinline[language=bash]|python -u brute_force.py|}、\Colorbox{cmdbg}{\lstinline[language=bash]|python -u hash_quick.py|}编译后运行。
+\newpage
 \subsection{伪代码}
+暴力破解算法伪代码如下,实际Fortran实现时没有存储$solutions$，而是逐一打印。
+\bigskip
 
 \begin{algorithm}[H]
     \caption{Brute-force solution to the Diophantine equation}
@@ -105,6 +108,9 @@ Codes文件夹中有算法1-3的Fortran实现，其目录内使用
     }
     \Return{$solutions$}
 \end{algorithm}
+\bigskip
+
+使用Mod30 Trick的正向算法($a \to e$)与逆向算法($e \to a$)的伪代码如2、3所示，Python中实现的是构建单幂表和双幂表的算法，伪代码如4、5所示。
 
 \begin{minipage}{0.48\textwidth}
     \begin{algorithm}[H]
@@ -214,15 +220,15 @@ Codes文件夹中有算法1-3的Fortran实现，其目录内使用
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{Figs/comparison_f90.png}
-    \caption{程序运行结果}
+    \includegraphics[width=1.0\textwidth]{Figs/comparison_f90.png}
+    \caption{Python运行结果对比}
     \label{fig:output_f90}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.6\textwidth]{Figs/comparison_py.png}
-    \caption{程序运行结果}
+    \includegraphics[width=1.0\textwidth]{Figs/comparison_py.png}
+    \caption{Fortran运行结果对比}
     \label{fig:output_py}
 \end{figure}
 
