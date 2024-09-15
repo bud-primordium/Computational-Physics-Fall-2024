@@ -7,12 +7,22 @@
 \usepackage{listings}
 \usepackage{xcolor,xparse}
 \usepackage{realboxes}
-\usepackage{graphics}
-\usepackage{graphicx}
 \usepackage{mathrsfs}
 \usepackage{wrapfig}
 \usepackage{subfigure}
+\usepackage{forest}
 \usepackage{pifont}
+
+\SetKw{Print}{print}
+\SetKw{Read}{read}
+\SetKw{Allocate}{allocate}
+\SetKw{Deallocate}{deallocate}
+\SetKw{Call}{call}
+\SetKw{True}{true}
+\SetKw{False}{false}
+\SetKw{Continue}{continue}
+\SetKw{Break}{break}
+\SetKw{Write}{write}
 
 \definecolor{cmdbg}{rgb}{0.9,0.9,0.9}
 \lstset{%
@@ -31,9 +41,11 @@
 \begin{document}
 \maketitle
 
-% \section{题目 1：五次幂丢番图方程}
-% \input{problem_1.tex}
+\section{题目 1：五次幂丢番图方程}
+\input{problem_1.tex}
+
 \section{题目 2：24点问题}
 \input{problem_2.tex}
-
+\vspace{5pt}
+\textit{很久没有这么开心地探索喜欢的问题了，上一次或许追溯到和大一室友玩 Stable Diffusion 的时候，怀念他和那张 3080ti，给那段特殊日子带来了一些亮色。这次的 24\_point 也已经忘了只是个 Fortran 练手作业，但写得很开心，尽管接下来我不得不去面对恐怖的量力和电动作业。往后这样的机会恐怕越来越少吧，下次问问在东京的乙桑，那家伙鬼点子多。}
 \end{document}

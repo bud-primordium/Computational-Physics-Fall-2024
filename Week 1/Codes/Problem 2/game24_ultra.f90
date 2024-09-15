@@ -1,20 +1,61 @@
 !----------------------------------------------------------------------------
-! Program:     game24_promax.f90
+! Program:     game24_promax_ultra.f90
 ! Author:      Gilbert Young
-! Date:        2024-09-14
+! Date:        2024-09-15
 ! Description:
-!   This program performs a recursive brute-force search to solve the 24 game.
-!   It finds all possible combinations of the given numbers using basic arithmetic
-!   operations (addition, subtraction, multiplication, division) to reach the target number 24.
+!   This enhanced version of the 24 game solver utilizes a recursive search with pruning,
+!   and considers the commutative properties of addition and multiplication to reduce the search space.
+!   It halts upon finding the first valid solution. This program also includes a progress bar to monitor
+!   the search progress and employs OpenMP for parallelization when dealing with six or more numbers,
+!   optimizing performance on multi-core systems. This code was developed with the assistance of ChatGPT 4o,
+!   which provided insights into optimizing algorithm efficiency and code structure.
 !----------------------------------------------------------------------------
 
 module game24_module
+    use omp_lib
+    use iso_fortran_env, only: int64
     implicit none
     ! Define constants
     integer, parameter :: max_limit = 8     ! Maximum allowed value for the number of inputs
     integer, parameter :: expr_len = 200   ! Maximum length for expressions
 
+    ! Precomputed total calls for n=6,7,8
+    integer(int64), parameter :: total_calls_n6 = 20000000_int64
+    integer(int64), parameter :: total_calls_n7 = 2648275200_int64
+    integer(int64), parameter :: total_calls_n8 = 444557593600_int64
+
+    !----------------------- Progress Indicator Variables ---------------------
+    integer(int64) :: total_calls = 0           ! Total number of recursive calls
+    integer(int64) :: completed_calls = 0       ! Number of completed recursive calls
+    integer :: last_percentage = -1              ! Last percentage reported
+    integer, parameter :: progress_bar_width = 50  ! Width of the progress bar
+    character(len=1) :: carriage_return = char(13) ! Carriage return character
+    logical :: show_progress = .false.           ! Flag to show progress bar
+    !--------------------------------------------------------------------------
 contains
+
+    !-----------------------------------------------------------------------
+    ! ! Aborted function: calculate_total_calls
+    ! ! Description:
+    ! !   Estimates the total number of recursive calls for a given n,
+    ! !   considering commutativity (addition and multiplication).
+    ! ! Arguments:
+    ! !   n: The number of input numbers.
+    ! ! Returns:
+    ! !   The estimated total number of recursive calls as an integer.
+    ! !-----------------------------------------------------------------------
+    ! integer function calculate_total_calls(n)
+    !     implicit none
+    !     integer, intent(in) :: n
+    !     integer :: k
+    !     calculate_total_calls = 1
+    !     do k = 2, n
+    !         ! For each pair, there are 6 possible operations:
+    !         ! 1 addition, 1 multiplication (commutative)
+    !         ! 2 subtraction, 2 division (non-commutative)
+    !         calculate_total_calls = calculate_total_calls * ((k * (k - 1)) / 2) * 6
+    !     end do
+    ! end function calculate_total_calls
 
     !-----------------------------------------------------------------------
     ! Subroutine: convert_to_number
@@ -40,13 +81,13 @@ contains
 
         select case (first_char)
         case ('A', 'a')
-            number = 1
+            number = 1.0
         case ('J', 'j')
-            number = 11
+            number = 11.0
         case ('Q', 'q')
-            number = 12
+            number = 12.0
         case ('K', 'k')
-            number = 13
+            number = 13.0
         case default
             read (input_str, *, iostat=ios) temp_number  ! Attempt to read a real number
 
@@ -133,15 +174,60 @@ contains
     end subroutine create_new_arrays
 
     !-----------------------------------------------------------------------
+    ! Subroutine: update_progress_bar
+    ! Description:
+    !   Updates and displays the horizontal percentage-based progress bar.
+    ! Arguments:
+    !   None
+    !-----------------------------------------------------------------------
+    subroutine update_progress_bar()
+        implicit none
+        real :: percentage
+        integer :: filled_length
+        character(len=progress_bar_width) :: bar
+        integer :: int_percentage
+
+        if (total_calls == 0 .or. .not. show_progress) return  ! Avoid division by zero and check the flag
+
+        percentage = real(completed_calls) / real(total_calls) * 100.0
+
+        ! Ensure percentage does not exceed 100%
+        if (percentage > 100.0) percentage = 100.0
+
+        ! Calculate integer percentage
+        int_percentage = int(percentage)
+
+        ! Update progress bar only when percentage increases by at least 1%
+        if (int_percentage > last_percentage) then
+            last_percentage = int_percentage
+
+            ! Calculate the filled length of the progress bar
+            filled_length = min(int(percentage / 100.0 * progress_bar_width), progress_bar_width)
+
+            ! Construct the progress bar string
+            bar = repeat('=', filled_length)
+            if (filled_length < progress_bar_width) then
+                bar = bar//'>'//repeat(' ', progress_bar_width - filled_length - 1)
+            end if
+
+            ! Print the progress bar and integer percentage
+            write (*, '(A, F4.1, A)', advance='no') carriage_return//'['//bar//'] ', percentage, '%'
+            call flush (0)  ! Ensure output is displayed immediately
+        end if
+    end subroutine update_progress_bar
+
+    !-----------------------------------------------------------------------
     ! Recursive Subroutine: solve_24
     ! Description:
     !   Recursively solves the 24 game by trying all possible operations.
+    !   Utilizes OpenMP tasks for parallelization.
     ! Arguments:
     !   nums:   Array of numbers to use in the game.
     !   exprs:  Array of string expressions representing the numbers.
     !   found:  Logical flag indicating if a solution has been found.
     !-----------------------------------------------------------------------
     recursive subroutine solve_24(nums, exprs, found)
+        use omp_lib
         implicit none
         real, intent(in)                         :: nums(:)       ! Input: Array of numbers
         character(len=expr_len), intent(in)      :: exprs(:)      ! Input: Array of expressions
@@ -155,14 +241,27 @@ contains
 
         n = size(nums)
 
+        ! Increment the completed_calls counter and update progress bar
+        if (show_progress) then
+            !$omp atomic
+            completed_calls = completed_calls + 1
+            call update_progress_bar()
+        end if
+
         ! If a solution is found, return
         if (found) return
 
         ! Base case: If only one number is left, check if it is 24
         if (n == 1) then
             if (abs(nums(1) - 24.0) < 1e-4) then
-                write (*, '(A, A, A, F10.6, A)') 'Solution found:', trim(exprs(1)), '= 24 (', nums(1), ' )'
+                if (show_progress) then
+                    write (*, '(A, F5.1, A)', advance='no') carriage_return//'['//repeat('=', progress_bar_width)//'] ', 100.0, '%'
+                    write (*, '(A)') ''  ! Insert a blank line
+                end if
+                !$omp critical
+                write (*, '(A, A, A, F10.7, A)') 'Solution found:', trim(exprs(1)), '= 24 (', nums(1), ')'
                 found = .true.
+                !$omp end critical
             end if
             return
         end if
@@ -199,8 +298,14 @@ contains
                     ! Create new arrays with the selected numbers removed
                     call create_new_arrays(nums, exprs, i, j, result, new_expr, new_nums, new_exprs)
 
-                    ! Recursively call the solve_24 function with the new arrays
-                    call solve_24(new_nums, new_exprs, found)
+                    ! For the first few recursion levels, create parallel tasks
+                    if (n >= 6 .and. omp_get_level() < 2) then
+                        !$omp task shared(found) firstprivate(new_nums, new_exprs)
+                        call solve_24(new_nums, new_exprs, found)
+                        !$omp end task
+                    else
+                        call solve_24(new_nums, new_exprs, found)
+                    end if
 
                     ! If a solution is found, deallocate memory and return
                     if (found) then
@@ -228,8 +333,15 @@ contains
                         ! Create new arrays with the selected numbers removed
                         call create_new_arrays(nums, exprs, i, j, result, new_expr, new_nums, new_exprs)
 
-                        ! Recursively call the solve_24 function with the new arrays
-                        call solve_24(new_nums, new_exprs, found)
+                        ! For the first few recursion levels, create parallel tasks
+                        if (n >= 6 .and. omp_get_level() < 2) then
+                            !$omp task shared(found) firstprivate(new_nums, new_exprs)
+                            call solve_24(new_nums, new_exprs, found)
+                            !$omp end task
+                        else
+                            ! Recursively call the solve_24 function with the new arrays
+                            call solve_24(new_nums, new_exprs, found)
+                        end if
 
                         ! If a solution is found, deallocate memory and return
                         if (found) then
@@ -246,7 +358,7 @@ contains
 
 end module game24_module
 
-program game24_promax
+program game24_ultra
     use game24_module
     implicit none
 
@@ -311,8 +423,49 @@ program game24_promax
         ! Initialize the solution flag to false
         found_solution = .false.
 
-        ! Call the recursive function to solve the 24 game
+        ! Assign precomputed total_calls based on n
+        select case (maxn)
+        case (6)
+            total_calls = total_calls_n6
+        case (7)
+            total_calls = total_calls_n7
+        case (8)
+            total_calls = total_calls_n8
+        case default
+            total_calls = 0
+        end select
+
+        ! Decide whether to show progress bar based on n
+        if (maxn >= 6) then
+            show_progress = .true.
+            completed_calls = 0
+            last_percentage = -1
+
+            ! Initialize progress bar display
+            write (*, '(A)', advance='no') '['//repeat(' ', progress_bar_width)//'] 0%'
+            call flush (0)  ! Ensure the output is displayed immediately
+        else
+            show_progress = .false.
+        end if
+
+        ! Start parallel region
+        !$omp parallel
+        !$omp single nowait
         call solve_24(numbers, expressions, found_solution)
+        !$omp end single
+        !$omp end parallel
+
+        ! After search completes, ensure the progress bar reaches 100% if shown
+        if (show_progress .and. .not. found_solution) then
+            write (*, '(A, A)', advance='no') carriage_return//'['//repeat('=', progress_bar_width)//'] 100%  '
+            call flush (0)
+            write (*, '(A)') ''  ! Insert a blank line
+        end if
+
+        ! If a solution was found and progress bar is shown, ensure a blank line
+        if (show_progress .and. found_solution) then
+            ! Progress bar already refreshed to 100% and blank line inserted in solve_24
+        end if
 
         ! If no solution was found, print a message
         if (.not. found_solution) then
@@ -324,7 +477,11 @@ program game24_promax
         deallocate (expressions)
 
         ! Ask the user if they want to play again
-        write (*, '(A)', advance='no') 'Play again? (Enter y/n to continue or any other key to exit): '
+        if (show_progress) then
+            write (*, '(A)', advance='no') carriage_return//'Play again? (Enter y/n to continue or any other key to exit): '
+        else
+            write (*, '(A)', advance='no') 'Play again? (Enter y/n to continue or any other key to exit): '
+        end if
         read (*, '(A)') play_again  ! Read user input
 
         ! Check if the user wants to exit
@@ -334,4 +491,4 @@ program game24_promax
 
     print *, 'Exiting the game...'
 
-end program game24_promax
+end program game24_ultra
