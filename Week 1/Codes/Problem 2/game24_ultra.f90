@@ -9,6 +9,21 @@
 !   the search progress and employs OpenMP for parallelization when dealing with six or more numbers,
 !   optimizing performance on multi-core systems. This code was developed with the assistance of ChatGPT 4o,
 !   which provided insights into optimizing algorithm efficiency and code structure.
+!
+! IMPORTANT:
+!   To compile this program, the following command **must** be used to enable OpenMP:
+!
+!   gfortran -fopenmp game24_ultra.f90 -o ultra_local
+!
+!   Without the -fopenmp option, the program will not compile correctly, as OpenMP is required for
+!   parallelization in this code.
+!
+! RECOMMENDED:
+!   For better performance, it is recommended to use optimization and native architecture settings:
+!
+!   gfortran -O3 -march=native -fopenmp game24_ultra.f90 -o ultra_local
+!
+!   These options will optimize the code for your system, potentially improving the execution speed.
 !----------------------------------------------------------------------------
 
 module game24_module
