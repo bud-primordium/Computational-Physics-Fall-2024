@@ -45,5 +45,6 @@ Thumbs.db
 #忽略打包的作业文档
 *.zip
 
-#忽略发布版本的预备文件
-release
+#忽略草稿文件夹和发布预处理文件夹
+.draft
+.release
