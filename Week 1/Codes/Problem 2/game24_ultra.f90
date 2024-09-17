@@ -1,5 +1,5 @@
 !----------------------------------------------------------------------------
-! Program:     game24_promax_ultra.f90
+! Program:     game24_ultra.f90
 ! Author:      Gilbert Young
 ! Date:        2024-09-15
 ! Description:
@@ -427,7 +427,7 @@ program game24_ultra
                 if (ios == 0) exit
 
                 ! Invalid input: prompt the user to try again
-                print *, 'Invalid input. Please enter an integer or valid card symbol (A, J, Q, K).'
+                write (*, '(A)') 'Invalid input. Please enter an integer or valid card symbol (A, J, Q, K).'
             end do
 
             ! Convert the number to a string expression and remove trailing zeros
@@ -484,7 +484,7 @@ program game24_ultra
 
         ! If no solution was found, print a message
         if (.not. found_solution) then
-            print *, 'No valid solution found.'
+            write (*, '(A)') 'No valid solution found.'
         end if
 
         ! Deallocate the memory used by the arrays
@@ -504,6 +504,6 @@ program game24_ultra
 
     end do  ! End of game loop
 
-    print *, 'Exiting the game...'
+    write (*, '(A)') 'Exiting the game...'
 
 end program game24_ultra

@@ -132,7 +132,7 @@ For example, using the numbers 2, 3, 4, and 6, the calculation $(((4+6)-2)*3)=24
 本程序最终设计为允许用户最多输入$8$张牌，允许输入整数或者A/J/Q/K(含小写)，综合考虑复杂度与Fortran特性，采用了第3种剪枝策略。对于结果的输出，可以将所有解存储再一并输出，但这涉及到未知数目的存储，且在$n>4$时极大影响运行效率（多个数的运算更有可能在较浅搜索区域寻找到解并提前结束），最终决定只输出第一个找到的解。不过 \texttt{game24\_ultra.f90}中，对$n\ge 6 $引入了进度条与\texttt{OpenMP}多线程并行优化，可能同时输出不止一个解。
 
 判断结果正误的精度最初设置为$1 \times 10^{-6}$
-,比Fortran内置的单精度\texttt{epsilon(1.0)}大些，但仍不能正确判定$8/(3-8/3) = 24$，便放宽为了$1 \mathrm{e-4} $,对于4个$[1,13]$的运算尚未发现误判，但在更大规模的测试中已经发现漏洞，且转为双精度的运算开销实在过大，故在最终结果输出时加注括号与机器运算值，供用户自行检验。
+,比Fortran内置的单精度\texttt{epsilon(1.0)}大些，但仍不能正确判定$8/(3-8/3) = 24$，便放宽为了$1 \times 10^{-4}$,对于4个$[1,13]$的运算尚未发现误判，但在更大规模的测试中已经发现漏洞，且转为双精度的运算开销实在过大，故在最终结果输出时加注括号与机器运算值，供用户自行检验。
 
 \texttt{./Codes/Problem 2}中有\texttt{game24\_promax.f90}与\texttt{game24\_ultra.f90}两个版本，下文的代码分析以前者为例，后者仅是在GPT o1建议下引入了多线程优化与进度条（实现原理为：提前存储$n=6,7,8$路径数，与已调用次数进行比对）。多线程优化在无解情况测试中被验证是显著有效的。在终端进入其目录，分别运行
 
@@ -144,7 +144,7 @@ For example, using the numbers 2, 3, 4, and 6, the calculation $(((4+6)-2)*3)=24
 \noindent \Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -O3 -march=native -fopenmp game24_ultra.f90 -o ultra_local|} 命令编译\texttt{Ultra}的本地版本，但在移植到其它架构时可能性能下降。
 
 \subsection{伪代码}
-\noindent 主程序与用户交互，调用\texttt{\textbf{Recursive routine solve\_24}}，而\texttt{ create\_new\_arrays}生成下一轮的数字列表与表达式。
+\noindent 主程序与用户交互，调用\texttt{\textbf{Recursive Subroutine solve\_24}}，而\texttt{ create\_new\_arrays}生成下一轮数字与表达式。
 
 \vspace{5pt} % Vertical space
 \begin{algorithm}[H]
@@ -193,7 +193,7 @@ For example, using the numbers 2, 3, 4, and 6, the calculation $(((4+6)-2)*3)=24
     $\texttt{new\_exprs}(n - 1) \gets \texttt{new\_expr}$\tcp*[r]{Add new expression to new arrays}
 \end{algorithm}
 
-\noindent 程序的核心逻辑是下面的\texttt{\textbf{Recursive routine solve\_24}}，
+\noindent 程序的核心逻辑是下面的\texttt{\textbf{Recursive Subroutine solve\_24}}，
 
 \begin{algorithm}[H]
     \caption{Recursive Subroutine: solve\_24}

@@ -41,3 +41,9 @@ node_modules/
 # 忽略其他操作系统生成的文件
 .DS_Store
 Thumbs.db
+
+#忽略打包的作业文档
+*.zip
+
+#忽略发布版本的预备文件
+release
