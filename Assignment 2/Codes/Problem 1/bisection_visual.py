@@ -99,7 +99,7 @@ def main():
     print("Bisection Method Dynamic Visualization")
     print("Choose the interval to iterate for the root:")
     print("1: Find the root in the interval [0.0, 1.0]")
-    print("2: Find the root in the interval [1.5, 2.0]")
+    print("2: Find the root in the interval [1.0, 2.0]")
     print("3: Custom interval, enter the left and right endpoints")
 
     choice = input("Please enter your choice (1/2/3):")
@@ -107,7 +107,7 @@ def main():
     if choice == "1":
         a, b = 0.0, 1.0
     elif choice == "2":
-        a, b = 1.5, 2.0
+        a, b = 1.0, 2.0
     elif choice == "3":
         try:
             a = float(input("Please enter the left endpoint a: "))

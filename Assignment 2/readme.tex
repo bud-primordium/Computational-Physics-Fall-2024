@@ -1,7 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage[top=1cm, bottom=2cm, left=1cm, right=1cm]{geometry}
 \usepackage{ctex}
-\usepackage[linesnumbered,ruled]{algorithm2e}
 \usepackage{amsthm,amsmath,amssymb}
 \usepackage[colorlinks=true,linkcolor=blue]{hyperref}
 \usepackage{listings}
@@ -14,6 +13,11 @@
 \usepackage{pifont}
 \usepackage{tikz}
 \usepackage{float}
+\usepackage{algorithm2e}
+\RestyleAlgo{ruled}
+\LinesNumbered
+\SetAlgoSkip{0pt}
+\DontPrintSemicolon
 
 \SetKw{Print}{print}
 \SetKw{Read}{read}
@@ -25,6 +29,33 @@
 \SetKw{Continue}{continue}
 \SetKw{Break}{break}
 \SetKw{Write}{write}
+\SetKw{RaiseError}{raise error}
+\SetKw{Swap}{swap}
+\SetKw{Compute}{compute}
+
+% Define the breakablealgorithm environment
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {%
+    \begin{center}
+      \refstepcounter{algorithm}% New algorithm
+      \hrule height 0.8pt \kern2pt% Pre-rule
+      \renewcommand{\caption}[2][\relax]{% Redefine \caption
+        {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+        \ifx\relax##1\relax
+          \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+        \else
+          \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+        \fi
+        \kern2pt\hrule\kern2pt
+      }
+  }
+  {%
+      \kern2pt\hrule\relax% Post-rule
+    \end{center}
+  }
+\makeatother
+
 
 \definecolor{cmdbg}{rgb}{0.9,0.9,0.9}
 \lstset{%
@@ -42,7 +73,7 @@
 
 \begin{document}
 \maketitle
-
+\textit{今天原本应该是鏖战Griffths的猫与蔡先生的日子，可惜平板没电。}
 \section{题目 1：三次方程根的求解与精确化}
 \input{problem_1.tex}
 
@@ -53,5 +84,5 @@
 \input{problem_3.tex}
 
 \vspace{5pt}
-\textit{今天原本应该是鏖战Griffths的猫与蔡先生的日子，可惜平板没电。}
+
 \end{document}
