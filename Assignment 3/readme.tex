@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage[top=1cm, bottom=2cm, left=1cm, right=1cm]{geometry}
+\usepackage{ctex}
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{listings}
+\usepackage{xcolor,xparse}
+\usepackage{realboxes}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{forest}
+\usepackage{pifont}
+\usepackage{bm}
+
+\SetKw{Print}{print}
+\SetKw{Read}{read}
+\SetKw{Allocate}{allocate}
+\SetKw{Deallocate}{deallocate}
+\SetKw{Call}{call}
+\SetKw{True}{true}
+\SetKw{False}{false}
+\SetKw{Continue}{continue}
+\SetKw{Break}{break}
+\SetKw{Write}{write}
+
+\definecolor{cmdbg}{rgb}{0.9,0.9,0.9}
+\lstset{%
+	basicstyle=\ttfamily,
+	breaklines = true,
+	backgroundcolor=\color{cmdbg},
+}
+\DeclareDocumentCommand{\ccmd}{v}{% 参数 v 表示工作方法类似于 \verb
+    \Colorbox{cmdbg}{\csname lstinline\endcsname!#1!}%
+}
+
+
+\author{杨远青 22300190015}
+\title{计算物理作业3}
+
+\begin{document}
+\maketitle
+\textit{远方来朋，喜；假期俱至，悦。}
+\section{题目 1：高斯消元法的时间复杂度分析}
+\input{problem_1.tex}
+
+\vspace{5pt}
+\end{document}
