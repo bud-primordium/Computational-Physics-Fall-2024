@@ -12,6 +12,7 @@
 \usepackage{subfigure}
 \usepackage{forest}
 \usepackage{pifont}
+\usepackage{ulem}
 \usepackage{bm}
 
 \SetKw{Print}{print}
@@ -42,8 +43,22 @@
 \begin{document}
 \maketitle
 \textit{远方来朋，喜；假期俱至，悦。}
-\section{题目 1：高斯消元法的时间复杂度分析}
-\input{problem_1.tex}
+
+\section{\texorpdfstring{\sout{题目 1：高斯消元法的时间复杂度分析}}{题目 1}}
+\input{problem_1_old.tex}
+
+\setcounter{section}{0}
+\vspace{1em}
+\textit{公元二〇二四年九月二十四日，午时三刻，于HGX106室，惊闻徐夫子欲改弦更张，悲哉！}
+\vspace{-1em}
+\section{\texorpdfstring{题目 1：$\bm{LU}$分解法的时间复杂度分析}{题目 1：LU分解法的时间复杂度分析}}
+\input{problem_1_new.tex}
+
+\section{题目 2：结合部分主元应用高斯消元法}
+\input{problem_2.tex}
+
+\section{题目 3：变分法求解一维薛定谔方程}
+\input{problem_3.tex}
 
 \vspace{5pt}
 \end{document}

@@ -1,0 +1,99 @@
+\subsection{题目描述}
+Prove that the time complexity of $\bm{LU}$ decomposition algorithm is $\mathcal{O}(n^3)$.
+\subsection{证明}
+$\bm{LU}$分解法的第一步是将系数矩阵$\bm{A}$分解为一个下三角矩阵$\bm{L}$和一个上三角矩阵$\bm{U}$：
+\[
+    \begin{bmatrix}
+        a_{11} & a_{12} & \cdots & a_{1n} \\
+        a_{21} & a_{22} & \cdots & a_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        l_{11} & 0      & \cdots & 0      \\
+        l_{21} & l_{22} & \cdots & 0      \\
+        \vdots & \vdots & \ddots & \vdots \\
+        l_{n1} & l_{n2} & \cdots & l_{nn}
+    \end{bmatrix}
+    \begin{bmatrix}
+        1      & u_{12} & \cdots & u_{1n} \\
+        0      & 1      & \cdots & u_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0      & 0      & \cdots & 1
+    \end{bmatrix}.
+\]
+这一步常采用Crout方法实现，即在每一轮中，我们先计算$\bm{L}$的第$k$列元素$l_{ik}$，
+\[
+    l_{ik} = a_{ik} - \sum_{s=1}^{k-1} l_{is} u_{sk}, \quad \ i = k, k+1, \dots, n.
+\]
+每一个$l_{ik}$的计算涉及$k-1$次乘法和$k-1$次减法，共有$(n-k+1)$个$l_{ik}$需要计算；再计算$\bm{U}$的第$k$行元素$u_{kj}$，
+\[
+    u_{kj} = \frac{1}{l_{kk}} \left( a_{kj} - \sum_{s=1}^{k-1} l_{ks} u_{sj} \right), \quad \ j = k+1, k+2, \dots, n.
+\]
+相比$l_{ik}$的计算多了一次除法，共有$(n-k)$个$u_{kj}$需要计算，故第$k$轮的操作数为
+\[
+    (n-k+1)\cdot(2k-2)+(n-k)\cdot(2k-1) = -4k^2 + (4n+5)k -3n -2.
+\]
+因此，分解步骤的总操作数为
+\[
+    T_c(n) =\sum_{k=1}^{n} \ [-4k^2 + (4n+5)k -3n -2]                                                 \\
+    = -4 \cdot \frac{n(n+1)(2n+1)}{6} + (4n+5) \cdot \frac{n(n+1)}{2} - (3n+2) \cdot n\\
+    = \frac{4n^3 - 3n^2 - n}{6}.
+\]
+
+再考虑回代步骤的操作数，即用分解得到的$\bm{L}$和$\bm{U}$求解方程组$\bm{Ax} = \bm{b}$。首先求解$\bm{Ly} = \bm{b}$，即
+\[
+    \begin{bmatrix}
+        l_{11} & 0      & \cdots & 0      \\
+        l_{21} & l_{22} & \cdots & 0      \\
+        \vdots & \vdots & \ddots & \vdots \\
+        l_{n1} & l_{n2} & \cdots & l_{nn}
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+        y_1 \\ y_2 \\ \vdots \\ y_n
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        b_1 \\ b_2 \\ \vdots \\ b_n
+    \end{bmatrix}.
+\]
+这实质上是从第一行开始的\textit{Forward Substitution}，即
+\[
+    y_i=\frac{1}{l_{i i}}\left(b_i-\sum_{j=1}^{i-1} l_{i j} y_j\right).
+\]
+每一步有$1$次除法，$(i-1)$次乘法与$(i-1)$次减法；再求解$\bm{Ux} = \bm{y}$，即
+\[
+    \begin{bmatrix}
+        1      & u_{12} & \cdots & u_{1n} \\
+        0      & 1      & \cdots & u_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0      & 0      & \cdots & 1
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+        x_1 \\ x_2 \\ \vdots \\ x_n
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        y_1 \\ y_2 \\ \vdots \\ y_n
+    \end{bmatrix},
+\]
+这实质上是从最后一行开始的\textit{Backward Substitution}，即
+\[
+    x_i=\left(y_i-\sum_{j=i+1}^{n} u_{i j} x_j\right).
+\]
+每一步有$(n-i)$次乘法与$(n-i)$次减法，故回代步骤操作数为
+\[
+    T_s(n)=\sum_{i=1}^{n} \ [(2i-1)+(2n-2i)] = \sum_{i=1}^{n} (2n-1) = n(2n-1) = 2n^2 -n.
+\]
+因此，$\bm{LU}$分解法的总操作数为
+\[
+    T(n)=T_c(n)+T_s(n)=\frac{4n^3 -3n^2 -n}{6} + 2n^2 -n = \frac{4n^3 +9n^2 -7n}{6}.
+\]
+其中有除法$n(n+1)/2$次，乘法与减法各$n(n-1)(2n+5)/6$次，故
+\[
+    \boxed{T(n) = \mathcal{O}(n^3)}
+\]
+\textit{Amazing，居然与Gaussian消元法的各种操作数都相同！}
