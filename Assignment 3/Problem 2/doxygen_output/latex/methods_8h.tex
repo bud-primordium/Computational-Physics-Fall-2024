@@ -1,0 +1,140 @@
+\doxysection{methods.\+h File Reference}
+\hypertarget{methods_8h}{}\label{methods_8h}\index{methods.h@{methods.h}}
+
+
+Core computational functions for solving linear systems.  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for methods.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=142pt]{methods_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{methods_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{methods_8h_ad65a91718a67d95c2bd00b4c753d3766}{Gaussian\+Elimination}} (std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\begin{DoxyCompactList}\small\item\em Performs Gaussian elimination on the matrix. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{methods_8h_ad6d94e87c3566ffd3bb2835ff2d18d5d}{Determine\+Rank}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\begin{DoxyCompactList}\small\item\em Determines the rank of the matrix. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{methods_8h_aabb015bf653c5a6fcbf99e8ec7f000f2}{Back\+Substitution}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols, std\+::vector$<$ double $>$ \&solution)
+\begin{DoxyCompactList}\small\item\em Performs back-\/substitution to find the unique solution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{methods_8h_a7069c66cd98c8ff1b05ff2f8b84dfe2c}{Show\+General\+Solution}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols, int rank)
+\begin{DoxyCompactList}\small\item\em Displays the general solution for systems with infinitely many solutions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Core computational functions for solving linear systems. 
+
+\begin{DoxyAuthor}{Author}
+Gilbert Young 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024/09/25 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{methods_8h_aabb015bf653c5a6fcbf99e8ec7f000f2}\index{methods.h@{methods.h}!BackSubstitution@{BackSubstitution}}
+\index{BackSubstitution@{BackSubstitution}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{BackSubstitution()}{BackSubstitution()}}
+{\footnotesize\ttfamily \label{methods_8h_aabb015bf653c5a6fcbf99e8ec7f000f2} 
+bool Back\+Substitution (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{, }\item[{std\+::vector$<$ double $>$ \&}]{solution}{}\end{DoxyParamCaption})}
+
+
+
+Performs back-\/substitution to find the unique solution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The upper triangular matrix after Gaussian elimination. \\
+\hline
+{\em rows} & Number of rows in the matrix. \\
+\hline
+{\em cols} & Number of columns in the matrix. \\
+\hline
+{\em solution} & Reference to store the solution vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If a unique solution exists. 
+
+false If the system is inconsistent. 
+\end{DoxyReturn}
+\Hypertarget{methods_8h_ad6d94e87c3566ffd3bb2835ff2d18d5d}\index{methods.h@{methods.h}!DetermineRank@{DetermineRank}}
+\index{DetermineRank@{DetermineRank}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{DetermineRank()}{DetermineRank()}}
+{\footnotesize\ttfamily \label{methods_8h_ad6d94e87c3566ffd3bb2835ff2d18d5d} 
+int Determine\+Rank (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+
+Determines the rank of the matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The matrix. \\
+\hline
+{\em rows} & Number of rows in the matrix. \\
+\hline
+{\em cols} & Number of columns in the matrix. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The rank of the matrix. 
+\end{DoxyReturn}
+\Hypertarget{methods_8h_ad65a91718a67d95c2bd00b4c753d3766}\index{methods.h@{methods.h}!GaussianElimination@{GaussianElimination}}
+\index{GaussianElimination@{GaussianElimination}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{GaussianElimination()}{GaussianElimination()}}
+{\footnotesize\ttfamily \label{methods_8h_ad65a91718a67d95c2bd00b4c753d3766} 
+int Gaussian\+Elimination (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+
+Performs Gaussian elimination on the matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & Reference to the matrix to be modified. \\
+\hline
+{\em rows} & Number of rows in the matrix. \\
+\hline
+{\em cols} & Number of columns in the matrix. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Number of row exchanges performed. 
+\end{DoxyReturn}
+\Hypertarget{methods_8h_a7069c66cd98c8ff1b05ff2f8b84dfe2c}\index{methods.h@{methods.h}!ShowGeneralSolution@{ShowGeneralSolution}}
+\index{ShowGeneralSolution@{ShowGeneralSolution}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{ShowGeneralSolution()}{ShowGeneralSolution()}}
+{\footnotesize\ttfamily \label{methods_8h_a7069c66cd98c8ff1b05ff2f8b84dfe2c} 
+void Show\+General\+Solution (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{, }\item[{int}]{rank}{}\end{DoxyParamCaption})}
+
+
+
+Displays the general solution for systems with infinitely many solutions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The matrix after Gaussian elimination. \\
+\hline
+{\em rows} & Number of rows in the matrix. \\
+\hline
+{\em cols} & Number of columns in the matrix. \\
+\hline
+{\em rank} & The rank of the matrix. \\
+\hline
+\end{DoxyParams}

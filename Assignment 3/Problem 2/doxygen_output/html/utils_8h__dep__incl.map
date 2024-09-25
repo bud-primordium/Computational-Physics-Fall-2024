@@ -1,0 +1,9 @@
+<map id="utils.h" name="utils.h">
+<area shape="rect" id="Node000001" title="Utility functions for matrix initialization and display." alt="" coords="145,5,201,32"/>
+<area shape="rect" id="Node000002" href="$interaction_8cpp.html" title="Implementation of user interaction functions." alt="" coords="5,80,112,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,43,80,82,77,77,139,38"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html" title="Entry point for the Gaussian Elimination Solver project." alt="" coords="136,80,210,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="176,48,176,80,170,80,170,48"/>
+<area shape="rect" id="Node000004" href="$utils_8cpp.html" title="Implementation of utility functions for matrix operations." alt="" coords="234,80,304,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="203,39,254,77,251,82,200,44"/>
+</map>

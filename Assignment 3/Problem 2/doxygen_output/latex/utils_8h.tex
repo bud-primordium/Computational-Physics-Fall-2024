@@ -1,0 +1,134 @@
+\doxysection{utils.\+h File Reference}
+\hypertarget{utils_8h}{}\label{utils_8h}\index{utils.h@{utils.h}}
+
+
+Utility functions for matrix initialization and display.  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for utils.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{utils_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{utils_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{utils_8h_afdd09077415c66826ef7d5bc9555baf7}{Init\+Matrix}} (std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, const std\+::string \&filename, int \&rows, int \&cols)
+\begin{DoxyCompactList}\small\item\em Initializes the matrix by reading from a .in file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utils_8h_ae29912c7e35b26fed14371c725a9de04}{Show\+Equations}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\begin{DoxyCompactList}\small\item\em Displays the system of linear equations. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{utils_8h_ad5d7dd8f4b1c4406d767e585b2a1569e}{Check\+Consistency}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\begin{DoxyCompactList}\small\item\em Checks the consistency of the system of equations. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utils_8h_ae94786e20414ed38e7ffab148ac6bd78}{Display\+Solution}} (const std\+::vector$<$ double $>$ \&solution)
+\begin{DoxyCompactList}\small\item\em Displays the unique solution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Utility functions for matrix initialization and display. 
+
+\begin{DoxyAuthor}{Author}
+Gilbert Young 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024/09/25 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{utils_8h_ad5d7dd8f4b1c4406d767e585b2a1569e}\index{utils.h@{utils.h}!CheckConsistency@{CheckConsistency}}
+\index{CheckConsistency@{CheckConsistency}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{CheckConsistency()}{CheckConsistency()}}
+{\footnotesize\ttfamily \label{utils_8h_ad5d7dd8f4b1c4406d767e585b2a1569e} 
+bool Check\+Consistency (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+
+Checks the consistency of the system of equations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The matrix representing the system. \\
+\hline
+{\em rows} & Number of rows in the matrix. \\
+\hline
+{\em cols} & Number of columns in the matrix. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If the system is consistent. 
+
+false If the system is inconsistent. 
+\end{DoxyReturn}
+\Hypertarget{utils_8h_ae94786e20414ed38e7ffab148ac6bd78}\index{utils.h@{utils.h}!DisplaySolution@{DisplaySolution}}
+\index{DisplaySolution@{DisplaySolution}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{DisplaySolution()}{DisplaySolution()}}
+{\footnotesize\ttfamily \label{utils_8h_ae94786e20414ed38e7ffab148ac6bd78} 
+void Display\+Solution (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{solution}{}\end{DoxyParamCaption})}
+
+
+
+Displays the unique solution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em solution} & The solution vector. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{utils_8h_afdd09077415c66826ef7d5bc9555baf7}\index{utils.h@{utils.h}!InitMatrix@{InitMatrix}}
+\index{InitMatrix@{InitMatrix}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{InitMatrix()}{InitMatrix()}}
+{\footnotesize\ttfamily \label{utils_8h_afdd09077415c66826ef7d5bc9555baf7} 
+bool Init\+Matrix (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{const std\+::string \&}]{filename}{, }\item[{int \&}]{rows}{, }\item[{int \&}]{cols}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the matrix by reading from a .in file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & Reference to the matrix to be initialized. \\
+\hline
+{\em filename} & Name of the input file. \\
+\hline
+{\em rows} & Reference to store the number of rows. \\
+\hline
+{\em cols} & Reference to store the number of columns. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If the matrix was successfully initialized. 
+
+false If there was an error during initialization. 
+\end{DoxyReturn}
+\Hypertarget{utils_8h_ae29912c7e35b26fed14371c725a9de04}\index{utils.h@{utils.h}!ShowEquations@{ShowEquations}}
+\index{ShowEquations@{ShowEquations}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{ShowEquations()}{ShowEquations()}}
+{\footnotesize\ttfamily \label{utils_8h_ae29912c7e35b26fed14371c725a9de04} 
+void Show\+Equations (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+
+Displays the system of linear equations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The matrix representing the system. \\
+\hline
+{\em rows} & Number of equations. \\
+\hline
+{\em cols} & Number of variables plus one (for constants). \\
+\hline
+\end{DoxyParams}

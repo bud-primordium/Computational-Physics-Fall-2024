@@ -1,0 +1,115 @@
+\begin{theindex}
+
+  \item {AskRunAgain}
+    \subitem {interaction.cpp}, \hyperpage{6}
+    \subitem {interaction.h}, \hyperpage{9}
+
+  \indexspace
+
+  \item {BackSubstitution}
+    \subitem {methods.cpp}, \hyperpage{13}
+    \subitem {methods.h}, \hyperpage{19}
+
+  \indexspace
+
+  \item {CheckConsistency}
+    \subitem {utils.cpp}, \hyperpage{22}
+    \subitem {utils.h}, \hyperpage{25}
+
+  \indexspace
+
+  \item {DetermineRank}
+    \subitem {methods.cpp}, \hyperpage{14}
+    \subitem {methods.h}, \hyperpage{19}
+  \item {DisplaySolution}
+    \subitem {utils.cpp}, \hyperpage{22}
+    \subitem {utils.h}, \hyperpage{25}
+
+  \indexspace
+
+  \item {Eliminate}
+    \subitem {methods.cpp}, \hyperpage{14}
+  \item {Exchange}
+    \subitem {methods.cpp}, \hyperpage{14}
+
+  \indexspace
+
+  \item {Gaussian Elimination Solver}, \hyperpage{1}
+  \item {GaussianElimination}
+    \subitem {methods.cpp}, \hyperpage{15}
+    \subitem {methods.h}, \hyperpage{19}
+
+  \indexspace
+
+  \item {IdentifyPivots}
+    \subitem {methods.cpp}, \hyperpage{15}
+  \item {InitMatrix}
+    \subitem {utils.cpp}, \hyperpage{22}
+    \subitem {utils.h}, \hyperpage{25}
+  \item {interaction.cpp}, \hyperpage{5}
+    \subitem {AskRunAgain}, \hyperpage{6}
+    \subitem {SelectInputFile}, \hyperpage{6}
+    \subitem {WaitForExit}, \hyperpage{7}
+  \item {interaction.h}, \hyperpage{7}
+    \subitem {AskRunAgain}, \hyperpage{9}
+    \subitem {SelectInputFile}, \hyperpage{9}
+    \subitem {WaitForExit}, \hyperpage{10}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.cpp}, \hyperpage{11}
+  \item {main.cpp}, \hyperpage{10}
+    \subitem {main}, \hyperpage{11}
+  \item {methods.cpp}, \hyperpage{12}
+    \subitem {BackSubstitution}, \hyperpage{13}
+    \subitem {DetermineRank}, \hyperpage{14}
+    \subitem {Eliminate}, \hyperpage{14}
+    \subitem {Exchange}, \hyperpage{14}
+    \subitem {GaussianElimination}, \hyperpage{15}
+    \subitem {IdentifyPivots}, \hyperpage{15}
+    \subitem {Pivoting}, \hyperpage{16}
+    \subitem {ShowGeneralSolution}, \hyperpage{16}
+  \item {methods.h}, \hyperpage{17}
+    \subitem {BackSubstitution}, \hyperpage{19}
+    \subitem {DetermineRank}, \hyperpage{19}
+    \subitem {GaussianElimination}, \hyperpage{19}
+    \subitem {ShowGeneralSolution}, \hyperpage{20}
+
+  \indexspace
+
+  \item {Pivoting}
+    \subitem {methods.cpp}, \hyperpage{16}
+
+  \indexspace
+
+  \item {SelectInputFile}
+    \subitem {interaction.cpp}, \hyperpage{6}
+    \subitem {interaction.h}, \hyperpage{9}
+  \item {ShowEquations}
+    \subitem {utils.cpp}, \hyperpage{23}
+    \subitem {utils.h}, \hyperpage{26}
+  \item {ShowGeneralSolution}
+    \subitem {methods.cpp}, \hyperpage{16}
+    \subitem {methods.h}, \hyperpage{20}
+
+  \indexspace
+
+  \item {utils.cpp}, \hyperpage{21}
+    \subitem {CheckConsistency}, \hyperpage{22}
+    \subitem {DisplaySolution}, \hyperpage{22}
+    \subitem {InitMatrix}, \hyperpage{22}
+    \subitem {ShowEquations}, \hyperpage{23}
+  \item {utils.h}, \hyperpage{23}
+    \subitem {CheckConsistency}, \hyperpage{25}
+    \subitem {DisplaySolution}, \hyperpage{25}
+    \subitem {InitMatrix}, \hyperpage{25}
+    \subitem {ShowEquations}, \hyperpage{26}
+
+  \indexspace
+
+  \item {WaitForExit}
+    \subitem {interaction.cpp}, \hyperpage{7}
+    \subitem {interaction.h}, \hyperpage{10}
+
+\end{theindex}

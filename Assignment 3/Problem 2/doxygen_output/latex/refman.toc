@@ -1,0 +1,59 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Gaussian Elimination Solver}{1}{chapter.1}%
+\contentsline {subsection}{\numberline {1.0.1}Features}{1}{subsection.1.0.1}%
+\contentsline {subsection}{\numberline {1.0.2}Usage}{1}{subsection.1.0.2}%
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}File Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Detailed Description}{6}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Function Documentation}{6}{subsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.1}AskRunAgain()}{6}{subsubsection.3.1.2.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.2}SelectInputFile()}{6}{subsubsection.3.1.2.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.3}WaitForExit()}{7}{subsubsection.3.1.2.3}%
+\contentsline {section}{\numberline {3.2}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{7}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Detailed Description}{8}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Function Documentation}{9}{subsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2.1}AskRunAgain()}{9}{subsubsection.3.2.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2.2}SelectInputFile()}{9}{subsubsection.3.2.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2.3}WaitForExit()}{10}{subsubsection.3.2.2.3}%
+\contentsline {section}{\numberline {3.3}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{10}{section.3.3}%
+\contentsline {section}{\numberline {3.4}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{10}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{11}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Function Documentation}{11}{subsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}main()}{11}{subsubsection.3.4.2.1}%
+\contentsline {section}{\numberline {3.5}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{12}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Detailed Description}{13}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Function Documentation}{13}{subsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}BackSubstitution()}{13}{subsubsection.3.5.2.1}%
+\contentsline {subsubsection}{\numberline {3.5.2.2}DetermineRank()}{14}{subsubsection.3.5.2.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.3}Eliminate()}{14}{subsubsection.3.5.2.3}%
+\contentsline {subsubsection}{\numberline {3.5.2.4}Exchange()}{15}{subsubsection.3.5.2.4}%
+\contentsline {subsubsection}{\numberline {3.5.2.5}GaussianElimination()}{15}{subsubsection.3.5.2.5}%
+\contentsline {subsubsection}{\numberline {3.5.2.6}IdentifyPivots()}{15}{subsubsection.3.5.2.6}%
+\contentsline {subsubsection}{\numberline {3.5.2.7}Pivoting()}{16}{subsubsection.3.5.2.7}%
+\contentsline {subsubsection}{\numberline {3.5.2.8}ShowGeneralSolution()}{16}{subsubsection.3.5.2.8}%
+\contentsline {section}{\numberline {3.6}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{17}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Detailed Description}{18}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Function Documentation}{19}{subsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.1}BackSubstitution()}{19}{subsubsection.3.6.2.1}%
+\contentsline {subsubsection}{\numberline {3.6.2.2}DetermineRank()}{19}{subsubsection.3.6.2.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.3}GaussianElimination()}{19}{subsubsection.3.6.2.3}%
+\contentsline {subsubsection}{\numberline {3.6.2.4}ShowGeneralSolution()}{20}{subsubsection.3.6.2.4}%
+\contentsline {section}{\numberline {3.7}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{20}{section.3.7}%
+\contentsline {section}{\numberline {3.8}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{21}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Detailed Description}{21}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Function Documentation}{22}{subsection.3.8.2}%
+\contentsline {subsubsection}{\numberline {3.8.2.1}CheckConsistency()}{22}{subsubsection.3.8.2.1}%
+\contentsline {subsubsection}{\numberline {3.8.2.2}DisplaySolution()}{22}{subsubsection.3.8.2.2}%
+\contentsline {subsubsection}{\numberline {3.8.2.3}InitMatrix()}{22}{subsubsection.3.8.2.3}%
+\contentsline {subsubsection}{\numberline {3.8.2.4}ShowEquations()}{23}{subsubsection.3.8.2.4}%
+\contentsline {section}{\numberline {3.9}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{23}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{24}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Function Documentation}{25}{subsection.3.9.2}%
+\contentsline {subsubsection}{\numberline {3.9.2.1}CheckConsistency()}{25}{subsubsection.3.9.2.1}%
+\contentsline {subsubsection}{\numberline {3.9.2.2}DisplaySolution()}{25}{subsubsection.3.9.2.2}%
+\contentsline {subsubsection}{\numberline {3.9.2.3}InitMatrix()}{25}{subsubsection.3.9.2.3}%
+\contentsline {subsubsection}{\numberline {3.9.2.4}ShowEquations()}{26}{subsubsection.3.9.2.4}%
+\contentsline {section}{\numberline {3.10}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{26}{section.3.10}%
+\contentsline {chapter}{Index}{27}{section*.18}%

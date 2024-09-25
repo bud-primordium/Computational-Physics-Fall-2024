@@ -1,0 +1,409 @@
+\doxysection{methods.\+cpp File Reference}
+\hypertarget{methods_8cpp}{}\label{methods_8cpp}\index{methods.cpp@{methods.cpp}}
+
+
+Implementation of computational functions for solving linear systems.  
+
+
+{\ttfamily \#include "{}methods.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for methods.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{methods_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{methods_8cpp_a07f322f6a0616765900b9a8ce12c7da0}{Pivoting}} (const vector$<$ vector$<$ double $>$ $>$ \&m, int current\+\_\+row, int total\+\_\+rows)
+\item 
+void \mbox{\hyperlink{methods_8cpp_aaa145e0f9daaacd0a693955245932d65}{Exchange}} (vector$<$ vector$<$ double $>$ $>$ \&m, int row1, int row2)
+\item 
+bool \mbox{\hyperlink{methods_8cpp_a980eadbed8b024569d32b9e94da58389}{Eliminate}} (vector$<$ vector$<$ double $>$ $>$ \&m, int current\+\_\+row, int total\+\_\+rows, int total\+\_\+cols)
+\item 
+int \mbox{\hyperlink{methods_8cpp_a2ea7565a417afce6f38d584692d55fd4}{Gaussian\+Elimination}} (vector$<$ vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\item 
+bool \mbox{\hyperlink{methods_8cpp_ac670b993a182e328bad2b2a3ba950388}{Back\+Substitution}} (const vector$<$ vector$<$ double $>$ $>$ \&m, int rows, int cols, vector$<$ double $>$ \&solution)
+\item 
+int \mbox{\hyperlink{methods_8cpp_a0fdd5a300b009e3c78fce40052d76cbe}{Determine\+Rank}} (const vector$<$ vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{methods_8cpp_a062a9c93054ad9e6bb03d2a64f8b4749}{Identify\+Pivots}} (const vector$<$ vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\item 
+void \mbox{\hyperlink{methods_8cpp_ad0c1b2e7266ae89cd0175de9415788b5}{Show\+General\+Solution}} (const vector$<$ vector$<$ double $>$ $>$ \&m, int rows, int cols, int rank)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of computational functions for solving linear systems. 
+
+\begin{DoxyAuthor}{Author}
+Gilbert Young 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024/09/25
+\end{DoxyDate}
+
+
+This file implements key algorithms such as Gaussian elimination with partial pivoting, back-\/substitution, and rank determination. It also includes functionality to display the general solution when the system has infinitely many solutions. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{methods_8cpp_ac670b993a182e328bad2b2a3ba950388}\index{methods.cpp@{methods.cpp}!BackSubstitution@{BackSubstitution}}
+\index{BackSubstitution@{BackSubstitution}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{BackSubstitution()}{BackSubstitution()}}
+{\footnotesize\ttfamily \label{methods_8cpp_ac670b993a182e328bad2b2a3ba950388} 
+bool Back\+Substitution (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{, }\item[{vector$<$ double $>$ \&}]{solution}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ solution.assign(cols\ -\/\ 1,\ 0.0);}
+\DoxyCodeLine{00122\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Starting\ back-\/substitution\ process..."{}}\ <<\ endl;}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ rows\ -\/\ 1;\ i\ >=\ 0;\ i-\/-\/)}
+\DoxyCodeLine{00124\ \ \ \ \ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ the\ first\ non-\/zero\ coefficient\ in\ the\ row}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pivot\_col\ =\ -\/1;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][j])\ >\ 1e-\/12)}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pivot\_col\ =\ j;}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pivot\_col\ ==\ -\/1)}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][cols\ -\/\ 1])\ >\ 1e-\/12)}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Inconsistent\ equation}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 0\ =\ 0,\ skip}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ rhs\ =\ m[i][cols\ -\/\ 1];}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Calculating\ x"{}}\ <<\ pivot\_col\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:"{}}\ <<\ endl;}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ pivot\_col\ +\ 1;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ \ \ "{}}\ <<\ fixed\ <<\ setprecision(4)\ <<\ m[i][j]\ <<\ \textcolor{stringliteral}{"{}\ *\ x"{}}\ <<\ j\ +\ 1}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ =\ "{}}\ <<\ m[i][j]\ *\ solution[j]\ <<\ endl;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ rhs\ -\/=\ m[i][j]\ *\ solution[j];}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ \ \ RHS\ after\ subtraction\ =\ "{}}\ <<\ rhs\ <<\ endl;}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ solution[pivot\_col]\ =\ rhs\ /\ m[i][pivot\_col];}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ \ \ x"{}}\ <<\ pivot\_col\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ =\ "{}}\ <<\ rhs\ <<\ \textcolor{stringliteral}{"{}\ /\ "{}}\ <<\ m[i][pivot\_col]}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ =\ "{}}\ <<\ fixed\ <<\ setprecision(4)\ <<\ solution[pivot\_col]\ <<\ endl}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ endl;}
+\DoxyCodeLine{00163\ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00165\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a0fdd5a300b009e3c78fce40052d76cbe}\index{methods.cpp@{methods.cpp}!DetermineRank@{DetermineRank}}
+\index{DetermineRank@{DetermineRank}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{DetermineRank()}{DetermineRank()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a0fdd5a300b009e3c78fce40052d76cbe} 
+int Determine\+Rank (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{int}\ rank\ =\ 0;}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)}
+\DoxyCodeLine{00171\ \ \ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ non\_zero\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][j])\ >\ 1e-\/12)}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ non\_zero\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (non\_zero)}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ rank++;}
+\DoxyCodeLine{00183\ \ \ \ \ \}}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{00185\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a980eadbed8b024569d32b9e94da58389}\index{methods.cpp@{methods.cpp}!Eliminate@{Eliminate}}
+\index{Eliminate@{Eliminate}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{Eliminate()}{Eliminate()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a980eadbed8b024569d32b9e94da58389} 
+bool Eliminate (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{current\+\_\+row}{, }\item[{int}]{total\+\_\+rows}{, }\item[{int}]{total\+\_\+cols}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ current\_row\ +\ 1;\ i\ <\ total\_rows;\ i++)}
+\DoxyCodeLine{00049\ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[current\_row][current\_row])\ <\ 1e-\/12)}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pivot\ is\ too\ small,\ cannot\ eliminate}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ factor\ =\ m[i][current\_row]\ /\ m[current\_row][current\_row];}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Eliminating\ element\ in\ row\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{},\ column\ "{}}\ <<\ current\_row\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:"{}}\ <<\ endl;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Multiplying\ row\ "{}}\ <<\ current\_row\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ by\ "{}}\ <<\ fixed\ <<\ setprecision(4)\ <<\ factor}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ and\ subtracting\ from\ row\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ endl;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ m[i][current\_row]\ =\ 0.0;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ current\_row\ +\ 1;\ j\ <\ total\_cols;\ j++)}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ m[i][j]\ -\/=\ factor\ *\ m[current\_row][j];}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00067\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_aaa145e0f9daaacd0a693955245932d65}\index{methods.cpp@{methods.cpp}!Exchange@{Exchange}}
+\index{Exchange@{Exchange}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{Exchange()}{Exchange()}}
+{\footnotesize\ttfamily \label{methods_8cpp_aaa145e0f9daaacd0a693955245932d65} 
+void Exchange (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{row1}{, }\item[{int}]{row2}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ swap(m[row1],\ m[row2]);}
+\DoxyCodeLine{00042\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Swapping\ row\ "{}}\ <<\ row1\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ with\ row\ "{}}\ <<\ row2\ +\ 1\ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ endl;}
+\DoxyCodeLine{00043\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a2ea7565a417afce6f38d584692d55fd4}\index{methods.cpp@{methods.cpp}!GaussianElimination@{GaussianElimination}}
+\index{GaussianElimination@{GaussianElimination}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{GaussianElimination()}{GaussianElimination()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a2ea7565a417afce6f38d584692d55fd4} 
+int Gaussian\+Elimination (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{int}\ exchange\_count\ =\ 0;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ min(rows,\ cols\ -\/\ 1);\ i++)}
+\DoxyCodeLine{00073\ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Processing\ column\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}..."{}}\ <<\ endl;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ imax\ =\ \mbox{\hyperlink{methods_8cpp_a07f322f6a0616765900b9a8ce12c7da0}{Pivoting}}(m,\ i,\ rows);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (imax\ !=\ i)}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{methods_8cpp_aaa145e0f9daaacd0a693955245932d65}{Exchange}}(m,\ i,\ imax);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ exchange\_count++;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}No\ need\ to\ swap\ rows\ for\ column\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ endl;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ pivot\ is\ zero}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][i])\ <\ 1e-\/12)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Warning:\ Pivot\ element\ in\ row\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ is\ close\ to\ zero.\ The\ matrix\ may\ be\ singular."{}}\ <<\ endl;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{methods_8cpp_a980eadbed8b024569d32b9e94da58389}{Eliminate}}(m,\ i,\ rows,\ cols);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ current\ matrix\ state\ with\ optimized\ formatting}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Current\ matrix\ state:"{}}\ <<\ endl;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ r\ =\ 0;\ r\ <\ rows;\ r++)}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ c\ =\ 0;\ c\ <\ cols;\ c++)}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ coeff\ =\ round(m[r][c]\ *\ 1e12)\ /\ 1e12;\ \textcolor{comment}{//\ Handle\ floating-\/point\ precision}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(coeff\ -\/\ round(coeff))\ <\ 1e-\/12)}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ static\_cast<long\ long>(round(coeff))\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ fixed\ <<\ setprecision(2)\ <<\ coeff\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}}\ <<\ endl;}
+\DoxyCodeLine{00115\ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{return}\ exchange\_count;}
+\DoxyCodeLine{00117\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a062a9c93054ad9e6bb03d2a64f8b4749}\index{methods.cpp@{methods.cpp}!IdentifyPivots@{IdentifyPivots}}
+\index{IdentifyPivots@{IdentifyPivots}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{IdentifyPivots()}{IdentifyPivots()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a062a9c93054ad9e6bb03d2a64f8b4749} 
+vector$<$ int $>$ Identify\+Pivots (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00188\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ vector<int>\ pivots;}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ min(rows,\ cols\ -\/\ 1);\ i++)}
+\DoxyCodeLine{00191\ \ \ \ \ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ the\ pivot\ in\ the\ current\ row}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pivot\_col\ =\ -\/1;}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][j])\ >\ 1e-\/12)}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pivot\_col\ =\ j;}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pivot\_col\ !=\ -\/1)}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ pivots.push\_back(pivot\_col);}
+\DoxyCodeLine{00204\ \ \ \ \ \}}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordflow}{return}\ pivots;}
+\DoxyCodeLine{00206\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a07f322f6a0616765900b9a8ce12c7da0}\index{methods.cpp@{methods.cpp}!Pivoting@{Pivoting}}
+\index{Pivoting@{Pivoting}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{Pivoting()}{Pivoting()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a07f322f6a0616765900b9a8ce12c7da0} 
+int Pivoting (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{current\+\_\+row}{, }\item[{int}]{total\+\_\+rows}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{int}\ imax\ =\ current\_row;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{double}\ max\_val\ =\ fabs(m[current\_row][current\_row]);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ current\_row\ +\ 1;\ i\ <\ total\_rows;\ i++)}
+\DoxyCodeLine{00028\ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][current\_row])\ >\ max\_val)}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ imax\ =\ i;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ max\_val\ =\ fabs(m[i][current\_row]);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00034\ \ \ \ \ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ imax;}
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_ad0c1b2e7266ae89cd0175de9415788b5}\index{methods.cpp@{methods.cpp}!ShowGeneralSolution@{ShowGeneralSolution}}
+\index{ShowGeneralSolution@{ShowGeneralSolution}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{ShowGeneralSolution()}{ShowGeneralSolution()}}
+{\footnotesize\ttfamily \label{methods_8cpp_ad0c1b2e7266ae89cd0175de9415788b5} 
+void Show\+General\+Solution (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{, }\item[{int}]{rank}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00209\ \{}
+\DoxyCodeLine{00210\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ system\ has\ infinitely\ many\ solutions."{}}\ <<\ endl;}
+\DoxyCodeLine{00211\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Solution\ space\ dimension:\ "{}}\ <<\ (cols\ -\/\ 1\ -\/\ rank)\ <<\ endl;}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{comment}{//\ Identify\ pivot\ columns}}
+\DoxyCodeLine{00214\ \ \ \ \ vector<int>\ pivots\ =\ \mbox{\hyperlink{methods_8cpp_a062a9c93054ad9e6bb03d2a64f8b4749}{IdentifyPivots}}(m,\ rows,\ cols);}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{comment}{//\ Identify\ free\ variables}}
+\DoxyCodeLine{00217\ \ \ \ \ vector<int>\ free\_vars;}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00219\ \ \ \ \ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (find(pivots.begin(),\ pivots.end(),\ j)\ ==\ pivots.end())}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ free\_vars.push\_back(j);}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00224\ \ \ \ \ \}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{comment}{//\ Assign\ parameters\ to\ free\ variables}}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_free\ =\ free\_vars.size();}
+\DoxyCodeLine{00228\ \ \ \ \ vector<string>\ params;}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ num\_free;\ i++)}
+\DoxyCodeLine{00230\ \ \ \ \ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ params.push\_back(\textcolor{stringliteral}{"{}t"{}}\ +\ to\_string(i\ +\ 1));}
+\DoxyCodeLine{00232\ \ \ \ \ \}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ Initialize\ solution\ vector\ with\ parameters}}
+\DoxyCodeLine{00235\ \ \ \ \ vector<double>\ particular\_solution(cols\ -\/\ 1,\ 0.0);}
+\DoxyCodeLine{00236\ \ \ \ \ vector<vector<double>>\ basis\_vectors;}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{comment}{//\ Find\ a\ particular\ solution\ by\ setting\ all\ free\ variables\ to\ 0}}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ rows\ -\/\ 1;\ i\ >=\ 0;\ i-\/-\/)}
+\DoxyCodeLine{00240\ \ \ \ \ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ the\ first\ non-\/zero\ coefficient\ in\ the\ row}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pivot\_col\ =\ -\/1;}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][j])\ >\ 1e-\/12)}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pivot\_col\ =\ j;}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pivot\_col\ ==\ -\/1)}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ 0\ =\ 0,\ skip}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ rhs\ =\ m[i][cols\ -\/\ 1];}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ pivot\_col\ +\ 1;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ rhs\ -\/=\ m[i][j]\ *\ particular\_solution[j];}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ particular\_solution[pivot\_col]\ =\ rhs\ /\ m[i][pivot\_col];}
+\DoxyCodeLine{00263\ \ \ \ \ \}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ Now,\ find\ basis\ vectors\ by\ setting\ each\ free\ variable\ to\ 1\ and\ others\ to\ 0}}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ num\_free;\ i++)}
+\DoxyCodeLine{00267\ \ \ \ \ \{}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ vector<double>\ basis(cols\ -\/\ 1,\ 0.0);}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ basis[free\_vars[i]]\ =\ 1.0;\ \textcolor{comment}{//\ Set\ the\ free\ variable\ to\ 1}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Perform\ back-\/substitution\ for\ pivot\ variables}}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ r\ =\ rank\ -\/\ 1;\ r\ >=\ 0;\ r-\/-\/)}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pivot\_col\ =\ pivots[r];}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ rhs\ =\ 0.0;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ pivot\_col\ +\ 1;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\ -\/=\ m[r][j]\ *\ basis[j];}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ basis[pivot\_col]\ =\ rhs\ /\ m[r][pivot\_col];}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ basis\_vectors.push\_back(basis);}
+\DoxyCodeLine{00284\ \ \ \ \ \}}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{comment}{//\ Display\ the\ general\ solution}}
+\DoxyCodeLine{00287\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}General\ solution:"{}}\ <<\ endl;}
+\DoxyCodeLine{00288\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}x\ =\ ["{}};}
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00290\ \ \ \ \ \{}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ cout\ <<\ fixed\ <<\ setprecision(4)\ <<\ particular\_solution[j];}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ <\ cols\ -\/\ 2)}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{},\ "{}};}
+\DoxyCodeLine{00294\ \ \ \ \ \}}
+\DoxyCodeLine{00295\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ num\_free;\ i++)}
+\DoxyCodeLine{00298\ \ \ \ \ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ +\ "{}}\ <<\ params[i]\ <<\ \textcolor{stringliteral}{"{}\ *\ ["{}};}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ fixed\ <<\ setprecision(4)\ <<\ basis\_vectors[i][j];}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ <\ cols\ -\/\ 2)}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{},\ "{}};}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ num\_free\ -\/\ 1)}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ +\ "{}};}
+\DoxyCodeLine{00309\ \ \ \ \ \}}
+\DoxyCodeLine{00310\ \ \ \ \ cout\ <<\ endl}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ <<\ endl;}
+\DoxyCodeLine{00312\ \}}
+
+\end{DoxyCode}

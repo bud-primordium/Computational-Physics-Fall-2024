@@ -24,20 +24,13 @@ def wait_for_file(filepath, timeout=120):
 
 
 def extract_project_info(startpath):
-    """
-    尝试从 main.cpp 提取项目名称和简要说明
-    Args:
-        startpath (str): 项目的起始路径
-    Returns:
-        tuple: (project_name, project_brief)
-    """
+    """尝试从 main.cpp 提取项目名称和简要说明"""
     main_file = os.path.join(startpath, "main.cpp")
     project_name = "Default Project Name"
     project_brief = "Default Project Brief"
     if os.path.exists(main_file):
         with open(main_file, "r", encoding="utf-8") as file:
             content = file.read()
-            # 提取 @mainpage 和其后的描述
             mainpage_match = re.search(
                 r"@mainpage\s+([^\n]+)\s*\*\s*\n\s*\*\s+(.+?)(?:\n\s*\*|$)",
                 content,
@@ -57,48 +50,43 @@ def clean_output_dir(output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
 
-def create_readme(parent_dir, html_dir, pdf_path):
-    """在 parent_dir 创建 readme.html，引用 index.html 和 readme.pdf"""
-    readme_path = os.path.join(parent_dir, "readme.html")
-    target_pdf_path = os.path.join(parent_dir, "readme.pdf")
-
-    # 复制 refman.pdf 到 parent_dir 作为 readme.pdf
+def copy_file_safe(src, dst):
+    """安全复制文件，处理找不到文件的情况"""
     try:
-        shutil.copy2(pdf_path, target_pdf_path)
-        logging.info(f"已复制 PDF 文件到: {target_pdf_path}")
+        shutil.copy2(src, dst)
+        logging.info(f"已复制文件 {src} 到 {dst}")
     except FileNotFoundError:
-        logging.error(f"无法找到 PDF 文件: {pdf_path}")
-        return
+        logging.error(f"无法找到文件: {src}")
 
-    # 计算相对路径
+
+def create_readme_redirect(parent_dir, html_dir):
+    """创建 readme.html 并自动重定向到 index.html"""
+    readme_path = os.path.join(parent_dir, "readme.html")
     relative_html_path = os.path.relpath(
         os.path.join(html_dir, "index.html"), parent_dir
     )
-    relative_pdf_path = os.path.relpath(target_pdf_path, parent_dir)
 
     # 确保使用正斜杠作为路径分隔符
     relative_html_path = relative_html_path.replace("\\", "/")
-    relative_pdf_path = relative_pdf_path.replace("\\", "/")
 
-    # 创建 readme.html
+    # 创建 readme.html，包含重定向逻辑
     with open(readme_path, "w", encoding="utf-8") as readme:
         readme.write(
             f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="refresh" content="0; url=./{relative_html_path}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Documentation</title>
+    <title>Redirecting to Documentation</title>
 </head>
 <body>
-    <h1>Project Documentation</h1>
-    <p>To view the full documentation, open <a href="./{relative_html_path}">index.html</a>.</p>
-    <p>To view the PDF version of the documentation, open <a href="./{relative_pdf_path}">readme.pdf</a>.</p>
+    <p>If you are not redirected automatically, follow this <a href="./{relative_html_path}">link to the documentation</a>.</p>
 </body>
 </html>
 """
         )
-    logging.info(f"readme.html 和 readme.pdf 已在 {parent_dir} 中创建")
+    logging.info(f"readme.html 已在 {parent_dir} 中创建，带有自动重定向功能")
 
 
 def generate_doxygen(startpath, project_name=None):
@@ -106,15 +94,13 @@ def generate_doxygen(startpath, project_name=None):
     if not project_name:
         project_name, project_brief = extract_project_info(startpath)
     else:
-        # 如果提供了项目名称，仍需提取项目简要说明
         _, project_brief = extract_project_info(startpath)
 
-    # 设置输出目录
-    output_dir = os.path.join(startpath, "doxygen_output")
+    # 设置输出目录到 src 的父目录
+    output_dir = os.path.join(os.path.dirname(startpath), "doxygen_output")
     html_dir = os.path.join(output_dir, "html")
     latex_dir = os.path.join(output_dir, "latex")
 
-    # 清理输出目录
     clean_output_dir(output_dir)
 
     doxyfile_path = os.path.join(startpath, "Doxyfile")
@@ -142,26 +128,18 @@ def generate_doxygen(startpath, project_name=None):
         "doxygen-awesome-paragraph-link.js",
         "doxygen-awesome-interactive-toc.js",
     ]
-    html_source = os.path.join(os.path.dirname(__file__), "header.html")
-    html_target = os.path.join(css_target_dir, "header.html")
-    try:
-        shutil.copy2(html_source, html_target)
-        logging.info(f"已复制 header.html 到: {html_target}")
-    except FileNotFoundError:
-        logging.error(f"无法找到 header.html 文件: {html_source}")
-        return
-
     for resource_file in resource_files:
-        resource_source = os.path.join(
-            os.path.dirname(__file__), "doxygen-awesome-css", resource_file
+        copy_file_safe(
+            os.path.join(
+                os.path.dirname(__file__), "doxygen-awesome-css", resource_file
+            ),
+            os.path.join(css_target_dir, resource_file),
         )
-        resource_target = os.path.join(css_target_dir, resource_file)
-        try:
-            shutil.copy2(resource_source, resource_target)
-            logging.info(f"已复制 {resource_file} 到: {resource_target}")
-        except FileNotFoundError:
-            logging.error(f"无法找到 {resource_file} 文件: {resource_source}")
-            return
+
+    # 复制 header.html
+    header_source = os.path.join(os.path.dirname(__file__), "header.html")
+    header_target = os.path.join(css_target_dir, "header.html")
+    copy_file_safe(header_source, header_target)
 
     # 写入Doxyfile
     with open(doxyfile_path, "w", encoding="utf-8") as doxyfile:
@@ -207,9 +185,9 @@ def generate_doxygen(startpath, project_name=None):
         logging.error(str(e))
         return
 
-    # 创建 readme.html
+    # 创建 readme.html 重定向到 index.html
     parent_dir = os.path.dirname(startpath)
-    create_readme(parent_dir, html_dir, refman_pdf_path)
+    create_readme_redirect(parent_dir, html_dir)
 
     # 自动打开 readme.html
     readme_html_path = os.path.join(parent_dir, "readme.html")
@@ -218,6 +196,11 @@ def generate_doxygen(startpath, project_name=None):
         logging.info(f"已打开 {readme_html_path}")
     else:
         logging.error(f"无法找到 {readme_html_path}")
+
+    # 删除临时的 Doxyfile 和 CSS 文件夹
+    os.remove(doxyfile_path)
+    shutil.rmtree(css_target_dir)
+    logging.info("临时文件夹和Doxyfile已删除")
 
 
 # 示例用法

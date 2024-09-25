@@ -1,0 +1,199 @@
+\doxysection{utils.\+cpp File Reference}
+\hypertarget{utils_8cpp}{}\label{utils_8cpp}\index{utils.cpp@{utils.cpp}}
+
+
+Implementation of utility functions for matrix operations.  
+
+
+{\ttfamily \#include "{}utils.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+Include dependency graph for utils.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{utils_8cpp_aaa4c42442dbb69abecbaced455bd3d5c}{Init\+Matrix}} (vector$<$ vector$<$ double $>$ $>$ \&m, const string \&filename, int \&rows, int \&cols)
+\item 
+void \mbox{\hyperlink{utils_8cpp_ac18af39e38edc89ae42a05b2a1c2c3fd}{Show\+Equations}} (const vector$<$ vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\item 
+bool \mbox{\hyperlink{utils_8cpp_af58df231724b448df3738086ef230a8b}{Check\+Consistency}} (const vector$<$ vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\item 
+void \mbox{\hyperlink{utils_8cpp_a202c189a299ce2b4234e13fe6462b5fd}{Display\+Solution}} (const vector$<$ double $>$ \&solution)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of utility functions for matrix operations. 
+
+\begin{DoxyAuthor}{Author}
+Gilbert Young 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024/09/25
+\end{DoxyDate}
+
+
+This file contains the implementations of functions that handle reading matrices from {\ttfamily .in} files and displaying the corresponding system of linear equations. These utility functions are essential for the initialization and output of matrix data used in solving linear systems. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{utils_8cpp_af58df231724b448df3738086ef230a8b}\index{utils.cpp@{utils.cpp}!CheckConsistency@{CheckConsistency}}
+\index{CheckConsistency@{CheckConsistency}!utils.cpp@{utils.cpp}}
+\doxysubsubsection{\texorpdfstring{CheckConsistency()}{CheckConsistency()}}
+{\footnotesize\ttfamily \label{utils_8cpp_af58df231724b448df3738086ef230a8b} 
+bool Check\+Consistency (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)}
+\DoxyCodeLine{00115\ \ \ \ \ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ all\_zero\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][j])\ >\ 1e-\/12)}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ all\_zero\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_zero\ \&\&\ fabs(m[i][cols\ -\/\ 1])\ >\ 1e-\/12)}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \ \ \ \ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00131\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8cpp_a202c189a299ce2b4234e13fe6462b5fd}\index{utils.cpp@{utils.cpp}!DisplaySolution@{DisplaySolution}}
+\index{DisplaySolution@{DisplaySolution}!utils.cpp@{utils.cpp}}
+\doxysubsubsection{\texorpdfstring{DisplaySolution()}{DisplaySolution()}}
+{\footnotesize\ttfamily \label{utils_8cpp_a202c189a299ce2b4234e13fe6462b5fd} 
+void Display\+Solution (\begin{DoxyParamCaption}\item[{const vector$<$ double $>$ \&}]{solution}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ system\ has\ a\ unique\ solution:"{}}\ <<\ endl;}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ solution.size();\ i++)}
+\DoxyCodeLine{00137\ \ \ \ \ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}x"{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ =\ "{}}\ <<\ fixed\ <<\ setprecision(4)\ <<\ solution[i]\ <<\ endl;}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8cpp_aaa4c42442dbb69abecbaced455bd3d5c}\index{utils.cpp@{utils.cpp}!InitMatrix@{InitMatrix}}
+\index{InitMatrix@{InitMatrix}!utils.cpp@{utils.cpp}}
+\doxysubsubsection{\texorpdfstring{InitMatrix()}{InitMatrix()}}
+{\footnotesize\ttfamily \label{utils_8cpp_aaa4c42442dbb69abecbaced455bd3d5c} 
+bool Init\+Matrix (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{const string \&}]{filename}{, }\item[{int \&}]{rows}{, }\item[{int \&}]{cols}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ ifstream\ in(filename);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{if}\ (!in.is\_open())}
+\DoxyCodeLine{00027\ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Cannot\ open\ file\ "{}}\ <<\ filename\ <<\ endl;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Read\ the\ matrix\ dimensions\ dynamically}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{string}\ line;}
+\DoxyCodeLine{00034\ \ \ \ \ rows\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ cols\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ vector<vector<double>>\ temp\_matrix;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{while}\ (getline(in,\ line))}
+\DoxyCodeLine{00038\ \ \ \ \ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (line.empty())}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ Skip\ empty\ lines}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ vector<double>\ row;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ num;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ istringstream\ iss(line);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (iss\ >>\ num)}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ row.push\_back(num);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cols\ ==\ 0)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ cols\ =\ row.size();}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ ((\textcolor{keywordtype}{int})row.size()\ !=\ cols)}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Inconsistent\ number\ of\ columns\ in\ the\ file."{}}\ <<\ endl;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ in.close();}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ temp\_matrix.push\_back(row);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ rows++;}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ in.close();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (rows\ ==\ 0\ ||\ cols\ <\ 2)}
+\DoxyCodeLine{00064\ \ \ \ \ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ The\ matrix\ must\ have\ at\ least\ one\ equation\ and\ one\ variable."{}}\ <<\ endl;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Assign\ to\ m}}
+\DoxyCodeLine{00070\ \ \ \ \ m\ =\ temp\_matrix;}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00072\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8cpp_ac18af39e38edc89ae42a05b2a1c2c3fd}\index{utils.cpp@{utils.cpp}!ShowEquations@{ShowEquations}}
+\index{ShowEquations@{ShowEquations}!utils.cpp@{utils.cpp}}
+\doxysubsubsection{\texorpdfstring{ShowEquations()}{ShowEquations()}}
+{\footnotesize\ttfamily \label{utils_8cpp_ac18af39e38edc89ae42a05b2a1c2c3fd} 
+void Show\+Equations (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ current\ system\ of\ linear\ equations\ is:"{}}\ <<\ endl;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)}
+\DoxyCodeLine{00078\ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ equation\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ coefficient\ is\ an\ integer}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ coeff\ =\ round(m[i][j]\ *\ 1e12)\ /\ 1e12;\ \textcolor{comment}{//\ Handle\ floating-\/point\ precision}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(coeff\ -\/\ round(coeff))\ <\ 1e-\/12)}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ to\_string(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\textcolor{keyword}{>}(round(coeff)))\ +\ \textcolor{stringliteral}{"{}x"{}}\ +\ to\_string(j\ +\ 1);}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ to\_string(round(m[i][j]\ *\ 10000)\ /\ 10000.0)\ +\ \textcolor{stringliteral}{"{}x"{}}\ +\ to\_string(j\ +\ 1);}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ <\ cols\ -\/\ 2)}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ \textcolor{stringliteral}{"{}\ +\ "{}};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Handle\ constant\ term}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ const\_term\ =\ round(m[i][cols\ -\/\ 1]\ *\ 1e12)\ /\ 1e12;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(const\_term\ -\/\ round(const\_term))\ <\ 1e-\/12)}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ \textcolor{stringliteral}{"{}\ =\ "{}}\ +\ to\_string(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\textcolor{keyword}{>}(round(const\_term)));}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ \textcolor{stringliteral}{"{}\ =\ "{}}\ +\ to\_string(round(m[i][cols\ -\/\ 1]\ *\ 10000)\ /\ 10000.0);}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ cout\ <<\ equation\ <<\ endl;}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{00110\ \}}
+
+\end{DoxyCode}

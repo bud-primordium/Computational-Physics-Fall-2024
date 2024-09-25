@@ -1,0 +1,173 @@
+\doxysection{interaction.\+cpp File Reference}
+\hypertarget{interaction_8cpp}{}\label{interaction_8cpp}\index{interaction.cpp@{interaction.cpp}}
+
+
+Implementation of user interaction functions.  
+
+
+{\ttfamily \#include "{}interaction.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include "{}utils.\+h"{}}\newline
+Include dependency graph for interaction.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interaction_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{interaction_8cpp_a2d487cfe8d671b913c99aec6a02b382a}{Select\+Input\+File}} ()
+\begin{DoxyCompactList}\small\item\em Allows the user to select an input .in file from the current directory. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{interaction_8cpp_ac0c03a1432857a1e55bb86ca977cd544}{Ask\+Run\+Again}} ()
+\begin{DoxyCompactList}\small\item\em Asks the user if they want to run the program again. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interaction_8cpp_ac8baab338f6d1846a193b06303693cea}{Wait\+For\+Exit}} ()
+\begin{DoxyCompactList}\small\item\em Waits for the user to press Enter before exiting. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of user interaction functions. 
+
+\begin{DoxyAuthor}{Author}
+Gilbert Young 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024/09/25
+\end{DoxyDate}
+
+
+This file implements the functions responsible for interacting with the user, including selecting input files, prompting whether to run the program again, and waiting for the user to exit. These functions guide the flow of the program based on user input. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{interaction_8cpp_ac0c03a1432857a1e55bb86ca977cd544}\index{interaction.cpp@{interaction.cpp}!AskRunAgain@{AskRunAgain}}
+\index{AskRunAgain@{AskRunAgain}!interaction.cpp@{interaction.cpp}}
+\doxysubsubsection{\texorpdfstring{AskRunAgain()}{AskRunAgain()}}
+{\footnotesize\ttfamily \label{interaction_8cpp_ac0c03a1432857a1e55bb86ca977cd544} 
+char Ask\+Run\+Again (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Asks the user if they want to run the program again. 
+
+\begin{DoxyReturn}{Returns}
+char The user\textquotesingle{}s choice (\textquotesingle{}y\textquotesingle{}, \textquotesingle{}Y\textquotesingle{}, \textquotesingle{}n\textquotesingle{}, \textquotesingle{}N\textquotesingle{}). 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{char}\ choice;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nDo\ you\ want\ to\ run\ the\ program\ again?\ (y/n):\ "{}};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ cin\ >>\ choice;}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (choice\ ==\ \textcolor{charliteral}{'y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'Y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'n'}\ ||\ choice\ ==\ \textcolor{charliteral}{'N'})}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ input.\ Please\ enter\ 'y'\ or\ 'n'."{}}\ <<\ endl;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{return}\ choice;}
+\DoxyCodeLine{00108\ \}}
+
+\end{DoxyCode}
+\Hypertarget{interaction_8cpp_a2d487cfe8d671b913c99aec6a02b382a}\index{interaction.cpp@{interaction.cpp}!SelectInputFile@{SelectInputFile}}
+\index{SelectInputFile@{SelectInputFile}!interaction.cpp@{interaction.cpp}}
+\doxysubsubsection{\texorpdfstring{SelectInputFile()}{SelectInputFile()}}
+{\footnotesize\ttfamily \label{interaction_8cpp_a2d487cfe8d671b913c99aec6a02b382a} 
+string Select\+Input\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Allows the user to select an input .in file from the current directory. 
+
+\begin{DoxyReturn}{Returns}
+std\+::string The name of the selected file. Empty string if no file is selected. 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ vector<string>\ in\_files;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&entry\ :\ filesystem::directory\_iterator(filesystem::current\_path()))}
+\DoxyCodeLine{00032\ \ \ \ \ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry.is\_regular\_file())}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ filename\ =\ entry.path().filename().string();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (filename.size()\ >=\ 3\ \&\&\ filename.substr(filename.size()\ -\/\ 3)\ ==\ \textcolor{stringliteral}{"{}.in"{}})}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ in\_files.push\_back(filename);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{string}\ selected\_file;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{if}\ (in\_files.empty())}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}No\ .in\ files\ found\ in\ the\ current\ directory."{}}\ <<\ endl;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (in\_files.size()\ ==\ 1)}
+\DoxyCodeLine{00050\ \ \ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ selected\_file\ =\ in\_files[0];}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Found\ one\ .in\ file:\ "{}}\ <<\ selected\_file\ <<\ \textcolor{stringliteral}{"{}\ .\ Automatically\ selecting\ it."{}}\ <<\ endl;}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00055\ \ \ \ \ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Multiple\ .in\ files\ found.\ Please\ select\ one:"{}}\ <<\ endl;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ in\_files.size();\ i++)}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}.\ "{}}\ <<\ in\_files[i]\ <<\ endl;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ file\_choice;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Improved\ input\ validation}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Enter\ the\ number\ of\ the\ file\ you\ want\ to\ use\ (1-\/"{}}\ <<\ in\_files.size()\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ cin\ >>\ file\_choice;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cin.fail()\ ||\ file\_choice\ <\ 1\ ||\ file\_choice\ >\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(in\_files.size()))}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cin.clear();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ error\ flags}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cin.ignore(numeric\_limits<streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});\ \textcolor{comment}{//\ Clear\ input\ buffer}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ input.\ Please\ enter\ a\ number\ between\ 1\ and\ "{}}\ <<\ in\_files.size()\ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ endl;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ selected\_file\ =\ in\_files[file\_choice\ -\/\ 1];}
+\DoxyCodeLine{00080\ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{return}\ selected\_file;}
+\DoxyCodeLine{00083\ \}}
+
+\end{DoxyCode}
+\Hypertarget{interaction_8cpp_ac8baab338f6d1846a193b06303693cea}\index{interaction.cpp@{interaction.cpp}!WaitForExit@{WaitForExit}}
+\index{WaitForExit@{WaitForExit}!interaction.cpp@{interaction.cpp}}
+\doxysubsubsection{\texorpdfstring{WaitForExit()}{WaitForExit()}}
+{\footnotesize\ttfamily \label{interaction_8cpp_ac8baab338f6d1846a193b06303693cea} 
+void Wait\+For\+Exit (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Waits for the user to press Enter before exiting. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPress\ Enter\ to\ exit..."{}};}
+\DoxyCodeLine{00116\ \ \ \ \ cin.ignore(numeric\_limits<streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});\ \textcolor{comment}{//\ Clear\ input\ buffer}}
+\DoxyCodeLine{00117\ \ \ \ \ cin.get();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ Enter\ key}}
+\DoxyCodeLine{00118\ \}}
+
+\end{DoxyCode}
