@@ -1,4 +1,4 @@
-# 项目名称和版本
+# 项目信息
 PROJECT_NAME           = "$PROJECT_NAME"
 PROJECT_BRIEF          = "$PROJECT_BRIEF"
 PROJECT_NUMBER         = "1.0"
@@ -8,40 +8,32 @@ OUTPUT_LANGUAGE        = English
 INPUT                  = "$MAIN_CPP_PATH" "$START_PATH"
 FILE_PATTERNS          = *.cpp *.h
 RECURSIVE              = YES
-EXCLUDE_PATTERNS       = */test/* */examples/*  # 移除 */*.h
+EXCLUDE_PATTERNS       = */test/* */examples/*
 
-# 去掉路径前缀
+# 路径和符号处理
 STRIP_FROM_PATH        = "$START_PATH"
-
-# 移除 EXCLUDE_SYMBOLS
 # EXCLUDE_SYMBOLS        = *.h  # 移除这一行
 
-# 文档输出路径
+# 输出配置
 OUTPUT_DIRECTORY       = "$OUTPUT_DIR"
 
 # HTML 输出设置
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
-HTML_COLORSTYLE        = LIGHT  # 使用浅色主题
+HTML_COLORSTYLE        = LIGHT
 HTML_HEADER            = doxygen-awesome-css/header.html
-
-
-# 指定自定义 CSS 文件
-HTML_EXTRA_STYLESHEET  = doxygen-awesome-css/doxygen-awesome.css 
-
-# 复制自定义 CSS 文件到输出目录
+HTML_EXTRA_STYLESHEET  = doxygen-awesome-css/doxygen-awesome.css
 HTML_EXTRA_FILES       = doxygen-awesome-css/doxygen-awesome.css \
                          doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js \
                          doxygen-awesome-css/doxygen-awesome-paragraph-link.js \
                          doxygen-awesome-css/doxygen-awesome-interactive-toc.js
-
 HTML_DYNAMIC_SECTIONS  = YES
 DISABLE_INDEX          = NO
 SEARCHENGINE           = YES
-FULL_SIDEBAR           = NO  # 按照作者建议关闭全侧栏
+FULL_SIDEBAR           = NO
 
 # 树状结构视图
-GENERATE_TREEVIEW      = YES  # 必须开启
+GENERATE_TREEVIEW      = YES
 
 # LaTeX 输出设置（生成 PDF 文档）
 GENERATE_LATEX         = YES
@@ -50,30 +42,31 @@ USE_PDFLATEX           = YES
 
 # 源代码浏览功能
 SOURCE_BROWSER         = NO
-INLINE_SOURCES         = YES  #
+INLINE_SOURCES         = YES
 
 # 图表设置（启用 Graphviz）
 HAVE_DOT               = YES
 DOT_PATH               =
 
 # 文档生成设置
-EXTRACT_ALL            = YES   # 提取所有元素的文档，即使没有注释
-EXTRACT_PRIVATE        = YES   # 提取 private 成员的文档
-EXTRACT_STATIC         = YES   # 提取 static 成员的文档
-EXTRACT_LOCAL_METHODS  = YES   # 提取局部函数的文档
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_METHODS  = YES
+ENABLE_PREPROCESSING   = YES
 
 # Brief 和详细描述设置
-BRIEF_MEMBER_DESC      = YES   # 确保 brief 注释显示
-ALWAYS_DETAILED_SEC    = YES   # 确保详细描述部分总是显示
+BRIEF_MEMBER_DESC      = YES
+ALWAYS_DETAILED_SEC    = YES
 
 # 调试和错误日志
 WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
-WARN_NO_PARAMDOC       = YES   # 如果参数没有文档，则发出警告
-QUIET                  = NO    # 如果设置为YES，不显示任何消息
-JAVADOC_AUTOBRIEF      = YES   # 使 @brief 作用于单行 Javadoc 风格注释
+WARN_NO_PARAMDOC       = YES
+QUIET                  = NO
+JAVADOC_AUTOBRIEF      = YES
 
 # 其他杂项设置
-GENERATE_TESTLIST      = YES
-GENERATE_DEPRECATEDLIST= YES
+GENERATE_TESTLIST       = YES
+GENERATE_DEPRECATEDLIST = YES

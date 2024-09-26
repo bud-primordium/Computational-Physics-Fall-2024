@@ -1,0 +1,173 @@
+\begin{theindex}
+
+  \item {alpha\_sa}
+    \subitem {DefaultParameters}, \hyperpage{5}
+  \item {alpha\_sd}
+    \subitem {DefaultParameters}, \hyperpage{5}
+
+  \indexspace
+
+  \item {compareMethods}
+    \subitem {utils.cpp}, \hyperpage{25}
+    \subitem {utils.h}, \hyperpage{28}
+  \item {computeGradient}
+    \subitem {functions.cpp}, \hyperpage{9}
+    \subitem {functions.h}, \hyperpage{11}
+  \item {conjugateGradient}
+    \subitem {methods.cpp}, \hyperpage{15}
+    \subitem {methods.h}, \hyperpage{19}
+  \item {crossoverRate\_ga}
+    \subitem {DefaultParameters}, \hyperpage{5}
+
+  \indexspace
+
+  \item {DefaultParameters}, \hyperpage{5}
+    \subitem {alpha\_sa}, \hyperpage{5}
+    \subitem {alpha\_sd}, \hyperpage{5}
+    \subitem {crossoverRate\_ga}, \hyperpage{5}
+    \subitem {generations\_ga}, \hyperpage{6}
+    \subitem {maxIter\_cg}, \hyperpage{6}
+    \subitem {maxIter\_sa}, \hyperpage{6}
+    \subitem {maxIter\_sd}, \hyperpage{6}
+    \subitem {mutationRate\_ga}, \hyperpage{6}
+    \subitem {populationSize\_ga}, \hyperpage{6}
+    \subitem {T0\_sa}, \hyperpage{6}
+    \subitem {Tmin\_sa}, \hyperpage{6}
+    \subitem {tol\_cg}, \hyperpage{6}
+    \subitem {tol\_sd}, \hyperpage{6}
+    \subitem {x0}, \hyperpage{7}
+    \subitem {y0}, \hyperpage{7}
+  \item {displayDefaultParameters}
+    \subitem {utils.cpp}, \hyperpage{26}
+    \subitem {utils.h}, \hyperpage{28}
+  \item {duration}
+    \subitem {Result}, \hyperpage{8}
+
+  \indexspace
+
+  \item {f}
+    \subitem {Result}, \hyperpage{8}
+  \item {fitness}
+    \subitem {Individual}, \hyperpage{7}
+  \item {functions.cpp}, \hyperpage{9}
+    \subitem {computeGradient}, \hyperpage{9}
+    \subitem {functionToMinimize}, \hyperpage{9}
+    \subitem {lineSearchBacktracking}, \hyperpage{10}
+  \item {functions.h}, \hyperpage{10}
+    \subitem {computeGradient}, \hyperpage{11}
+    \subitem {functionToMinimize}, \hyperpage{11}
+    \subitem {lineSearchBacktracking}, \hyperpage{11}
+  \item {functionToMinimize}
+    \subitem {functions.cpp}, \hyperpage{9}
+    \subitem {functions.h}, \hyperpage{11}
+
+  \indexspace
+
+  \item {generations\_ga}
+    \subitem {DefaultParameters}, \hyperpage{6}
+  \item {geneticAlgorithm}
+    \subitem {methods.cpp}, \hyperpage{16}
+    \subitem {methods.h}, \hyperpage{20}
+
+  \indexspace
+
+  \item {Individual}, \hyperpage{7}
+    \subitem {fitness}, \hyperpage{7}
+    \subitem {Individual}, \hyperpage{7}
+    \subitem {x}, \hyperpage{7}
+    \subitem {y}, \hyperpage{8}
+  \item {iterations}
+    \subitem {Result}, \hyperpage{8}
+
+  \indexspace
+
+  \item {lineSearchBacktracking}
+    \subitem {functions.cpp}, \hyperpage{10}
+    \subitem {functions.h}, \hyperpage{11}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.cpp}, \hyperpage{12}
+  \item {main.cpp}, \hyperpage{12}
+    \subitem {main}, \hyperpage{12}
+  \item {maxIter\_cg}
+    \subitem {DefaultParameters}, \hyperpage{6}
+  \item {maxIter\_sa}
+    \subitem {DefaultParameters}, \hyperpage{6}
+  \item {maxIter\_sd}
+    \subitem {DefaultParameters}, \hyperpage{6}
+  \item {methods.cpp}, \hyperpage{14}
+    \subitem {conjugateGradient}, \hyperpage{15}
+    \subitem {geneticAlgorithm}, \hyperpage{16}
+    \subitem {simulatedAnnealing}, \hyperpage{17}
+    \subitem {steepestDescent}, \hyperpage{17}
+  \item {methods.h}, \hyperpage{18}
+    \subitem {conjugateGradient}, \hyperpage{19}
+    \subitem {geneticAlgorithm}, \hyperpage{20}
+    \subitem {simulatedAnnealing}, \hyperpage{21}
+    \subitem {steepestDescent}, \hyperpage{21}
+  \item {mutationRate\_ga}
+    \subitem {DefaultParameters}, \hyperpage{6}
+
+  \indexspace
+
+  \item {populationSize\_ga}
+    \subitem {DefaultParameters}, \hyperpage{6}
+
+  \indexspace
+
+  \item {Result}, \hyperpage{8}
+    \subitem {duration}, \hyperpage{8}
+    \subitem {f}, \hyperpage{8}
+    \subitem {iterations}, \hyperpage{8}
+    \subitem {x}, \hyperpage{8}
+    \subitem {y}, \hyperpage{8}
+
+  \indexspace
+
+  \item {simulatedAnnealing}
+    \subitem {methods.cpp}, \hyperpage{17}
+    \subitem {methods.h}, \hyperpage{21}
+  \item {steepestDescent}
+    \subitem {methods.cpp}, \hyperpage{17}
+    \subitem {methods.h}, \hyperpage{21}
+  \item {structs.h}, \hyperpage{23}
+
+  \indexspace
+
+  \item {T0\_sa}
+    \subitem {DefaultParameters}, \hyperpage{6}
+  \item {Tmin\_sa}
+    \subitem {DefaultParameters}, \hyperpage{6}
+  \item {tol\_cg}
+    \subitem {DefaultParameters}, \hyperpage{6}
+  \item {tol\_sd}
+    \subitem {DefaultParameters}, \hyperpage{6}
+
+  \indexspace
+
+  \item {utils.cpp}, \hyperpage{24}
+    \subitem {compareMethods}, \hyperpage{25}
+    \subitem {displayDefaultParameters}, \hyperpage{26}
+  \item {utils.h}, \hyperpage{27}
+    \subitem {compareMethods}, \hyperpage{28}
+    \subitem {displayDefaultParameters}, \hyperpage{28}
+
+  \indexspace
+
+  \item {x}
+    \subitem {Individual}, \hyperpage{7}
+    \subitem {Result}, \hyperpage{8}
+  \item {x0}
+    \subitem {DefaultParameters}, \hyperpage{7}
+
+  \indexspace
+
+  \item {y}
+    \subitem {Individual}, \hyperpage{8}
+    \subitem {Result}, \hyperpage{8}
+  \item {y0}
+    \subitem {DefaultParameters}, \hyperpage{7}
+
+\end{theindex}

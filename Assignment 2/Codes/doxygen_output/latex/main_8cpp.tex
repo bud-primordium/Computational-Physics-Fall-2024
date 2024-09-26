@@ -1,0 +1,165 @@
+\doxysection{main.\+cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{main.cpp@{main.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include "{}methods.\+h"{}}\newline
+{\ttfamily \#include "{}utils.\+h"{}}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ srand(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\textcolor{keyword}{>}(time(0)));}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{char}\ choice;}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{struct_default_parameters}{DefaultParameters}}\ params;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{do}}
+\DoxyCodeLine{00032\ \ \ \ \ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nOptimization\ Algorithms\ Menu:\(\backslash\)n"{}};}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}1.\ Steepest\ Descent\ Method\(\backslash\)n"{}};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}2.\ Conjugate\ Gradient\ Method\(\backslash\)n"{}};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}3.\ Simulated\ Annealing\(\backslash\)n"{}};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}4.\ Genetic\ Algorithm\(\backslash\)n"{}};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}5.\ Compare\ All\ Methods\(\backslash\)n"{}};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ your\ choice\ (1-\/5):\ "{}};}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ option;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ std::cin\ >>\ option;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (option\ >=\ 1\ \&\&\ option\ <=\ 4)}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_ab9fce7eff03a2d09b1bfc6e09a14b538}{displayDefaultParameters}}(params,\ option);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n1.\ Use\ default\ parameters\(\backslash\)n"{}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}2.\ Customize\ parameters\(\backslash\)n"{}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ your\ choice\ (1-\/2):\ "{}};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ subOption;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ subOption;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (subOption\ ==\ 1)}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Run\ method\ with\ default\ parameters}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (option\ ==\ 1)}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_aa2bec146e419affb8eb2b1fe5fdd4c2c}{steepestDescent}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}});}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 2)}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ab83d34604c4245c59dd7964fc09f4bde}{conjugateGradient}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}},\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}});}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 3)}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_a1b37d5f500d8064487a5321a10625575}{simulatedAnnealing}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}});}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 4)}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ac232b96177b1e35952375d87e108e7df}{geneticAlgorithm}}(params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}});}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ results}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nResults:\(\backslash\)n"{}};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ at\ ("{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ <<\ \textcolor{stringliteral}{"{})\(\backslash\)n"{}};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ value:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Total\ iterations:\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Execution\ Time:\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ <<\ \textcolor{stringliteral}{"{}\ seconds\(\backslash\)n"{}};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (subOption\ ==\ 2)}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Customize\ parameters}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ x\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ y\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (option\ ==\ 1)}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ learning\ rate\ alpha\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}};}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ maximum\ iterations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ tolerance\ (default\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}};}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_aa2bec146e419affb8eb2b1fe5fdd4c2c}{steepestDescent}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}});}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 2)}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ maximum\ iterations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ tolerance\ (default\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ab83d34604c4245c59dd7964fc09f4bde}{conjugateGradient}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}},\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}});}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 3)}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ temperature\ T0\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ minimum\ temperature\ Tmin\ (default\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(6)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}};}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ cooling\ rate\ alpha\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ maximum\ iterations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_a1b37d5f500d8064487a5321a10625575}{simulatedAnnealing}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}});}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 4)}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ population\ size\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}};}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ number\ of\ generations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}};}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ mutation\ rate\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}};}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ crossover\ rate\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ac232b96177b1e35952375d87e108e7df}{geneticAlgorithm}}(params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}});}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ results}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nResults:\(\backslash\)n"{}};}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ at\ ("{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ <<\ \textcolor{stringliteral}{"{})\(\backslash\)n"{}};}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ value:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Total\ iterations:\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Execution\ Time:\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ <<\ \textcolor{stringliteral}{"{}\ seconds\(\backslash\)n"{}};}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ sub-\/option.\ Please\ select\ 1\ or\ 2.\(\backslash\)n"{}};}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 5)}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compare\ all\ methods\ with\ default\ parameters}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a7d0093d88cfdc13aeb89a018184df54a}{compareMethods}}(params);}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ option.\ Please\ select\ 1-\/5.\(\backslash\)n"{}};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ask\ user\ if\ they\ want\ to\ run\ again}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nDo\ you\ want\ to\ run\ the\ program\ again?\ (y/n):\ "{}};}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ std::cin\ >>\ choice;}
+\DoxyCodeLine{00148\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (choice\ ==\ \textcolor{charliteral}{'y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'Y'});}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ user\ input\ before\ exiting}}
+\DoxyCodeLine{00151\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPress\ Enter\ to\ exit..."{}};}
+\DoxyCodeLine{00152\ \ \ \ \ std::cin.ignore(std::numeric\_limits<std::streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});\ \textcolor{comment}{//\ Clear\ input\ buffer}}
+\DoxyCodeLine{00153\ \ \ \ \ std::cin.get();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ Enter\ key}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00155\ \}}
+
+\end{DoxyCode}

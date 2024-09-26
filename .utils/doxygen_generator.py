@@ -163,6 +163,18 @@ def generate_doxygen(startpath, project_name=None):
         logging.error(str(e))
         return
 
+    # 创建 readme.html 重定向到 index.html
+    parent_dir = os.path.dirname(startpath)
+    create_readme_redirect(parent_dir, html_dir)
+
+    # 自动打开 readme.html
+    readme_html_path = os.path.join(parent_dir, "readme.html")
+    if os.path.exists(readme_html_path):
+        webbrowser.open_new_tab(readme_html_path)
+        logging.info(f"已打开 {readme_html_path}")
+    else:
+        logging.error(f"无法找到 {readme_html_path}")
+
     # 运行 make.bat 来编译 LaTeX 生成 PDF
     make_bat_path = os.path.join(latex_dir, "make.bat")
     if os.path.exists(make_bat_path):
@@ -184,18 +196,6 @@ def generate_doxygen(startpath, project_name=None):
     except TimeoutError as e:
         logging.error(str(e))
         return
-
-    # 创建 readme.html 重定向到 index.html
-    parent_dir = os.path.dirname(startpath)
-    create_readme_redirect(parent_dir, html_dir)
-
-    # 自动打开 readme.html
-    readme_html_path = os.path.join(parent_dir, "readme.html")
-    if os.path.exists(readme_html_path):
-        webbrowser.open_new_tab(readme_html_path)
-        logging.info(f"已打开 {readme_html_path}")
-    else:
-        logging.error(f"无法找到 {readme_html_path}")
 
     # 删除临时的 Doxyfile 和 CSS 文件夹
     os.remove(doxyfile_path)
