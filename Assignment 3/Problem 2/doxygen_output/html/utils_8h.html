@@ -1,9 +1,9 @@
 <!-- HTML header for doxygen 1.12.0-->
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.12.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -123,6 +123,7 @@ $(function(){initNavTree('utils_8h.html',''); initResizable(true); });
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for utils.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -130,11 +131,13 @@ $(function(){initNavTree('utils_8h.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="utils_8h__incl.png" border="0" usemap="#autils_8h" alt=""/></div>
 <map name="autils_8h" id="autils_8h">
-<area shape="rect" title="Utility functions for matrix initialization and display." alt="" coords="46,5,102,32"/>
+<area shape="rect" title="Utility functions for matrix initialization and display." alt="" coords="86,5,142,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,63,107"/>
-<area shape="poly" title=" " alt="" coords="69,34,51,68,46,65,65,31"/>
+<area shape="poly" title=" " alt="" coords="102,35,61,72,57,68,98,31"/>
 <area shape="rect" title=" " alt="" coords="87,80,141,107"/>
-<area shape="poly" title=" " alt="" coords="83,31,102,65,97,68,79,34"/>
+<area shape="poly" title=" " alt="" coords="117,33,117,64,111,64,111,33"/>
+<area shape="rect" title=" " alt="" coords="165,80,226,107"/>
+<area shape="poly" title=" " alt="" coords="130,31,172,68,168,72,126,35"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -159,7 +162,7 @@ $(function(){initNavTree('utils_8h.html',''); initResizable(true); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:afdd09077415c66826ef7d5bc9555baf7" id="r_afdd09077415c66826ef7d5bc9555baf7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdd09077415c66826ef7d5bc9555baf7">InitMatrix</a> (std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, const std::string &amp;filename, int &amp;rows, int &amp;cols)</td></tr>
-<tr class="memdesc:afdd09077415c66826ef7d5bc9555baf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the matrix by reading from a .in file.  <br /></td></tr>
+<tr class="memdesc:afdd09077415c66826ef7d5bc9555baf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the matrix by reading from a <code>.in</code> file.  <br /></td></tr>
 <tr class="separator:afdd09077415c66826ef7d5bc9555baf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae29912c7e35b26fed14371c725a9de04" id="r_ae29912c7e35b26fed14371c725a9de04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae29912c7e35b26fed14371c725a9de04">ShowEquations</a> (const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
 <tr class="memdesc:ae29912c7e35b26fed14371c725a9de04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the system of linear equations.  <br /></td></tr>
@@ -170,6 +173,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ae94786e20414ed38e7ffab148ac6bd78" id="r_ae94786e20414ed38e7ffab148ac6bd78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae94786e20414ed38e7ffab148ac6bd78">DisplaySolution</a> (const std::vector&lt; double &gt; &amp;solution)</td></tr>
 <tr class="memdesc:ae94786e20414ed38e7ffab148ac6bd78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the unique solution.  <br /></td></tr>
 <tr class="separator:ae94786e20414ed38e7ffab148ac6bd78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed5d7e9b71f7e9678cd766731f22a7fd" id="r_aed5d7e9b71f7e9678cd766731f22a7fd"><td class="memItemLeft" align="right" valign="top">std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed5d7e9b71f7e9678cd766731f22a7fd">StartTimer</a> ()</td></tr>
+<tr class="separator:aed5d7e9b71f7e9678cd766731f22a7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96497a08edf3c32846d69dbf39a73159" id="r_a96497a08edf3c32846d69dbf39a73159"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96497a08edf3c32846d69dbf39a73159">StopTimer</a> (const std::chrono::steady_clock::time_point &amp;start)</td></tr>
+<tr class="separator:a96497a08edf3c32846d69dbf39a73159"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility functions for matrix initialization and display. </p>
@@ -269,7 +276,7 @@ false If the system is inconsistent. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes the matrix by reading from a .in file. </p>
+<p>Initializes the matrix by reading from a <code>.in</code> file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m</td><td>Reference to the matrix to be initialized. </td></tr>
@@ -318,6 +325,43 @@ false If there was an error during initialization. </dd></dl>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aed5d7e9b71f7e9678cd766731f22a7fd" name="aed5d7e9b71f7e9678cd766731f22a7fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed5d7e9b71f7e9678cd766731f22a7fd">&#9670;&#160;</a></span>StartTimer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::steady_clock::time_point StartTimer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">  158</span>{</div>
+<div class="line"><span class="lineno">  159</span>    <span class="keywordflow">return</span> chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">  160</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a96497a08edf3c32846d69dbf39a73159" name="a96497a08edf3c32846d69dbf39a73159"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96497a08edf3c32846d69dbf39a73159">&#9670;&#160;</a></span>StopTimer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StopTimer </td>
+          <td>(</td>
+          <td class="paramtype">const std::chrono::steady_clock::time_point &amp;</td>          <td class="paramname"><span class="paramname"><em>start</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

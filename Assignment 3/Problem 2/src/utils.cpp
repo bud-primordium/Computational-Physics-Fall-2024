@@ -1,6 +1,4 @@
 /**
- * @author Gilbert Young
- * @date 2024/09/25
  * @file utils.cpp
  * @brief Implementation of utility functions for matrix operations.
  *
@@ -20,6 +18,9 @@
 
 using namespace std;
 
+/**
+ * @copydoc InitMatrix(std::vector<std::vector<double>> &, const std::string &, int &, int &)
+ */
 bool InitMatrix(vector<vector<double>> &m, const string &filename, int &rows, int &cols)
 {
     ifstream in(filename);
@@ -49,7 +50,7 @@ bool InitMatrix(vector<vector<double>> &m, const string &filename, int &rows, in
         {
             cols = row.size();
         }
-        else if ((int)row.size() != cols)
+        else if (static_cast<int>(row.size()) != cols)
         {
             cerr << "Error: Inconsistent number of columns in the file." << endl;
             in.close();
@@ -71,9 +72,13 @@ bool InitMatrix(vector<vector<double>> &m, const string &filename, int &rows, in
     return true;
 }
 
+/**
+ * @copydoc ShowEquations(const std::vector<std::vector<double>> &, int, int)
+ */
 void ShowEquations(const vector<vector<double>> &m, int rows, int cols)
 {
     cout << "The current system of linear equations is:" << endl;
+
     for (int i = 0; i < rows; i++)
     {
         string equation = "";
@@ -81,18 +86,21 @@ void ShowEquations(const vector<vector<double>> &m, int rows, int cols)
         {
             // Check if the coefficient is an integer
             double coeff = round(m[i][j] * 1e12) / 1e12; // Handle floating-point precision
+
             if (fabs(coeff - round(coeff)) < 1e-12)
             {
-                equation += to_string(static_cast<long long>(round(coeff))) + "x" + to_string(j + 1);
+                equation += to_string(static_cast<long long>(round(coeff))) + " x" + to_string(j + 1);
             }
             else
             {
-                equation += to_string(round(m[i][j] * 10000) / 10000.0) + "x" + to_string(j + 1);
+                // Set precision for floating-point numbers
+                equation += to_string(round(m[i][j] * 10000) / 10000.0) + " x" + to_string(j + 1);
             }
 
             if (j < cols - 2)
-                equation += " + ";
+                equation += " + "; // Add space around '+' for better readability
         }
+
         // Handle constant term
         double const_term = round(m[i][cols - 1] * 1e12) / 1e12;
         if (fabs(const_term - round(const_term)) < 1e-12)
@@ -104,11 +112,14 @@ void ShowEquations(const vector<vector<double>> &m, int rows, int cols)
             equation += " = " + to_string(round(m[i][cols - 1] * 10000) / 10000.0);
         }
 
-        cout << equation << endl;
+        cout << equation << endl; // Output the equation
     }
-    cout << endl;
+    cout << endl; // Add a blank line at the end
 }
 
+/**
+ * @copydoc CheckConsistency(const std::vector<std::vector<double>> &, int, int)
+ */
 bool CheckConsistency(const vector<vector<double>> &m, int rows, int cols)
 {
     for (int i = 0; i < rows; i++)
@@ -130,6 +141,9 @@ bool CheckConsistency(const vector<vector<double>> &m, int rows, int cols)
     return true;
 }
 
+/**
+ * @copydoc DisplaySolution(const std::vector<double> &)
+ */
 void DisplaySolution(const vector<double> &solution)
 {
     cout << "The system has a unique solution:" << endl;
@@ -137,4 +151,17 @@ void DisplaySolution(const vector<double> &solution)
     {
         cout << "x" << i + 1 << " = " << fixed << setprecision(4) << solution[i] << endl;
     }
+}
+
+// Timing functions
+chrono::steady_clock::time_point StartTimer()
+{
+    return chrono::steady_clock::now();
+}
+
+void StopTimer(const chrono::steady_clock::time_point &start)
+{
+    auto end = chrono::steady_clock::now();
+    chrono::duration<double> elapsed = end - start;
+    cout << "Time elapsed: " << elapsed.count() << " seconds." << endl;
 }

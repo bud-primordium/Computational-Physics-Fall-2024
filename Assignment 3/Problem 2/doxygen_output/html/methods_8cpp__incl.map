@@ -1,17 +1,19 @@
 <map id="methods.cpp" name="methods.cpp">
-<area shape="rect" id="Node000001" title="Implementation of computational functions for solving linear systems." alt="" coords="236,5,332,32"/>
-<area shape="rect" id="Node000002" href="$methods_8h.html" title="Core computational functions for solving linear systems." alt="" coords="5,80,88,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,35,103,78,102,72,242,30"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="112,80,184,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="261,35,186,75,184,70,259,30"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="208,80,274,107"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="279,34,258,68,254,65,274,31"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="298,80,355,107"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="294,31,314,65,309,68,289,34"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="379,80,453,107"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="308,30,381,70,379,75,306,35"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="477,80,530,107"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="323,30,464,76,462,81,321,35"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="18,155,75,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="49,107,49,139,44,139,44,107"/>
+<area shape="rect" id="Node000001" title="Implementation of computational functions for solving linear systems." alt="" coords="178,5,274,32"/>
+<area shape="rect" id="Node000002" href="$methods_8h.html" title="Core computational functions for solving linear systems." alt="" coords="33,80,115,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,35,116,75,113,70,198,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,155,63,181"/>
+<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="178,30,86,50,47,65,23,82,17,95,16,109,23,140,18,141,10,110,12,93,19,78,44,60,85,45,177,25"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="106,155,159,181"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="217,34,180,81,147,142,142,139,176,79,213,31"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="190,80,262,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="229,33,229,64,223,64,223,33"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="286,80,352,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="244,30,293,68,290,73,241,35"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="376,80,433,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="258,30,363,72,361,77,256,35"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="457,80,531,107"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="273,30,443,75,441,81,272,35"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="69,109,51,142,46,140,65,106"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="86,106,115,141,111,144,82,109"/>
 </map>

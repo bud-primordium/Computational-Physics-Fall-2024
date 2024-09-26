@@ -1,9 +1,9 @@
 <!-- HTML header for doxygen 1.12.0-->
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.12.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -127,6 +127,7 @@ $(function(){initNavTree('methods_8cpp.html',''); initResizable(true); });
 <code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for methods.cpp:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -134,42 +135,52 @@ $(function(){initNavTree('methods_8cpp.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="methods_8cpp__incl.png" border="0" usemap="#amethods_8cpp" alt=""/></div>
 <map name="amethods_8cpp" id="amethods_8cpp">
-<area shape="rect" title="Implementation of computational functions for solving linear systems." alt="" coords="236,5,332,32"/>
-<area shape="rect" href="methods_8h.html" title="Core computational functions for solving linear systems." alt="" coords="5,80,88,107"/>
-<area shape="poly" title=" " alt="" coords="243,35,103,78,102,72,242,30"/>
-<area shape="rect" title=" " alt="" coords="112,80,184,107"/>
-<area shape="poly" title=" " alt="" coords="261,35,186,75,184,70,259,30"/>
-<area shape="rect" title=" " alt="" coords="208,80,274,107"/>
-<area shape="poly" title=" " alt="" coords="279,34,258,68,254,65,274,31"/>
-<area shape="rect" title=" " alt="" coords="298,80,355,107"/>
-<area shape="poly" title=" " alt="" coords="294,31,314,65,309,68,289,34"/>
-<area shape="rect" title=" " alt="" coords="379,80,453,107"/>
-<area shape="poly" title=" " alt="" coords="308,30,381,70,379,75,306,35"/>
-<area shape="rect" title=" " alt="" coords="477,80,530,107"/>
-<area shape="poly" title=" " alt="" coords="323,30,464,76,462,81,321,35"/>
-<area shape="rect" title=" " alt="" coords="18,155,75,181"/>
-<area shape="poly" title=" " alt="" coords="49,107,49,139,44,139,44,107"/>
+<area shape="rect" title="Implementation of computational functions for solving linear systems." alt="" coords="178,5,274,32"/>
+<area shape="rect" href="methods_8h.html" title="Core computational functions for solving linear systems." alt="" coords="33,80,115,107"/>
+<area shape="poly" title=" " alt="" coords="201,35,116,75,113,70,198,30"/>
+<area shape="rect" title=" " alt="" coords="5,155,63,181"/>
+<area shape="poly" title=" " alt="" coords="178,30,86,50,47,65,23,82,17,95,16,109,23,140,18,141,10,110,12,93,19,78,44,60,85,45,177,25"/>
+<area shape="rect" title=" " alt="" coords="106,155,159,181"/>
+<area shape="poly" title=" " alt="" coords="217,34,180,81,147,142,142,139,176,79,213,31"/>
+<area shape="rect" title=" " alt="" coords="190,80,262,107"/>
+<area shape="poly" title=" " alt="" coords="229,33,229,64,223,64,223,33"/>
+<area shape="rect" title=" " alt="" coords="286,80,352,107"/>
+<area shape="poly" title=" " alt="" coords="244,30,293,68,290,73,241,35"/>
+<area shape="rect" title=" " alt="" coords="376,80,433,107"/>
+<area shape="poly" title=" " alt="" coords="258,30,363,72,361,77,256,35"/>
+<area shape="rect" title=" " alt="" coords="457,80,531,107"/>
+<area shape="poly" title=" " alt="" coords="273,30,443,75,441,81,272,35"/>
+<area shape="poly" title=" " alt="" coords="69,109,51,142,46,140,65,106"/>
+<area shape="poly" title=" " alt="" coords="86,106,115,141,111,144,82,109"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a07f322f6a0616765900b9a8ce12c7da0" id="r_a07f322f6a0616765900b9a8ce12c7da0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a> (const vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows)</td></tr>
+<tr class="memdesc:a07f322f6a0616765900b9a8ce12c7da0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs partial pivoting and returns the row index with the maximum pivot.  <br /></td></tr>
 <tr class="separator:a07f322f6a0616765900b9a8ce12c7da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa145e0f9daaacd0a693955245932d65" id="r_aaa145e0f9daaacd0a693955245932d65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa145e0f9daaacd0a693955245932d65">Exchange</a> (vector&lt; vector&lt; double &gt; &gt; &amp;m, int row1, int row2)</td></tr>
+<tr class="memdesc:aaa145e0f9daaacd0a693955245932d65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two rows in the matrix and outputs the action.  <br /></td></tr>
 <tr class="separator:aaa145e0f9daaacd0a693955245932d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a980eadbed8b024569d32b9e94da58389" id="r_a980eadbed8b024569d32b9e94da58389"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a980eadbed8b024569d32b9e94da58389">Eliminate</a> (vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows, int total_cols)</td></tr>
+<tr class="memdesc:a980eadbed8b024569d32b9e94da58389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs elimination on the matrix to form an upper triangular matrix.  <br /></td></tr>
 <tr class="separator:a980eadbed8b024569d32b9e94da58389"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ea7565a417afce6f38d584692d55fd4" id="r_a2ea7565a417afce6f38d584692d55fd4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ea7565a417afce6f38d584692d55fd4">GaussianElimination</a> (vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
+<tr class="memdesc:a2ea7565a417afce6f38d584692d55fd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs Gaussian elimination on the augmented matrix with partial pivoting.     <br /></td></tr>
 <tr class="separator:a2ea7565a417afce6f38d584692d55fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac670b993a182e328bad2b2a3ba950388" id="r_ac670b993a182e328bad2b2a3ba950388"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac670b993a182e328bad2b2a3ba950388">BackSubstitution</a> (const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols, vector&lt; double &gt; &amp;solution)</td></tr>
+<tr class="memdesc:ac670b993a182e328bad2b2a3ba950388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs back-substitution to find the solution vector.     <br /></td></tr>
 <tr class="separator:ac670b993a182e328bad2b2a3ba950388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fdd5a300b009e3c78fce40052d76cbe" id="r_a0fdd5a300b009e3c78fce40052d76cbe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fdd5a300b009e3c78fce40052d76cbe">DetermineRank</a> (const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
+<tr class="memdesc:a0fdd5a300b009e3c78fce40052d76cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the rank of the coefficient matrix A (excluding augmented column).     <br /></td></tr>
 <tr class="separator:a0fdd5a300b009e3c78fce40052d76cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a062a9c93054ad9e6bb03d2a64f8b4749" id="r_a062a9c93054ad9e6bb03d2a64f8b4749"><td class="memItemLeft" align="right" valign="top">vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a> (const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
-<tr class="separator:a062a9c93054ad9e6bb03d2a64f8b4749"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0c1b2e7266ae89cd0175de9415788b5" id="r_ad0c1b2e7266ae89cd0175de9415788b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0c1b2e7266ae89cd0175de9415788b5">ShowGeneralSolution</a> (const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols, int rank)</td></tr>
+<tr class="memdesc:ad0c1b2e7266ae89cd0175de9415788b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the general solution for systems with infinitely many solutions.     <br /></td></tr>
 <tr class="separator:ad0c1b2e7266ae89cd0175de9415788b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a062a9c93054ad9e6bb03d2a64f8b4749" id="r_a062a9c93054ad9e6bb03d2a64f8b4749"><td class="memItemLeft" align="right" valign="top">vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a> (const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
+<tr class="memdesc:a062a9c93054ad9e6bb03d2a64f8b4749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identifies the pivot columns in the matrix.     <br /></td></tr>
+<tr class="separator:a062a9c93054ad9e6bb03d2a64f8b4749"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of computational functions for solving linear systems. </p>
@@ -205,52 +216,66 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  120</span>{</div>
-<div class="line"><span class="lineno">  121</span>    solution.assign(cols - 1, 0.0);</div>
-<div class="line"><span class="lineno">  122</span>    cout &lt;&lt; <span class="stringliteral">&quot;Starting back-substitution process...&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  123</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = rows - 1; i &gt;= 0; i--)</div>
-<div class="line"><span class="lineno">  124</span>    {</div>
-<div class="line"><span class="lineno">  125</span>        <span class="comment">// Find the first non-zero coefficient in the row</span></div>
-<div class="line"><span class="lineno">  126</span>        <span class="keywordtype">int</span> pivot_col = -1;</div>
-<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  128</span>        {</div>
-<div class="line"><span class="lineno">  129</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
-<div class="line"><span class="lineno">  130</span>            {</div>
-<div class="line"><span class="lineno">  131</span>                pivot_col = j;</div>
-<div class="line"><span class="lineno">  132</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  133</span>            }</div>
-<div class="line"><span class="lineno">  134</span>        }</div>
-<div class="line"><span class="lineno">  135</span> </div>
-<div class="line"><span class="lineno">  136</span>        <span class="keywordflow">if</span> (pivot_col == -1)</div>
-<div class="line"><span class="lineno">  137</span>        {</div>
-<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">if</span> (fabs(m[i][cols - 1]) &gt; 1e-12)</div>
-<div class="line"><span class="lineno">  139</span>            {</div>
-<div class="line"><span class="lineno">  140</span>                <span class="comment">// Inconsistent equation</span></div>
-<div class="line"><span class="lineno">  141</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  142</span>            }</div>
-<div class="line"><span class="lineno">  143</span>            <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  144</span>            {</div>
-<div class="line"><span class="lineno">  145</span>                <span class="comment">// 0 = 0, skip</span></div>
-<div class="line"><span class="lineno">  146</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  147</span>            }</div>
-<div class="line"><span class="lineno">  148</span>        }</div>
-<div class="line"><span class="lineno">  149</span> </div>
-<div class="line"><span class="lineno">  150</span>        <span class="keywordtype">double</span> rhs = m[i][cols - 1];</div>
-<div class="line"><span class="lineno">  151</span>        cout &lt;&lt; <span class="stringliteral">&quot;Calculating x&quot;</span> &lt;&lt; pivot_col + 1 &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = pivot_col + 1; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  153</span>        {</div>
-<div class="line"><span class="lineno">  154</span>            cout &lt;&lt; <span class="stringliteral">&quot;    &quot;</span> &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; m[i][j] &lt;&lt; <span class="stringliteral">&quot; * x&quot;</span> &lt;&lt; j + 1</div>
-<div class="line"><span class="lineno">  155</span>                 &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; m[i][j] * solution[j] &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  156</span>            rhs -= m[i][j] * solution[j];</div>
-<div class="line"><span class="lineno">  157</span>        }</div>
-<div class="line"><span class="lineno">  158</span>        cout &lt;&lt; <span class="stringliteral">&quot;    RHS after subtraction = &quot;</span> &lt;&lt; rhs &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  159</span>        solution[pivot_col] = rhs / m[i][pivot_col];</div>
-<div class="line"><span class="lineno">  160</span>        cout &lt;&lt; <span class="stringliteral">&quot;    x&quot;</span> &lt;&lt; pivot_col + 1 &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; rhs &lt;&lt; <span class="stringliteral">&quot; / &quot;</span> &lt;&lt; m[i][pivot_col]</div>
-<div class="line"><span class="lineno">  161</span>             &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; solution[pivot_col] &lt;&lt; endl</div>
-<div class="line"><span class="lineno">  162</span>             &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  163</span>    }</div>
-<div class="line"><span class="lineno">  164</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  165</span>}</div>
+
+<p>Performs back-substitution to find the solution vector.    </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The upper triangular matrix after Gaussian elimination. </td></tr>
+    <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
+    <tr><td class="paramname">solution</td><td>Reference to store the solution vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If a unique solution exists. </dd>
+<dd>
+false If the system is inconsistent.    </dd></dl>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>{</div>
+<div class="line"><span class="lineno">  139</span>    solution.assign(cols - 1, 0.0);</div>
+<div class="line"><span class="lineno">  140</span>    cout &lt;&lt; <span class="stringliteral">&quot;Starting back-substitution process...&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  141</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = rows - 1; i &gt;= 0; i--)</div>
+<div class="line"><span class="lineno">  142</span>    {</div>
+<div class="line"><span class="lineno">  143</span>        <span class="comment">// Find the first non-zero coefficient in the row</span></div>
+<div class="line"><span class="lineno">  144</span>        <span class="keywordtype">int</span> pivot_col = -1;</div>
+<div class="line"><span class="lineno">  145</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  146</span>        {</div>
+<div class="line"><span class="lineno">  147</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
+<div class="line"><span class="lineno">  148</span>            {</div>
+<div class="line"><span class="lineno">  149</span>                pivot_col = j;</div>
+<div class="line"><span class="lineno">  150</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  151</span>            }</div>
+<div class="line"><span class="lineno">  152</span>        }</div>
+<div class="line"><span class="lineno">  153</span> </div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">if</span> (pivot_col == -1)</div>
+<div class="line"><span class="lineno">  155</span>        {</div>
+<div class="line"><span class="lineno">  156</span>            <span class="keywordflow">if</span> (fabs(m[i][cols - 1]) &gt; 1e-12)</div>
+<div class="line"><span class="lineno">  157</span>            {</div>
+<div class="line"><span class="lineno">  158</span>                <span class="comment">// Inconsistent equation</span></div>
+<div class="line"><span class="lineno">  159</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  160</span>            }</div>
+<div class="line"><span class="lineno">  161</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  162</span>            {</div>
+<div class="line"><span class="lineno">  163</span>                <span class="comment">// 0 = 0, skip</span></div>
+<div class="line"><span class="lineno">  164</span>                <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  165</span>            }</div>
+<div class="line"><span class="lineno">  166</span>        }</div>
+<div class="line"><span class="lineno">  167</span> </div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordtype">double</span> rhs = m[i][cols - 1];</div>
+<div class="line"><span class="lineno">  169</span>        cout &lt;&lt; <span class="stringliteral">&quot;Calculating x&quot;</span> &lt;&lt; pivot_col + 1 &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  170</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = pivot_col + 1; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  171</span>        {</div>
+<div class="line"><span class="lineno">  172</span>            cout &lt;&lt; <span class="stringliteral">&quot;    &quot;</span> &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; m[i][j] &lt;&lt; <span class="stringliteral">&quot; * x&quot;</span> &lt;&lt; j + 1</div>
+<div class="line"><span class="lineno">  173</span>                 &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; m[i][j] * solution[j] &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  174</span>            rhs -= m[i][j] * solution[j];</div>
+<div class="line"><span class="lineno">  175</span>        }</div>
+<div class="line"><span class="lineno">  176</span>        cout &lt;&lt; <span class="stringliteral">&quot;    RHS after subtraction = &quot;</span> &lt;&lt; rhs &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  177</span>        solution[pivot_col] = rhs / m[i][pivot_col];</div>
+<div class="line"><span class="lineno">  178</span>        cout &lt;&lt; <span class="stringliteral">&quot;    x&quot;</span> &lt;&lt; pivot_col + 1 &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; rhs &lt;&lt; <span class="stringliteral">&quot; / &quot;</span> &lt;&lt; m[i][pivot_col]</div>
+<div class="line"><span class="lineno">  179</span>             &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; solution[pivot_col] &lt;&lt; endl</div>
+<div class="line"><span class="lineno">  180</span>             &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  181</span>    }</div>
+<div class="line"><span class="lineno">  182</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  183</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -277,24 +302,35 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  168</span>{</div>
-<div class="line"><span class="lineno">  169</span>    <span class="keywordtype">int</span> rank = 0;</div>
-<div class="line"><span class="lineno">  170</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; rows; i++)</div>
-<div class="line"><span class="lineno">  171</span>    {</div>
-<div class="line"><span class="lineno">  172</span>        <span class="keywordtype">bool</span> non_zero = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  173</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  174</span>        {</div>
-<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
-<div class="line"><span class="lineno">  176</span>            {</div>
-<div class="line"><span class="lineno">  177</span>                non_zero = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  178</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  179</span>            }</div>
-<div class="line"><span class="lineno">  180</span>        }</div>
-<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">if</span> (non_zero)</div>
-<div class="line"><span class="lineno">  182</span>            rank++;</div>
-<div class="line"><span class="lineno">  183</span>    }</div>
-<div class="line"><span class="lineno">  184</span>    <span class="keywordflow">return</span> rank;</div>
-<div class="line"><span class="lineno">  185</span>}</div>
+
+<p>Determines the rank of the coefficient matrix A (excluding augmented column).    </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The augmented matrix [A|b]. </td></tr>
+    <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int The rank of the matrix A.    </dd></dl>
+<div class="fragment"><div class="line"><span class="lineno">  189</span>{</div>
+<div class="line"><span class="lineno">  190</span>    <span class="keywordtype">int</span> rank = 0;</div>
+<div class="line"><span class="lineno">  191</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; rows; i++)</div>
+<div class="line"><span class="lineno">  192</span>    {</div>
+<div class="line"><span class="lineno">  193</span>        <span class="keywordtype">bool</span> non_zero = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  195</span>        {</div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
+<div class="line"><span class="lineno">  197</span>            {</div>
+<div class="line"><span class="lineno">  198</span>                non_zero = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  199</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  200</span>            }</div>
+<div class="line"><span class="lineno">  201</span>        }</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> (non_zero)</div>
+<div class="line"><span class="lineno">  203</span>            rank++;</div>
+<div class="line"><span class="lineno">  204</span>    }</div>
+<div class="line"><span class="lineno">  205</span>    <span class="keywordflow">return</span> rank;</div>
+<div class="line"><span class="lineno">  206</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -326,27 +362,31 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   47</span>{</div>
-<div class="line"><span class="lineno">   48</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = current_row + 1; i &lt; total_rows; i++)</div>
-<div class="line"><span class="lineno">   49</span>    {</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">if</span> (fabs(m[current_row][current_row]) &lt; 1e-12)</div>
-<div class="line"><span class="lineno">   51</span>        {</div>
-<div class="line"><span class="lineno">   52</span>            <span class="comment">// Pivot is too small, cannot eliminate</span></div>
-<div class="line"><span class="lineno">   53</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   54</span>        }</div>
-<div class="line"><span class="lineno">   55</span>        <span class="keywordtype">double</span> factor = m[i][current_row] / m[current_row][current_row];</div>
-<div class="line"><span class="lineno">   56</span>        cout &lt;&lt; <span class="stringliteral">&quot;Eliminating element in row &quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;, column &quot;</span> &lt;&lt; current_row + 1 &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   57</span>        cout &lt;&lt; <span class="stringliteral">&quot;Multiplying row &quot;</span> &lt;&lt; current_row + 1 &lt;&lt; <span class="stringliteral">&quot; by &quot;</span> &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; factor</div>
-<div class="line"><span class="lineno">   58</span>             &lt;&lt; <span class="stringliteral">&quot; and subtracting from row &quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   59</span>        m[i][current_row] = 0.0;</div>
-<div class="line"><span class="lineno">   60</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = current_row + 1; j &lt; total_cols; j++)</div>
-<div class="line"><span class="lineno">   61</span>        {</div>
-<div class="line"><span class="lineno">   62</span>            m[i][j] -= factor * m[current_row][j];</div>
-<div class="line"><span class="lineno">   63</span>        }</div>
-<div class="line"><span class="lineno">   64</span>        cout &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   65</span>    }</div>
-<div class="line"><span class="lineno">   66</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   67</span>}</div>
+
+<p>Performs elimination on the matrix to form an upper triangular matrix. </p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>{</div>
+<div class="line"><span class="lineno">   49</span>    <span class="keywordtype">double</span> pivot = m[current_row][current_row];</div>
+<div class="line"><span class="lineno">   50</span>    <span class="keywordflow">if</span> (fabs(pivot) &lt; 1e-12)</div>
+<div class="line"><span class="lineno">   51</span>    {</div>
+<div class="line"><span class="lineno">   52</span>        <span class="comment">// Pivot is too small, cannot eliminate</span></div>
+<div class="line"><span class="lineno">   53</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   54</span>    }</div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = current_row + 1; i &lt; total_rows; i++)</div>
+<div class="line"><span class="lineno">   57</span>    {</div>
+<div class="line"><span class="lineno">   58</span>        <span class="keywordtype">double</span> factor = m[i][current_row] / pivot;</div>
+<div class="line"><span class="lineno">   59</span>        cout &lt;&lt; <span class="stringliteral">&quot;Eliminating element in row &quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;, column &quot;</span> &lt;&lt; current_row + 1 &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">   60</span>        cout &lt;&lt; <span class="stringliteral">&quot;Multiplying row &quot;</span> &lt;&lt; current_row + 1 &lt;&lt; <span class="stringliteral">&quot; by &quot;</span> &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; factor</div>
+<div class="line"><span class="lineno">   61</span>             &lt;&lt; <span class="stringliteral">&quot; and subtracting from row &quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">   62</span>        m[i][current_row] = 0.0;</div>
+<div class="line"><span class="lineno">   63</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = current_row + 1; j &lt; total_cols; j++)</div>
+<div class="line"><span class="lineno">   64</span>        {</div>
+<div class="line"><span class="lineno">   65</span>            m[i][j] -= factor * m[current_row][j];</div>
+<div class="line"><span class="lineno">   66</span>        }</div>
+<div class="line"><span class="lineno">   67</span>        cout &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">   68</span>    }</div>
+<div class="line"><span class="lineno">   69</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   70</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -373,10 +413,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   40</span>{</div>
-<div class="line"><span class="lineno">   41</span>    swap(m[row1], m[row2]);</div>
-<div class="line"><span class="lineno">   42</span>    cout &lt;&lt; <span class="stringliteral">&quot;Swapping row &quot;</span> &lt;&lt; row1 + 1 &lt;&lt; <span class="stringliteral">&quot; with row &quot;</span> &lt;&lt; row2 + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   43</span>}</div>
+
+<p>Swaps two rows in the matrix and outputs the action. </p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>{</div>
+<div class="line"><span class="lineno">   42</span>    swap(m[row1], m[row2]);</div>
+<div class="line"><span class="lineno">   43</span>    cout &lt;&lt; <span class="stringliteral">&quot;Swapping row &quot;</span> &lt;&lt; row1 + 1 &lt;&lt; <span class="stringliteral">&quot; with row &quot;</span> &lt;&lt; row2 + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">   44</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -403,57 +445,77 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   70</span>{</div>
-<div class="line"><span class="lineno">   71</span>    <span class="keywordtype">int</span> exchange_count = 0;</div>
-<div class="line"><span class="lineno">   72</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; min(rows, cols - 1); i++)</div>
-<div class="line"><span class="lineno">   73</span>    {</div>
-<div class="line"><span class="lineno">   74</span>        cout &lt;&lt; <span class="stringliteral">&quot;Processing column &quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keywordtype">int</span> imax = <a class="code hl_function" href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a>(m, i, rows);</div>
-<div class="line"><span class="lineno">   76</span>        <span class="keywordflow">if</span> (imax != i)</div>
-<div class="line"><span class="lineno">   77</span>        {</div>
-<div class="line"><span class="lineno">   78</span>            <a class="code hl_function" href="#aaa145e0f9daaacd0a693955245932d65">Exchange</a>(m, i, imax);</div>
-<div class="line"><span class="lineno">   79</span>            exchange_count++;</div>
-<div class="line"><span class="lineno">   80</span>        }</div>
-<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">   82</span>        {</div>
-<div class="line"><span class="lineno">   83</span>            cout &lt;&lt; <span class="stringliteral">&quot;No need to swap rows for column &quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   84</span>        }</div>
-<div class="line"><span class="lineno">   85</span> </div>
-<div class="line"><span class="lineno">   86</span>        <span class="comment">// Check if pivot is zero</span></div>
-<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">if</span> (fabs(m[i][i]) &lt; 1e-12)</div>
-<div class="line"><span class="lineno">   88</span>        {</div>
-<div class="line"><span class="lineno">   89</span>            cout &lt;&lt; <span class="stringliteral">&quot;Warning: Pivot element in row &quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot; is close to zero. The matrix may be singular.&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   90</span>        }</div>
-<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">   92</span>        {</div>
-<div class="line"><span class="lineno">   93</span>            <a class="code hl_function" href="#a980eadbed8b024569d32b9e94da58389">Eliminate</a>(m, i, rows, cols);</div>
-<div class="line"><span class="lineno">   94</span>        }</div>
-<div class="line"><span class="lineno">   95</span> </div>
-<div class="line"><span class="lineno">   96</span>        <span class="comment">// Display current matrix state with optimized formatting</span></div>
-<div class="line"><span class="lineno">   97</span>        cout &lt;&lt; <span class="stringliteral">&quot;Current matrix state:&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">   98</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> r = 0; r &lt; rows; r++)</div>
-<div class="line"><span class="lineno">   99</span>        {</div>
-<div class="line"><span class="lineno">  100</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; cols; c++)</div>
-<div class="line"><span class="lineno">  101</span>            {</div>
-<div class="line"><span class="lineno">  102</span>                <span class="keywordtype">double</span> coeff = round(m[r][c] * 1e12) / 1e12; <span class="comment">// Handle floating-point precision</span></div>
-<div class="line"><span class="lineno">  103</span>                <span class="keywordflow">if</span> (fabs(coeff - round(coeff)) &lt; 1e-12)</div>
-<div class="line"><span class="lineno">  104</span>                {</div>
-<div class="line"><span class="lineno">  105</span>                    cout &lt;&lt; static_cast&lt;long long&gt;(round(coeff)) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span>;</div>
-<div class="line"><span class="lineno">  106</span>                }</div>
-<div class="line"><span class="lineno">  107</span>                <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  108</span>                {</div>
-<div class="line"><span class="lineno">  109</span>                    cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; coeff &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span>;</div>
-<div class="line"><span class="lineno">  110</span>                }</div>
-<div class="line"><span class="lineno">  111</span>            }</div>
-<div class="line"><span class="lineno">  112</span>            cout &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  113</span>        }</div>
-<div class="line"><span class="lineno">  114</span>        cout &lt;&lt; <span class="stringliteral">&quot;-------------------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  115</span>    }</div>
-<div class="line"><span class="lineno">  116</span>    <span class="keywordflow">return</span> exchange_count;</div>
-<div class="line"><span class="lineno">  117</span>}</div>
-<div class="ttc" id="amethods_8cpp_html_a07f322f6a0616765900b9a8ce12c7da0"><div class="ttname"><a href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a></div><div class="ttdeci">int Pivoting(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows)</div><div class="ttdef"><b>Definition</b> methods.cpp:23</div></div>
-<div class="ttc" id="amethods_8cpp_html_a980eadbed8b024569d32b9e94da58389"><div class="ttname"><a href="#a980eadbed8b024569d32b9e94da58389">Eliminate</a></div><div class="ttdeci">bool Eliminate(vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows, int total_cols)</div><div class="ttdef"><b>Definition</b> methods.cpp:46</div></div>
-<div class="ttc" id="amethods_8cpp_html_aaa145e0f9daaacd0a693955245932d65"><div class="ttname"><a href="#aaa145e0f9daaacd0a693955245932d65">Exchange</a></div><div class="ttdeci">void Exchange(vector&lt; vector&lt; double &gt; &gt; &amp;m, int row1, int row2)</div><div class="ttdef"><b>Definition</b> methods.cpp:39</div></div>
+
+<p>Performs Gaussian elimination on the augmented matrix with partial pivoting.    </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>Reference to the augmented matrix [A|b] to be modified. </td></tr>
+    <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int Number of row exchanges performed during elimination.    </dd></dl>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{</div>
+<div class="line"><span class="lineno">   77</span>    <span class="keywordtype">int</span> exchange_count = 0;</div>
+<div class="line"><span class="lineno">   78</span>    <span class="keywordtype">int</span> n = min(rows, cols - 1); <span class="comment">// Number of variables</span></div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; n; k++)</div>
+<div class="line"><span class="lineno">   81</span>    {</div>
+<div class="line"><span class="lineno">   82</span>        cout &lt;&lt; <span class="stringliteral">&quot;Processing column &quot;</span> &lt;&lt; k + 1 &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">   83</span> </div>
+<div class="line"><span class="lineno">   84</span>        <span class="comment">// Find the row with the maximum pivot element</span></div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordtype">int</span> imax = <a class="code hl_function" href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a>(m, k, rows);</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>        <span class="comment">// Swap the current row with the pivot row if necessary</span></div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">if</span> (imax != k)</div>
+<div class="line"><span class="lineno">   89</span>        {</div>
+<div class="line"><span class="lineno">   90</span>            <a class="code hl_function" href="#aaa145e0f9daaacd0a693955245932d65">Exchange</a>(m, k, imax);</div>
+<div class="line"><span class="lineno">   91</span>            exchange_count++;</div>
+<div class="line"><span class="lineno">   92</span>        }</div>
+<div class="line"><span class="lineno">   93</span>        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">   94</span>        {</div>
+<div class="line"><span class="lineno">   95</span>            cout &lt;&lt; <span class="stringliteral">&quot;No need to swap rows for column &quot;</span> &lt;&lt; k + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">   96</span>        }</div>
+<div class="line"><span class="lineno">   97</span> </div>
+<div class="line"><span class="lineno">   98</span>        <span class="comment">// Check if pivot element is near zero (singular matrix)</span></div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">if</span> (fabs(m[k][k]) &lt; 1e-12)</div>
+<div class="line"><span class="lineno">  100</span>        {</div>
+<div class="line"><span class="lineno">  101</span>            cout &lt;&lt; <span class="stringliteral">&quot;Warning: Pivot element in row &quot;</span> &lt;&lt; k + 1 &lt;&lt; <span class="stringliteral">&quot; is close to zero. The matrix may be singular.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">continue</span>; <span class="comment">// Skip elimination for this pivot</span></div>
+<div class="line"><span class="lineno">  103</span>        }</div>
+<div class="line"><span class="lineno">  104</span> </div>
+<div class="line"><span class="lineno">  105</span>        <span class="comment">// Eliminate entries below the pivot</span></div>
+<div class="line"><span class="lineno">  106</span>        <span class="keywordflow">if</span> (!<a class="code hl_function" href="#a980eadbed8b024569d32b9e94da58389">Eliminate</a>(m, k, rows, cols))</div>
+<div class="line"><span class="lineno">  107</span>        {</div>
+<div class="line"><span class="lineno">  108</span>            cout &lt;&lt; <span class="stringliteral">&quot;Elimination failed for column &quot;</span> &lt;&lt; k + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  109</span>        }</div>
+<div class="line"><span class="lineno">  110</span> </div>
+<div class="line"><span class="lineno">  111</span>        <span class="comment">// Display current matrix state</span></div>
+<div class="line"><span class="lineno">  112</span>        cout &lt;&lt; <span class="stringliteral">&quot;Current matrix state:&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> r = 0; r &lt; rows; r++)</div>
+<div class="line"><span class="lineno">  114</span>        {</div>
+<div class="line"><span class="lineno">  115</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; cols; c++)</div>
+<div class="line"><span class="lineno">  116</span>            {</div>
+<div class="line"><span class="lineno">  117</span>                <span class="keywordtype">double</span> coeff = round(m[r][c] * 1e12) / 1e12; <span class="comment">// Handle floating-point precision</span></div>
+<div class="line"><span class="lineno">  118</span>                <span class="keywordflow">if</span> (fabs(coeff - round(coeff)) &lt; 1e-12)</div>
+<div class="line"><span class="lineno">  119</span>                {</div>
+<div class="line"><span class="lineno">  120</span>                    cout &lt;&lt; static_cast&lt;long long&gt;(round(coeff)) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span>;</div>
+<div class="line"><span class="lineno">  121</span>                }</div>
+<div class="line"><span class="lineno">  122</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  123</span>                {</div>
+<div class="line"><span class="lineno">  124</span>                    cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; coeff &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span>;</div>
+<div class="line"><span class="lineno">  125</span>                }</div>
+<div class="line"><span class="lineno">  126</span>            }</div>
+<div class="line"><span class="lineno">  127</span>            cout &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  128</span>        }</div>
+<div class="line"><span class="lineno">  129</span>        cout &lt;&lt; <span class="stringliteral">&quot;-------------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  130</span>    }</div>
+<div class="line"><span class="lineno">  131</span>    <span class="keywordflow">return</span> exchange_count;</div>
+<div class="line"><span class="lineno">  132</span>}</div>
+<div class="ttc" id="amethods_8cpp_html_a07f322f6a0616765900b9a8ce12c7da0"><div class="ttname"><a href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a></div><div class="ttdeci">int Pivoting(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows)</div><div class="ttdoc">Performs partial pivoting and returns the row index with the maximum pivot.</div><div class="ttdef"><b>Definition</b> methods.cpp:23</div></div>
+<div class="ttc" id="amethods_8cpp_html_a980eadbed8b024569d32b9e94da58389"><div class="ttname"><a href="#a980eadbed8b024569d32b9e94da58389">Eliminate</a></div><div class="ttdeci">bool Eliminate(vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows, int total_cols)</div><div class="ttdoc">Performs elimination on the matrix to form an upper triangular matrix.</div><div class="ttdef"><b>Definition</b> methods.cpp:47</div></div>
+<div class="ttc" id="amethods_8cpp_html_aaa145e0f9daaacd0a693955245932d65"><div class="ttname"><a href="#aaa145e0f9daaacd0a693955245932d65">Exchange</a></div><div class="ttdeci">void Exchange(vector&lt; vector&lt; double &gt; &gt; &amp;m, int row1, int row2)</div><div class="ttdoc">Swaps two rows in the matrix and outputs the action.</div><div class="ttdef"><b>Definition</b> methods.cpp:40</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -480,25 +542,37 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  188</span>{</div>
-<div class="line"><span class="lineno">  189</span>    vector&lt;int&gt; pivots;</div>
-<div class="line"><span class="lineno">  190</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; min(rows, cols - 1); i++)</div>
-<div class="line"><span class="lineno">  191</span>    {</div>
-<div class="line"><span class="lineno">  192</span>        <span class="comment">// Find the pivot in the current row</span></div>
-<div class="line"><span class="lineno">  193</span>        <span class="keywordtype">int</span> pivot_col = -1;</div>
-<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  195</span>        {</div>
-<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
-<div class="line"><span class="lineno">  197</span>            {</div>
-<div class="line"><span class="lineno">  198</span>                pivot_col = j;</div>
-<div class="line"><span class="lineno">  199</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  200</span>            }</div>
-<div class="line"><span class="lineno">  201</span>        }</div>
-<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> (pivot_col != -1)</div>
-<div class="line"><span class="lineno">  203</span>            pivots.push_back(pivot_col);</div>
-<div class="line"><span class="lineno">  204</span>    }</div>
-<div class="line"><span class="lineno">  205</span>    <span class="keywordflow">return</span> pivots;</div>
-<div class="line"><span class="lineno">  206</span>}</div>
+
+<p>Identifies the pivot columns in the matrix.    </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The matrix after Gaussian elimination. </td></tr>
+    <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;int&gt; A vector containing the indices of the pivot columns.    </dd></dl>
+<div class="fragment"><div class="line"><span class="lineno">  321</span>{</div>
+<div class="line"><span class="lineno">  322</span>    vector&lt;int&gt; pivots;</div>
+<div class="line"><span class="lineno">  323</span>    <span class="keywordtype">int</span> n = min(rows, cols - 1);</div>
+<div class="line"><span class="lineno">  324</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n; i++)</div>
+<div class="line"><span class="lineno">  325</span>    {</div>
+<div class="line"><span class="lineno">  326</span>        <span class="comment">// Find the pivot column in the current row</span></div>
+<div class="line"><span class="lineno">  327</span>        <span class="keywordtype">int</span> pivot_col = -1;</div>
+<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  329</span>        {</div>
+<div class="line"><span class="lineno">  330</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
+<div class="line"><span class="lineno">  331</span>            {</div>
+<div class="line"><span class="lineno">  332</span>                pivot_col = j;</div>
+<div class="line"><span class="lineno">  333</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  334</span>            }</div>
+<div class="line"><span class="lineno">  335</span>        }</div>
+<div class="line"><span class="lineno">  336</span>        <span class="keywordflow">if</span> (pivot_col != -1)</div>
+<div class="line"><span class="lineno">  337</span>            pivots.push_back(pivot_col);</div>
+<div class="line"><span class="lineno">  338</span>    }</div>
+<div class="line"><span class="lineno">  339</span>    <span class="keywordflow">return</span> pivots;</div>
+<div class="line"><span class="lineno">  340</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -525,19 +599,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Performs partial pivoting and returns the row index with the maximum pivot. </p>
 <div class="fragment"><div class="line"><span class="lineno">   24</span>{</div>
 <div class="line"><span class="lineno">   25</span>    <span class="keywordtype">int</span> imax = current_row;</div>
 <div class="line"><span class="lineno">   26</span>    <span class="keywordtype">double</span> max_val = fabs(m[current_row][current_row]);</div>
 <div class="line"><span class="lineno">   27</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = current_row + 1; i &lt; total_rows; i++)</div>
 <div class="line"><span class="lineno">   28</span>    {</div>
-<div class="line"><span class="lineno">   29</span>        <span class="keywordflow">if</span> (fabs(m[i][current_row]) &gt; max_val)</div>
-<div class="line"><span class="lineno">   30</span>        {</div>
-<div class="line"><span class="lineno">   31</span>            imax = i;</div>
-<div class="line"><span class="lineno">   32</span>            max_val = fabs(m[i][current_row]);</div>
-<div class="line"><span class="lineno">   33</span>        }</div>
-<div class="line"><span class="lineno">   34</span>    }</div>
-<div class="line"><span class="lineno">   35</span>    <span class="keywordflow">return</span> imax;</div>
-<div class="line"><span class="lineno">   36</span>}</div>
+<div class="line"><span class="lineno">   29</span>        <span class="keywordtype">double</span> val = fabs(m[i][current_row]);</div>
+<div class="line"><span class="lineno">   30</span>        <span class="keywordflow">if</span> (val &gt; max_val)</div>
+<div class="line"><span class="lineno">   31</span>        {</div>
+<div class="line"><span class="lineno">   32</span>            imax = i;</div>
+<div class="line"><span class="lineno">   33</span>            max_val = val;</div>
+<div class="line"><span class="lineno">   34</span>        }</div>
+<div class="line"><span class="lineno">   35</span>    }</div>
+<div class="line"><span class="lineno">   36</span>    <span class="keywordflow">return</span> imax;</div>
+<div class="line"><span class="lineno">   37</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -569,111 +646,122 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  209</span>{</div>
-<div class="line"><span class="lineno">  210</span>    cout &lt;&lt; <span class="stringliteral">&quot;The system has infinitely many solutions.&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  211</span>    cout &lt;&lt; <span class="stringliteral">&quot;Solution space dimension: &quot;</span> &lt;&lt; (cols - 1 - rank) &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  212</span> </div>
-<div class="line"><span class="lineno">  213</span>    <span class="comment">// Identify pivot columns</span></div>
-<div class="line"><span class="lineno">  214</span>    vector&lt;int&gt; pivots = <a class="code hl_function" href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a>(m, rows, cols);</div>
+
+<p>Displays the general solution for systems with infinitely many solutions.    </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The matrix after Gaussian elimination. </td></tr>
+    <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
+    <tr><td class="paramname">rank</td><td>The rank of the coefficient matrix A.    </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line"><span class="lineno">  212</span>{</div>
+<div class="line"><span class="lineno">  213</span>    cout &lt;&lt; <span class="stringliteral">&quot;The system has infinitely many solutions.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  214</span>    cout &lt;&lt; <span class="stringliteral">&quot;Solution space dimension: &quot;</span> &lt;&lt; (cols - 1 - rank) &lt;&lt; endl;</div>
 <div class="line"><span class="lineno">  215</span> </div>
-<div class="line"><span class="lineno">  216</span>    <span class="comment">// Identify free variables</span></div>
-<div class="line"><span class="lineno">  217</span>    vector&lt;int&gt; free_vars;</div>
-<div class="line"><span class="lineno">  218</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  219</span>    {</div>
-<div class="line"><span class="lineno">  220</span>        <span class="keywordflow">if</span> (find(pivots.begin(), pivots.end(), j) == pivots.end())</div>
-<div class="line"><span class="lineno">  221</span>        {</div>
-<div class="line"><span class="lineno">  222</span>            free_vars.push_back(j);</div>
-<div class="line"><span class="lineno">  223</span>        }</div>
-<div class="line"><span class="lineno">  224</span>    }</div>
-<div class="line"><span class="lineno">  225</span> </div>
-<div class="line"><span class="lineno">  226</span>    <span class="comment">// Assign parameters to free variables</span></div>
-<div class="line"><span class="lineno">  227</span>    <span class="keywordtype">int</span> num_free = free_vars.size();</div>
-<div class="line"><span class="lineno">  228</span>    vector&lt;string&gt; params;</div>
-<div class="line"><span class="lineno">  229</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; num_free; i++)</div>
-<div class="line"><span class="lineno">  230</span>    {</div>
-<div class="line"><span class="lineno">  231</span>        params.push_back(<span class="stringliteral">&quot;t&quot;</span> + to_string(i + 1));</div>
-<div class="line"><span class="lineno">  232</span>    }</div>
-<div class="line"><span class="lineno">  233</span> </div>
-<div class="line"><span class="lineno">  234</span>    <span class="comment">// Initialize solution vector with parameters</span></div>
-<div class="line"><span class="lineno">  235</span>    vector&lt;double&gt; particular_solution(cols - 1, 0.0);</div>
-<div class="line"><span class="lineno">  236</span>    vector&lt;vector&lt;double&gt;&gt; basis_vectors;</div>
-<div class="line"><span class="lineno">  237</span> </div>
-<div class="line"><span class="lineno">  238</span>    <span class="comment">// Find a particular solution by setting all free variables to 0</span></div>
-<div class="line"><span class="lineno">  239</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = rows - 1; i &gt;= 0; i--)</div>
-<div class="line"><span class="lineno">  240</span>    {</div>
-<div class="line"><span class="lineno">  241</span>        <span class="comment">// Find the first non-zero coefficient in the row</span></div>
-<div class="line"><span class="lineno">  242</span>        <span class="keywordtype">int</span> pivot_col = -1;</div>
-<div class="line"><span class="lineno">  243</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  244</span>        {</div>
-<div class="line"><span class="lineno">  245</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
-<div class="line"><span class="lineno">  246</span>            {</div>
-<div class="line"><span class="lineno">  247</span>                pivot_col = j;</div>
-<div class="line"><span class="lineno">  248</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  249</span>            }</div>
-<div class="line"><span class="lineno">  250</span>        }</div>
-<div class="line"><span class="lineno">  251</span> </div>
-<div class="line"><span class="lineno">  252</span>        <span class="keywordflow">if</span> (pivot_col == -1)</div>
-<div class="line"><span class="lineno">  253</span>        {</div>
-<div class="line"><span class="lineno">  254</span>            <span class="keywordflow">continue</span>; <span class="comment">// 0 = 0, skip</span></div>
-<div class="line"><span class="lineno">  255</span>        }</div>
-<div class="line"><span class="lineno">  256</span> </div>
-<div class="line"><span class="lineno">  257</span>        <span class="keywordtype">double</span> rhs = m[i][cols - 1];</div>
-<div class="line"><span class="lineno">  258</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = pivot_col + 1; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  259</span>        {</div>
-<div class="line"><span class="lineno">  260</span>            rhs -= m[i][j] * particular_solution[j];</div>
-<div class="line"><span class="lineno">  261</span>        }</div>
-<div class="line"><span class="lineno">  262</span>        particular_solution[pivot_col] = rhs / m[i][pivot_col];</div>
-<div class="line"><span class="lineno">  263</span>    }</div>
-<div class="line"><span class="lineno">  264</span> </div>
-<div class="line"><span class="lineno">  265</span>    <span class="comment">// Now, find basis vectors by setting each free variable to 1 and others to 0</span></div>
-<div class="line"><span class="lineno">  266</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; num_free; i++)</div>
-<div class="line"><span class="lineno">  267</span>    {</div>
-<div class="line"><span class="lineno">  268</span>        vector&lt;double&gt; basis(cols - 1, 0.0);</div>
-<div class="line"><span class="lineno">  269</span>        basis[free_vars[i]] = 1.0; <span class="comment">// Set the free variable to 1</span></div>
-<div class="line"><span class="lineno">  270</span> </div>
-<div class="line"><span class="lineno">  271</span>        <span class="comment">// Perform back-substitution for pivot variables</span></div>
-<div class="line"><span class="lineno">  272</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> r = rank - 1; r &gt;= 0; r--)</div>
-<div class="line"><span class="lineno">  273</span>        {</div>
-<div class="line"><span class="lineno">  274</span>            <span class="keywordtype">int</span> pivot_col = pivots[r];</div>
-<div class="line"><span class="lineno">  275</span>            <span class="keywordtype">double</span> rhs = 0.0;</div>
-<div class="line"><span class="lineno">  276</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = pivot_col + 1; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  277</span>            {</div>
-<div class="line"><span class="lineno">  278</span>                rhs -= m[r][j] * basis[j];</div>
-<div class="line"><span class="lineno">  279</span>            }</div>
-<div class="line"><span class="lineno">  280</span>            basis[pivot_col] = rhs / m[r][pivot_col];</div>
-<div class="line"><span class="lineno">  281</span>        }</div>
-<div class="line"><span class="lineno">  282</span> </div>
-<div class="line"><span class="lineno">  283</span>        basis_vectors.push_back(basis);</div>
-<div class="line"><span class="lineno">  284</span>    }</div>
+<div class="line"><span class="lineno">  216</span>    <span class="comment">// Identify pivot columns</span></div>
+<div class="line"><span class="lineno">  217</span>    vector&lt;int&gt; pivots = <a class="code hl_function" href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a>(m, rows, cols);</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="line"><span class="lineno">  219</span>    <span class="comment">// Identify free variables</span></div>
+<div class="line"><span class="lineno">  220</span>    vector&lt;int&gt; free_vars;</div>
+<div class="line"><span class="lineno">  221</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  222</span>    {</div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">if</span> (find(pivots.begin(), pivots.end(), j) == pivots.end())</div>
+<div class="line"><span class="lineno">  224</span>        {</div>
+<div class="line"><span class="lineno">  225</span>            free_vars.push_back(j);</div>
+<div class="line"><span class="lineno">  226</span>        }</div>
+<div class="line"><span class="lineno">  227</span>    }</div>
+<div class="line"><span class="lineno">  228</span> </div>
+<div class="line"><span class="lineno">  229</span>    <span class="comment">// Assign parameters to free variables</span></div>
+<div class="line"><span class="lineno">  230</span>    <span class="keywordtype">int</span> num_free = free_vars.size();</div>
+<div class="line"><span class="lineno">  231</span>    vector&lt;string&gt; params;</div>
+<div class="line"><span class="lineno">  232</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; num_free; i++)</div>
+<div class="line"><span class="lineno">  233</span>    {</div>
+<div class="line"><span class="lineno">  234</span>        params.push_back(<span class="stringliteral">&quot;t&quot;</span> + to_string(i + 1));</div>
+<div class="line"><span class="lineno">  235</span>    }</div>
+<div class="line"><span class="lineno">  236</span> </div>
+<div class="line"><span class="lineno">  237</span>    <span class="comment">// Initialize solution vector with parameters</span></div>
+<div class="line"><span class="lineno">  238</span>    vector&lt;double&gt; particular_solution(cols - 1, 0.0);</div>
+<div class="line"><span class="lineno">  239</span>    vector&lt;vector&lt;double&gt;&gt; basis_vectors;</div>
+<div class="line"><span class="lineno">  240</span> </div>
+<div class="line"><span class="lineno">  241</span>    <span class="comment">// Find a particular solution by setting all free variables to 0</span></div>
+<div class="line"><span class="lineno">  242</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = rows - 1; i &gt;= 0; i--)</div>
+<div class="line"><span class="lineno">  243</span>    {</div>
+<div class="line"><span class="lineno">  244</span>        <span class="comment">// Find the first non-zero coefficient in the row</span></div>
+<div class="line"><span class="lineno">  245</span>        <span class="keywordtype">int</span> pivot_col = -1;</div>
+<div class="line"><span class="lineno">  246</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  247</span>        {</div>
+<div class="line"><span class="lineno">  248</span>            <span class="keywordflow">if</span> (fabs(m[i][j]) &gt; 1e-12)</div>
+<div class="line"><span class="lineno">  249</span>            {</div>
+<div class="line"><span class="lineno">  250</span>                pivot_col = j;</div>
+<div class="line"><span class="lineno">  251</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  252</span>            }</div>
+<div class="line"><span class="lineno">  253</span>        }</div>
+<div class="line"><span class="lineno">  254</span> </div>
+<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">if</span> (pivot_col == -1)</div>
+<div class="line"><span class="lineno">  256</span>        {</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">continue</span>; <span class="comment">// 0 = 0, skip</span></div>
+<div class="line"><span class="lineno">  258</span>        }</div>
+<div class="line"><span class="lineno">  259</span> </div>
+<div class="line"><span class="lineno">  260</span>        <span class="keywordtype">double</span> rhs = m[i][cols - 1];</div>
+<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = pivot_col + 1; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  262</span>        {</div>
+<div class="line"><span class="lineno">  263</span>            rhs -= m[i][j] * particular_solution[j];</div>
+<div class="line"><span class="lineno">  264</span>        }</div>
+<div class="line"><span class="lineno">  265</span>        particular_solution[pivot_col] = rhs / m[i][pivot_col];</div>
+<div class="line"><span class="lineno">  266</span>    }</div>
+<div class="line"><span class="lineno">  267</span> </div>
+<div class="line"><span class="lineno">  268</span>    <span class="comment">// Now, find basis vectors by setting each free variable to 1 and others to 0</span></div>
+<div class="line"><span class="lineno">  269</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; num_free; i++)</div>
+<div class="line"><span class="lineno">  270</span>    {</div>
+<div class="line"><span class="lineno">  271</span>        vector&lt;double&gt; basis(cols - 1, 0.0);</div>
+<div class="line"><span class="lineno">  272</span>        basis[free_vars[i]] = 1.0; <span class="comment">// Set the free variable to 1</span></div>
+<div class="line"><span class="lineno">  273</span> </div>
+<div class="line"><span class="lineno">  274</span>        <span class="comment">// Perform back-substitution for pivot variables</span></div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> r = rank - 1; r &gt;= 0; r--)</div>
+<div class="line"><span class="lineno">  276</span>        {</div>
+<div class="line"><span class="lineno">  277</span>            <span class="keywordtype">int</span> pivot_col = pivots[r];</div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordtype">double</span> rhs = 0.0;</div>
+<div class="line"><span class="lineno">  279</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = pivot_col + 1; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  280</span>            {</div>
+<div class="line"><span class="lineno">  281</span>                rhs -= m[r][j] * basis[j];</div>
+<div class="line"><span class="lineno">  282</span>            }</div>
+<div class="line"><span class="lineno">  283</span>            basis[pivot_col] = rhs / m[r][pivot_col];</div>
+<div class="line"><span class="lineno">  284</span>        }</div>
 <div class="line"><span class="lineno">  285</span> </div>
-<div class="line"><span class="lineno">  286</span>    <span class="comment">// Display the general solution</span></div>
-<div class="line"><span class="lineno">  287</span>    cout &lt;&lt; <span class="stringliteral">&quot;General solution:&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  288</span>    cout &lt;&lt; <span class="stringliteral">&quot;x = [&quot;</span>;</div>
-<div class="line"><span class="lineno">  289</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  290</span>    {</div>
-<div class="line"><span class="lineno">  291</span>        cout &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; particular_solution[j];</div>
-<div class="line"><span class="lineno">  292</span>        <span class="keywordflow">if</span> (j &lt; cols - 2)</div>
-<div class="line"><span class="lineno">  293</span>            cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><span class="lineno">  294</span>    }</div>
-<div class="line"><span class="lineno">  295</span>    cout &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><span class="lineno">  296</span> </div>
-<div class="line"><span class="lineno">  297</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; num_free; i++)</div>
-<div class="line"><span class="lineno">  298</span>    {</div>
-<div class="line"><span class="lineno">  299</span>        cout &lt;&lt; <span class="stringliteral">&quot; + &quot;</span> &lt;&lt; params[i] &lt;&lt; <span class="stringliteral">&quot; * [&quot;</span>;</div>
-<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
-<div class="line"><span class="lineno">  301</span>        {</div>
-<div class="line"><span class="lineno">  302</span>            cout &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; basis_vectors[i][j];</div>
-<div class="line"><span class="lineno">  303</span>            <span class="keywordflow">if</span> (j &lt; cols - 2)</div>
-<div class="line"><span class="lineno">  304</span>                cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><span class="lineno">  305</span>        }</div>
-<div class="line"><span class="lineno">  306</span>        cout &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><span class="lineno">  307</span>        <span class="keywordflow">if</span> (i &lt; num_free - 1)</div>
-<div class="line"><span class="lineno">  308</span>            cout &lt;&lt; <span class="stringliteral">&quot; + &quot;</span>;</div>
-<div class="line"><span class="lineno">  309</span>    }</div>
-<div class="line"><span class="lineno">  310</span>    cout &lt;&lt; endl</div>
-<div class="line"><span class="lineno">  311</span>         &lt;&lt; endl;</div>
-<div class="line"><span class="lineno">  312</span>}</div>
-<div class="ttc" id="amethods_8cpp_html_a062a9c93054ad9e6bb03d2a64f8b4749"><div class="ttname"><a href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a></div><div class="ttdeci">vector&lt; int &gt; IdentifyPivots(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdef"><b>Definition</b> methods.cpp:187</div></div>
+<div class="line"><span class="lineno">  286</span>        basis_vectors.push_back(basis);</div>
+<div class="line"><span class="lineno">  287</span>    }</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>    <span class="comment">// Display the general solution</span></div>
+<div class="line"><span class="lineno">  290</span>    cout &lt;&lt; <span class="stringliteral">&quot;General solution:&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  291</span>    cout &lt;&lt; <span class="stringliteral">&quot;x = [&quot;</span>;</div>
+<div class="line"><span class="lineno">  292</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  293</span>    {</div>
+<div class="line"><span class="lineno">  294</span>        cout &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; particular_solution[j];</div>
+<div class="line"><span class="lineno">  295</span>        <span class="keywordflow">if</span> (j &lt; cols - 2)</div>
+<div class="line"><span class="lineno">  296</span>            cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  297</span>    }</div>
+<div class="line"><span class="lineno">  298</span>    cout &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><span class="lineno">  299</span> </div>
+<div class="line"><span class="lineno">  300</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; num_free; i++)</div>
+<div class="line"><span class="lineno">  301</span>    {</div>
+<div class="line"><span class="lineno">  302</span>        cout &lt;&lt; <span class="stringliteral">&quot; + &quot;</span> &lt;&lt; params[i] &lt;&lt; <span class="stringliteral">&quot; * [&quot;</span>;</div>
+<div class="line"><span class="lineno">  303</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols - 1; j++)</div>
+<div class="line"><span class="lineno">  304</span>        {</div>
+<div class="line"><span class="lineno">  305</span>            cout &lt;&lt; fixed &lt;&lt; setprecision(4) &lt;&lt; basis_vectors[i][j];</div>
+<div class="line"><span class="lineno">  306</span>            <span class="keywordflow">if</span> (j &lt; cols - 2)</div>
+<div class="line"><span class="lineno">  307</span>                cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  308</span>        }</div>
+<div class="line"><span class="lineno">  309</span>        cout &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><span class="lineno">  310</span>        <span class="keywordflow">if</span> (i &lt; num_free - 1)</div>
+<div class="line"><span class="lineno">  311</span>            cout &lt;&lt; <span class="stringliteral">&quot; + &quot;</span>;</div>
+<div class="line"><span class="lineno">  312</span>    }</div>
+<div class="line"><span class="lineno">  313</span>    cout &lt;&lt; endl</div>
+<div class="line"><span class="lineno">  314</span>         &lt;&lt; endl;</div>
+<div class="line"><span class="lineno">  315</span>}</div>
+<div class="ttc" id="amethods_8cpp_html_a062a9c93054ad9e6bb03d2a64f8b4749"><div class="ttname"><a href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a></div><div class="ttdeci">vector&lt; int &gt; IdentifyPivots(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Identifies the pivot columns in the matrix.</div><div class="ttdef"><b>Definition</b> methods.cpp:320</div></div>
 </div><!-- fragment -->
 </div>
 </div>

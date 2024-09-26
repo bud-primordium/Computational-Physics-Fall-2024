@@ -1,9 +1,9 @@
 <!-- HTML header for doxygen 1.12.0-->
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.12.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -122,6 +122,7 @@ $(function(){initNavTree('methods_8h.html',''); initResizable(true); });
 <p>Core computational functions for solving linear systems.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for methods.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -129,9 +130,11 @@ $(function(){initNavTree('methods_8h.html',''); initResizable(true); });
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="methods_8h__incl.png" border="0" usemap="#amethods_8h" alt=""/></div>
 <map name="amethods_8h" id="amethods_8h">
-<area shape="rect" title="Core computational functions for solving linear systems." alt="" coords="5,5,88,32"/>
-<area shape="rect" title=" " alt="" coords="18,80,75,107"/>
-<area shape="poly" title=" " alt="" coords="49,33,49,64,44,64,44,33"/>
+<area shape="rect" title="Core computational functions for solving linear systems." alt="" coords="33,5,115,32"/>
+<area shape="rect" title=" " alt="" coords="5,80,63,107"/>
+<area shape="poly" title=" " alt="" coords="69,34,51,68,46,65,65,31"/>
+<area shape="rect" title=" " alt="" coords="87,80,141,107"/>
+<area shape="poly" title=" " alt="" coords="83,31,102,65,97,68,79,34"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -154,22 +157,26 @@ $(function(){initNavTree('methods_8h.html',''); initResizable(true); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad65a91718a67d95c2bd00b4c753d3766" id="r_ad65a91718a67d95c2bd00b4c753d3766"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad65a91718a67d95c2bd00b4c753d3766">GaussianElimination</a> (std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
-<tr class="memdesc:ad65a91718a67d95c2bd00b4c753d3766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs Gaussian elimination on the matrix.  <br /></td></tr>
+<tr class="memdesc:ad65a91718a67d95c2bd00b4c753d3766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs Gaussian elimination on the augmented matrix with partial pivoting.  <br /></td></tr>
 <tr class="separator:ad65a91718a67d95c2bd00b4c753d3766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6d94e87c3566ffd3bb2835ff2d18d5d" id="r_ad6d94e87c3566ffd3bb2835ff2d18d5d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6d94e87c3566ffd3bb2835ff2d18d5d">DetermineRank</a> (const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
-<tr class="memdesc:ad6d94e87c3566ffd3bb2835ff2d18d5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the rank of the matrix.  <br /></td></tr>
+<tr class="memdesc:ad6d94e87c3566ffd3bb2835ff2d18d5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the rank of the coefficient matrix A (excluding augmented column).  <br /></td></tr>
 <tr class="separator:ad6d94e87c3566ffd3bb2835ff2d18d5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabb015bf653c5a6fcbf99e8ec7f000f2" id="r_aabb015bf653c5a6fcbf99e8ec7f000f2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabb015bf653c5a6fcbf99e8ec7f000f2">BackSubstitution</a> (const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols, std::vector&lt; double &gt; &amp;solution)</td></tr>
-<tr class="memdesc:aabb015bf653c5a6fcbf99e8ec7f000f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs back-substitution to find the unique solution.  <br /></td></tr>
+<tr class="memdesc:aabb015bf653c5a6fcbf99e8ec7f000f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs back-substitution to find the solution vector.  <br /></td></tr>
 <tr class="separator:aabb015bf653c5a6fcbf99e8ec7f000f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7069c66cd98c8ff1b05ff2f8b84dfe2c" id="r_a7069c66cd98c8ff1b05ff2f8b84dfe2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7069c66cd98c8ff1b05ff2f8b84dfe2c">ShowGeneralSolution</a> (const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols, int rank)</td></tr>
 <tr class="memdesc:a7069c66cd98c8ff1b05ff2f8b84dfe2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the general solution for systems with infinitely many solutions.  <br /></td></tr>
 <tr class="separator:a7069c66cd98c8ff1b05ff2f8b84dfe2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b9e8133d7e4a58e80b9da3ead6aff58" id="r_a5b9e8133d7e4a58e80b9da3ead6aff58"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b9e8133d7e4a58e80b9da3ead6aff58">IdentifyPivots</a> (const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</td></tr>
+<tr class="memdesc:a5b9e8133d7e4a58e80b9da3ead6aff58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identifies the pivot columns in the matrix.  <br /></td></tr>
+<tr class="separator:a5b9e8133d7e4a58e80b9da3ead6aff58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Core computational functions for solving linear systems. </p>
 <dl class="section author"><dt>Author</dt><dd>Gilbert Young </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2024/09/25 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2024/09/25</dd></dl>
+<p>This header declares functions for Gaussian elimination with partial pivoting, back-substitution, rank determination, and displaying general solutions. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="aabb015bf653c5a6fcbf99e8ec7f000f2" name="aabb015bf653c5a6fcbf99e8ec7f000f2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aabb015bf653c5a6fcbf99e8ec7f000f2">&#9670;&#160;</a></span>BackSubstitution()</h2>
@@ -200,12 +207,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Performs back-substitution to find the unique solution. </p>
+<p>Performs back-substitution to find the solution vector. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m</td><td>The upper triangular matrix after Gaussian elimination. </td></tr>
     <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
-    <tr><td class="paramname">cols</td><td>Number of columns in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
     <tr><td class="paramname">solution</td><td>Reference to store the solution vector. </td></tr>
   </table>
   </dd>
@@ -240,16 +247,16 @@ false If the system is inconsistent. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Determines the rank of the matrix. </p>
+<p>Determines the rank of the coefficient matrix A (excluding augmented column). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">m</td><td>The matrix. </td></tr>
+    <tr><td class="paramname">m</td><td>The augmented matrix [A|b]. </td></tr>
     <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
-    <tr><td class="paramname">cols</td><td>Number of columns in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int The rank of the matrix. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int The rank of the matrix A. </dd></dl>
 
 </div>
 </div>
@@ -277,16 +284,53 @@ false If the system is inconsistent. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Performs Gaussian elimination on the matrix. </p>
+<p>Performs Gaussian elimination on the augmented matrix with partial pivoting. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">m</td><td>Reference to the matrix to be modified. </td></tr>
+    <tr><td class="paramname">m</td><td>Reference to the augmented matrix [A|b] to be modified. </td></tr>
     <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
-    <tr><td class="paramname">cols</td><td>Number of columns in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int Number of row exchanges performed. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int Number of row exchanges performed during elimination. </dd></dl>
+
+</div>
+</div>
+<a id="a5b9e8133d7e4a58e80b9da3ead6aff58" name="a5b9e8133d7e4a58e80b9da3ead6aff58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b9e8133d7e4a58e80b9da3ead6aff58">&#9670;&#160;</a></span>IdentifyPivots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; int &gt; IdentifyPivots </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>rows</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>cols</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Identifies the pivot columns in the matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The matrix after Gaussian elimination. </td></tr>
+    <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;int&gt; A vector containing the indices of the pivot columns. </dd></dl>
 
 </div>
 </div>
@@ -324,8 +368,8 @@ false If the system is inconsistent. </dd></dl>
   <table class="params">
     <tr><td class="paramname">m</td><td>The matrix after Gaussian elimination. </td></tr>
     <tr><td class="paramname">rows</td><td>Number of rows in the matrix. </td></tr>
-    <tr><td class="paramname">cols</td><td>Number of columns in the matrix. </td></tr>
-    <tr><td class="paramname">rank</td><td>The rank of the matrix. </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in the matrix (including augmented column). </td></tr>
+    <tr><td class="paramname">rank</td><td>The rank of the coefficient matrix A. </td></tr>
   </table>
   </dd>
 </dl>

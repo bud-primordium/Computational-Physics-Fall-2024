@@ -59,50 +59,55 @@ int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 \DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ \textcolor{comment}{//\ File\ selection\ failed}}
 \DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ vector<vector<double>>\ matrix;}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rows,\ cols;}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{utils_8cpp_aaa4c42442dbb69abecbaced455bd3d5c}{InitMatrix}}(matrix,\ selected\_file,\ rows,\ cols))}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ \textcolor{comment}{//\ Matrix\ initialization\ failed}}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_ac18af39e38edc89ae42a05b2a1c2c3fd}{ShowEquations}}(matrix,\ rows,\ cols);}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Starting\ Gaussian\ elimination\ process..."{}}\ <<\ endl;}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exchange\_count\ =\ \mbox{\hyperlink{methods_8cpp_a2ea7565a417afce6f38d584692d55fd4}{GaussianElimination}}(matrix,\ rows,\ cols);}
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Gaussian\ elimination\ completed."{}}\ <<\ endl}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ endl;}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rank\ =\ \mbox{\hyperlink{methods_8cpp_a0fdd5a300b009e3c78fce40052d76cbe}{DetermineRank}}(matrix,\ rows,\ cols);}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ consistent\ =\ \mbox{\hyperlink{utils_8cpp_af58df231724b448df3738086ef230a8b}{CheckConsistency}}(matrix,\ rows,\ cols);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Start\ timer\ after\ selecting\ the\ file}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ start\_time\ =\ \mbox{\hyperlink{utils_8cpp_ad599ccd0a91c3a7617ea5230269b01b9}{StartTimer}}();}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ vector<vector<double>>\ matrix;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rows,\ cols;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{utils_8cpp_aaa4c42442dbb69abecbaced455bd3d5c}{InitMatrix}}(matrix,\ selected\_file,\ rows,\ cols))}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ \textcolor{comment}{//\ Matrix\ initialization\ failed}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_ac18af39e38edc89ae42a05b2a1c2c3fd}{ShowEquations}}(matrix,\ rows,\ cols);}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Starting\ Gaussian\ elimination\ process..."{}}\ <<\ endl;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exchange\_count\ =\ \mbox{\hyperlink{methods_8cpp_a2ea7565a417afce6f38d584692d55fd4}{GaussianElimination}}(matrix,\ rows,\ cols);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Gaussian\ elimination\ completed."{}}\ <<\ endl}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ endl;}
 \DoxyCodeLine{00067\ }
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!consistent)}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ system\ of\ equations\ is\ inconsistent\ and\ has\ no\ solution."{}}\ <<\ endl;}
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (rank\ <\ (cols\ -\/\ 1))}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{methods_8cpp_ad0c1b2e7266ae89cd0175de9415788b5}{ShowGeneralSolution}}(matrix,\ rows,\ cols,\ rank);}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ vector<double>\ solution;}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ solvable\ =\ \mbox{\hyperlink{methods_8cpp_ac670b993a182e328bad2b2a3ba950388}{BackSubstitution}}(matrix,\ rows,\ cols,\ solution);}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (solvable)}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a202c189a299ce2b4234e13fe6462b5fd}{DisplaySolution}}(solution);}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ system\ of\ equations\ is\ inconsistent\ and\ has\ no\ solution."{}}\ <<\ endl;}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ choice\ =\ \mbox{\hyperlink{interaction_8cpp_ac0c03a1432857a1e55bb86ca977cd544}{AskRunAgain}}();}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (choice\ ==\ \textcolor{charliteral}{'y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'Y'});}
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{interaction_8cpp_ac8baab338f6d1846a193b06303693cea}{WaitForExit}}();}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{00096\ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rank\ =\ \mbox{\hyperlink{methods_8cpp_a0fdd5a300b009e3c78fce40052d76cbe}{DetermineRank}}(matrix,\ rows,\ cols);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ consistent\ =\ \mbox{\hyperlink{utils_8cpp_af58df231724b448df3738086ef230a8b}{CheckConsistency}}(matrix,\ rows,\ cols);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!consistent)}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ system\ of\ equations\ is\ inconsistent\ and\ has\ no\ solution."{}}\ <<\ endl;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (rank\ <\ (cols\ -\/\ 1))}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{methods_8cpp_ad0c1b2e7266ae89cd0175de9415788b5}{ShowGeneralSolution}}(matrix,\ rows,\ cols,\ rank);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ vector<double>\ solution;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ solvable\ =\ \mbox{\hyperlink{methods_8cpp_ac670b993a182e328bad2b2a3ba950388}{BackSubstitution}}(matrix,\ rows,\ cols,\ solution);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (solvable)}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a202c189a299ce2b4234e13fe6462b5fd}{DisplaySolution}}(solution);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ system\ of\ equations\ is\ inconsistent\ and\ has\ no\ solution."{}}\ <<\ endl;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Stop\ timer\ after\ the\ solution\ is\ displayed}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a2bcb5f113e10162896f518b3b1dad4a3}{StopTimer}}(start\_time);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ choice\ =\ \mbox{\hyperlink{interaction_8cpp_ac0c03a1432857a1e55bb86ca977cd544}{AskRunAgain}}();}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (choice\ ==\ \textcolor{charliteral}{'y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'Y'});}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{interaction_8cpp_ac8baab338f6d1846a193b06303693cea}{WaitForExit}}();}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00101\ \}}
 
 \end{DoxyCode}

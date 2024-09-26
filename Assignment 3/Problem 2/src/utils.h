@@ -10,9 +10,10 @@
 
 #include <vector>
 #include <string>
+#include <chrono>
 
 /**
- * @brief Initializes the matrix by reading from a .in file.
+ * @brief Initializes the matrix by reading from a `.in` file.
  *
  * @param m Reference to the matrix to be initialized.
  * @param filename Name of the input file.
@@ -49,5 +50,9 @@ bool CheckConsistency(const std::vector<std::vector<double>> &m, int rows, int c
  * @param solution The solution vector.
  */
 void DisplaySolution(const std::vector<double> &solution);
+
+// Timing functions
+std::chrono::steady_clock::time_point StartTimer();
+void StopTimer(const std::chrono::steady_clock::time_point &start);
 
 #endif // UTILS_H

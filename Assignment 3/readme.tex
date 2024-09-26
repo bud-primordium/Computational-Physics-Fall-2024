@@ -1,11 +1,27 @@
 \documentclass[11pt]{article}
+
+% 页面设置
 \usepackage[top=1cm, bottom=2cm, left=1cm, right=1cm]{geometry}
+
+% 中文支持
 \usepackage{ctex}
-\usepackage[linesnumbered,ruled]{algorithm2e}
-\usepackage{amsthm,amsmath,amssymb}
-\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+
+% 数学包
+\usepackage{amsmath, amssymb, amsthm}
+
+% 算法包
+\usepackage[linesnumbered, ruled]{algorithm2e}
+
+% 超链接
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+
+% 代码显示
 \usepackage{listings}
+
+% 颜色和命令定义
 \usepackage{xcolor,xparse}
+
+% 其他需要的包
 \usepackage{realboxes}
 \usepackage{mathrsfs}
 \usepackage{wrapfig}
@@ -14,27 +30,21 @@
 \usepackage{pifont}
 \usepackage{ulem}
 \usepackage{bm}
+\usepackage{multicol}
+\usepackage{verbatim}
+\usepackage{float}
 
-\SetKw{Print}{print}
-\SetKw{Read}{read}
-\SetKw{Allocate}{allocate}
-\SetKw{Deallocate}{deallocate}
-\SetKw{Call}{call}
-\SetKw{True}{true}
-\SetKw{False}{false}
-\SetKw{Continue}{continue}
-\SetKw{Break}{break}
-\SetKw{Write}{write}
+% 添加 'soul' 包用于高亮和支持换行
+\usepackage{soul}
 
-\definecolor{cmdbg}{rgb}{0.9,0.9,0.9}
-\lstset{%
-	basicstyle=\ttfamily,
-	breaklines = true,
-	backgroundcolor=\color{cmdbg},
-}
-\DeclareDocumentCommand{\ccmd}{v}{% 参数 v 表示工作方法类似于 \verb
-    \Colorbox{cmdbg}{\csname lstinline\endcsname!#1!}%
-}
+% 定义自定义颜色
+\definecolor{cmdbg}{RGB}{220, 220, 220} % 浅灰色背景
+
+% 设置高亮颜色
+\sethlcolor{cmdbg}
+
+% 定义 \ccmd 命令，用于行内代码片段
+\newcommand{\ccmd}[1]{\hl{\texttt{#1}}}
 
 
 \author{杨远青 22300190015}
@@ -44,7 +54,8 @@
 \maketitle
 \textit{远方来朋，喜；假期俱至，悦。}
 
-\section{\texorpdfstring{\sout{题目 1：高斯消元法的时间复杂度分析}}{题目 1：高斯消元法的时间复杂度分析}}
+
+\section{\texorpdfstring{\sout{题目 1：高斯消元法的时间复杂度分析}}{题目 1：高斯消元法的时间复杂度分析}}\label{sec:gaussian_elimination}
 \input{Problem 1/problem_1_old.tex}
 
 \setcounter{section}{0}

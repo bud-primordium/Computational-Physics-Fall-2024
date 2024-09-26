@@ -4,7 +4,6 @@
  * @file methods.cpp
  * @brief Implementation of computational functions for solving linear systems.
  *
- * @details
  * This file implements key algorithms such as Gaussian elimination with partial pivoting,
  * back-substitution, and rank determination. It also includes functionality to display
  * the general solution when the system has infinitely many solutions.
@@ -16,43 +15,47 @@
 #include <cmath>
 #include <algorithm>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-// Performs partial pivoting and returns the row index with the maximum pivot.
+/// Performs partial pivoting and returns the row index with the maximum pivot.
 int Pivoting(const vector<vector<double>> &m, int current_row, int total_rows)
 {
     int imax = current_row;
     double max_val = fabs(m[current_row][current_row]);
     for (int i = current_row + 1; i < total_rows; i++)
     {
-        if (fabs(m[i][current_row]) > max_val)
+        double val = fabs(m[i][current_row]);
+        if (val > max_val)
         {
             imax = i;
-            max_val = fabs(m[i][current_row]);
+            max_val = val;
         }
     }
     return imax;
 }
 
-// Swaps two rows in the matrix.
+/// Swaps two rows in the matrix and outputs the action.
 void Exchange(vector<vector<double>> &m, int row1, int row2)
 {
     swap(m[row1], m[row2]);
     cout << "Swapping row " << row1 + 1 << " with row " << row2 + 1 << "." << endl;
 }
 
-// Performs elimination on the matrix to form an upper triangular matrix.
+/// Performs elimination on the matrix to form an upper triangular matrix.
 bool Eliminate(vector<vector<double>> &m, int current_row, int total_rows, int total_cols)
 {
+    double pivot = m[current_row][current_row];
+    if (fabs(pivot) < 1e-12)
+    {
+        // Pivot is too small, cannot eliminate
+        return false;
+    }
+
     for (int i = current_row + 1; i < total_rows; i++)
     {
-        if (fabs(m[current_row][current_row]) < 1e-12)
-        {
-            // Pivot is too small, cannot eliminate
-            return false;
-        }
-        double factor = m[i][current_row] / m[current_row][current_row];
+        double factor = m[i][current_row] / pivot;
         cout << "Eliminating element in row " << i + 1 << ", column " << current_row + 1 << ":" << endl;
         cout << "Multiplying row " << current_row + 1 << " by " << fixed << setprecision(4) << factor
              << " and subtracting from row " << i + 1 << "." << endl;
@@ -66,34 +69,46 @@ bool Eliminate(vector<vector<double>> &m, int current_row, int total_rows, int t
     return true;
 }
 
+/**
+ * @copydoc GaussianElimination(std::vector<std::vector<double>> &, int, int)
+ */
 int GaussianElimination(vector<vector<double>> &m, int rows, int cols)
 {
     int exchange_count = 0;
-    for (int i = 0; i < min(rows, cols - 1); i++)
+    int n = min(rows, cols - 1); // Number of variables
+
+    for (int k = 0; k < n; k++)
     {
-        cout << "Processing column " << i + 1 << "..." << endl;
-        int imax = Pivoting(m, i, rows);
-        if (imax != i)
+        cout << "Processing column " << k + 1 << "..." << endl;
+
+        // Find the row with the maximum pivot element
+        int imax = Pivoting(m, k, rows);
+
+        // Swap the current row with the pivot row if necessary
+        if (imax != k)
         {
-            Exchange(m, i, imax);
+            Exchange(m, k, imax);
             exchange_count++;
         }
         else
         {
-            cout << "No need to swap rows for column " << i + 1 << "." << endl;
+            cout << "No need to swap rows for column " << k + 1 << "." << endl;
         }
 
-        // Check if pivot is zero
-        if (fabs(m[i][i]) < 1e-12)
+        // Check if pivot element is near zero (singular matrix)
+        if (fabs(m[k][k]) < 1e-12)
         {
-            cout << "Warning: Pivot element in row " << i + 1 << " is close to zero. The matrix may be singular." << endl;
-        }
-        else
-        {
-            Eliminate(m, i, rows, cols);
+            cout << "Warning: Pivot element in row " << k + 1 << " is close to zero. The matrix may be singular." << endl;
+            continue; // Skip elimination for this pivot
         }
 
-        // Display current matrix state with optimized formatting
+        // Eliminate entries below the pivot
+        if (!Eliminate(m, k, rows, cols))
+        {
+            cout << "Elimination failed for column " << k + 1 << "." << endl;
+        }
+
+        // Display current matrix state
         cout << "Current matrix state:" << endl;
         for (int r = 0; r < rows; r++)
         {
@@ -116,6 +131,9 @@ int GaussianElimination(vector<vector<double>> &m, int rows, int cols)
     return exchange_count;
 }
 
+/**
+ * @copydoc BackSubstitution(const std::vector<std::vector<double>> &, int, int, std::vector<double> &)
+ */
 bool BackSubstitution(const vector<vector<double>> &m, int rows, int cols, vector<double> &solution)
 {
     solution.assign(cols - 1, 0.0);
@@ -164,6 +182,9 @@ bool BackSubstitution(const vector<vector<double>> &m, int rows, int cols, vecto
     return true;
 }
 
+/**
+ * @copydoc DetermineRank(const std::vector<std::vector<double>> &, int, int)
+ */
 int DetermineRank(const vector<vector<double>> &m, int rows, int cols)
 {
     int rank = 0;
@@ -184,27 +205,9 @@ int DetermineRank(const vector<vector<double>> &m, int rows, int cols)
     return rank;
 }
 
-vector<int> IdentifyPivots(const vector<vector<double>> &m, int rows, int cols)
-{
-    vector<int> pivots;
-    for (int i = 0; i < min(rows, cols - 1); i++)
-    {
-        // Find the pivot in the current row
-        int pivot_col = -1;
-        for (int j = 0; j < cols - 1; j++)
-        {
-            if (fabs(m[i][j]) > 1e-12)
-            {
-                pivot_col = j;
-                break;
-            }
-        }
-        if (pivot_col != -1)
-            pivots.push_back(pivot_col);
-    }
-    return pivots;
-}
-
+/**
+ * @copydoc ShowGeneralSolution(const std::vector<std::vector<double>> &, int, int, int)
+ */
 void ShowGeneralSolution(const vector<vector<double>> &m, int rows, int cols, int rank)
 {
     cout << "The system has infinitely many solutions." << endl;
@@ -309,4 +312,29 @@ void ShowGeneralSolution(const vector<vector<double>> &m, int rows, int cols, in
     }
     cout << endl
          << endl;
+}
+
+/**
+ * @copydoc IdentifyPivots(const std::vector<std::vector<double>> &, int, int)
+ */
+vector<int> IdentifyPivots(const vector<vector<double>> &m, int rows, int cols)
+{
+    vector<int> pivots;
+    int n = min(rows, cols - 1);
+    for (int i = 0; i < n; i++)
+    {
+        // Find the pivot column in the current row
+        int pivot_col = -1;
+        for (int j = 0; j < cols - 1; j++)
+        {
+            if (fabs(m[i][j]) > 1e-12)
+            {
+                pivot_col = j;
+                break;
+            }
+        }
+        if (pivot_col != -1)
+            pivots.push_back(pivot_col);
+    }
+    return pivots;
 }

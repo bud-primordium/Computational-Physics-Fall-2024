@@ -2,19 +2,22 @@
 \hypertarget{methods_8h_source}{}\label{methods_8h_source}\mbox{\hyperlink{methods_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ }
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ METHODS\_H}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ METHODS\_H}}
-\DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00021\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{methods_8h_ad65a91718a67d95c2bd00b4c753d3766}{GaussianElimination}}(std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00031\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{methods_8h_ad6d94e87c3566ffd3bb2835ff2d18d5d}{DetermineRank}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
-\DoxyCodeLine{00032\ }
-\DoxyCodeLine{00043\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{methods_8h_aabb015bf653c5a6fcbf99e8ec7f000f2}{BackSubstitution}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols,\ std::vector<double>\ \&solution);}
-\DoxyCodeLine{00044\ }
-\DoxyCodeLine{00053\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{methods_8h_a7069c66cd98c8ff1b05ff2f8b84dfe2c}{ShowGeneralSolution}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols,\ \textcolor{keywordtype}{int}\ rank);}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ METHODS\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ METHODS\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ METHODS\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00026\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{methods_8h_ad65a91718a67d95c2bd00b4c753d3766}{GaussianElimination}}(std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{methods_8h_ad6d94e87c3566ffd3bb2835ff2d18d5d}{DetermineRank}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00048\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{methods_8h_aabb015bf653c5a6fcbf99e8ec7f000f2}{BackSubstitution}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols,\ std::vector<double>\ \&solution);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00058\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{methods_8h_a7069c66cd98c8ff1b05ff2f8b84dfe2c}{ShowGeneralSolution}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols,\ \textcolor{keywordtype}{int}\ rank);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00068\ std::vector<int>\ \mbox{\hyperlink{methods_8h_a5b9e8133d7e4a58e80b9da3ead6aff58}{IdentifyPivots}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ METHODS\_H}}
 
 \end{DoxyCode}

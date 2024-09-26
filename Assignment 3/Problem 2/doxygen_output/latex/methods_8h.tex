@@ -6,12 +6,13 @@ Core computational functions for solving linear systems.
 
 
 {\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
 Include dependency graph for methods.\+h\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=142pt]{methods_8h__incl}
+\includegraphics[width=182pt]{methods_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:
@@ -26,13 +27,15 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{DoxyCompactItemize}
 \item 
 int \mbox{\hyperlink{methods_8h_ad65a91718a67d95c2bd00b4c753d3766}{Gaussian\+Elimination}} (std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
-\begin{DoxyCompactList}\small\item\em Performs Gaussian elimination on the matrix. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Performs Gaussian elimination on the augmented matrix with partial pivoting. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{methods_8h_ad6d94e87c3566ffd3bb2835ff2d18d5d}{Determine\+Rank}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
-\begin{DoxyCompactList}\small\item\em Determines the rank of the matrix. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Determines the rank of the coefficient matrix A (excluding augmented column). \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{methods_8h_aabb015bf653c5a6fcbf99e8ec7f000f2}{Back\+Substitution}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols, std\+::vector$<$ double $>$ \&solution)
-\begin{DoxyCompactList}\small\item\em Performs back-\/substitution to find the unique solution. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Performs back-\/substitution to find the solution vector. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{methods_8h_a7069c66cd98c8ff1b05ff2f8b84dfe2c}{Show\+General\+Solution}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols, int rank)
-\begin{DoxyCompactList}\small\item\em Displays the general solution for systems with infinitely many solutions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Displays the general solution for systems with infinitely many solutions. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{methods_8h_a5b9e8133d7e4a58e80b9da3ead6aff58}{Identify\+Pivots}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
+\begin{DoxyCompactList}\small\item\em Identifies the pivot columns in the matrix. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -42,9 +45,11 @@ Core computational functions for solving linear systems.
 Gilbert Young 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-2024/09/25 
+2024/09/25
 \end{DoxyDate}
 
+
+This header declares functions for Gaussian elimination with partial pivoting, back-\/substitution, rank determination, and displaying general solutions. 
 
 \doxysubsection{Function Documentation}
 \Hypertarget{methods_8h_aabb015bf653c5a6fcbf99e8ec7f000f2}\index{methods.h@{methods.h}!BackSubstitution@{BackSubstitution}}
@@ -55,7 +60,7 @@ bool Back\+Substitution (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ s
 
 
 
-Performs back-\/substitution to find the unique solution. 
+Performs back-\/substitution to find the solution vector. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -63,7 +68,7 @@ Performs back-\/substitution to find the unique solution.
 \hline
 {\em rows} & Number of rows in the matrix. \\
 \hline
-{\em cols} & Number of columns in the matrix. \\
+{\em cols} & Number of columns in the matrix (including augmented column). \\
 \hline
 {\em solution} & Reference to store the solution vector. \\
 \hline
@@ -81,19 +86,19 @@ int Determine\+Rank (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+
 
 
 
-Determines the rank of the matrix. 
+Determines the rank of the coefficient matrix A (excluding augmented column). 
 
 
 \begin{DoxyParams}{Parameters}
-{\em m} & The matrix. \\
+{\em m} & The augmented matrix \mbox{[}A\texorpdfstring{$\vert$}{|}b\mbox{]}. \\
 \hline
 {\em rows} & Number of rows in the matrix. \\
 \hline
-{\em cols} & Number of columns in the matrix. \\
+{\em cols} & Number of columns in the matrix (including augmented column). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-int The rank of the matrix. 
+int The rank of the matrix A. 
 \end{DoxyReturn}
 \Hypertarget{methods_8h_ad65a91718a67d95c2bd00b4c753d3766}\index{methods.h@{methods.h}!GaussianElimination@{GaussianElimination}}
 \index{GaussianElimination@{GaussianElimination}!methods.h@{methods.h}}
@@ -103,19 +108,41 @@ int Gaussian\+Elimination (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+
 
 
 
-Performs Gaussian elimination on the matrix. 
+Performs Gaussian elimination on the augmented matrix with partial pivoting. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em m} & Reference to the matrix to be modified. \\
+{\em m} & Reference to the augmented matrix \mbox{[}A\texorpdfstring{$\vert$}{|}b\mbox{]} to be modified. \\
 \hline
 {\em rows} & Number of rows in the matrix. \\
 \hline
-{\em cols} & Number of columns in the matrix. \\
+{\em cols} & Number of columns in the matrix (including augmented column). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-int Number of row exchanges performed. 
+int Number of row exchanges performed during elimination. 
+\end{DoxyReturn}
+\Hypertarget{methods_8h_a5b9e8133d7e4a58e80b9da3ead6aff58}\index{methods.h@{methods.h}!IdentifyPivots@{IdentifyPivots}}
+\index{IdentifyPivots@{IdentifyPivots}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{IdentifyPivots()}{IdentifyPivots()}}
+{\footnotesize\ttfamily \label{methods_8h_a5b9e8133d7e4a58e80b9da3ead6aff58} 
+std\+::vector$<$ int $>$ Identify\+Pivots (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{m}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+
+Identifies the pivot columns in the matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The matrix after Gaussian elimination. \\
+\hline
+{\em rows} & Number of rows in the matrix. \\
+\hline
+{\em cols} & Number of columns in the matrix (including augmented column). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$int$>$ A vector containing the indices of the pivot columns. 
 \end{DoxyReturn}
 \Hypertarget{methods_8h_a7069c66cd98c8ff1b05ff2f8b84dfe2c}\index{methods.h@{methods.h}!ShowGeneralSolution@{ShowGeneralSolution}}
 \index{ShowGeneralSolution@{ShowGeneralSolution}!methods.h@{methods.h}}
@@ -133,8 +160,8 @@ Displays the general solution for systems with infinitely many solutions.
 \hline
 {\em rows} & Number of rows in the matrix. \\
 \hline
-{\em cols} & Number of columns in the matrix. \\
+{\em cols} & Number of columns in the matrix (including augmented column). \\
 \hline
-{\em rank} & The rank of the matrix. \\
+{\em rank} & The rank of the coefficient matrix A. \\
 \hline
 \end{DoxyParams}

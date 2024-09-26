@@ -20,11 +20,7 @@
 
 using namespace std;
 
-/**
- * @brief Allows the user to select an input .in file from the current directory.
- *
- * @return std::string The name of the selected file. Empty string if no file is selected.
- */
+/// Allows the user to select an input `.in` file from the current directory.Returns an empty string if no file is selected.
 string SelectInputFile()
 {
     vector<string> in_files;
@@ -49,7 +45,7 @@ string SelectInputFile()
     else if (in_files.size() == 1)
     {
         selected_file = in_files[0];
-        cout << "Found one .in file: " << selected_file << " . Automatically selecting it." << endl;
+        cout << "Found one .in file: " << selected_file << ". Automatically selecting it." << endl;
     }
     else
     {
@@ -82,11 +78,7 @@ string SelectInputFile()
     return selected_file;
 }
 
-/**
- * @brief Asks the user if they want to run the program again.
- *
- * @return char The user's choice ('y', 'Y', 'n', 'N').
- */
+/// Return char The user's choice ('y', 'Y', 'n', 'N').
 char AskRunAgain()
 {
     char choice;
@@ -107,9 +99,7 @@ char AskRunAgain()
     return choice;
 }
 
-/**
- * @brief Waits for the user to press Enter before exiting.
- */
+/// Waits for the user to press Enter before exiting.
 void WaitForExit()
 {
     cout << "\nPress Enter to exit...";

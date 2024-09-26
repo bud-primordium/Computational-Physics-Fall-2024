@@ -7,12 +7,13 @@ Utility functions for matrix initialization and display.
 
 {\ttfamily \#include $<$vector$>$}\newline
 {\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
 Include dependency graph for utils.\+h\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=182pt]{utils_8h__incl}
+\includegraphics[width=245pt]{utils_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:
@@ -27,13 +28,17 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{DoxyCompactItemize}
 \item 
 bool \mbox{\hyperlink{utils_8h_afdd09077415c66826ef7d5bc9555baf7}{Init\+Matrix}} (std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, const std\+::string \&filename, int \&rows, int \&cols)
-\begin{DoxyCompactList}\small\item\em Initializes the matrix by reading from a .in file. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Initializes the matrix by reading from a {\ttfamily .in} file. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{utils_8h_ae29912c7e35b26fed14371c725a9de04}{Show\+Equations}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
 \begin{DoxyCompactList}\small\item\em Displays the system of linear equations. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{utils_8h_ad5d7dd8f4b1c4406d767e585b2a1569e}{Check\+Consistency}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&m, int rows, int cols)
 \begin{DoxyCompactList}\small\item\em Checks the consistency of the system of equations. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{utils_8h_ae94786e20414ed38e7ffab148ac6bd78}{Display\+Solution}} (const std\+::vector$<$ double $>$ \&solution)
-\begin{DoxyCompactList}\small\item\em Displays the unique solution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Displays the unique solution. \end{DoxyCompactList}\item 
+std\+::chrono\+::steady\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{utils_8h_aed5d7e9b71f7e9678cd766731f22a7fd}{Start\+Timer}} ()
+\item 
+void \mbox{\hyperlink{utils_8h_a96497a08edf3c32846d69dbf39a73159}{Stop\+Timer}} (const std\+::chrono\+::steady\+\_\+clock\+::time\+\_\+point \&start)
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -95,7 +100,7 @@ bool Init\+Matrix (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector
 
 
 
-Initializes the matrix by reading from a .in file. 
+Initializes the matrix by reading from a {\ttfamily .in} file. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -132,3 +137,22 @@ Displays the system of linear equations.
 {\em cols} & Number of variables plus one (for constants). \\
 \hline
 \end{DoxyParams}
+\Hypertarget{utils_8h_aed5d7e9b71f7e9678cd766731f22a7fd}\index{utils.h@{utils.h}!StartTimer@{StartTimer}}
+\index{StartTimer@{StartTimer}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{StartTimer()}{StartTimer()}}
+{\footnotesize\ttfamily \label{utils_8h_aed5d7e9b71f7e9678cd766731f22a7fd} 
+std\+::chrono\+::steady\+\_\+clock\+::time\+\_\+point Start\+Timer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{return}\ chrono::steady\_clock::now();}
+\DoxyCodeLine{00160\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8h_a96497a08edf3c32846d69dbf39a73159}\index{utils.h@{utils.h}!StopTimer@{StopTimer}}
+\index{StopTimer@{StopTimer}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{StopTimer()}{StopTimer()}}
+{\footnotesize\ttfamily \label{utils_8h_a96497a08edf3c32846d69dbf39a73159} 
+void Stop\+Timer (\begin{DoxyParamCaption}\item[{const std\+::chrono\+::steady\+\_\+clock\+::time\+\_\+point \&}]{start}{}\end{DoxyParamCaption})}
+

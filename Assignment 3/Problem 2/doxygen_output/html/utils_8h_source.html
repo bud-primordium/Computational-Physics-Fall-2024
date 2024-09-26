@@ -1,9 +1,9 @@
 <!-- HTML header for doxygen 1.12.0-->
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.12.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -122,19 +122,26 @@ $(function(){initNavTree('utils_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="utils_8h.html#afdd09077415c66826ef7d5bc9555baf7">   24</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="utils_8h.html#afdd09077415c66826ef7d5bc9555baf7">InitMatrix</a>(std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keyword">const</span> std::string &amp;filename, <span class="keywordtype">int</span> &amp;rows, <span class="keywordtype">int</span> &amp;cols);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="utils_8h.html#ae29912c7e35b26fed14371c725a9de04">   33</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="utils_8h.html#ae29912c7e35b26fed14371c725a9de04">ShowEquations</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="utils_8h.html#ad5d7dd8f4b1c4406d767e585b2a1569e">   44</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="utils_8h.html#ad5d7dd8f4b1c4406d767e585b2a1569e">CheckConsistency</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="utils_8h.html#ae94786e20414ed38e7ffab148ac6bd78">   51</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="utils_8h.html#ae94786e20414ed38e7ffab148ac6bd78">DisplaySolution</a>(<span class="keyword">const</span> std::vector&lt;double&gt; &amp;solution);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#endif </span><span class="comment">// UTILS_H</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="utils_8h.html#afdd09077415c66826ef7d5bc9555baf7">   25</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="utils_8h.html#afdd09077415c66826ef7d5bc9555baf7">InitMatrix</a>(std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keyword">const</span> std::string &amp;filename, <span class="keywordtype">int</span> &amp;rows, <span class="keywordtype">int</span> &amp;cols);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="utils_8h.html#ae29912c7e35b26fed14371c725a9de04">   34</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="utils_8h.html#ae29912c7e35b26fed14371c725a9de04">ShowEquations</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="utils_8h.html#ad5d7dd8f4b1c4406d767e585b2a1569e">   45</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="utils_8h.html#ad5d7dd8f4b1c4406d767e585b2a1569e">CheckConsistency</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="utils_8h.html#ae94786e20414ed38e7ffab148ac6bd78">   52</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="utils_8h.html#ae94786e20414ed38e7ffab148ac6bd78">DisplaySolution</a>(<span class="keyword">const</span> std::vector&lt;double&gt; &amp;solution);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment">// Timing functions</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>std::chrono::steady_clock::time_point <a class="code hl_function" href="utils_8h.html#aed5d7e9b71f7e9678cd766731f22a7fd">StartTimer</a>();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="utils_8h.html#a96497a08edf3c32846d69dbf39a73159">   56</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="utils_8h.html#a96497a08edf3c32846d69dbf39a73159">StopTimer</a>(<span class="keyword">const</span> std::chrono::steady_clock::time_point &amp;start);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#endif </span><span class="comment">// UTILS_H</span></div>
+<div class="ttc" id="autils_8h_html_a96497a08edf3c32846d69dbf39a73159"><div class="ttname"><a href="utils_8h.html#a96497a08edf3c32846d69dbf39a73159">StopTimer</a></div><div class="ttdeci">void StopTimer(const std::chrono::steady_clock::time_point &amp;start)</div></div>
 <div class="ttc" id="autils_8h_html_ad5d7dd8f4b1c4406d767e585b2a1569e"><div class="ttname"><a href="utils_8h.html#ad5d7dd8f4b1c4406d767e585b2a1569e">CheckConsistency</a></div><div class="ttdeci">bool CheckConsistency(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Checks the consistency of the system of equations.</div></div>
 <div class="ttc" id="autils_8h_html_ae29912c7e35b26fed14371c725a9de04"><div class="ttname"><a href="utils_8h.html#ae29912c7e35b26fed14371c725a9de04">ShowEquations</a></div><div class="ttdeci">void ShowEquations(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Displays the system of linear equations.</div></div>
 <div class="ttc" id="autils_8h_html_ae94786e20414ed38e7ffab148ac6bd78"><div class="ttname"><a href="utils_8h.html#ae94786e20414ed38e7ffab148ac6bd78">DisplaySolution</a></div><div class="ttdeci">void DisplaySolution(const std::vector&lt; double &gt; &amp;solution)</div><div class="ttdoc">Displays the unique solution.</div></div>
+<div class="ttc" id="autils_8h_html_aed5d7e9b71f7e9678cd766731f22a7fd"><div class="ttname"><a href="utils_8h.html#aed5d7e9b71f7e9678cd766731f22a7fd">StartTimer</a></div><div class="ttdeci">std::chrono::steady_clock::time_point StartTimer()</div><div class="ttdef"><b>Definition</b> utils.cpp:157</div></div>
 <div class="ttc" id="autils_8h_html_afdd09077415c66826ef7d5bc9555baf7"><div class="ttname"><a href="utils_8h.html#afdd09077415c66826ef7d5bc9555baf7">InitMatrix</a></div><div class="ttdeci">bool InitMatrix(std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, const std::string &amp;filename, int &amp;rows, int &amp;cols)</div><div class="ttdoc">Initializes the matrix by reading from a .in file.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

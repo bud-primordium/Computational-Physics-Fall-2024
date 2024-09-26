@@ -1,9 +1,9 @@
 <!-- HTML header for doxygen 1.12.0-->
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.12.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -117,24 +117,28 @@ $(function(){initNavTree('methods_8h_source.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <a href="methods_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef METHODS_H</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define METHODS_H</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="methods_8h.html#ad65a91718a67d95c2bd00b4c753d3766">   21</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="methods_8h.html#ad65a91718a67d95c2bd00b4c753d3766">GaussianElimination</a>(std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="methods_8h.html#ad6d94e87c3566ffd3bb2835ff2d18d5d">   31</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="methods_8h.html#ad6d94e87c3566ffd3bb2835ff2d18d5d">DetermineRank</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="methods_8h.html#aabb015bf653c5a6fcbf99e8ec7f000f2">   43</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="methods_8h.html#aabb015bf653c5a6fcbf99e8ec7f000f2">BackSubstitution</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols, std::vector&lt;double&gt; &amp;solution);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="methods_8h.html#a7069c66cd98c8ff1b05ff2f8b84dfe2c">   53</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="methods_8h.html#a7069c66cd98c8ff1b05ff2f8b84dfe2c">ShowGeneralSolution</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols, <span class="keywordtype">int</span> rank);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif </span><span class="comment">// METHODS_H</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#ifndef METHODS_H</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#define METHODS_H</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="methods_8h.html#ad65a91718a67d95c2bd00b4c753d3766">   26</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="methods_8h.html#ad65a91718a67d95c2bd00b4c753d3766">GaussianElimination</a>(std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="methods_8h.html#ad6d94e87c3566ffd3bb2835ff2d18d5d">   36</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="methods_8h.html#ad6d94e87c3566ffd3bb2835ff2d18d5d">DetermineRank</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="methods_8h.html#aabb015bf653c5a6fcbf99e8ec7f000f2">   48</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="methods_8h.html#aabb015bf653c5a6fcbf99e8ec7f000f2">BackSubstitution</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols, std::vector&lt;double&gt; &amp;solution);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="methods_8h.html#a7069c66cd98c8ff1b05ff2f8b84dfe2c">   58</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="methods_8h.html#a7069c66cd98c8ff1b05ff2f8b84dfe2c">ShowGeneralSolution</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols, <span class="keywordtype">int</span> rank);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="methods_8h.html#a5b9e8133d7e4a58e80b9da3ead6aff58">   68</a></span>std::vector&lt;int&gt; <a class="code hl_function" href="methods_8h.html#a5b9e8133d7e4a58e80b9da3ead6aff58">IdentifyPivots</a>(<span class="keyword">const</span> std::vector&lt;std::vector&lt;double&gt;&gt; &amp;m, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#endif </span><span class="comment">// METHODS_H</span></div>
+<div class="ttc" id="amethods_8h_html_a5b9e8133d7e4a58e80b9da3ead6aff58"><div class="ttname"><a href="methods_8h.html#a5b9e8133d7e4a58e80b9da3ead6aff58">IdentifyPivots</a></div><div class="ttdeci">std::vector&lt; int &gt; IdentifyPivots(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Identifies the pivot columns in the matrix.</div></div>
 <div class="ttc" id="amethods_8h_html_a7069c66cd98c8ff1b05ff2f8b84dfe2c"><div class="ttname"><a href="methods_8h.html#a7069c66cd98c8ff1b05ff2f8b84dfe2c">ShowGeneralSolution</a></div><div class="ttdeci">void ShowGeneralSolution(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols, int rank)</div><div class="ttdoc">Displays the general solution for systems with infinitely many solutions.</div></div>
-<div class="ttc" id="amethods_8h_html_aabb015bf653c5a6fcbf99e8ec7f000f2"><div class="ttname"><a href="methods_8h.html#aabb015bf653c5a6fcbf99e8ec7f000f2">BackSubstitution</a></div><div class="ttdeci">bool BackSubstitution(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols, std::vector&lt; double &gt; &amp;solution)</div><div class="ttdoc">Performs back-substitution to find the unique solution.</div></div>
-<div class="ttc" id="amethods_8h_html_ad65a91718a67d95c2bd00b4c753d3766"><div class="ttname"><a href="methods_8h.html#ad65a91718a67d95c2bd00b4c753d3766">GaussianElimination</a></div><div class="ttdeci">int GaussianElimination(std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Performs Gaussian elimination on the matrix.</div></div>
-<div class="ttc" id="amethods_8h_html_ad6d94e87c3566ffd3bb2835ff2d18d5d"><div class="ttname"><a href="methods_8h.html#ad6d94e87c3566ffd3bb2835ff2d18d5d">DetermineRank</a></div><div class="ttdeci">int DetermineRank(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Determines the rank of the matrix.</div></div>
+<div class="ttc" id="amethods_8h_html_aabb015bf653c5a6fcbf99e8ec7f000f2"><div class="ttname"><a href="methods_8h.html#aabb015bf653c5a6fcbf99e8ec7f000f2">BackSubstitution</a></div><div class="ttdeci">bool BackSubstitution(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols, std::vector&lt; double &gt; &amp;solution)</div><div class="ttdoc">Performs back-substitution to find the solution vector.</div></div>
+<div class="ttc" id="amethods_8h_html_ad65a91718a67d95c2bd00b4c753d3766"><div class="ttname"><a href="methods_8h.html#ad65a91718a67d95c2bd00b4c753d3766">GaussianElimination</a></div><div class="ttdeci">int GaussianElimination(std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Performs Gaussian elimination on the augmented matrix with partial pivoting.</div></div>
+<div class="ttc" id="amethods_8h_html_ad6d94e87c3566ffd3bb2835ff2d18d5d"><div class="ttname"><a href="methods_8h.html#ad6d94e87c3566ffd3bb2835ff2d18d5d">DetermineRank</a></div><div class="ttdeci">int DetermineRank(const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Determines the rank of the coefficient matrix A (excluding augmented column).</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

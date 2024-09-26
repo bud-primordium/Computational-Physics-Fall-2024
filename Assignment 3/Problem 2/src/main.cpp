@@ -49,6 +49,9 @@ int main()
             return 1; // File selection failed
         }
 
+        // Start timer after selecting the file
+        auto start_time = StartTimer();
+
         vector<vector<double>> matrix;
         int rows, cols;
         if (!InitMatrix(matrix, selected_file, rows, cols))
@@ -87,6 +90,8 @@ int main()
             }
         }
 
+        // Stop timer after the solution is displayed
+        StopTimer(start_time);
         choice = AskRunAgain();
 
     } while (choice == 'y' || choice == 'Y');
