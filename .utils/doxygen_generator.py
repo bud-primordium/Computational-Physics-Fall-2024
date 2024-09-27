@@ -51,12 +51,16 @@ def clean_output_dir(output_dir):
 
 
 def copy_file_safe(src, dst):
-    """安全复制文件，处理找不到文件的情况"""
+    """安全复制文件，处理找不到文件的情况，并处理同名文件"""
     try:
+        if os.path.exists(dst):
+            logging.info(f"目标文件 {dst} 已存在，将被覆盖")
         shutil.copy2(src, dst)
         logging.info(f"已复制文件 {src} 到 {dst}")
     except FileNotFoundError:
         logging.error(f"无法找到文件: {src}")
+    except Exception as e:
+        logging.error(f"复制文件时出错: {e}")
 
 
 def create_readme_redirect(parent_dir, html_dir):
@@ -124,6 +128,8 @@ def generate_doxygen(startpath, project_name=None):
     os.makedirs(css_target_dir, exist_ok=True)
     resource_files = [
         "doxygen-awesome.css",
+        "doxygen-awesome-sidebar-only.css",
+        "doxygen-awesome-sidebar-only-darkmode-toggle.css",
         "doxygen-awesome-darkmode-toggle.js",
         "doxygen-awesome-paragraph-link.js",
         "doxygen-awesome-interactive-toc.js",
@@ -136,10 +142,16 @@ def generate_doxygen(startpath, project_name=None):
             os.path.join(css_target_dir, resource_file),
         )
 
-    # 复制 header.html
+    # 复制 header.html,footer.html和Comphys.svg
     header_source = os.path.join(os.path.dirname(__file__), "header.html")
+    footer_source = os.path.join(os.path.dirname(__file__), "footer.html")
+    svg_source = os.path.join(os.path.dirname(__file__), "comphys.svg")
     header_target = os.path.join(css_target_dir, "header.html")
+    footer_target = os.path.join(css_target_dir, "footer.html")
+    logo_target = os.path.join(css_target_dir, "comphys.svg")
     copy_file_safe(header_source, header_target)
+    copy_file_safe(footer_source, footer_target)
+    copy_file_safe(svg_source, logo_target)
 
     # 写入Doxyfile
     with open(doxyfile_path, "w", encoding="utf-8") as doxyfile:
