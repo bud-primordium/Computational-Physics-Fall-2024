@@ -1,0 +1,162 @@
+\doxysection{main.\+cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+The main entry point for the Root-\/\+Finding Algorithms Solver project.  
+
+
+{\ttfamily \#include "{}functions.\+h"{}}\newline
+{\ttfamily \#include "{}methods.\+h"{}}\newline
+{\ttfamily \#include "{}plotting.\+h"{}}\newline
+{\ttfamily \#include "{}utils.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main entry point for the Root-\/\+Finding Algorithms Solver project. 
+
+\begin{DoxyAuthor}{Author}
+Gilbert Young 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024/09/19 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Plot\ the\ function\ once\ at\ the\ beginning\ with\ range\ [-\/3,\ 3]}}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{plotting_8cpp_a4af2dc379bb28d4833a1dd980e511e36}{plot\_function}}(-\/3.0L,\ 3.0L,\ -\/10.0L,\ 10.0L);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{char}\ choice;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{do}}
+\DoxyCodeLine{00061\ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a\ =\ 0.0L,\ b\ =\ 0.0L,\ x0\ =\ 0.0L,\ tol\ =\ 1e-\/14L;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ std::string\ method\_name;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Get\ user\ input\ for\ method\ selection}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_ab2dd4669db3c565fb842e2a791a69eca}{get\_user\_input}}(a,\ b,\ x0,\ method\_name,\ tol);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max\_iter\ =\ 1000;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Map\ of\ methods\ excluding\ Newton-\/Raphson\ and\ Compare\ All\ Methods}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ std::map<std::string,\ std::function<\textcolor{keywordtype}{long}\ double(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>>\ methods\ =\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Bisection\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Hybrid\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Brent\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c}{brent\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Ridder\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56}{ridder\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\}\};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ ==\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}})}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ \mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(x0,\ tol,\ max\_iter,\ iterations,\ \mbox{\hyperlink{utils_8cpp_affdd5b83d06537b3199b863a5990313d}{calculate\_decimal\_places}}(tol));}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ \mbox{\hyperlink{utils_8cpp_affdd5b83d06537b3199b863a5990313d}{calculate\_decimal\_places}}(tol)\};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[method\_name].emplace\_back(info);}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ results}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nMethod:\ "{}}\ <<\ method\_name\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Initial\ guess:\ x0\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(info.decimal\_places)\ <<\ x0\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(info.decimal\_places)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\(\backslash\)n"{}};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&iter\ :\ iterations)}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ iter\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations\ Count:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (method\_name\ ==\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}})}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Run\ the\ problem\ steps}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_aa1ee0d68640cc06d6f48f95f72011820}{run\_problem\_steps}}();}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (method\_name\ ==\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}})}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Run\ the\ comparison}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a46f2f3e19644302067ff30bc43942b3b}{compare\_all\_methods}}();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Get\ the\ method\ function}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ methods.find(method\_name);}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ methods.end()\ \&\&\ it-\/>second\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a1c73efca06aba6c88572f806f8b31fea}{run\_method\_user\_selection}}(method\_name,\ it-\/>second,\ a,\ b,\ tol,\ max\_iter);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Method\ not\ found\ or\ not\ implemented.\(\backslash\)n"{}};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Output\ summary\ of\ all\ results}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ !=\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}}\ \&\&\ method\_name\ !=\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}})}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n-\/-\/-\/\ Summary\ of\ All\ Results\ -\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&method\ :\ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}})}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nMethod:\ "{}}\ <<\ method.first\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ idx\ =\ 1;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&info\ :\ method.second)}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ Root\ "{}}\ <<\ idx++\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(info.decimal\_places)\ <<\ info.root}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ |\ Iterations:\ "{}}\ <<\ info.iterations\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ summary\ for\ next\ run}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}.clear();}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ask\ user\ if\ they\ want\ to\ run\ again}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nDo\ you\ want\ to\ run\ the\ program\ again?\ (y/n):\ "{}};}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ std::cin\ >>\ choice;}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (choice\ ==\ \textcolor{charliteral}{'y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'Y'});}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{comment}{//\ Pause\ and\ wait\ for\ user\ input\ before\ exiting}}
+\DoxyCodeLine{00156\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPress\ Enter\ to\ exit..."{}};}
+\DoxyCodeLine{00157\ \ \ \ \ std::cin.ignore(std::numeric\_limits<std::streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{00158\ \ \ \ \ std::cin.get();}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00161\ \}}
+
+\end{DoxyCode}

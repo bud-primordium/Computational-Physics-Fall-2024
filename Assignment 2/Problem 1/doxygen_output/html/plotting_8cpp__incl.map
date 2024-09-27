@@ -1,0 +1,19 @@
+<map id="plotting.cpp" name="plotting.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="333,5,421,32"/>
+<area shape="rect" id="Node000002" href="$plotting_8h.html" title=" " alt="" coords="5,80,80,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="333,32,95,82,94,77,332,26"/>
+<area shape="rect" id="Node000003" href="$functions_8h.html" title=" " alt="" coords="104,80,189,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="338,35,202,77,201,72,336,30"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="214,80,285,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="356,35,286,74,283,70,354,30"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="308,80,366,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="373,34,354,68,349,65,368,31"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="390,80,444,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="386,31,405,65,401,68,382,34"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="468,80,526,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="399,30,465,69,462,74,397,35"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="549,80,616,107"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="414,30,536,73,534,78,412,35"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="640,80,709,107"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="422,28,626,77,624,82,421,33"/>
+</map>

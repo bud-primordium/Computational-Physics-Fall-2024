@@ -1,0 +1,264 @@
+\doxysection{methods.\+h File Reference}
+\hypertarget{methods_8h}{}\label{methods_8h}\index{methods.h@{methods.h}}
+{\ttfamily \#include "{}structs.\+h"{}}\newline
+Include dependency graph for methods.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=142pt]{methods_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=297pt]{methods_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_result}{Result}} \mbox{\hyperlink{methods_8h_aa2bec146e419affb8eb2b1fe5fdd4c2c}{steepest\+Descent}} (double x0, double y0, double alpha, int max\+Iter, double tol)
+\item 
+\mbox{\hyperlink{struct_result}{Result}} \mbox{\hyperlink{methods_8h_ab83d34604c4245c59dd7964fc09f4bde}{conjugate\+Gradient}} (double x0, double y0, int max\+Iter, double tol)
+\item 
+\mbox{\hyperlink{struct_result}{Result}} \mbox{\hyperlink{methods_8h_a1b37d5f500d8064487a5321a10625575}{simulated\+Annealing}} (double x0, double y0, double T0, double Tmin, double alpha, int max\+Iter)
+\item 
+\mbox{\hyperlink{struct_result}{Result}} \mbox{\hyperlink{methods_8h_ac232b96177b1e35952375d87e108e7df}{genetic\+Algorithm}} (int population\+Size, int generations, double mutation\+Rate, double crossover\+Rate)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{methods_8h_ab83d34604c4245c59dd7964fc09f4bde}\index{methods.h@{methods.h}!conjugateGradient@{conjugateGradient}}
+\index{conjugateGradient@{conjugateGradient}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{conjugateGradient()}{conjugateGradient()}}
+{\footnotesize\ttfamily \label{methods_8h_ab83d34604c4245c59dd7964fc09f4bde} 
+\mbox{\hyperlink{struct_result}{Result}} conjugate\+Gradient (\begin{DoxyParamCaption}\item[{double}]{x0}{, }\item[{double}]{y0}{, }\item[{int}]{max\+Iter}{, }\item[{double}]{tol}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ x0,\ y\ =\ y0,\ dx,\ dy;}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{functions_8cpp_a3dea8e4f38da09eb8030e2a81c7f5313}{computeGradient}}(x,\ y,\ dx,\ dy);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{double}\ g0\ =\ dx\ *\ dx\ +\ dy\ *\ dy;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{double}\ d\_x\ =\ -\/dx;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{double}\ d\_y\ =\ -\/dy;}
+\DoxyCodeLine{00062\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ 0;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ maxIter;\ ++i)}
+\DoxyCodeLine{00065\ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Line\ search\ to\ find\ optimal\ alpha}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ alpha\ =\ \mbox{\hyperlink{functions_8cpp_adaf177859093fe4a87da0a768c48bfbc}{lineSearchBacktracking}}(x,\ y,\ d\_x,\ d\_y);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ positions}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ x\ +=\ alpha\ *\ d\_x;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ y\ +=\ alpha\ *\ d\_y;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compute\ new\ gradient}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ new\_dx,\ new\_dy;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{functions_8cpp_a3dea8e4f38da09eb8030e2a81c7f5313}{computeGradient}}(x,\ y,\ new\_dx,\ new\_dy);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ gk\_new\ =\ new\_dx\ *\ new\_dx\ +\ new\_dy\ *\ new\_dy;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ for\ convergence}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sqrt(gk\_new)\ <\ tol)}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compute\ beta\ (Fletcher-\/Reeves)}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ beta\ =\ gk\_new\ /\ g0;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ directions}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ d\_x\ =\ -\/new\_dx\ +\ beta\ *\ d\_x;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ d\_y\ =\ -\/new\_dy\ +\ beta\ *\ d\_y;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ gradient\ magnitude}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ g0\ =\ gk\_new;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00092\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{00093\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ x;}
+\DoxyCodeLine{00094\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ y;}
+\DoxyCodeLine{00095\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x,\ y);}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00097\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8h_ac232b96177b1e35952375d87e108e7df}\index{methods.h@{methods.h}!geneticAlgorithm@{geneticAlgorithm}}
+\index{geneticAlgorithm@{geneticAlgorithm}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{geneticAlgorithm()}{geneticAlgorithm()}}
+{\footnotesize\ttfamily \label{methods_8h_ac232b96177b1e35952375d87e108e7df} 
+\mbox{\hyperlink{struct_result}{Result}} genetic\+Algorithm (\begin{DoxyParamCaption}\item[{int}]{population\+Size}{, }\item[{int}]{generations}{, }\item[{double}]{mutation\+Rate}{, }\item[{double}]{crossover\+Rate}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00142\ \ \ \ \ std::vector<Individual>\ population(populationSize);}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{double}\ xMin\ =\ -\/10.0,\ xMax\ =\ 10.0;}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{double}\ yMin\ =\ -\/10.0,\ yMax\ =\ 10.0;}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Initialize\ population}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&ind\ :\ population)}
+\DoxyCodeLine{00148\ \ \ \ \ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ ind.x\ =\ xMin\ +\ (xMax\ -\/\ xMin)\ *\ ((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX);}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ ind.y\ =\ yMin\ +\ (yMax\ -\/\ yMin)\ *\ ((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX);}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ ind.fitness\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(ind.x,\ ind.y);}
+\DoxyCodeLine{00152\ \ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ generations\ *\ populationSize;}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ gen\ =\ 0;\ gen\ <\ generations;\ ++gen)}
+\DoxyCodeLine{00157\ \ \ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Selection\ (Tournament\ Selection)}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ std::vector<Individual>\ newPopulation;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ populationSize;\ ++i)}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ a\ =\ rand()\ \%\ populationSize;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ b\ =\ rand()\ \%\ populationSize;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_individual}{Individual}}\ parent\ =\ population[a].\mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}}\ <\ population[b].fitness\ ?\ population[a]\ :\ population[b];}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation.push\_back(parent);}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Crossover\ (Single-\/point)}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ populationSize\ -\/\ 1;\ i\ +=\ 2)}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX)\ <\ crossoverRate)}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ alpha\ =\ (double)rand()\ /\ RAND\_MAX;}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_x1\ =\ alpha\ *\ newPopulation[i].x\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i\ +\ 1].x;}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_y1\ =\ alpha\ *\ newPopulation[i].y\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i\ +\ 1].y;}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_x2\ =\ alpha\ *\ newPopulation[i\ +\ 1].x\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i].x;}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_y2\ =\ alpha\ *\ newPopulation[i\ +\ 1].y\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i].y;}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i].x\ =\ temp\_x1;}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i].y\ =\ temp\_y1;}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i\ +\ 1].x\ =\ temp\_x2;}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i\ +\ 1].y\ =\ temp\_y2;}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mutation}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&ind\ :\ newPopulation)}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX)\ <\ mutationRate)}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.x\ +=\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.y\ +=\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clamp\ to\ search\ space}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.x\ <\ xMin)}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.x\ =\ xMin;}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.x\ >\ xMax)}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.x\ =\ xMax;}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.y\ <\ yMin)}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.y\ =\ yMin;}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.y\ >\ yMax)}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.y\ =\ yMax;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ ind.fitness\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(ind.x,\ ind.y);}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ population\ =\ newPopulation;}
+\DoxyCodeLine{00206\ \ \ \ \ \}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{comment}{//\ Find\ best\ individual}}
+\DoxyCodeLine{00209\ \ \ \ \ \mbox{\hyperlink{struct_individual}{Individual}}\ best\ =\ population[0];}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&ind\ :\ population)}
+\DoxyCodeLine{00211\ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.fitness\ <\ best.\mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}})}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ best\ =\ ind;}
+\DoxyCodeLine{00214\ \ \ \ \ \}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00217\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{00218\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ best.\mbox{\hyperlink{struct_individual_a697b625e5ee14d913d6d11693fdb8462}{x}};}
+\DoxyCodeLine{00219\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ best.\mbox{\hyperlink{struct_individual_abbc071c6c3dd08f7caf4d7ce554a2f76}{y}};}
+\DoxyCodeLine{00220\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ best.\mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}};}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00222\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8h_a1b37d5f500d8064487a5321a10625575}\index{methods.h@{methods.h}!simulatedAnnealing@{simulatedAnnealing}}
+\index{simulatedAnnealing@{simulatedAnnealing}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{simulatedAnnealing()}{simulatedAnnealing()}}
+{\footnotesize\ttfamily \label{methods_8h_a1b37d5f500d8064487a5321a10625575} 
+\mbox{\hyperlink{struct_result}{Result}} simulated\+Annealing (\begin{DoxyParamCaption}\item[{double}]{x0}{, }\item[{double}]{y0}{, }\item[{double}]{T0}{, }\item[{double}]{Tmin}{, }\item[{double}]{alpha}{, }\item[{int}]{max\+Iter}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ x0,\ y\ =\ y0,\ f\_current\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x,\ y);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{double}\ T\ =\ T0;}
+\DoxyCodeLine{00106\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ 0;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ maxIter\ \&\&\ T\ >\ Tmin;\ ++i)}
+\DoxyCodeLine{00109\ \ \ \ \ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ new\ candidate\ solution}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ x\_new\ =\ x\ +\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ y\_new\ =\ y\ +\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ f\_new\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x\_new,\ y\_new);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ delta\ =\ f\_new\ -\/\ f\_current;}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Accept\ new\ solution\ if\ better,\ or\ with\ a\ probability}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (delta\ <\ 0\ ||\ exp(-\/delta\ /\ T)\ >\ ((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX))}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ x\_new;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ y\_new;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ f\_current\ =\ f\_new;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cool\ down}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ T\ *=\ alpha;}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{00127\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00130\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{00131\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ x;}
+\DoxyCodeLine{00132\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ y;}
+\DoxyCodeLine{00133\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ f\_current;}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00135\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8h_aa2bec146e419affb8eb2b1fe5fdd4c2c}\index{methods.h@{methods.h}!steepestDescent@{steepestDescent}}
+\index{steepestDescent@{steepestDescent}!methods.h@{methods.h}}
+\doxysubsubsection{\texorpdfstring{steepestDescent()}{steepestDescent()}}
+{\footnotesize\ttfamily \label{methods_8h_aa2bec146e419affb8eb2b1fe5fdd4c2c} 
+\mbox{\hyperlink{struct_result}{Result}} steepest\+Descent (\begin{DoxyParamCaption}\item[{double}]{x0}{, }\item[{double}]{y0}{, }\item[{double}]{alpha}{, }\item[{int}]{max\+Iter}{, }\item[{double}]{tol}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ x0,\ y\ =\ y0,\ dx,\ dy;}
+\DoxyCodeLine{00027\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ 0;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ maxIter;\ ++i)}
+\DoxyCodeLine{00030\ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{functions_8cpp_a3dea8e4f38da09eb8030e2a81c7f5313}{computeGradient}}(x,\ y,\ dx,\ dy);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ norm\ =\ sqrt(dx\ *\ dx\ +\ dy\ *\ dy);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (norm\ <\ tol)}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ positions}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ x\ -\/=\ alpha\ *\ dx;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ y\ -\/=\ alpha\ *\ dy;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00045\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{00046\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ x;}
+\DoxyCodeLine{00047\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ y;}
+\DoxyCodeLine{00048\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x,\ y);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00050\ \}}
+
+\end{DoxyCode}

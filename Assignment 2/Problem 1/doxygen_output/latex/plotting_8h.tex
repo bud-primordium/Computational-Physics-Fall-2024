@@ -1,0 +1,116 @@
+\doxysection{plotting.\+h File Reference}
+\hypertarget{plotting_8h}{}\label{plotting_8h}\index{plotting.h@{plotting.h}}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=291pt]{plotting_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{plotting_8h_abd157cfd43a1503fec0f9ed1807babe2}{plot\+\_\+function}} (long double x\+\_\+min, long double x\+\_\+max, long double y\+\_\+min, long double y\+\_\+max, int width=60, int height=20, long double label\+\_\+interval=1.\+0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{plotting_8h_abd157cfd43a1503fec0f9ed1807babe2}\index{plotting.h@{plotting.h}!plot\_function@{plot\_function}}
+\index{plot\_function@{plot\_function}!plotting.h@{plotting.h}}
+\doxysubsubsection{\texorpdfstring{plot\_function()}{plot\_function()}}
+{\footnotesize\ttfamily \label{plotting_8h_abd157cfd43a1503fec0f9ed1807babe2} 
+void plot\+\_\+function (\begin{DoxyParamCaption}\item[{long double}]{x\+\_\+min}{, }\item[{long double}]{x\+\_\+max}{, }\item[{long double}]{y\+\_\+min}{, }\item[{long double}]{y\+\_\+max}{, }\item[{int}]{width}{ = {\ttfamily 60}, }\item[{int}]{height}{ = {\ttfamily 20}, }\item[{long double}]{label\+\_\+interval}{ = {\ttfamily 1.0}}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ std::vector<std::string>\ grid(height,\ std::string(width,\ \textcolor{charliteral}{'\ '}));}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ x\_axis\ =\ -\/1,\ y\_axis\ =\ -\/1;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Determine\ x-\/axis\ position}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (y\_min\ <=\ 0\ \&\&\ y\_max\ >=\ 0)}
+\DoxyCodeLine{00028\ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ x\_axis\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round((0\ -\/\ y\_min)\ /\ (y\_max\ -\/\ y\_min)\ *\ (height\ -\/\ 1)));}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Determine\ y-\/axis\ position}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\_min\ <=\ 0\ \&\&\ x\_max\ >=\ 0)}
+\DoxyCodeLine{00034\ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ y\_axis\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round((0\ -\/\ x\_min)\ /\ (x\_max\ -\/\ x\_min)\ *\ (width\ -\/\ 1)));}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Plot\ the\ function}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ width;\ ++i)}
+\DoxyCodeLine{00040\ \ \ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x\ =\ x\_min\ +\ i\ *\ (x\_max\ -\/\ x\_min)\ /\ (width\ -\/\ 1);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ y\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(x);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (y\ <\ y\_min\ ||\ y\ >\ y\_max)}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ j\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round((y\ -\/\ y\_min)\ /\ (y\_max\ -\/\ y\_min)\ *\ (height\ -\/\ 1)));}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ >=\ 0\ \&\&\ j\ <\ height)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ grid[height\ -\/\ 1\ -\/\ j][i]\ =\ \textcolor{charliteral}{'*'};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Draw\ x-\/axis}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\_axis\ !=\ -\/1)}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ width;\ ++i)}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[x\_axis][i]\ ==\ \textcolor{charliteral}{'\ '})}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[x\_axis][i]\ =\ \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Draw\ y-\/axis}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (y\_axis\ !=\ -\/1)}
+\DoxyCodeLine{00064\ \ \ \ \ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ height;\ ++i)}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[i][y\_axis]\ ==\ \textcolor{charliteral}{'\ '})}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[i][y\_axis]\ =\ \textcolor{charliteral}{'|'};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Draw\ origin}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\_axis\ !=\ -\/1\ \&\&\ y\_axis\ !=\ -\/1)}
+\DoxyCodeLine{00074\ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ grid[x\_axis][y\_axis]\ =\ \textcolor{charliteral}{'+'};}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Print\ the\ grid}}
+\DoxyCodeLine{00079\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nFunction\ Plot:\(\backslash\)n"{}};}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&row\ :\ grid)}
+\DoxyCodeLine{00081\ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ std::cout\ <<\ row\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Print\ x-\/axis\ labels}}
+\DoxyCodeLine{00086\ \ \ \ \ std::string\ label\_line(width,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ label\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(ceil(x\_min\ /\ label\_interval))\ *\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_interval);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ label\ <=\ static\_cast<int>(floor(x\_max\ /\ label\_interval))\ *\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_interval);}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ label\ +=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_interval))}
+\DoxyCodeLine{00090\ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ relative\_pos\ =\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(label)\ -\/\ x\_min)\ /\ (x\_max\ -\/\ x\_min);}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pos\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round(relative\_pos\ *\ (width\ -\/\ 1)));}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ std::ostringstream\ oss\_label;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ oss\_label\ <<\ std::fixed\ <<\ std::setprecision(0)\ <<\ label;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ std::string\ label\_str\ =\ oss\_label.str();}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ start\_pos\ =\ pos\ -\/\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_str.length()\ /\ 2);}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (start\_pos\ <\ 0)}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ start\_pos\ =\ 0;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (start\_pos\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_str.length())\ >\ width)}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ label\_str.length();\ ++i)}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ label\_line[start\_pos\ +\ i]\ =\ label\_str[i];}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ std::cout\ <<\ label\_line\ <<\ std::endl;}
+\DoxyCodeLine{00107\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}x\ range:\ ["{}}\ <<\ x\_min\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ x\_max\ <<\ \textcolor{stringliteral}{"{}]\(\backslash\)n"{}};}
+\DoxyCodeLine{00108\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}y\ range:\ ["{}}\ <<\ y\_min\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ y\_max\ <<\ \textcolor{stringliteral}{"{}]\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00109\ \}}
+
+\end{DoxyCode}

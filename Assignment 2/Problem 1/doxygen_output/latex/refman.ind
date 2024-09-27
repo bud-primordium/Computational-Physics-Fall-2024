@@ -1,0 +1,138 @@
+\begin{theindex}
+
+  \item {bisection}
+    \subitem {methods.cpp}, \hyperpage{14}
+    \subitem {methods.h}, \hyperpage{19}
+  \item {brent\_method}
+    \subitem {methods.cpp}, \hyperpage{15}
+    \subitem {methods.h}, \hyperpage{20}
+
+  \indexspace
+
+  \item {calculate\_decimal\_places}
+    \subitem {utils.cpp}, \hyperpage{29}
+    \subitem {utils.h}, \hyperpage{34}
+  \item {compare\_all\_methods}
+    \subitem {utils.cpp}, \hyperpage{29}
+    \subitem {utils.h}, \hyperpage{34}
+
+  \indexspace
+
+  \item {decimal\_places}
+    \subitem {RootInfo}, \hyperpage{7}
+
+  \indexspace
+
+  \item {f}
+    \subitem {functions.cpp}, \hyperpage{9}
+    \subitem {functions.h}, \hyperpage{10}
+  \item {f\_prime}
+    \subitem {functions.cpp}, \hyperpage{9}
+    \subitem {functions.h}, \hyperpage{10}
+  \item {functions.cpp}, \hyperpage{9}
+    \subitem {f}, \hyperpage{9}
+    \subitem {f\_prime}, \hyperpage{9}
+  \item {functions.h}, \hyperpage{10}
+    \subitem {f}, \hyperpage{10}
+    \subitem {f\_prime}, \hyperpage{10}
+
+  \indexspace
+
+  \item {get\_user\_input}
+    \subitem {utils.cpp}, \hyperpage{30}
+    \subitem {utils.h}, \hyperpage{36}
+
+  \indexspace
+
+  \item {hybrid\_method}
+    \subitem {methods.cpp}, \hyperpage{16}
+    \subitem {methods.h}, \hyperpage{21}
+
+  \indexspace
+
+  \item {iterations}
+    \subitem {RootInfo}, \hyperpage{7}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.cpp}, \hyperpage{12}
+  \item {main.cpp}, \hyperpage{11}
+    \subitem {main}, \hyperpage{12}
+  \item {methods.cpp}, \hyperpage{13}
+    \subitem {bisection}, \hyperpage{14}
+    \subitem {brent\_method}, \hyperpage{15}
+    \subitem {hybrid\_method}, \hyperpage{16}
+    \subitem {newton\_raphson}, \hyperpage{17}
+    \subitem {ridder\_method}, \hyperpage{17}
+  \item {methods.h}, \hyperpage{18}
+    \subitem {bisection}, \hyperpage{19}
+    \subitem {brent\_method}, \hyperpage{20}
+    \subitem {hybrid\_method}, \hyperpage{21}
+    \subitem {newton\_raphson}, \hyperpage{22}
+    \subitem {ridder\_method}, \hyperpage{22}
+
+  \indexspace
+
+  \item {newton\_raphson}
+    \subitem {methods.cpp}, \hyperpage{17}
+    \subitem {methods.h}, \hyperpage{22}
+
+  \indexspace
+
+  \item {plot\_function}
+    \subitem {plotting.cpp}, \hyperpage{24}
+    \subitem {plotting.h}, \hyperpage{26}
+  \item {plotting.cpp}, \hyperpage{24}
+    \subitem {plot\_function}, \hyperpage{24}
+  \item {plotting.h}, \hyperpage{26}
+    \subitem {plot\_function}, \hyperpage{26}
+
+  \indexspace
+
+  \item {ridder\_method}
+    \subitem {methods.cpp}, \hyperpage{17}
+    \subitem {methods.h}, \hyperpage{22}
+  \item {root}
+    \subitem {RootInfo}, \hyperpage{7}
+  \item {Root-\/Finding Algorithms Solver}, \hyperpage{1}
+  \item {RootInfo}, \hyperpage{7}
+    \subitem {decimal\_places}, \hyperpage{7}
+    \subitem {iterations}, \hyperpage{7}
+    \subitem {root}, \hyperpage{7}
+  \item {run\_method}
+    \subitem {utils.cpp}, \hyperpage{31}
+    \subitem {utils.h}, \hyperpage{37}
+  \item {run\_method\_user\_selection}
+    \subitem {utils.cpp}, \hyperpage{31}
+    \subitem {utils.h}, \hyperpage{37}
+  \item {run\_problem\_steps}
+    \subitem {utils.cpp}, \hyperpage{32}
+    \subitem {utils.h}, \hyperpage{37}
+
+  \indexspace
+
+  \item {summary}
+    \subitem {utils.cpp}, \hyperpage{33}
+    \subitem {utils.h}, \hyperpage{39}
+
+  \indexspace
+
+  \item {utils.cpp}, \hyperpage{28}
+    \subitem {calculate\_decimal\_places}, \hyperpage{29}
+    \subitem {compare\_all\_methods}, \hyperpage{29}
+    \subitem {get\_user\_input}, \hyperpage{30}
+    \subitem {run\_method}, \hyperpage{31}
+    \subitem {run\_method\_user\_selection}, \hyperpage{31}
+    \subitem {run\_problem\_steps}, \hyperpage{32}
+    \subitem {summary}, \hyperpage{33}
+  \item {utils.h}, \hyperpage{33}
+    \subitem {calculate\_decimal\_places}, \hyperpage{34}
+    \subitem {compare\_all\_methods}, \hyperpage{34}
+    \subitem {get\_user\_input}, \hyperpage{36}
+    \subitem {run\_method}, \hyperpage{37}
+    \subitem {run\_method\_user\_selection}, \hyperpage{37}
+    \subitem {run\_problem\_steps}, \hyperpage{37}
+    \subitem {summary}, \hyperpage{39}
+
+\end{theindex}

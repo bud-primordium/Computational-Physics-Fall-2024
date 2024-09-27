@@ -1,0 +1,379 @@
+\doxysection{utils.\+h File Reference}
+\hypertarget{utils_8h}{}\label{utils_8h}\index{utils.h@{utils.h}}
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include "{}methods.\+h"{}}\newline
+Include dependency graph for utils.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{utils_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{utils_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{utils_8h_a741da7b7db7708497c097df37d8fcd76}{run\+\_\+method}} (const std\+::string \&method\+\_\+name, std\+::function$<$ long double(long double, long double, long double, int, std\+::vector$<$ std\+::string $>$ \&, int)$>$ method\+\_\+func, long double a, long double b, long double tol, int max\+\_\+iter, int decimal\+\_\+places)
+\item 
+void \mbox{\hyperlink{utils_8h_aa1ee0d68640cc06d6f48f95f72011820}{run\+\_\+problem\+\_\+steps}} ()
+\item 
+void \mbox{\hyperlink{utils_8h_a46f2f3e19644302067ff30bc43942b3b}{compare\+\_\+all\+\_\+methods}} ()
+\item 
+void \mbox{\hyperlink{utils_8h_ab2dd4669db3c565fb842e2a791a69eca}{get\+\_\+user\+\_\+input}} (long double \&a, long double \&b, long double \&x0, std\+::string \&method\+\_\+name, long double \&tol)
+\item 
+int \mbox{\hyperlink{utils_8h_affdd5b83d06537b3199b863a5990313d}{calculate\+\_\+decimal\+\_\+places}} (long double tol)
+\item 
+void \mbox{\hyperlink{utils_8h_a1c73efca06aba6c88572f806f8b31fea}{run\+\_\+method\+\_\+user\+\_\+selection}} (const std\+::string \&method\+\_\+name, std\+::function$<$ long double(long double, long double, long double, int, std\+::vector$<$ std\+::string $>$ \&, int)$>$ method\+\_\+func, long double a, long double b, long double tol, int max\+\_\+iter)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std\+::map$<$ std\+::string, std\+::vector$<$ \mbox{\hyperlink{struct_root_info}{Root\+Info}} $>$ $>$ \mbox{\hyperlink{utils_8h_a4390b70f634a01cb926c274e249f9e8b}{summary}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{utils_8h_affdd5b83d06537b3199b863a5990313d}\index{utils.h@{utils.h}!calculate\_decimal\_places@{calculate\_decimal\_places}}
+\index{calculate\_decimal\_places@{calculate\_decimal\_places}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{calculate\_decimal\_places()}{calculate\_decimal\_places()}}
+{\footnotesize\ttfamily \label{utils_8h_affdd5b83d06537b3199b863a5990313d} 
+int calculate\+\_\+decimal\+\_\+places (\begin{DoxyParamCaption}\item[{long double}]{tol}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00298\ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keywordflow}{if}\ (tol\ <=\ 0)}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(ceil(-\/log10(tol)))\ +\ 1;}
+\DoxyCodeLine{00302\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8h_a46f2f3e19644302067ff30bc43942b3b}\index{utils.h@{utils.h}!compare\_all\_methods@{compare\_all\_methods}}
+\index{compare\_all\_methods@{compare\_all\_methods}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{compare\_all\_methods()}{compare\_all\_methods()}}
+{\footnotesize\ttfamily \label{utils_8h_a46f2f3e19644302067ff30bc43942b3b} 
+void compare\+\_\+all\+\_\+methods (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ Define\ intervals\ for\ three\ roots}}
+\DoxyCodeLine{00144\ \ \ \ \ std::vector<std::pair<long\ double,\ long\ double>>\ intervals\ =\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \{-\/3.0L,\ -\/2.0L\},\ \textcolor{comment}{//\ Negative\ root}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \{0.0L,\ 1.0L\},\ \ \ \textcolor{comment}{//\ First\ positive\ root}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \{1.0L,\ 3.0L\}\ \ \ \ \textcolor{comment}{//\ Second\ positive\ root}}
+\DoxyCodeLine{00148\ \ \ \ \ \};}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ Define\ tolerances\ and\ maximum\ iterations}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\ =\ 1e-\/14L;\ \textcolor{comment}{//\ 14\ decimal\ places}}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_iter\ =\ 1000;}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ List\ of\ methods\ to\ compare}}
+\DoxyCodeLine{00155\ \ \ \ \ std::vector<std::pair<std::string,\ std::function<\textcolor{keywordtype}{long}\ double(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>>>\ methods\ =\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Bisection\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ Newton-\/Raphson,\ use\ the\ midpoint\ as\ the\ initial\ guess}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ initial\_guess\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(initial\_guess,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Hybrid\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Brent's\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c}{brent\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Ridder's\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56}{ridder\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \}\}\};}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{comment}{//\ Store\ comparison\ results}}
+\DoxyCodeLine{00180\ \ \ \ \ std::map<std::string,\ std::vector<RootInfo>>\ comparison\_results;}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ Run\ each\ method\ for\ each\ interval}}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&method\ :\ methods)}
+\DoxyCodeLine{00184\ \ \ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&interval\ :\ intervals)}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ method.second(interval.first,\ interval.second,\ tol,\ max\_iter,\ iterations,\ 15);\ \textcolor{comment}{//\ 1e-\/14\ -\/>\ 15\ decimal\ places}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 15\};}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ comparison\_results[method.first].emplace\_back(info);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00192\ \ \ \ \ \}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{comment}{//\ Display\ comparison\ table}}
+\DoxyCodeLine{00195\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n-\/-\/-\/\ Comparison\ of\ All\ Methods\ (Precision:\ 1e-\/14)\ -\/-\/-\/\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{comment}{//\ Table\ header}}
+\DoxyCodeLine{00198\ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(25)\ <<\ \textcolor{stringliteral}{"{}Method"{}}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}Root\ 1\ (-\/3,-\/2)"{}}}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Iterations"{}}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}Root\ 2\ (0,1)"{}}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Iterations"{}}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}Root\ 3\ (1,3)"{}}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Iterations"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//\ Separator}}
+\DoxyCodeLine{00207\ \ \ \ \ std::cout\ <<\ std::string(130,\ \textcolor{charliteral}{'-\/'})\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//\ Table\ rows}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&method\ :\ methods)}
+\DoxyCodeLine{00211\ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(25)\ <<\ method.first;}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ intervals.size();\ ++i)}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (comparison\_results[method.first][i].root\ !=\ comparison\_results[method.first][i].root)}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ for\ NAN}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}N/A"{}}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::left\ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}N/A"{}};}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(30)\ <<\ std::fixed\ <<\ std::setprecision(15)\ <<\ comparison\_results[method.first][i].root}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::left\ <<\ std::setw(15)\ <<\ comparison\_results[method.first][i].iterations;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00228\ \ \ \ \ \}}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nNote:\ Precision\ is\ set\ to\ 1e-\/14,\ output\ displays\ 15\ decimal\ places.\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00231\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8h_ab2dd4669db3c565fb842e2a791a69eca}\index{utils.h@{utils.h}!get\_user\_input@{get\_user\_input}}
+\index{get\_user\_input@{get\_user\_input}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{get\_user\_input()}{get\_user\_input()}}
+{\footnotesize\ttfamily \label{utils_8h_ab2dd4669db3c565fb842e2a791a69eca} 
+void get\+\_\+user\+\_\+input (\begin{DoxyParamCaption}\item[{long double \&}]{a}{, }\item[{long double \&}]{b}{, }\item[{long double \&}]{x0}{, }\item[{std\+::string \&}]{method\+\_\+name}{, }\item[{long double \&}]{tol}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00235\ \{}
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{comment}{//\ List\ of\ available\ methods}}
+\DoxyCodeLine{00237\ \ \ \ \ std::vector<std::string>\ available\_methods\ =\ \{\textcolor{stringliteral}{"{}Bisection\ Method"{}},\ \textcolor{stringliteral}{"{}Hybrid\ Method"{}},\ \textcolor{stringliteral}{"{}Brent\ Method"{}},\ \textcolor{stringliteral}{"{}Ridder\ Method"{}},\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}},\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}},\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}}\};}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{comment}{//\ Display\ available\ methods}}
+\DoxyCodeLine{00240\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nAvailable\ methods:\(\backslash\)n"{}};}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ available\_methods.size();\ ++i)}
+\DoxyCodeLine{00242\ \ \ \ \ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ std::cout\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}.\ "{}}\ <<\ available\_methods[i]\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00244\ \ \ \ \ \}}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ select\ a\ method}}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordtype}{int}\ method\_choice;}
+\DoxyCodeLine{00248\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Select\ a\ method\ (1-\/"{}}\ <<\ available\_methods.size()\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00249\ \ \ \ \ std::cin\ >>\ method\_choice;}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{while}\ (method\_choice\ <\ 1\ ||\ method\_choice\ >\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(available\_methods.size()))}
+\DoxyCodeLine{00251\ \ \ \ \ \{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ choice.\ Please\ select\ a\ method\ (1-\/"{}}\ <<\ available\_methods.size()\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ std::cin\ >>\ method\_choice;}
+\DoxyCodeLine{00254\ \ \ \ \ \}}
+\DoxyCodeLine{00255\ \ \ \ \ method\_name\ =\ available\_methods[method\_choice\ -\/\ 1];}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ ==\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}})}
+\DoxyCodeLine{00258\ \ \ \ \ \{}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ input\ initial\ guess\ x0}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ guess\ x0:\ "{}};}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ std::cin\ >>\ x0;}
+\DoxyCodeLine{00262\ \ \ \ \ \}}
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (method\_name\ !=\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}}\ \&\&\ method\_name\ !=\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}})}
+\DoxyCodeLine{00264\ \ \ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ input\ interval\ [a,\ b]}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ interval\ [a,\ b]:\(\backslash\)n"{}};}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}a\ =\ "{}};}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ std::cin\ >>\ a;}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}b\ =\ "{}};}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ std::cin\ >>\ b;}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (a\ >=\ b)}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ interval.\ 'a'\ should\ be\ less\ than\ 'b'.\ Please\ re-\/enter:\(\backslash\)n"{}};}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}a\ =\ "{}};}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ a;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}b\ =\ "{}};}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ b;}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00279\ \ \ \ \ \}}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ !=\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}}\ \&\&\ method\_name\ !=\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}})}
+\DoxyCodeLine{00282\ \ \ \ \ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ input\ desired\ precision}}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ desired\ precision\ (e.g.,\ 1e-\/14,\ up\ to\ 1e-\/16):\ "{}};}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ std::cin\ >>\ tol;}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ min\_tol\ =\ 1e-\/16L;}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ max\_tol\ =\ 1e-\/4L;}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (tol\ <\ min\_tol\ ||\ tol\ >\ max\_tol)}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Precision\ out\ of\ bounds\ ("{}}\ <<\ min\_tol\ <<\ \textcolor{stringliteral}{"{}\ to\ "{}}\ <<\ max\_tol\ <<\ \textcolor{stringliteral}{"{}).\ Please\ re-\/enter:\ "{}};}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ tol;}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00293\ \ \ \ \ \}}
+\DoxyCodeLine{00294\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8h_a741da7b7db7708497c097df37d8fcd76}\index{utils.h@{utils.h}!run\_method@{run\_method}}
+\index{run\_method@{run\_method}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{run\_method()}{run\_method()}}
+{\footnotesize\ttfamily \label{utils_8h_a741da7b7db7708497c097df37d8fcd76} 
+void run\+\_\+method (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{method\+\_\+name}{, }\item[{std\+::function$<$ long double(long double, long double, long double, int, std\+::vector$<$ std\+::string $>$ \&, int)$>$}]{method\+\_\+func}{, }\item[{long double}]{a}{, }\item[{long double}]{b}{, }\item[{long double}]{tol}{, }\item[{int}]{max\+\_\+iter}{, }\item[{int}]{decimal\+\_\+places}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ method\_func(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ decimal\_places\};}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[method\_name].emplace\_back(info);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Display\ results}}
+\DoxyCodeLine{00039\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nMethod:\ "{}}\ <<\ method\_name\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ ==\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}})}
+\DoxyCodeLine{00041\ \ \ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Initial\ guess:\ x0\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Interval:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(2)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]\(\backslash\)n"{}};}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00049\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\(\backslash\)n"{}};}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&iter\ :\ iterations)}
+\DoxyCodeLine{00051\ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ std::cout\ <<\ iter\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations\ Count:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00055\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8h_a1c73efca06aba6c88572f806f8b31fea}\index{utils.h@{utils.h}!run\_method\_user\_selection@{run\_method\_user\_selection}}
+\index{run\_method\_user\_selection@{run\_method\_user\_selection}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{run\_method\_user\_selection()}{run\_method\_user\_selection()}}
+{\footnotesize\ttfamily \label{utils_8h_a1c73efca06aba6c88572f806f8b31fea} 
+void run\+\_\+method\+\_\+user\+\_\+selection (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{method\+\_\+name}{, }\item[{std\+::function$<$ long double(long double, long double, long double, int, std\+::vector$<$ std\+::string $>$ \&, int)$>$}]{method\+\_\+func}{, }\item[{long double}]{a}{, }\item[{long double}]{b}{, }\item[{long double}]{tol}{, }\item[{int}]{max\+\_\+iter}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00308\ \{}
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keywordtype}{int}\ decimal\_places\ =\ \mbox{\hyperlink{utils_8cpp_affdd5b83d06537b3199b863a5990313d}{calculate\_decimal\_places}}(tol);}
+\DoxyCodeLine{00310\ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a741da7b7db7708497c097df37d8fcd76}{run\_method}}(method\_name,\ method\_func,\ a,\ b,\ tol,\ max\_iter,\ decimal\_places);}
+\DoxyCodeLine{00311\ \}}
+
+\end{DoxyCode}
+\Hypertarget{utils_8h_aa1ee0d68640cc06d6f48f95f72011820}\index{utils.h@{utils.h}!run\_problem\_steps@{run\_problem\_steps}}
+\index{run\_problem\_steps@{run\_problem\_steps}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{run\_problem\_steps()}{run\_problem\_steps()}}
+{\footnotesize\ttfamily \label{utils_8h_aa1ee0d68640cc06d6f48f95f72011820} 
+void run\+\_\+problem\+\_\+steps (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Define\ intervals\ for\ three\ roots}}
+\DoxyCodeLine{00061\ \ \ \ \ std::vector<std::pair<long\ double,\ long\ double>>\ intervals\ =\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \{-\/3.0L,\ -\/2.0L\},\ \textcolor{comment}{//\ Negative\ root}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \{0.0L,\ 1.0L\},\ \ \ \textcolor{comment}{//\ First\ positive\ root}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \{1.0L,\ 3.0L\}\ \ \ \ \textcolor{comment}{//\ Second\ positive\ root}}
+\DoxyCodeLine{00065\ \ \ \ \ \};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Vector\ to\ store\ roots\ found\ in\ part\ (i)}}
+\DoxyCodeLine{00068\ \ \ \ \ std::vector<long\ double>\ found\_roots;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Define\ tolerances\ and\ maximum\ iterations}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\_bisection\ =\ 1e-\/4L;\ \textcolor{comment}{//\ 4\ decimal\ places}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\_newton\ =\ 1e-\/14L;\ \ \ \textcolor{comment}{//\ 14\ decimal\ places}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\_hybrid\ =\ 1e-\/14L;\ \ \ \textcolor{comment}{//\ 14\ decimal\ places}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_iter\ =\ 1000;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n-\/-\/-\/\ Problem\ Steps\ Execution\ -\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Part\ (i):\ Bisection\ Method\ to\ find\ three\ roots\ to\ 4\ decimal\ places}}
+\DoxyCodeLine{00079\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPart\ (i):\ Bisection\ Method\ to\ find\ roots\ to\ 4\ decimal\ places\(\backslash\)n"{}};}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&interval\ :\ intervals)}
+\DoxyCodeLine{00081\ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ \mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(interval.first,\ interval.second,\ tol\_bisection,\ max\_iter,\ iterations,\ 4);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 4\};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[\textcolor{stringliteral}{"{}Bisection\ Method"{}}].emplace\_back(info);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ the\ found\ root}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ found\_roots.emplace\_back(root);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root\ in\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(2)\ <<\ interval.first\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ interval.second\ <<\ \textcolor{stringliteral}{"{}]:\ "{}}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00093\ \ \ \ \ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Part\ (ii):\ Newton-\/Raphson\ Method\ to\ refine\ the\ three\ roots\ to\ 14\ decimal\ places}}
+\DoxyCodeLine{00096\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPart\ (ii):\ Newton-\/Raphson\ Method\ to\ refine\ roots\ to\ 14\ decimal\ places\(\backslash\)n"{}};}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&x0\ :\ found\_roots)}
+\DoxyCodeLine{00098\ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ \mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(x0,\ tol\_newton,\ max\_iter,\ iterations,\ 14);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 14\};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[\textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}}].emplace\_back(info);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Refined\ root\ starting\ from\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ x0\ <<\ \textcolor{stringliteral}{"{}:\ "{}}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::fixed\ <<\ std::setprecision(14)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Part\ (iii):\ Hybrid\ Method\ to\ find\ three\ roots\ to\ 14\ decimal\ places}}
+\DoxyCodeLine{00110\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPart\ (iii):\ Hybrid\ Method\ to\ find\ roots\ to\ 14\ decimal\ places\(\backslash\)n"{}};}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&interval\ :\ intervals)}
+\DoxyCodeLine{00112\ \ \ \ \ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ \mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(interval.first,\ interval.second,\ tol\_hybrid,\ max\_iter,\ iterations,\ 14);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 14\};}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[\textcolor{stringliteral}{"{}Hybrid\ Method"{}}].emplace\_back(info);}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root\ in\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(2)\ <<\ interval.first\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ interval.second\ <<\ \textcolor{stringliteral}{"{}]\ (Hybrid):\ "{}}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::fixed\ <<\ std::setprecision(14)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00121\ \ \ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Output\ summary\ of\ results\ for\ problem\ steps}}
+\DoxyCodeLine{00124\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n-\/-\/-\/\ Summary\ of\ Problem\ Steps\ Results\ -\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&method\ :\ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}})}
+\DoxyCodeLine{00126\ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nMethod:\ "{}}\ <<\ method.first\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ idx\ =\ 1;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&info\ :\ method.second)}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ Root\ "{}}\ <<\ idx++\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(info.decimal\_places)\ <<\ info.root}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ |\ Iterations:\ "{}}\ <<\ info.iterations\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//\ Clear\ summary\ for\ next\ run}}
+\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}.clear();}
+\DoxyCodeLine{00138\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{utils_8h_a4390b70f634a01cb926c274e249f9e8b}\index{utils.h@{utils.h}!summary@{summary}}
+\index{summary@{summary}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{summary}{summary}}
+{\footnotesize\ttfamily \label{utils_8h_a4390b70f634a01cb926c274e249f9e8b} 
+std\+::map$<$std\+::string, std\+::vector$<$\mbox{\hyperlink{struct_root_info}{Root\+Info}}$>$ $>$ summary\hspace{0.3cm}{\ttfamily [extern]}}
+

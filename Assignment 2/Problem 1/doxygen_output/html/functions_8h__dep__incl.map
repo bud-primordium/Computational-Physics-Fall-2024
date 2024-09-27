@@ -1,0 +1,21 @@
+<map id="functions.h" name="functions.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="284,5,370,32"/>
+<area shape="rect" id="Node000002" href="$functions_8cpp.html" title=" " alt="" coords="5,80,105,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,38,103,82,102,77,269,33"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html" title="The main entry point for the Root&#45;Finding Algorithms Solver project." alt="" coords="155,229,230,256"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="298,44,245,91,220,122,200,156,194,175,192,195,193,229,188,229,187,194,189,174,195,154,215,119,241,87,294,40"/>
+<area shape="rect" id="Node000004" href="$methods_8h.html" title=" " alt="" coords="286,80,368,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="330,48,330,80,324,80,324,48"/>
+<area shape="rect" id="Node000006" href="$utils_8cpp.html" title=" " alt="" coords="408,229,478,256"/>
+<area shape="poly" id="edge11_Node000001_Node000006" title=" " alt="" coords="357,40,406,88,428,119,446,154,450,174,452,195,448,229,443,229,446,195,445,175,440,156,424,122,401,92,354,44"/>
+<area shape="rect" id="Node000008" href="$plotting_8cpp.html" title=" " alt="" coords="531,80,619,107"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="385,34,532,77,531,82,384,39"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="276,115,246,133,220,156,209,174,202,194,196,229,190,228,197,192,204,172,216,153,243,128,273,111"/>
+<area shape="rect" id="Node000005" href="$methods_8cpp.html" title=" " alt="" coords="230,155,326,181"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="312,121,288,156,284,153,308,118"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="371,112,397,130,420,153,431,172,438,193,445,228,439,229,433,194,426,174,416,156,394,134,368,117"/>
+<area shape="rect" id="Node000007" href="$utils_8h.html" title=" " alt="" coords="350,155,406,181"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="347,118,371,153,367,156,342,121"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="336,188,225,231,223,226,334,183"/>
+<area shape="poly" id="edge9_Node000007_Node000006" title=" " alt="" coords="401,191,434,227,430,231,397,195"/>
+</map>

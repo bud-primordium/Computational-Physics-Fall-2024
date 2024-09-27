@@ -1,11 +1,43 @@
-/*
-@Author: Gilbert Young
-@Time: 2024/09/19 01:47
-@File_name: main.cpp
-@IDE: VSCode
-@Formatter: Clang-Format
-@Description: Main function to execute the root-finding program.
-*/
+/**
+ * @mainpage Root-Finding Algorithms Solver
+ *
+ * Using various numerical methods
+ *
+ * @details
+ * The program allows users to choose from the following root-finding algorithms:
+ * - Bisection Method
+ * - Hybrid Method
+ * - Brent Method
+ * - Ridder Method
+ * - Newton-Raphson Method
+ *
+ * Users can either use default parameters or customize them according to their needs. The program outputs include the root of the function, the number of iterations, and detailed steps.
+ *
+ * Additionally, the program offers options to compare all the methods and display their performance side by side.
+ *
+ * ## Key Features
+ * - Implements five distinct root-finding algorithms
+ * - Interactive user interface for method selection
+ * - Customizable parameters such as tolerance and initial guesses
+ * - Displays detailed performance metrics and results
+ * - Provides comparative analysis across the algorithms
+ *
+ * ## How to Use
+ * 1. Run the program.
+ * 2. Select a root-finding algorithm or choose to compare all methods.
+ * 3. Enter custom parameters or use the default values.
+ * 4. View the results and performance metrics.
+ */
+
+/**
+ * @file main.cpp
+ * @author
+ * Gilbert Young
+ * @date
+ * 2024/09/19
+ * @brief
+ * The main entry point for the Root-Finding Algorithms Solver project.
+ */
 
 #include "functions.h"
 #include "methods.h"

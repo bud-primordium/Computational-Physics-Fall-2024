@@ -1,0 +1,334 @@
+\doxysection{methods.\+cpp File Reference}
+\hypertarget{methods_8cpp}{}\label{methods_8cpp}\index{methods.cpp@{methods.cpp}}
+{\ttfamily \#include "{}methods.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+Include dependency graph for methods.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{methods_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+long double \mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}} (long double a, long double b, long double tol, int max\+\_\+iter, std\+::vector$<$ std\+::string $>$ \&iterations, int decimal\+\_\+places)
+\item 
+long double \mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\+\_\+raphson}} (long double x0, long double tol, int max\+\_\+iter, std\+::vector$<$ std\+::string $>$ \&iterations, int decimal\+\_\+places)
+\item 
+long double \mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{hybrid\+\_\+method}} (long double a, long double b, long double tol, int max\+\_\+iter, std\+::vector$<$ std\+::string $>$ \&iterations, int decimal\+\_\+places)
+\item 
+long double \mbox{\hyperlink{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c}{brent\+\_\+method}} (long double a, long double b, long double tol, int max\+\_\+iter, std\+::vector$<$ std\+::string $>$ \&iterations, int decimal\+\_\+places)
+\item 
+long double \mbox{\hyperlink{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56}{ridder\+\_\+method}} (long double a, long double b, long double tol, int max\+\_\+iter, std\+::vector$<$ std\+::string $>$ \&iterations, int decimal\+\_\+places)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}\index{methods.cpp@{methods.cpp}!bisection@{bisection}}
+\index{bisection@{bisection}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{bisection()}{bisection()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b} 
+long double bisection (\begin{DoxyParamCaption}\item[{long double}]{a}{, }\item[{long double}]{b}{, }\item[{long double}]{tol}{, }\item[{int}]{max\+\_\+iter}{, }\item[{std\+::vector$<$ std\+::string $>$ \&}]{iterations}{, }\item[{int}]{decimal\+\_\+places}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{00021\ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Bisection\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{00024\ \ \ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ a;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{00028\ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ c\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fc\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(c);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((b\ -\/\ a)\ /\ 2.0L\ <\ tol)}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fc\ <\ 0)}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ c;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fc;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ c;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fc;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{00048\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c}\index{methods.cpp@{methods.cpp}!brent\_method@{brent\_method}}
+\index{brent\_method@{brent\_method}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{brent\_method()}{brent\_method()}}
+{\footnotesize\ttfamily \label{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c} 
+long double brent\+\_\+method (\begin{DoxyParamCaption}\item[{long double}]{a}{, }\item[{long double}]{b}{, }\item[{long double}]{tol}{, }\item[{int}]{max\+\_\+iter}{, }\item[{std\+::vector$<$ std\+::string $>$ \&}]{iterations}{, }\item[{int}]{decimal\+\_\+places}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{00143\ \ \ \ \ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Brent's\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{00146\ \ \ \ \ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(fa)\ <\ fabs(fb))}
+\DoxyCodeLine{00149\ \ \ \ \ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ std::swap(a,\ b);}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ std::swap(fa,\ fb);}
+\DoxyCodeLine{00152\ \ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ a,\ fc\ =\ fa,\ s\ =\ b,\ fs\ =\ fb;}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{bool}\ mflag\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ d\ =\ 0.0;}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{00159\ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fb\ !=\ fc\ \&\&\ fa\ !=\ fc)}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Inverse\ quadratic\ interpolation}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ (a\ *\ fb\ *\ fc)\ /\ ((fa\ -\/\ fb)\ *\ (fa\ -\/\ fc))\ +}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (b\ *\ fa\ *\ fc)\ /\ ((fb\ -\/\ fa)\ *\ (fb\ -\/\ fc))\ +}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (c\ *\ fa\ *\ fb)\ /\ ((fc\ -\/\ fa)\ *\ (fc\ -\/\ fb));}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Secant\ method}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ b\ -\/\ fb\ *\ (b\ -\/\ a)\ /\ (fb\ -\/\ fa);}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Conditions\ to\ accept\ s}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition1\ =\ (s\ <\ (3\ *\ a\ +\ b)\ /\ 4.0L\ ||\ s\ >\ b);}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition2\ =\ (mflag\ \&\&\ fabs(s\ -\/\ b)\ >=\ fabs(b\ -\/\ c)\ /\ 2.0L);}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition3\ =\ (!mflag\ \&\&\ fabs(s\ -\/\ b)\ >=\ fabs(c\ -\/\ d)\ /\ 2.0L);}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition4\ =\ (mflag\ \&\&\ fabs(b\ -\/\ c)\ <\ tol);}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition5\ =\ (!mflag\ \&\&\ fabs(c\ -\/\ d)\ <\ tol);}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (condition1\ ||\ condition2\ ||\ condition3\ ||\ condition4\ ||\ condition5)}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bisection\ method}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ mflag\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ mflag\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fs\_new\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(s);}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ a\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ b\ =\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{},\ s\ =\ "{}}\ <<\ s;}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ d\ =\ c;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ c\ =\ b;}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ fc\ =\ fb;}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fs\_new\ <\ 0)}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ s;}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fs\_new;}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ s;}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fs\_new;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(fa)\ <\ fabs(fb))}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(a,\ b);}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(fa,\ fb);}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(b\ -\/\ a)\ <\ tol)}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00220\ \ \ \ \ \}}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordflow}{return}\ b;}
+\DoxyCodeLine{00223\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a7011422538c9322b29a10585a99b35dd}\index{methods.cpp@{methods.cpp}!hybrid\_method@{hybrid\_method}}
+\index{hybrid\_method@{hybrid\_method}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{hybrid\_method()}{hybrid\_method()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a7011422538c9322b29a10585a99b35dd} 
+long double hybrid\+\_\+method (\begin{DoxyParamCaption}\item[{long double}]{a}{, }\item[{long double}]{b}{, }\item[{long double}]{tol}{, }\item[{int}]{max\+\_\+iter}{, }\item[{std\+::vector$<$ std\+::string $>$ \&}]{iterations}{, }\item[{int}]{decimal\+\_\+places}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{00080\ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Hybrid\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ a;}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{00087\ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ c\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fc\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(c);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((b\ -\/\ a)\ /\ 2.0L\ <\ tol)}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fpc\ =\ \mbox{\hyperlink{functions_8cpp_abd103b781cb9df3cc08d894ad8925864}{f\_prime}}(c);}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fpc\ !=\ 0.0)}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ d\ =\ c\ -\/\ fc\ /\ fpc;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d\ >\ a\ \&\&\ d\ <\ b)}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fd\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(d);}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::ostringstream\ oss\_newton;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oss\_newton\ <<\ \textcolor{stringliteral}{"{}Newton\ Step:\ c\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ c}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ d\ =\ "{}}\ <<\ d;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iterations.push\_back(oss\_newton.str());}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(d\ -\/\ c)\ <\ tol)}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fd\ <\ 0)}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ d;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fd;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ d;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fd;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fallback\ to\ bisection}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fc\ <\ 0)}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ c;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fc;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ c;}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fc;}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{00136\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}\index{methods.cpp@{methods.cpp}!newton\_raphson@{newton\_raphson}}
+\index{newton\_raphson@{newton\_raphson}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{newton\_raphson()}{newton\_raphson()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff} 
+long double newton\+\_\+raphson (\begin{DoxyParamCaption}\item[{long double}]{x0}{, }\item[{long double}]{tol}{, }\item[{int}]{max\+\_\+iter}{, }\item[{std\+::vector$<$ std\+::string $>$ \&}]{iterations}{, }\item[{int}]{decimal\+\_\+places}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x1;}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{00055\ \ \ \ \ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fx0\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(x0);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fpx0\ =\ \mbox{\hyperlink{functions_8cpp_abd103b781cb9df3cc08d894ad8925864}{f\_prime}}(x0);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fpx0\ ==\ 0.0)}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ method\ fails.\ Derivative\ zero.\(\backslash\)n"{}};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ x1\ =\ x0\ -\/\ fx0\ /\ fpx0;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ x0\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ x0}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ x1\ =\ "{}}\ <<\ x1;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(x1\ -\/\ x0)\ <\ tol)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ x0\ =\ x1;}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{return}\ x1;}
+\DoxyCodeLine{00073\ \}}
+
+\end{DoxyCode}
+\Hypertarget{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56}\index{methods.cpp@{methods.cpp}!ridder\_method@{ridder\_method}}
+\index{ridder\_method@{ridder\_method}!methods.cpp@{methods.cpp}}
+\doxysubsubsection{\texorpdfstring{ridder\_method()}{ridder\_method()}}
+{\footnotesize\ttfamily \label{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56} 
+long double ridder\+\_\+method (\begin{DoxyParamCaption}\item[{long double}]{a}{, }\item[{long double}]{b}{, }\item[{long double}]{tol}{, }\item[{int}]{max\+\_\+iter}{, }\item[{std\+::vector$<$ std\+::string $>$ \&}]{iterations}{, }\item[{int}]{decimal\+\_\+places}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00227\ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{00230\ \ \ \ \ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Ridder's\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{00233\ \ \ \ \ \}}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{00236\ \ \ \ \ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ 0.5L\ *\ (a\ +\ b);}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fc\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(c);}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ s\_sq\ =\ fc\ *\ fc\ -\/\ fa\ *\ fb;}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\_sq\ <\ 0.0)}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Ridder's\ method\ fails.\ Square\ root\ of\ negative\ number.\(\backslash\)n"{}};}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ s\ =\ sqrt(s\_sq);}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ ==\ 0.0)}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ sign\ =\ ((fa\ -\/\ fb)\ <\ 0)\ ?\ -\/1.0L\ :\ 1.0L;}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x\ =\ c\ +\ (c\ -\/\ a)\ *\ fc\ /\ s\ *\ sign;}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fx\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(x);}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(fx)\ <\ tol)}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fc\ *\ fx\ <\ 0.0)}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ c;}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fc;}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ x;}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fx;}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (fa\ *\ fx\ <\ 0.0)}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ x;}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fx;}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ x;}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fx;}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(b\ -\/\ a)\ <\ tol)}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00279\ \ \ \ \ \}}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordflow}{return}\ 0.5L\ *\ (a\ +\ b);}
+\DoxyCodeLine{00282\ \}}
+
+\end{DoxyCode}

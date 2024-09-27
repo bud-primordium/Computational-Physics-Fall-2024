@@ -1,0 +1,9 @@
+<map id="plotting.h" name="plotting.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="111,5,185,32"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html" title="The main entry point for the Root&#45;Finding Algorithms Solver project." alt="" coords="5,80,80,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,43,62,82,59,77,116,39"/>
+<area shape="rect" id="Node000003" href="$plotting_8cpp.html" title=" " alt="" coords="104,80,192,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="150,48,150,80,145,80,145,48"/>
+<area shape="rect" id="Node000004" href="$utils_8cpp.html" title=" " alt="" coords="217,80,287,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="180,39,235,77,232,82,177,43"/>
+</map>

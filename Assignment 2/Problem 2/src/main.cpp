@@ -1,18 +1,42 @@
-/*
-@Author: Gilbert Young
-@Time: 2024/09/19 08:56
-@File_name: main.cpp
-@Description:
-Main program that implements four optimization algorithms to find the minimum of the function f(x, y) = sin(x + y) + cos(x + 2*y):
-1. Steepest Descent Method
-2. Conjugate Gradient Method
-3. Simulated Annealing
-4. Genetic Algorithm
+/**
+ * @mainpage Optimization Algorithms Solver
+ *
+ * Find the minimum of one multi-dimss function
+ *
+ * @details
+ * The program provides a menu for the user to select one of the following algorithms:
+ * - Steepest Descent Method
+ * - Conjugate Gradient Method
+ * - Simulated Annealing
+ * - Genetic Algorithm
+ *
+ * Users can choose to use default parameters or customize them. The program displays the results including the minimum point, function value, total iterations, and execution time.
+ *
+ * Option 5 compares all methods using default parameters, displaying their performance side by side.
+ *
+ * ## Features
+ * - Implementation of four optimization algorithms
+ * - Interactive menu for algorithm selection
+ * - Customizable parameters
+ * - Detailed results with performance metrics
+ * - Comparative analysis of algorithms
+ *
+ * ## Usage
+ * 1. Run the program.
+ * 2. Select an optimization algorithm or choose to compare all methods.
+ * 3. Opt to use default parameters or enter custom parameters.
+ * 4. View the results and performance metrics.
+ */
 
-It provides a menu for the user to select an algorithm, use default parameters or customize them, and displays the results including the minimum point, function value, total iterations, and execution time.
-
-Option 5 compares all methods using default parameters, displaying their performance side by side.
-*/
+/**
+ * @file main.cpp
+ * @author
+ * Gilbert Young
+ * @date
+ * 2024/09/19
+ * @brief
+ * Entry point for the Optimization Algorithms Solver project.
+ */
 
 #include <iostream>
 #include <cstdlib>
