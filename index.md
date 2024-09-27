@@ -1,21 +1,19 @@
-# 24秋 计算物理基础
+# [24秋 计算物理基础](https://github.com/bud-primordium/Computational-Physics-Fall-2024)
 
-本仓库用于存储“24秋 计算物理基础”课程中的代码与随笔。  
+本站点用于展示“24秋 计算物理基础”课程中部分代码的说明文档。  
 
-## [在线预览部分代码结构](https://bud-primordium.github.io/Computational-Physics-Fall-2024/)（试运行）
-
-### [Assignment 1](./Assignment%201)
+## [Assignment 1](./Assignment%201)
 
 - [README.pdf](./Assignment%201/readme.pdf)
 - [Game24 Fortran](./Assignment%201/Problem%202/doxygen_output/html/index.html)
 
-### [Assignment 2](./Assignment%202)
+## [Assignment 2](./Assignment%202)
 
 - [README.pdf](./Assignment%202/readme.pdf)
 - [Root Finder C++](./Assignment%202/Problem%201/doxygen_output/html/index.html)
 - [Optimization Algorithms C++](./Assignment%202/Problem%202/doxygen_output/html/index.html)
 
-### [Assignment 3](./Assignment%203)
+## [Assignment 3](./Assignment%203)
 
 - [README.pdf](./Assignment%203/readme.pdf)
 - [Linear Equations Solver C++](./Assignment%203/Problem%202/doxygen_output/html/index.html)
