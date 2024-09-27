@@ -1,0 +1,515 @@
+\doxysection{game24\+\_\+module Module Reference}
+\hypertarget{namespacegame24__module}{}\label{namespacegame24__module}\index{game24\_module@{game24\_module}}
+\doxysubsubsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_aa3212e7fb8d9f2cbd93301d7e919a982}{convert\+\_\+to\+\_\+number}} (input\+\_\+str, number, ios)
+\begin{DoxyCompactList}\small\item\em Converts user input (cards or numbers) into numeric values. \end{DoxyCompactList}\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_a86d74e2afb04d351a907dd130acb4a66}{remove\+\_\+decimal\+\_\+zeros}} (str, result)
+\begin{DoxyCompactList}\small\item\em Removes trailing zeros after the decimal point in a string. \end{DoxyCompactList}\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_a4519893898cd720f63919d5b4c5b98d4}{create\+\_\+new\+\_\+arrays}} (nums, exprs, idx1, idx2, result, new\+\_\+expr, new\+\_\+nums, new\+\_\+exprs)
+\begin{DoxyCompactList}\small\item\em Creates new arrays after performing an operation. \end{DoxyCompactList}\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_ac63873521c67a757d3a562304e5ed21d}{update\+\_\+progress\+\_\+bar}} ()
+\begin{DoxyCompactList}\small\item\em Updates and displays the horizontal percentage-\/based progress bar. \end{DoxyCompactList}\item 
+recursive subroutine \mbox{\hyperlink{namespacegame24__module_af0cc14f3cbfe672a2eb76b55d4757bcf}{solve\+\_\+24}} (nums, exprs, found)
+\begin{DoxyCompactList}\small\item\em Recursively solves the 24 game by trying all possible operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer, parameter \mbox{\hyperlink{namespacegame24__module_a1ba6f7785767097765dd34c3906d9201}{max\+\_\+limit}} = 8
+\item 
+integer, parameter \mbox{\hyperlink{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777}{expr\+\_\+len}} = 200
+\item 
+integer(int64), parameter \mbox{\hyperlink{namespacegame24__module_a2ef2c23a45b5fff7c625695b6c1ac8ee}{total\+\_\+calls\+\_\+n6}} = 20000000\+\_\+int64
+\item 
+integer(int64), parameter \mbox{\hyperlink{namespacegame24__module_af6af021499613e43462b64cf0baed768}{total\+\_\+calls\+\_\+n7}} = 2648275200\+\_\+int64
+\item 
+integer(int64), parameter \mbox{\hyperlink{namespacegame24__module_a44c5b29d2c35135eaa3132c629286207}{total\+\_\+calls\+\_\+n8}} = 444557593600\+\_\+int64
+\item 
+integer(int64) \mbox{\hyperlink{namespacegame24__module_ab915acf8dce34d142bb403657b757ac3}{total\+\_\+calls}} = 0
+\item 
+integer(int64) \mbox{\hyperlink{namespacegame24__module_a636b6df612b3b10e8e186dcfe90851e1}{completed\+\_\+calls}} = 0
+\item 
+integer \mbox{\hyperlink{namespacegame24__module_a26d5aa2c365a8b1571227e5e4bb22a94}{last\+\_\+percentage}} = -\/1
+\item 
+integer, parameter \mbox{\hyperlink{namespacegame24__module_a27258fa8bb74bd7b439f86fa3311ea21}{progress\+\_\+bar\+\_\+width}} = 50
+\item 
+character(len=1) \mbox{\hyperlink{namespacegame24__module_a22b3d81c5c27d038bacda3d0123cca3f}{carriage\+\_\+return}} = char(13)
+\item 
+logical \mbox{\hyperlink{namespacegame24__module_ae96de3d1f0bf07500e00219b60c39424}{show\+\_\+progress}} = .false.
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function/\+Subroutine Documentation}
+\Hypertarget{namespacegame24__module_aa3212e7fb8d9f2cbd93301d7e919a982}\index{game24\_module@{game24\_module}!convert\_to\_number@{convert\_to\_number}}
+\index{convert\_to\_number@{convert\_to\_number}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{convert\_to\_number()}{convert\_to\_number()}}
+{\footnotesize\ttfamily \label{namespacegame24__module_aa3212e7fb8d9f2cbd93301d7e919a982} 
+subroutine game24\+\_\+module\+::convert\+\_\+to\+\_\+number (\begin{DoxyParamCaption}\item[{character(len=\texorpdfstring{$\ast$}{*}), intent(in)}]{input\+\_\+str}{, }\item[{real, intent(out)}]{number}{, }\item[{integer, intent(out)}]{ios}{}\end{DoxyParamCaption})}
+
+
+
+Converts user input (cards or numbers) into numeric values. 
+
+Handles card values such as \textquotesingle{}A\textquotesingle{}, \textquotesingle{}J\textquotesingle{}, \textquotesingle{}Q\textquotesingle{}, \textquotesingle{}K\textquotesingle{}. 
+\begin{DoxyParams}{Parameters}
+{\em input\+\_\+str} & String representing the number or card value \\
+\hline
+{\em number} & The corresponding numeric value after conversion \\
+\hline
+{\em ios} & I/O status indicator (0 for success) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{implicit\ none} }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=*)},\ \textcolor{keywordtype}{intent(in)}\ ::\ input\_str }
+\DoxyCodeLine{00091\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real},\ \textcolor{keywordtype}{intent(out)}\ \ \ \ \ \ \ \ \ \ \ \ ::\ number }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer},\ \textcolor{keywordtype}{intent(out)}\ \ \ \ \ \ \ \ \ ::\ ios }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=1)}\ \ \ \ \ \ \ \ \ \ \ \ \ ::\ first\_char }
+\DoxyCodeLine{00094\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ temp\_number }
+\DoxyCodeLine{00095\  }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ ios\ =\ 0\ \ \textcolor{comment}{!\ Reset\ the\ I/O\ status\ to\ 0\ (valid\ input\ by\ default) }}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ first\_char\ =\ input\_str(1:1) }
+\DoxyCodeLine{00098\  }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{select\ case}\ (first\_char) }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (\textcolor{stringliteral}{'A'},\ \textcolor{stringliteral}{'a'}) }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ number\ =\ 1.0 }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (\textcolor{stringliteral}{'J'},\ \textcolor{stringliteral}{'j'}) }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ number\ =\ 11.0 }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (\textcolor{stringliteral}{'Q'},\ \textcolor{stringliteral}{'q'}) }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ number\ =\ 12.0 }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (\textcolor{stringliteral}{'K'},\ \textcolor{stringliteral}{'k'}) }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ number\ =\ 13.0 }
+\DoxyCodeLine{00108\ \textcolor{keywordflow}{\ \ \ \ \ \ \ \ case\ default} }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{read}\ (input\_str,\ *,\ iostat=ios)\ temp\_number\ \ \textcolor{comment}{!\ Attempt\ to\ read\ a\ real\ number }}
+\DoxyCodeLine{00110\  }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ If\ input\ is\ not\ a\ valid\ real\ number\ or\ is\ not\ an\ integer,\ set\ ios\ to\ 1 }}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ios\ /=\ 0\ .or.\ mod(temp\_number,\ 1.0)\ /=\ 0.0)\ then }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ios\ =\ 1\ \ \textcolor{comment}{!\ Invalid\ input }}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ else }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ number\ =\ temp\_number\ \ \textcolor{comment}{!\ Valid\ integer\ input }}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }select }
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a4519893898cd720f63919d5b4c5b98d4}\index{game24\_module@{game24\_module}!create\_new\_arrays@{create\_new\_arrays}}
+\index{create\_new\_arrays@{create\_new\_arrays}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{create\_new\_arrays()}{create\_new\_arrays()}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a4519893898cd720f63919d5b4c5b98d4} 
+subroutine game24\+\_\+module\+::create\+\_\+new\+\_\+arrays (\begin{DoxyParamCaption}\item[{real, dimension(\+:), intent(in)}]{nums}{, }\item[{character(len=\mbox{\hyperlink{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777}{expr\+\_\+len}}), dimension(\+:), intent(in)}]{exprs}{, }\item[{integer, intent(in)}]{idx1}{, }\item[{integer, intent(in)}]{idx2}{, }\item[{real, intent(in)}]{result}{, }\item[{character(len=\mbox{\hyperlink{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777}{expr\+\_\+len}}), intent(in)}]{new\+\_\+expr}{, }\item[{real, dimension(\+:), intent(out), allocatable}]{new\+\_\+nums}{, }\item[{character(len=\mbox{\hyperlink{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777}{expr\+\_\+len}}), dimension(\+:), intent(out), allocatable}]{new\+\_\+exprs}{}\end{DoxyParamCaption})}
+
+
+
+Creates new arrays after performing an operation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nums} & Input array of numbers \\
+\hline
+{\em exprs} & Input array of expressions \\
+\hline
+{\em idx1} & Index of the first element to remove \\
+\hline
+{\em idx2} & Index of the second element to remove \\
+\hline
+{\em result} & Result of the operation \\
+\hline
+{\em new\+\_\+expr} & New expression string \\
+\hline
+{\em new\+\_\+nums} & Output array of numbers with elements removed and result added \\
+\hline
+{\em new\+\_\+exprs} & Output array of expressions with elements removed and new\+\_\+expr added \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{implicit\ none} }
+\DoxyCodeLine{00156\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real},\ \textcolor{keywordtype}{intent(in)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ nums(:)\ \ \ \ \ \ \ \textcolor{comment}{!\ Input:\ Array\ of\ numbers }}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=expr\_len)},\ \textcolor{keywordtype}{intent(in)}\ \ \ \ \ ::\ exprs(:)\ \ \ \ \ \ \textcolor{comment}{!\ Input:\ Array\ of\ expressions }}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer},\ \textcolor{keywordtype}{intent(in)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ idx1,\ idx2\ \ \ \ \textcolor{comment}{!\ Input:\ Indices\ of\ elements\ to\ remove }}
+\DoxyCodeLine{00159\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real},\ \textcolor{keywordtype}{intent(in)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ result\ \ \ \ \ \ \ \ \textcolor{comment}{!\ Input:\ Result\ of\ the\ operation }}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=expr\_len)},\ \textcolor{keywordtype}{intent(in)}\ \ \ \ \ ::\ new\_expr\ \ \ \ \ \ \textcolor{comment}{!\ Input:\ New\ expression }}
+\DoxyCodeLine{00161\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real},\ \textcolor{keywordtype}{allocatable},\ \textcolor{keywordtype}{intent(out)}\ \ \ \ \ \ \ \ \ \ ::\ new\_nums(:)\ \ \ \textcolor{comment}{!\ Output:\ New\ array\ of\ numbers }}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=expr\_len)},\ \textcolor{keywordtype}{allocatable},\ \textcolor{keywordtype}{intent(out)}\ ::\ new\_exprs(:)\textcolor{comment}{\ !\ Output:\ New\ array\ of\ expressions }}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ i,\ j,\ n\ \ \ \ \ \ \ \textcolor{comment}{!\ Loop\ counters\ and\ size\ of\ input\ arrays }}
+\DoxyCodeLine{00164\  }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ n\ =\ \textcolor{keyword}{size}(nums) }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keyword}{allocate}\ (new\_nums(n\ -\/\ 1)) }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keyword}{allocate}\ (new\_exprs(n\ -\/\ 1)) }
+\DoxyCodeLine{00168\  }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ j\ =\ 0 }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ i\ =\ 1,\ n }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ /=\ idx1\ .and.\ i\ /=\ idx2)\ then }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ j\ =\ j\ +\ 1 }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_nums(j)\ =\ nums(i) }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_exprs(j)\ =\ exprs(i) }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }do }
+\DoxyCodeLine{00177\  }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Add\ the\ result\ of\ the\ operation\ to\ the\ new\ arrays }}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ new\_nums(n\ -\/\ 1)\ =\ result }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ new\_exprs(n\ -\/\ 1)\ =\ new\_expr }
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a86d74e2afb04d351a907dd130acb4a66}\index{game24\_module@{game24\_module}!remove\_decimal\_zeros@{remove\_decimal\_zeros}}
+\index{remove\_decimal\_zeros@{remove\_decimal\_zeros}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{remove\_decimal\_zeros()}{remove\_decimal\_zeros()}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a86d74e2afb04d351a907dd130acb4a66} 
+subroutine game24\+\_\+module\+::remove\+\_\+decimal\+\_\+zeros (\begin{DoxyParamCaption}\item[{character(len=\texorpdfstring{$\ast$}{*}), intent(in)}]{str}{, }\item[{character(len=\texorpdfstring{$\ast$}{*}), intent(out)}]{result}{}\end{DoxyParamCaption})}
+
+
+
+Removes trailing zeros after the decimal point in a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & Input string that may contain trailing zeros \\
+\hline
+{\em result} & Output string with trailing zeros removed \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{implicit\ none} }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=*)},\ \textcolor{keywordtype}{intent(in)}\ \ ::\ str\ \ \ \ \ \ \ \textcolor{comment}{!\ Input:\ String\ to\ remove\ zeros\ from }}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=*)},\ \textcolor{keywordtype}{intent(out)}\ ::\ result\ \ \ \ \textcolor{comment}{!\ Output:\ String\ without\ trailing\ zeros }}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ i,\ len\_str\ \ \textcolor{comment}{!\ Loop\ counter\ and\ string\ length }}
+\DoxyCodeLine{00128\  }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ len\_str\ =\ len\_trim(str) }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ result\ =\ adjustl(str(1:len\_str)) }
+\DoxyCodeLine{00131\  }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Find\ the\ position\ of\ the\ decimal\ point }}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ i\ =\ index(result,\ \textcolor{stringliteral}{'.'}) }
+\DoxyCodeLine{00134\  }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ If\ there's\ a\ decimal\ point,\ remove\ trailing\ zeros }}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >\ 0)\ then }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \textcolor{keywordflow}{while}\ (len\_str\ >\ i\ .and.\ result(len\_str:len\_str)\ ==\ \textcolor{stringliteral}{'0'}) }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ len\_str\ =\ len\_str\ -\/\ 1 }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }do }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result(len\_str:len\_str)\ ==\ \textcolor{stringliteral}{'.'})\ len\_str\ =\ len\_str\ -\/\ 1 }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ result(1:len\_str) }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_af0cc14f3cbfe672a2eb76b55d4757bcf}\index{game24\_module@{game24\_module}!solve\_24@{solve\_24}}
+\index{solve\_24@{solve\_24}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{solve\_24()}{solve\_24()}}
+{\footnotesize\ttfamily \label{namespacegame24__module_af0cc14f3cbfe672a2eb76b55d4757bcf} 
+recursive subroutine game24\+\_\+module\+::solve\+\_\+24 (\begin{DoxyParamCaption}\item[{real, dimension(\+:), intent(in)}]{nums}{, }\item[{character(len=\mbox{\hyperlink{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777}{expr\+\_\+len}}), dimension(\+:), intent(in)}]{exprs}{, }\item[{logical, intent(inout)}]{found}{}\end{DoxyParamCaption})}
+
+
+
+Recursively solves the 24 game by trying all possible operations. 
+
+Utilizes Open\+MP tasks for parallelization. 
+\begin{DoxyParams}{Parameters}
+{\em nums} & Array of numbers to use in the game \\
+\hline
+{\em exprs} & Array of string expressions representing the numbers \\
+\hline
+{\em found} & Logical flag indicating if a solution has been found \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{use\ }omp\_lib }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{implicit\ none} }
+\DoxyCodeLine{00228\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real},\ \textcolor{keywordtype}{intent(in)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ nums(:)\ \ \ \ \ \ \ \textcolor{comment}{!\ Input:\ Array\ of\ numbers }}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=expr\_len)},\ \textcolor{keywordtype}{intent(in)}\ \ \ \ \ \ ::\ exprs(:)\ \ \ \ \ \ \textcolor{comment}{!\ Input:\ Array\ of\ expressions }}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{logical},\ \textcolor{keywordtype}{intent(inout)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ found\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Input/Output:\ Flag\ indicating\ if\ a\ solution\ is\ found }}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ n\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Size\ of\ the\ input\ arrays }}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ i,\ j,\ op\ \ \ \ \ \ \textcolor{comment}{!\ Loop\ counters }}
+\DoxyCodeLine{00233\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ a,\ b,\ result\ \ \textcolor{comment}{!\ Temporary\ variables\ for\ calculations }}
+\DoxyCodeLine{00234\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real},\ \textcolor{keywordtype}{allocatable}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ new\_nums(:)\ \ \ \textcolor{comment}{!\ Temp\ array\ to\ store\ numbers\ after\ an\ operation }}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=expr\_len)},\ \textcolor{keywordtype}{allocatable}\ \ \ \ \ ::\ new\_exprs(:)\ \ \textcolor{comment}{!\ Temp\ array\ to\ store\ expressions\ after\ an\ operation }}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=expr\_len)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::\ expr\_a,\ expr\_b,\ new\_expr\textcolor{comment}{\ !\ Temp\ variables\ for\ expressions }}
+\DoxyCodeLine{00237\  }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ n\ =\ \textcolor{keyword}{size}(nums) }
+\DoxyCodeLine{00239\  }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Increment\ the\ completed\_calls\ counter\ and\ update\ progress\ bar }}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (show\_progress)\ then }
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\$omp\ atomic }}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ completed\_calls\ =\ completed\_calls\ +\ 1 }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }update\_progress\_bar() }
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00246\  }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ If\ a\ solution\ is\ found,\ return }}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (found)\ return }
+\DoxyCodeLine{00249\  }
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Base\ case:\ If\ only\ one\ number\ is\ left,\ check\ if\ it\ is\ 24 }}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ ==\ 1)\ then }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (abs(nums(1)\ -\/\ 24.0)\ <\ 1e-\/4)\ then }
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (show\_progress)\ then }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{write}\ (*,\ \textcolor{stringliteral}{'(A,\ F5.1,\ A)'},\ advance=\textcolor{stringliteral}{'no'})\ carriage\_return\textcolor{comment}{//}\textcolor{stringliteral}{'['}\textcolor{comment}{//repeat(}\textcolor{stringliteral}{'='}\textcolor{comment}{,\ progress\_bar\_width)//}\textcolor{stringliteral}{']\ '}\textcolor{comment}{,\ 100.0,\ }\textcolor{stringliteral}{'\%'}\textcolor{comment}{ }}
+\DoxyCodeLine{00255\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{write}\ (*,\ \textcolor{stringliteral}{'(A)'})\ \textcolor{stringliteral}{''}\ \ \textcolor{comment}{!\ Insert\ a\ blank\ line }}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\$omp\ critical }}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{write}\ (*,\ \textcolor{stringliteral}{'(A,\ A,\ A,\ F10.7,\ A)'})\ \textcolor{stringliteral}{'Solution\ found:'},\ trim\textcolor{comment}{(exprs(1)),\ }\textcolor{stringliteral}{'=\ 24\ ('}\textcolor{comment}{,\ nums(1),\ }\textcolor{stringliteral}{')'}\textcolor{comment}{ }}
+\DoxyCodeLine{00259\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ found\ =\ .true. }
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\$omp\ end\ critical }}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ return }
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00264\  }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Iterate\ over\ all\ pairs\ of\ numbers }}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ i\ =\ 1,\ n\ -\/\ 1 }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ j\ =\ i\ +\ 1,\ n }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ nums(i) }
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ nums(j) }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\_a\ =\ exprs(i) }
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\_b\ =\ exprs(j) }
+\DoxyCodeLine{00272\  }
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Iterate\ over\ all\ operators }}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ op\ =\ 1,\ 4 }
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Avoid\ division\ by\ zero }}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((op\ ==\ 4\ .and.\ abs(b)\ <\ 1e-\/6))\ cycle }
+\DoxyCodeLine{00277\  }
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Perform\ the\ operation\ and\ create\ the\ new\ expression }}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{select\ case}\ (op) }
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (1) }
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ a\ +\ b }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_expr\ =\ \textcolor{stringliteral}{'('}//trim(expr\_a)//\textcolor{stringliteral}{'+'}//trim(expr\_b)/\textcolor{comment}{/}\textcolor{stringliteral}{')'}\textcolor{comment}{ }}
+\DoxyCodeLine{00283\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (2) }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ a\ -\/\ b }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_expr\ =\ \textcolor{stringliteral}{'('}//trim(expr\_a)//\textcolor{stringliteral}{'-\/'}//trim(expr\_b)/\textcolor{comment}{/}\textcolor{stringliteral}{')'}\textcolor{comment}{ }}
+\DoxyCodeLine{00286\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (3) }
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ a\ *\ b }
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_expr\ =\ \textcolor{stringliteral}{'('}//trim(expr\_a)//\textcolor{stringliteral}{'*'}//trim(expr\_b)/\textcolor{comment}{/}\textcolor{stringliteral}{')'}\textcolor{comment}{ }}
+\DoxyCodeLine{00289\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (4) }
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ a\ /\ b }
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_expr\ =\ \textcolor{stringliteral}{'('}//trim(expr\_a)//\textcolor{stringliteral}{'/'}//trim(expr\_b)/\textcolor{comment}{/}\textcolor{stringliteral}{')'}\textcolor{comment}{ }}
+\DoxyCodeLine{00292\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }select }
+\DoxyCodeLine{00293\  }
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Create\ new\ arrays\ with\ the\ selected\ numbers\ removed }}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }create\_new\_arrays(nums,\ exprs,\ i,\ j,\ result,\ new\_expr\textcolor{comment}{,\ new\_nums,\ new\_exprs) }}
+\DoxyCodeLine{00296\ \textcolor{comment}{} }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ For\ the\ first\ few\ recursion\ levels,\ create\ parallel\ tasks }}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ >=\ 6\ .and.\ omp\_get\_level()\ <\ 2)\ then }
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\$omp\ task\ shared(found)\ firstprivate(new\_nums,\ new\_exprs) }}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }solve\_24(new\_nums,\ new\_exprs,\ found) }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\$omp\ end\ task }}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else }
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }solve\_24(new\_nums,\ new\_exprs,\ found) }
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00305\  }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ If\ a\ solution\ is\ found,\ deallocate\ memory\ and\ return }}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (found)\ then }
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{deallocate}\ (new\_nums) }
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{deallocate}\ (new\_exprs) }
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return }
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00312\  }
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Handle\ commutative\ operations\ only\ once }}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (op\ ==\ 1\ .or.\ op\ ==\ 3)\ cycle }
+\DoxyCodeLine{00315\  }
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Swap\ operands\ for\ subtraction\ and\ division }}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (op\ ==\ 2\ .or.\ op\ ==\ 4)\ then }
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (op\ ==\ 4\ .and.\ abs(a)\ <\ 1e-\/6)\ cycle\ \ \textcolor{comment}{!\ Avoid\ division\ by\ zero }}
+\DoxyCodeLine{00319\  }
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{select\ case}\ (op) }
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (2) }
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ b\ -\/\ a }
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_expr\ =\ \textcolor{stringliteral}{'('}//trim(expr\_b)//\textcolor{stringliteral}{'-\/'}//trim(expr\_a\textcolor{comment}{)//}\textcolor{stringliteral}{')'}\textcolor{comment}{ }}
+\DoxyCodeLine{00324\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ (4) }
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ b\ /\ a }
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_expr\ =\ \textcolor{stringliteral}{'('}//trim(expr\_b)//\textcolor{stringliteral}{'/'}//trim(expr\_a\textcolor{comment}{)//}\textcolor{stringliteral}{')'}\textcolor{comment}{ }}
+\DoxyCodeLine{00327\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }select }
+\DoxyCodeLine{00328\  }
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Create\ new\ arrays\ with\ the\ selected\ numbers\ removed }}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }create\_new\_arrays(nums,\ exprs,\ i,\ j,\ result\textcolor{comment}{,\ new\_expr,\ new\_nums,\ new\_exprs) }}
+\DoxyCodeLine{00331\ \textcolor{comment}{} }
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ For\ the\ first\ few\ recursion\ levels,\ create\ parallel\ tasks }}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ >=\ 6\ .and.\ omp\_get\_level()\ <\ 2)\ then }
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\$omp\ task\ shared(found)\ firstprivate(new\_nums,\ new\_exprs) }}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }solve\_24(new\_nums,\ new\_exprs,\ found) }
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\$omp\ end\ task }}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else }
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Recursively\ call\ the\ solve\_24\ function\ with\ the\ new\ arrays }}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }solve\_24(new\_nums,\ new\_exprs,\ found) }
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00341\  }
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ If\ a\ solution\ is\ found,\ deallocate\ memory\ and\ return }}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (found)\ then }
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{deallocate}\ (new\_nums) }
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{deallocate}\ (new\_exprs) }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return }
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00349\  }
+\DoxyCodeLine{00350\ \textcolor{keywordflow}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end\ do}\ \ \textcolor{comment}{!\ End\ of\ operator\ loop }}
+\DoxyCodeLine{00351\ \textcolor{keywordflow}{\ \ \ \ \ \ \ \ \ \ \ \ end\ do}\ \ \textcolor{comment}{!\ End\ of\ j\ loop }}
+\DoxyCodeLine{00352\ \textcolor{keywordflow}{\ \ \ \ \ \ \ \ end\ do}\ \ \textcolor{comment}{!\ End\ of\ i\ loop }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_ac63873521c67a757d3a562304e5ed21d}\index{game24\_module@{game24\_module}!update\_progress\_bar@{update\_progress\_bar}}
+\index{update\_progress\_bar@{update\_progress\_bar}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{update\_progress\_bar()}{update\_progress\_bar()}}
+{\footnotesize\ttfamily \label{namespacegame24__module_ac63873521c67a757d3a562304e5ed21d} 
+subroutine game24\+\_\+module\+::update\+\_\+progress\+\_\+bar}
+
+
+
+Updates and displays the horizontal percentage-\/based progress bar. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{implicit\ none} }
+\DoxyCodeLine{00186\ \textcolor{keywordtype}{\ \ \ \ \ \ \ \ real}\ ::\ percentage }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer}\ ::\ filled\_length }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{character(len=progress\_bar\_width)}\ ::\ bar }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{integer}\ ::\ int\_percentage }
+\DoxyCodeLine{00190\  }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (total\_calls\ ==\ 0\ .or.\ .not.\ show\_progress)\ \textcolor{keywordflow}{return}\ \ \textcolor{comment}{!\ Avoid\ division\ by\ zero\ and\ check\ the\ flag }}
+\DoxyCodeLine{00192\  }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ percentage\ =\ real(completed\_calls)\ /\ real(total\_calls)\ *\ 100.0 }
+\DoxyCodeLine{00194\  }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Ensure\ percentage\ does\ not\ exceed\ 100\% }}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (percentage\ >\ 100.0)\ percentage\ =\ 100.0 }
+\DoxyCodeLine{00197\  }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Calculate\ integer\ percentage }}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ int\_percentage\ =\ int(percentage) }
+\DoxyCodeLine{00200\  }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Update\ progress\ bar\ only\ when\ percentage\ increases\ by\ at\ least\ 1\% }}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (int\_percentage\ >\ last\_percentage)\ then }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ last\_percentage\ =\ int\_percentage }
+\DoxyCodeLine{00204\  }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Calculate\ the\ filled\ length\ of\ the\ progress\ bar }}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ filled\_length\ =\ min(int(percentage\ /\ 100.0\ *\ progress\_bar\_width\textcolor{comment}{),\ progress\_bar\_width) }}
+\DoxyCodeLine{00207\ \textcolor{comment}{} }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Construct\ the\ progress\ bar\ string }}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ bar\ =\ repeat(\textcolor{stringliteral}{'='},\ filled\_length) }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (filled\_length\ <\ progress\_bar\_width)\ then }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bar\ =\ bar//\textcolor{stringliteral}{'>'}//repeat(\textcolor{stringliteral}{'\ '},\ progress\_bar\_width\ -\/\ filled\_length\textcolor{comment}{\ -\/\ 1) }}
+\DoxyCodeLine{00212\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+\DoxyCodeLine{00213\  }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Print\ the\ progress\ bar\ and\ integer\ percentage }}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{write}\ (*,\ \textcolor{stringliteral}{'(A,\ F4.1,\ A)'},\ advance=\textcolor{stringliteral}{'no'})\ carriage\_return//\textcolor{stringliteral}{'['}\textcolor{comment}{//bar//}\textcolor{stringliteral}{']\ '}\textcolor{comment}{,\ percentage,\ }\textcolor{stringliteral}{'\%'}\textcolor{comment}{ }}
+\DoxyCodeLine{00216\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{call\ }flush\ (0)\ \ \textcolor{comment}{!\ Ensure\ output\ is\ displayed\ immediately }}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keyword}{end\ }if }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacegame24__module_a22b3d81c5c27d038bacda3d0123cca3f}\index{game24\_module@{game24\_module}!carriage\_return@{carriage\_return}}
+\index{carriage\_return@{carriage\_return}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{carriage\_return}{carriage\_return}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a22b3d81c5c27d038bacda3d0123cca3f} 
+character(len=1) game24\+\_\+module\+::carriage\+\_\+return = char(13)}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{character(len=1)}\ ::\ carriage\_return\ =\ char(13)\ \textcolor{comment}{!\ Carriage\ return\ character }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a636b6df612b3b10e8e186dcfe90851e1}\index{game24\_module@{game24\_module}!completed\_calls@{completed\_calls}}
+\index{completed\_calls@{completed\_calls}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{completed\_calls}{completed\_calls}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a636b6df612b3b10e8e186dcfe90851e1} 
+integer(int64) game24\+\_\+module\+::completed\+\_\+calls = 0}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{integer(int64)}\ ::\ completed\_calls\ =\ 0\ \ \ \ \ \ \ \textcolor{comment}{!\ Number\ of\ completed\ recursive\ calls }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777}\index{game24\_module@{game24\_module}!expr\_len@{expr\_len}}
+\index{expr\_len@{expr\_len}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{expr\_len}{expr\_len}}
+{\footnotesize\ttfamily \label{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777} 
+integer, parameter game24\+\_\+module\+::expr\+\_\+len = 200}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{integer},\ \textcolor{keywordtype}{parameter}\ ::\ expr\_len\ =\ 200\ \ \ \textcolor{comment}{!\ Maximum\ length\ for\ expressions }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a26d5aa2c365a8b1571227e5e4bb22a94}\index{game24\_module@{game24\_module}!last\_percentage@{last\_percentage}}
+\index{last\_percentage@{last\_percentage}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{last\_percentage}{last\_percentage}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a26d5aa2c365a8b1571227e5e4bb22a94} 
+integer game24\+\_\+module\+::last\+\_\+percentage = -\/1}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{integer}\ ::\ last\_percentage\ =\ -\/1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Last\ percentage\ reported }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a1ba6f7785767097765dd34c3906d9201}\index{game24\_module@{game24\_module}!max\_limit@{max\_limit}}
+\index{max\_limit@{max\_limit}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{max\_limit}{max\_limit}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a1ba6f7785767097765dd34c3906d9201} 
+integer, parameter game24\+\_\+module\+::max\+\_\+limit = 8}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{integer},\ \textcolor{keywordtype}{parameter}\ ::\ max\_limit\ =\ 8\ \ \ \ \ \textcolor{comment}{!\ Maximum\ allowed\ value\ for\ the\ number\ of\ inputs }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a27258fa8bb74bd7b439f86fa3311ea21}\index{game24\_module@{game24\_module}!progress\_bar\_width@{progress\_bar\_width}}
+\index{progress\_bar\_width@{progress\_bar\_width}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{progress\_bar\_width}{progress\_bar\_width}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a27258fa8bb74bd7b439f86fa3311ea21} 
+integer, parameter game24\+\_\+module\+::progress\+\_\+bar\+\_\+width = 50}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{integer},\ \textcolor{keywordtype}{parameter}\ ::\ progress\_bar\_width\ =\ 50\ \ \textcolor{comment}{!\ Width\ of\ the\ progress\ bar }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_ae96de3d1f0bf07500e00219b60c39424}\index{game24\_module@{game24\_module}!show\_progress@{show\_progress}}
+\index{show\_progress@{show\_progress}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{show\_progress}{show\_progress}}
+{\footnotesize\ttfamily \label{namespacegame24__module_ae96de3d1f0bf07500e00219b60c39424} 
+logical game24\+\_\+module\+::show\+\_\+progress = .false.}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{logical}\ ::\ show\_progress\ =\ .false.\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Flag\ to\ show\ progress\ bar }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_ab915acf8dce34d142bb403657b757ac3}\index{game24\_module@{game24\_module}!total\_calls@{total\_calls}}
+\index{total\_calls@{total\_calls}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{total\_calls}{total\_calls}}
+{\footnotesize\ttfamily \label{namespacegame24__module_ab915acf8dce34d142bb403657b757ac3} 
+integer(int64) game24\+\_\+module\+::total\+\_\+calls = 0}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{integer(int64)}\ ::\ total\_calls\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{!\ Total\ number\ of\ recursive\ calls }}
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a2ef2c23a45b5fff7c625695b6c1ac8ee}\index{game24\_module@{game24\_module}!total\_calls\_n6@{total\_calls\_n6}}
+\index{total\_calls\_n6@{total\_calls\_n6}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{total\_calls\_n6}{total\_calls\_n6}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a2ef2c23a45b5fff7c625695b6c1ac8ee} 
+integer(int64), parameter game24\+\_\+module\+::total\+\_\+calls\+\_\+n6 = 20000000\+\_\+int64}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{integer(int64)},\ \textcolor{keywordtype}{parameter}\ ::\ total\_calls\_n6\ =\ 20000000\_int64 }
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_af6af021499613e43462b64cf0baed768}\index{game24\_module@{game24\_module}!total\_calls\_n7@{total\_calls\_n7}}
+\index{total\_calls\_n7@{total\_calls\_n7}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{total\_calls\_n7}{total\_calls\_n7}}
+{\footnotesize\ttfamily \label{namespacegame24__module_af6af021499613e43462b64cf0baed768} 
+integer(int64), parameter game24\+\_\+module\+::total\+\_\+calls\+\_\+n7 = 2648275200\+\_\+int64}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{integer(int64)},\ \textcolor{keywordtype}{parameter}\ ::\ total\_calls\_n7\ =\ 2648275200\_int64 }
+
+\end{DoxyCode}
+\Hypertarget{namespacegame24__module_a44c5b29d2c35135eaa3132c629286207}\index{game24\_module@{game24\_module}!total\_calls\_n8@{total\_calls\_n8}}
+\index{total\_calls\_n8@{total\_calls\_n8}!game24\_module@{game24\_module}}
+\doxysubsubsection{\texorpdfstring{total\_calls\_n8}{total\_calls\_n8}}
+{\footnotesize\ttfamily \label{namespacegame24__module_a44c5b29d2c35135eaa3132c629286207} 
+integer(int64), parameter game24\+\_\+module\+::total\+\_\+calls\+\_\+n8 = 444557593600\+\_\+int64}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{integer(int64)},\ \textcolor{keywordtype}{parameter}\ ::\ total\_calls\_n8\ =\ 444557593600\_int64 }
+
+\end{DoxyCode}

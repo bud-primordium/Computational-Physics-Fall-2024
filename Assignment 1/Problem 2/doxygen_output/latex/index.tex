@@ -1,0 +1,33 @@
+\chapter{24-\/Game Solver}
+\hypertarget{index}{}\label{index}\index{24-\/Game Solver@{24-\/Game Solver}}
+An enhanced version of the 24-\/game solver using recursive search and pruning.
+
+This program allows users to solve the 24-\/game using the following features\+:
+\begin{DoxyItemize}
+\item Recursive search with pruning
+\item Progress bar to monitor search progress
+\item Open\+MP parallelization for multi-\/core systems
+\item Optimization for commutative operations (addition and multiplication)
+\end{DoxyItemize}
+
+Users can either use default settings or customize them according to their needs. The program outputs include\+:
+\begin{DoxyItemize}
+\item The first valid solution for 24
+\item Detailed recursive steps and expressions
+\end{DoxyItemize}
+
+Additionally, the program supports solving the game with varying number of inputs and halts upon finding a valid solution.\hypertarget{index_autotoc_md0}{}\doxysubsection{\texorpdfstring{Key Features}{Key Features}}\label{index_autotoc_md0}
+
+\begin{DoxyItemize}
+\item Implements recursive search for the 24-\/game
+\item Supports up to 8 input numbers
+\item Open\+MP for parallelization on larger input sizes
+\item Progress bar for visual feedback during the search process
+\end{DoxyItemize}\hypertarget{index_autotoc_md1}{}\doxysubsection{\texorpdfstring{How to Use}{How to Use}}\label{index_autotoc_md1}
+
+\begin{DoxyEnumerate}
+\item Compile the program with Open\+MP support ({\ttfamily gfortran -\/fopenmp}).
+\item Enter the number of numbers (between 1 and 8).
+\item Provide the input numbers or card values (A=1, J=11, Q=12, K=13).
+\item View the solution if found, or a message indicating no solution. 
+\end{DoxyEnumerate}

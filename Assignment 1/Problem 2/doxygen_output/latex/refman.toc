@@ -1,0 +1,34 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}24-\/Game Solver}{1}{chapter.1}%
+\contentsline {subsection}{\numberline {1.0.1}Key Features}{1}{subsection.1.0.1}%
+\contentsline {subsection}{\numberline {1.0.2}How to Use}{1}{subsection.1.0.2}%
+\contentsline {chapter}{\numberline {2}Modules Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Modules List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}File Index}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}File List}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Module Documentation}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}game24\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}module Module Reference}{7}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Function/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Subroutine Documentation}{7}{subsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.1.1}convert\_to\_number()}{7}{subsubsection.4.1.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.1.2}create\_new\_arrays()}{8}{subsubsection.4.1.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.1.3}remove\_decimal\_zeros()}{9}{subsubsection.4.1.1.3}%
+\contentsline {subsubsection}{\numberline {4.1.1.4}solve\_24()}{9}{subsubsection.4.1.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.1.5}update\_progress\_bar()}{11}{subsubsection.4.1.1.5}%
+\contentsline {subsection}{\numberline {4.1.2}Variable Documentation}{12}{subsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.1}carriage\_return}{12}{subsubsection.4.1.2.1}%
+\contentsline {subsubsection}{\numberline {4.1.2.2}completed\_calls}{12}{subsubsection.4.1.2.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.3}expr\_len}{12}{subsubsection.4.1.2.3}%
+\contentsline {subsubsection}{\numberline {4.1.2.4}last\_percentage}{12}{subsubsection.4.1.2.4}%
+\contentsline {subsubsection}{\numberline {4.1.2.5}max\_limit}{12}{subsubsection.4.1.2.5}%
+\contentsline {subsubsection}{\numberline {4.1.2.6}progress\_bar\_width}{12}{subsubsection.4.1.2.6}%
+\contentsline {subsubsection}{\numberline {4.1.2.7}show\_progress}{12}{subsubsection.4.1.2.7}%
+\contentsline {subsubsection}{\numberline {4.1.2.8}total\_calls}{13}{subsubsection.4.1.2.8}%
+\contentsline {subsubsection}{\numberline {4.1.2.9}total\_calls\_n6}{13}{subsubsection.4.1.2.9}%
+\contentsline {subsubsection}{\numberline {4.1.2.10}total\_calls\_n7}{13}{subsubsection.4.1.2.10}%
+\contentsline {subsubsection}{\numberline {4.1.2.11}total\_calls\_n8}{13}{subsubsection.4.1.2.11}%
+\contentsline {chapter}{\numberline {5}File Documentation}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}game24\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ultra.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}f90 File Reference}{15}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Detailed Description}{16}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Function/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Subroutine Documentation}{16}{subsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.2.1}game24\_ultra()}{16}{subsubsection.5.1.2.1}%
+\contentsline {chapter}{Index}{17}{section*.6}%

@@ -1,0 +1,72 @@
+\doxysection{game24\+\_\+ultra.\+f90 File Reference}
+\hypertarget{game24__ultra_8f90}{}\label{game24__ultra_8f90}\index{game24\_ultra.f90@{game24\_ultra.f90}}
+
+
+The main entry point for the 24-\/game solver, utilizing recursive search, progress bar, and Open\+MP parallelization.  
+
+
+\doxysubsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+module \mbox{\hyperlink{namespacegame24__module}{game24\+\_\+module}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_aa3212e7fb8d9f2cbd93301d7e919a982}{game24\+\_\+module\+::convert\+\_\+to\+\_\+number}} (input\+\_\+str, number, ios)
+\begin{DoxyCompactList}\small\item\em Converts user input (cards or numbers) into numeric values. \end{DoxyCompactList}\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_a86d74e2afb04d351a907dd130acb4a66}{game24\+\_\+module\+::remove\+\_\+decimal\+\_\+zeros}} (str, result)
+\begin{DoxyCompactList}\small\item\em Removes trailing zeros after the decimal point in a string. \end{DoxyCompactList}\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_a4519893898cd720f63919d5b4c5b98d4}{game24\+\_\+module\+::create\+\_\+new\+\_\+arrays}} (nums, exprs, idx1, idx2, result, new\+\_\+expr, new\+\_\+nums, new\+\_\+exprs)
+\begin{DoxyCompactList}\small\item\em Creates new arrays after performing an operation. \end{DoxyCompactList}\item 
+subroutine \mbox{\hyperlink{namespacegame24__module_ac63873521c67a757d3a562304e5ed21d}{game24\+\_\+module\+::update\+\_\+progress\+\_\+bar}} ()
+\begin{DoxyCompactList}\small\item\em Updates and displays the horizontal percentage-\/based progress bar. \end{DoxyCompactList}\item 
+recursive subroutine \mbox{\hyperlink{namespacegame24__module_af0cc14f3cbfe672a2eb76b55d4757bcf}{game24\+\_\+module\+::solve\+\_\+24}} (nums, exprs, found)
+\begin{DoxyCompactList}\small\item\em Recursively solves the 24 game by trying all possible operations. \end{DoxyCompactList}\item 
+program \mbox{\hyperlink{game24__ultra_8f90_a0872aa34d65d00e4e0f6383dca93c773}{game24\+\_\+ultra}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer, parameter \mbox{\hyperlink{namespacegame24__module_a1ba6f7785767097765dd34c3906d9201}{game24\+\_\+module\+::max\+\_\+limit}} = 8
+\item 
+integer, parameter \mbox{\hyperlink{namespacegame24__module_aec52bfa69813de11fcb4e68d45134777}{game24\+\_\+module\+::expr\+\_\+len}} = 200
+\item 
+integer(int64), parameter \mbox{\hyperlink{namespacegame24__module_a2ef2c23a45b5fff7c625695b6c1ac8ee}{game24\+\_\+module\+::total\+\_\+calls\+\_\+n6}} = 20000000\+\_\+int64
+\item 
+integer(int64), parameter \mbox{\hyperlink{namespacegame24__module_af6af021499613e43462b64cf0baed768}{game24\+\_\+module\+::total\+\_\+calls\+\_\+n7}} = 2648275200\+\_\+int64
+\item 
+integer(int64), parameter \mbox{\hyperlink{namespacegame24__module_a44c5b29d2c35135eaa3132c629286207}{game24\+\_\+module\+::total\+\_\+calls\+\_\+n8}} = 444557593600\+\_\+int64
+\item 
+integer(int64) \mbox{\hyperlink{namespacegame24__module_ab915acf8dce34d142bb403657b757ac3}{game24\+\_\+module\+::total\+\_\+calls}} = 0
+\item 
+integer(int64) \mbox{\hyperlink{namespacegame24__module_a636b6df612b3b10e8e186dcfe90851e1}{game24\+\_\+module\+::completed\+\_\+calls}} = 0
+\item 
+integer \mbox{\hyperlink{namespacegame24__module_a26d5aa2c365a8b1571227e5e4bb22a94}{game24\+\_\+module\+::last\+\_\+percentage}} = -\/1
+\item 
+integer, parameter \mbox{\hyperlink{namespacegame24__module_a27258fa8bb74bd7b439f86fa3311ea21}{game24\+\_\+module\+::progress\+\_\+bar\+\_\+width}} = 50
+\item 
+character(len=1) \mbox{\hyperlink{namespacegame24__module_a22b3d81c5c27d038bacda3d0123cca3f}{game24\+\_\+module\+::carriage\+\_\+return}} = char(13)
+\item 
+logical \mbox{\hyperlink{namespacegame24__module_ae96de3d1f0bf07500e00219b60c39424}{game24\+\_\+module\+::show\+\_\+progress}} = .false.
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main entry point for the 24-\/game solver, utilizing recursive search, progress bar, and Open\+MP parallelization. 
+
+\begin{DoxyAuthor}{Author}
+Gilbert Young 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024/09/15 
+\end{DoxyDate}
+
+
+\doxysubsection{Function/\+Subroutine Documentation}
+\Hypertarget{game24__ultra_8f90_a0872aa34d65d00e4e0f6383dca93c773}\index{game24\_ultra.f90@{game24\_ultra.f90}!game24\_ultra@{game24\_ultra}}
+\index{game24\_ultra@{game24\_ultra}!game24\_ultra.f90@{game24\_ultra.f90}}
+\doxysubsubsection{\texorpdfstring{game24\_ultra()}{game24\_ultra()}}
+{\footnotesize\ttfamily \label{game24__ultra_8f90_a0872aa34d65d00e4e0f6383dca93c773} 
+program game24\+\_\+ultra}
+

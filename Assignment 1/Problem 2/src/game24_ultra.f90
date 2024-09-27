@@ -1,30 +1,38 @@
-!----------------------------------------------------------------------------
-! Program:     game24_ultra.f90
-! Author:      Gilbert Young
-! Date:        2024-09-15
-! Description:
-!   This enhanced version of the 24 game solver utilizes a recursive search with pruning,
-!   and considers the commutative properties of addition and multiplication to reduce the search space.
-!   It halts upon finding the first valid solution. This program also includes a progress bar to monitor
-!   the search progress and employs OpenMP for parallelization when dealing with six or more numbers,
-!   optimizing performance on multi-core systems. This code was developed with the assistance of ChatGPT 4o,
-!   which provided insights into optimizing algorithm efficiency and code structure.
-!
-! IMPORTANT:
-!   To compile this program, the following command **must** be used to enable OpenMP:
-!
-!   gfortran -fopenmp game24_ultra.f90 -o ultra_local
-!
-!   Without the -fopenmp option, the program will not compile correctly, as OpenMP is required for
-!   parallelization in this code.
-!
-! RECOMMENDED:
-!   For better performance, it is recommended to use optimization and native architecture settings:
-!
-!   gfortran -O3 -march=native -fopenmp game24_ultra.f90 -o ultra_local
-!
-!   These options will optimize the code for your system, potentially improving the execution speed.
-!----------------------------------------------------------------------------
+!> @mainpage 24-Game Solver
+!! An enhanced version of the 24-game solver using recursive search and pruning.
+!! @details
+!! This program allows users to solve the 24-game using the following features:
+!! - Recursive search with pruning
+!! - Progress bar to monitor search progress
+!! - OpenMP parallelization for multi-core systems
+!! - Optimization for commutative operations (addition and multiplication)
+!!
+!! Users can either use default settings or customize them according to their needs. The program outputs include:
+!! - The first valid solution for 24
+!! - Detailed recursive steps and expressions
+!!
+!! Additionally, the program supports solving the game with varying number of inputs and halts upon finding a valid solution.
+!!
+!! ## Key Features
+!! - Implements recursive search for the 24-game
+!! - Supports up to 8 input numbers
+!! - OpenMP for parallelization on larger input sizes
+!! - Progress bar for visual feedback during the search process
+!!
+!! ## How to Use
+!! 1. Compile the program with OpenMP support (`gfortran -fopenmp`).
+!! 2. Enter the number of numbers (between 1 and 8).
+!! 3. Provide the input numbers or card values (A=1, J=11, Q=12, K=13).
+!! 4. View the solution if found, or a message indicating no solution.
+!-------------------------------------------------------------------------------
+
+!> @file game24_ultra.f90
+!! @author
+!! Gilbert Young
+!! @date
+!! 2024/09/15
+!! @brief
+!! The main entry point for the 24-game solver, utilizing recursive search, progress bar, and OpenMP parallelization.
 
 module game24_module
     use omp_lib
@@ -72,17 +80,11 @@ contains
     !     end do
     ! end function calculate_total_calls
 
-    !-----------------------------------------------------------------------
-    ! Subroutine: convert_to_number
-    ! Description:
-    !   Converts user input (numbers or card values) into numeric values.
-    !   Handles card values such as 'A', 'J', 'Q', 'K' and converts them into
-    !   corresponding numbers (A=1, J=11, Q=12, K=13).
-    ! Arguments:
-    !   input_str: Input string representing the number or card.
-    !   number:    Output real number after conversion.
-    !   ios:       I/O status indicator (0 for success, non-zero for error).
-    !-----------------------------------------------------------------------
+!> Converts user input (cards or numbers) into numeric values.
+!! Handles card values such as 'A', 'J', 'Q', 'K'.
+!! @param input_str String representing the number or card value
+!! @param number The corresponding numeric value after conversion
+!! @param ios I/O status indicator (0 for success)
     subroutine convert_to_number(input_str, number, ios)
         implicit none
         character(len=*), intent(in) :: input_str
@@ -115,14 +117,9 @@ contains
         end select
     end subroutine convert_to_number
 
-    !-----------------------------------------------------------------------
-    ! Subroutine: remove_decimal_zeros
-    ! Description:
-    !   Removes trailing zeros after the decimal point from a string.
-    ! Arguments:
-    !   str:    Input string that may contain trailing zeros.
-    !   result: Output string with trailing zeros removed.
-    !-----------------------------------------------------------------------
+!> Removes trailing zeros after the decimal point in a string.
+!! @param str Input string that may contain trailing zeros
+!! @param result Output string with trailing zeros removed
     subroutine remove_decimal_zeros(str, result)
         implicit none
         character(len=*), intent(in)  :: str       ! Input: String to remove zeros from
@@ -145,20 +142,15 @@ contains
         end if
     end subroutine remove_decimal_zeros
 
-    !-----------------------------------------------------------------------
-    ! Subroutine: create_new_arrays
-    ! Description:
-    !   Creates new arrays after performing an operation.
-    ! Arguments:
-    !   nums:      Input array of numbers.
-    !   exprs:     Input array of expressions.
-    !   idx1:      Index of the first element to remove.
-    !   idx2:      Index of the second element to remove.
-    !   result:    Result of the operation.
-    !   new_expr:  New expression string.
-    !   new_nums:  Output array of numbers with elements removed and result added.
-    !   new_exprs: Output array of expressions with elements removed and new_expr added.
-    !-----------------------------------------------------------------------
+!> Creates new arrays after performing an operation.
+!! @param nums Input array of numbers
+!! @param exprs Input array of expressions
+!! @param idx1 Index of the first element to remove
+!! @param idx2 Index of the second element to remove
+!! @param result Result of the operation
+!! @param new_expr New expression string
+!! @param new_nums Output array of numbers with elements removed and result added
+!! @param new_exprs Output array of expressions with elements removed and new_expr added
     subroutine create_new_arrays(nums, exprs, idx1, idx2, result, new_expr, new_nums, new_exprs)
         implicit none
         real, intent(in)                        :: nums(:)       ! Input: Array of numbers
@@ -188,13 +180,7 @@ contains
         new_exprs(n - 1) = new_expr
     end subroutine create_new_arrays
 
-    !-----------------------------------------------------------------------
-    ! Subroutine: update_progress_bar
-    ! Description:
-    !   Updates and displays the horizontal percentage-based progress bar.
-    ! Arguments:
-    !   None
-    !-----------------------------------------------------------------------
+!> Updates and displays the horizontal percentage-based progress bar.
     subroutine update_progress_bar()
         implicit none
         real :: percentage
@@ -231,16 +217,11 @@ contains
         end if
     end subroutine update_progress_bar
 
-    !-----------------------------------------------------------------------
-    ! Recursive Subroutine: solve_24
-    ! Description:
-    !   Recursively solves the 24 game by trying all possible operations.
-    !   Utilizes OpenMP tasks for parallelization.
-    ! Arguments:
-    !   nums:   Array of numbers to use in the game.
-    !   exprs:  Array of string expressions representing the numbers.
-    !   found:  Logical flag indicating if a solution has been found.
-    !-----------------------------------------------------------------------
+!> Recursively solves the 24 game by trying all possible operations.
+!! Utilizes OpenMP tasks for parallelization.
+!! @param nums Array of numbers to use in the game
+!! @param exprs Array of string expressions representing the numbers
+!! @param found Logical flag indicating if a solution has been found
     recursive subroutine solve_24(nums, exprs, found)
         use omp_lib
         implicit none

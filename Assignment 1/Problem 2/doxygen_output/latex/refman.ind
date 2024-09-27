@@ -1,0 +1,88 @@
+\begin{theindex}
+
+  \item {24-\/Game Solver}, \hyperpage{1}
+
+  \indexspace
+
+  \item {carriage\_return}
+    \subitem {game24\_module}, \hyperpage{12}
+  \item {completed\_calls}
+    \subitem {game24\_module}, \hyperpage{12}
+  \item {convert\_to\_number}
+    \subitem {game24\_module}, \hyperpage{7}
+  \item {create\_new\_arrays}
+    \subitem {game24\_module}, \hyperpage{8}
+
+  \indexspace
+
+  \item {expr\_len}
+    \subitem {game24\_module}, \hyperpage{12}
+
+  \indexspace
+
+  \item {game24\_module}, \hyperpage{7}
+    \subitem {carriage\_return}, \hyperpage{12}
+    \subitem {completed\_calls}, \hyperpage{12}
+    \subitem {convert\_to\_number}, \hyperpage{7}
+    \subitem {create\_new\_arrays}, \hyperpage{8}
+    \subitem {expr\_len}, \hyperpage{12}
+    \subitem {last\_percentage}, \hyperpage{12}
+    \subitem {max\_limit}, \hyperpage{12}
+    \subitem {progress\_bar\_width}, \hyperpage{12}
+    \subitem {remove\_decimal\_zeros}, \hyperpage{9}
+    \subitem {show\_progress}, \hyperpage{12}
+    \subitem {solve\_24}, \hyperpage{9}
+    \subitem {total\_calls}, \hyperpage{12}
+    \subitem {total\_calls\_n6}, \hyperpage{13}
+    \subitem {total\_calls\_n7}, \hyperpage{13}
+    \subitem {total\_calls\_n8}, \hyperpage{13}
+    \subitem {update\_progress\_bar}, \hyperpage{11}
+  \item {game24\_ultra}
+    \subitem {game24\_ultra.f90}, \hyperpage{16}
+  \item {game24\_ultra.f90}, \hyperpage{15}
+    \subitem {game24\_ultra}, \hyperpage{16}
+
+  \indexspace
+
+  \item {last\_percentage}
+    \subitem {game24\_module}, \hyperpage{12}
+
+  \indexspace
+
+  \item {max\_limit}
+    \subitem {game24\_module}, \hyperpage{12}
+
+  \indexspace
+
+  \item {progress\_bar\_width}
+    \subitem {game24\_module}, \hyperpage{12}
+
+  \indexspace
+
+  \item {remove\_decimal\_zeros}
+    \subitem {game24\_module}, \hyperpage{9}
+
+  \indexspace
+
+  \item {show\_progress}
+    \subitem {game24\_module}, \hyperpage{12}
+  \item {solve\_24}
+    \subitem {game24\_module}, \hyperpage{9}
+
+  \indexspace
+
+  \item {total\_calls}
+    \subitem {game24\_module}, \hyperpage{12}
+  \item {total\_calls\_n6}
+    \subitem {game24\_module}, \hyperpage{13}
+  \item {total\_calls\_n7}
+    \subitem {game24\_module}, \hyperpage{13}
+  \item {total\_calls\_n8}
+    \subitem {game24\_module}, \hyperpage{13}
+
+  \indexspace
+
+  \item {update\_progress\_bar}
+    \subitem {game24\_module}, \hyperpage{11}
+
+\end{theindex}
