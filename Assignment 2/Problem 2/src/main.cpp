@@ -1,7 +1,7 @@
 /**
  * @mainpage Optimization Algorithms Solver
  *
- * Find the minimum of one multi-dimss function
+ * Find the minimum of one multi-dims function
  *
  * @details
  * The program provides a menu for the user to select one of the following algorithms:

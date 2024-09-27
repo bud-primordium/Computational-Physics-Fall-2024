@@ -2,19 +2,20 @@
 
 本仓库用于存储“24秋 计算物理基础”课程中的代码与随笔。  
 
-# 我的课程作业
+## [在线预览部分代码结构](https://bud-primordium.github.io/Computational-Physics-Fall-2024/)（试运行）
 
-## [Assignment 1](./Assignment%201)
+### [Assignment 1](./Assignment%201)
 
 - [README.pdf](./Assignment%201/readme.pdf)
-- [Problem 1 Code](./Assignment%201/Codes/Problem%201)
-- [Problem 2 Code](./Assignment%201/Codes/Problem%202)
+- [Game24 Fortran](./Assignment%201/Problem%202/readme.html)
 
-## [Assignment 2](./Assignment%202)
+### [Assignment 2](./Assignment%202)
 
 - [README.pdf](./Assignment%202/readme.pdf)
-- [Problem 1 Code](./Assignment%202/Codes/Problem%201)
-- [Problem 2 Code](./Assignment%202/Codes/Problem%202/readme.html)
-- [Problem 3 Code](./Assignment%202/Codes/Problem%203)
+- [Root Finder C++](./Assignment%202/Problem%201/readme.html)
+- [Optimization Algorithms C++](./Assignment%202/Problem%202/readme.html)
 
-<!-- 继续添加其他作业 -->
+### [Assignment 3](./Assignment%202)
+
+- [README.pdf](./Assignment%202/readme.pdf)
+- [Linear Equations Solver C++](./Assignment%203/Problem%201/readme.html)
