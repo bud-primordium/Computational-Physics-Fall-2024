@@ -14,7 +14,7 @@
 
 - [README.pdf](./Assignment%202/readme.pdf)
 - [Problem 1 Code](./Assignment%202/Codes/Problem%201)
-- [Problem 2 Code](./Assignment%202/Codes/Problem%202)
+- [Problem 2 Code](./Assignment%202/Codes/Problem%202/readme.html)
 - [Problem 3 Code](./Assignment%202/Codes/Problem%203)
 
 <!-- 继续添加其他作业 -->
