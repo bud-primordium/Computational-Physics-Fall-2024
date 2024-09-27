@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Gaussian Elimination Solver", "index.html", [
+  [ "Linear Equations Solver", "index.html", [
     [ "Files", "files.html", [
       [ "Features", "index.html#autotoc_md0", null ],
       [ "Usage", "index.html#autotoc_md1", null ],

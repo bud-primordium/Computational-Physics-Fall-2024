@@ -12,27 +12,31 @@
 % 算法包
 \usepackage[linesnumbered, ruled]{algorithm2e}
 
+% 颜色和命令定义
+\usepackage{xcolor, xparse}
+
 % 超链接
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 
 % 代码显示
 \usepackage{listings}
 
-% 颜色和命令定义
-\usepackage{xcolor,xparse}
+% 图形包
+\usepackage{graphicx}
+
+% 子图包
+\usepackage{subcaption}
 
 % 其他需要的包
-\usepackage{realboxes}
 \usepackage{mathrsfs}
 \usepackage{wrapfig}
-\usepackage{subfigure}
 \usepackage{forest}
-\usepackage{pifont}
-\usepackage{ulem}
+\usepackage[normalem]{ulem} % 保持 \emph 为斜体
 \usepackage{bm}
 \usepackage{multicol}
 \usepackage{verbatim}
 \usepackage{float}
+\usepackage{pifont}
 
 % 添加 'soul' 包用于高亮和支持换行
 \usepackage{soul}
@@ -46,12 +50,24 @@
 % 定义 \ccmd 命令，用于行内代码片段
 \newcommand{\ccmd}[1]{\hl{\texttt{#1}}}
 
-
-\author{杨远青 22300190015}
+\author{
+    % \begin{center}
+    %     \begin{minipage}{0.5\textwidth}
+    %         \centering
+    %         杨远青 22300190015
+    %     \end{minipage}%
+    %     \hfill
+    %     \begin{minipage}{0.5\textwidth}
+    %         \centering
+    %         \includegraphics{../../.utils/comphys.pdf}
+    %     \end{minipage}
+    % \end{center}
+}
 \title{计算物理作业3}
 
 \begin{document}
 \maketitle
+
 \textit{远方来朋，喜；假期俱至，悦。}
 
 
@@ -71,5 +87,4 @@
 \section{题目 3：变分法求解一维薛定谔方程}
 \input{Problem 3/problem_3.tex}
 
-\vspace{5pt}
 \end{document}

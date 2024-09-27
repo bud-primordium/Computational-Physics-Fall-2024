@@ -1,5 +1,5 @@
 \@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
-\contentsline {chapter}{\numberline {1}Gaussian Elimination Solver}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {1}Linear Equations Solver}{1}{chapter.1}%
 \contentsline {subsection}{\numberline {1.0.1}Features}{1}{subsection.1.0.1}%
 \contentsline {subsection}{\numberline {1.0.2}Usage}{1}{subsection.1.0.2}%
 \contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%

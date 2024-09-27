@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['solver_0',['Gaussian Elimination Solver',['../index.html',1,'']]]
+  ['solver_0',['Linear Equations Solver',['../index.html',1,'']]]
 ];

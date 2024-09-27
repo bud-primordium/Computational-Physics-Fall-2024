@@ -34,7 +34,6 @@
 
   \indexspace
 
-  \item {Gaussian Elimination Solver}, \hyperpage{1}
   \item {GaussianElimination}
     \subitem {methods.cpp}, \hyperpage{15}
     \subitem {methods.h}, \hyperpage{20}
@@ -55,6 +54,10 @@
     \subitem {AskRunAgain}, \hyperpage{8}
     \subitem {SelectInputFile}, \hyperpage{8}
     \subitem {WaitForExit}, \hyperpage{9}
+
+  \indexspace
+
+  \item {Linear Equations Solver}, \hyperpage{1}
 
   \indexspace
 

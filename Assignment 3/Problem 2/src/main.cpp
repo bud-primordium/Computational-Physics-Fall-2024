@@ -1,7 +1,7 @@
 /**
- * @mainpage Gaussian Elimination Solver
+ * @mainpage Linear Equations Solver
  *
- * This project solves systems of linear equations using Gaussian elimination.
+ * Using Gaussian elimination
  *
  * @details
  * The program reads matrices from `.in` files, performs Gaussian elimination with partial pivoting,

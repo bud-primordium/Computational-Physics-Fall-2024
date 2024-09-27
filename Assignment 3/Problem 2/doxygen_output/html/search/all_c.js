@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['waitforexit_0',['WaitForExit',['../interaction_8cpp.html#ac8baab338f6d1846a193b06303693cea',1,'WaitForExit():&#160;interaction.cpp'],['../interaction_8h.html#ac8baab338f6d1846a193b06303693cea',1,'WaitForExit():&#160;interaction.cpp']]]
+  ['usage_0',['Usage',['../index.html#autotoc_md1',1,'']]],
+  ['utils_2ecpp_1',['utils.cpp',['../utils_8cpp.html',1,'']]],
+  ['utils_2eh_2',['utils.h',['../utils_8h.html',1,'']]]
 ];
