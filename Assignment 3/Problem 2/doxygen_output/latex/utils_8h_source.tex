@@ -1,26 +1,26 @@
 \doxysection{utils.\+h}
 \hypertarget{utils_8h_source}{}\label{utils_8h_source}\mbox{\hyperlink{utils_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ }
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
-\DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <chrono>}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00025\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8h_afdd09077415c66826ef7d5bc9555baf7}{InitMatrix}}(std::vector<std::vector<double>>\ \&m,\ \textcolor{keyword}{const}\ std::string\ \&filename,\ \textcolor{keywordtype}{int}\ \&rows,\ \textcolor{keywordtype}{int}\ \&cols);}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00034\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_ae29912c7e35b26fed14371c725a9de04}{ShowEquations}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00045\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8h_ad5d7dd8f4b1c4406d767e585b2a1569e}{CheckConsistency}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
-\DoxyCodeLine{00046\ }
-\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_ae94786e20414ed38e7ffab148ac6bd78}{DisplaySolution}}(\textcolor{keyword}{const}\ std::vector<double>\ \&solution);}
-\DoxyCodeLine{00053\ }
-\DoxyCodeLine{00054\ \textcolor{comment}{//\ Timing\ functions}}
-\DoxyCodeLine{00055\ std::chrono::steady\_clock::time\_point\ \mbox{\hyperlink{utils_8h_aed5d7e9b71f7e9678cd766731f22a7fd}{StartTimer}}();}
-\DoxyCodeLine{00056\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a96497a08edf3c32846d69dbf39a73159}{StopTimer}}(\textcolor{keyword}{const}\ std::chrono::steady\_clock::time\_point\ \&start);}
-\DoxyCodeLine{00057\ }
-\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_H}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00008}00008\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00009}00009\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00025}\mbox{\hyperlink{utils_8h_afdd09077415c66826ef7d5bc9555baf7}{00025}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8h_afdd09077415c66826ef7d5bc9555baf7}{InitMatrix}}(std::vector<std::vector<double>>\ \&m,\ \textcolor{keyword}{const}\ std::string\ \&filename,\ \textcolor{keywordtype}{int}\ \&rows,\ \textcolor{keywordtype}{int}\ \&cols);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00034}\mbox{\hyperlink{utils_8h_ae29912c7e35b26fed14371c725a9de04}{00034}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_ae29912c7e35b26fed14371c725a9de04}{ShowEquations}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00045}\mbox{\hyperlink{utils_8h_ad5d7dd8f4b1c4406d767e585b2a1569e}{00045}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8h_ad5d7dd8f4b1c4406d767e585b2a1569e}{CheckConsistency}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00052}\mbox{\hyperlink{utils_8h_ae94786e20414ed38e7ffab148ac6bd78}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_ae94786e20414ed38e7ffab148ac6bd78}{DisplaySolution}}(\textcolor{keyword}{const}\ std::vector<double>\ \&solution);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00054}00054\ \textcolor{comment}{//\ Timing\ functions}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00055}00055\ std::chrono::steady\_clock::time\_point\ \mbox{\hyperlink{utils_8h_aed5d7e9b71f7e9678cd766731f22a7fd}{StartTimer}}();}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00056}\mbox{\hyperlink{utils_8h_a96497a08edf3c32846d69dbf39a73159}{00056}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a96497a08edf3c32846d69dbf39a73159}{StopTimer}}(\textcolor{keyword}{const}\ std::chrono::steady\_clock::time\_point\ \&start);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00058}00058\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_H}}
 
 \end{DoxyCode}

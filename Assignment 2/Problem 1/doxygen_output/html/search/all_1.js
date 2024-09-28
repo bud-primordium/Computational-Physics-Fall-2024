@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['bisection_0',['bisection',['../methods_8cpp.html#a5c5d08f0d638df97122fca856cbd6c6b',1,'bisection(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp'],['../methods_8h.html#a5c5d08f0d638df97122fca856cbd6c6b',1,'bisection(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp']]],
-  ['brent_5fmethod_1',['brent_method',['../methods_8cpp.html#aadf1073b5a8b2ccf7d66fafa42dade9c',1,'brent_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp'],['../methods_8h.html#aadf1073b5a8b2ccf7d66fafa42dade9c',1,'brent_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp']]]
+  ['calculate_5fdecimal_5fplaces_0',['calculate_decimal_places',['../utils_8cpp.html#affdd5b83d06537b3199b863a5990313d',1,'calculate_decimal_places(long double tol):&#160;utils.cpp'],['../utils_8h.html#affdd5b83d06537b3199b863a5990313d',1,'calculate_decimal_places(long double tol):&#160;utils.cpp']]],
+  ['compare_5fall_5fmethods_1',['compare_all_methods',['../utils_8cpp.html#a46f2f3e19644302067ff30bc43942b3b',1,'compare_all_methods():&#160;utils.cpp'],['../utils_8h.html#a46f2f3e19644302067ff30bc43942b3b',1,'compare_all_methods():&#160;utils.cpp']]]
 ];

@@ -193,7 +193,9 @@ $(function(){initNavTree('methods_8cpp.html',''); initResizable(true); });
 <area shape="poly" title=" " alt="" coords="86,106,115,141,111,144,82,109"/>
 </map>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="methods_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a07f322f6a0616765900b9a8ce12c7da0" id="r_a07f322f6a0616765900b9a8ce12c7da0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a> (const vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows)</td></tr>
@@ -226,6 +228,8 @@ Functions</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Gilbert Young </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2024/09/25</dd></dl>
 <p>This file implements key algorithms such as Gaussian elimination with partial pivoting, back-substitution, and rank determination. It also includes functionality to display the general solution when the system has infinitely many solutions. </p>
+
+<p class="definition">Definition in file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="ac670b993a182e328bad2b2a3ba950388" name="ac670b993a182e328bad2b2a3ba950388"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac670b993a182e328bad2b2a3ba950388">&#9670;&#160;</a></span>BackSubstitution()</h2>
@@ -269,6 +273,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true If a unique solution exists. </dd>
 <dd>
 false If the system is inconsistent.    </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00137">137</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  138</span>{</div>
 <div class="line"><span class="lineno">  139</span>    solution.assign(cols - 1, 0.0);</div>
 <div class="line"><span class="lineno">  140</span>    cout &lt;&lt; <span class="stringliteral">&quot;Starting back-substitution process...&quot;</span> &lt;&lt; endl;</div>
@@ -352,6 +358,8 @@ false If the system is inconsistent.    </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int The rank of the matrix A.    </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00188">188</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  189</span>{</div>
 <div class="line"><span class="lineno">  190</span>    <span class="keywordtype">int</span> rank = 0;</div>
 <div class="line"><span class="lineno">  191</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; rows; i++)</div>
@@ -403,6 +411,8 @@ false If the system is inconsistent.    </dd></dl>
 </div><div class="memdoc">
 
 <p>Performs elimination on the matrix to form an upper triangular matrix. </p>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00047">47</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>{</div>
 <div class="line"><span class="lineno">   49</span>    <span class="keywordtype">double</span> pivot = m[current_row][current_row];</div>
 <div class="line"><span class="lineno">   50</span>    <span class="keywordflow">if</span> (fabs(pivot) &lt; 1e-12)</div>
@@ -454,6 +464,8 @@ false If the system is inconsistent.    </dd></dl>
 </div><div class="memdoc">
 
 <p>Swaps two rows in the matrix and outputs the action. </p>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00040">40</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   41</span>{</div>
 <div class="line"><span class="lineno">   42</span>    swap(m[row1], m[row2]);</div>
 <div class="line"><span class="lineno">   43</span>    cout &lt;&lt; <span class="stringliteral">&quot;Swapping row &quot;</span> &lt;&lt; row1 + 1 &lt;&lt; <span class="stringliteral">&quot; with row &quot;</span> &lt;&lt; row2 + 1 &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl;</div>
@@ -495,6 +507,8 @@ false If the system is inconsistent.    </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int Number of row exchanges performed during elimination.    </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00075">75</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   76</span>{</div>
 <div class="line"><span class="lineno">   77</span>    <span class="keywordtype">int</span> exchange_count = 0;</div>
 <div class="line"><span class="lineno">   78</span>    <span class="keywordtype">int</span> n = min(rows, cols - 1); <span class="comment">// Number of variables</span></div>
@@ -552,9 +566,9 @@ false If the system is inconsistent.    </dd></dl>
 <div class="line"><span class="lineno">  130</span>    }</div>
 <div class="line"><span class="lineno">  131</span>    <span class="keywordflow">return</span> exchange_count;</div>
 <div class="line"><span class="lineno">  132</span>}</div>
-<div class="ttc" id="amethods_8cpp_html_a07f322f6a0616765900b9a8ce12c7da0"><div class="ttname"><a href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a></div><div class="ttdeci">int Pivoting(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows)</div><div class="ttdoc">Performs partial pivoting and returns the row index with the maximum pivot.</div><div class="ttdef"><b>Definition</b> methods.cpp:23</div></div>
-<div class="ttc" id="amethods_8cpp_html_a980eadbed8b024569d32b9e94da58389"><div class="ttname"><a href="#a980eadbed8b024569d32b9e94da58389">Eliminate</a></div><div class="ttdeci">bool Eliminate(vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows, int total_cols)</div><div class="ttdoc">Performs elimination on the matrix to form an upper triangular matrix.</div><div class="ttdef"><b>Definition</b> methods.cpp:47</div></div>
-<div class="ttc" id="amethods_8cpp_html_aaa145e0f9daaacd0a693955245932d65"><div class="ttname"><a href="#aaa145e0f9daaacd0a693955245932d65">Exchange</a></div><div class="ttdeci">void Exchange(vector&lt; vector&lt; double &gt; &gt; &amp;m, int row1, int row2)</div><div class="ttdoc">Swaps two rows in the matrix and outputs the action.</div><div class="ttdef"><b>Definition</b> methods.cpp:40</div></div>
+<div class="ttc" id="amethods_8cpp_html_a07f322f6a0616765900b9a8ce12c7da0"><div class="ttname"><a href="#a07f322f6a0616765900b9a8ce12c7da0">Pivoting</a></div><div class="ttdeci">int Pivoting(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows)</div><div class="ttdoc">Performs partial pivoting and returns the row index with the maximum pivot.</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00023">methods.cpp:23</a></div></div>
+<div class="ttc" id="amethods_8cpp_html_a980eadbed8b024569d32b9e94da58389"><div class="ttname"><a href="#a980eadbed8b024569d32b9e94da58389">Eliminate</a></div><div class="ttdeci">bool Eliminate(vector&lt; vector&lt; double &gt; &gt; &amp;m, int current_row, int total_rows, int total_cols)</div><div class="ttdoc">Performs elimination on the matrix to form an upper triangular matrix.</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00047">methods.cpp:47</a></div></div>
+<div class="ttc" id="amethods_8cpp_html_aaa145e0f9daaacd0a693955245932d65"><div class="ttname"><a href="#aaa145e0f9daaacd0a693955245932d65">Exchange</a></div><div class="ttdeci">void Exchange(vector&lt; vector&lt; double &gt; &gt; &amp;m, int row1, int row2)</div><div class="ttdoc">Swaps two rows in the matrix and outputs the action.</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00040">methods.cpp:40</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -592,6 +606,8 @@ false If the system is inconsistent.    </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;int&gt; A vector containing the indices of the pivot columns.    </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00320">320</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  321</span>{</div>
 <div class="line"><span class="lineno">  322</span>    vector&lt;int&gt; pivots;</div>
 <div class="line"><span class="lineno">  323</span>    <span class="keywordtype">int</span> n = min(rows, cols - 1);</div>
@@ -640,6 +656,8 @@ false If the system is inconsistent.    </dd></dl>
 </div><div class="memdoc">
 
 <p>Performs partial pivoting and returns the row index with the maximum pivot. </p>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00023">23</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   24</span>{</div>
 <div class="line"><span class="lineno">   25</span>    <span class="keywordtype">int</span> imax = current_row;</div>
 <div class="line"><span class="lineno">   26</span>    <span class="keywordtype">double</span> max_val = fabs(m[current_row][current_row]);</div>
@@ -696,6 +714,8 @@ false If the system is inconsistent.    </dd></dl>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="methods_8cpp_source.html#l00211">211</a> of file <a class="el" href="methods_8cpp_source.html">methods.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  212</span>{</div>
 <div class="line"><span class="lineno">  213</span>    cout &lt;&lt; <span class="stringliteral">&quot;The system has infinitely many solutions.&quot;</span> &lt;&lt; endl;</div>
 <div class="line"><span class="lineno">  214</span>    cout &lt;&lt; <span class="stringliteral">&quot;Solution space dimension: &quot;</span> &lt;&lt; (cols - 1 - rank) &lt;&lt; endl;</div>
@@ -800,7 +820,7 @@ false If the system is inconsistent.    </dd></dl>
 <div class="line"><span class="lineno">  313</span>    cout &lt;&lt; endl</div>
 <div class="line"><span class="lineno">  314</span>         &lt;&lt; endl;</div>
 <div class="line"><span class="lineno">  315</span>}</div>
-<div class="ttc" id="amethods_8cpp_html_a062a9c93054ad9e6bb03d2a64f8b4749"><div class="ttname"><a href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a></div><div class="ttdeci">vector&lt; int &gt; IdentifyPivots(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Identifies the pivot columns in the matrix.</div><div class="ttdef"><b>Definition</b> methods.cpp:320</div></div>
+<div class="ttc" id="amethods_8cpp_html_a062a9c93054ad9e6bb03d2a64f8b4749"><div class="ttname"><a href="#a062a9c93054ad9e6bb03d2a64f8b4749">IdentifyPivots</a></div><div class="ttdeci">vector&lt; int &gt; IdentifyPivots(const vector&lt; vector&lt; double &gt; &gt; &amp;m, int rows, int cols)</div><div class="ttdoc">Identifies the pivot columns in the matrix.</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00320">methods.cpp:320</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

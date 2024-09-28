@@ -8,23 +8,23 @@
   \indexspace
 
   \item {compareMethods}
-    \subitem {utils.cpp}, \hyperpage{27}
-    \subitem {utils.h}, \hyperpage{30}
+    \subitem {utils.cpp}, \hyperpage{35}
+    \subitem {utils.h}, \hyperpage{39}
   \item {computeGradient}
-    \subitem {functions.cpp}, \hyperpage{11}
-    \subitem {functions.h}, \hyperpage{13}
+    \subitem {functions.cpp}, \hyperpage{13}
+    \subitem {functions.h}, \hyperpage{15}
   \item {conjugateGradient}
-    \subitem {methods.cpp}, \hyperpage{17}
-    \subitem {methods.h}, \hyperpage{21}
+    \subitem {methods.cpp}, \hyperpage{22}
+    \subitem {methods.h}, \hyperpage{29}
   \item {crossoverRate\_ga}
-    \subitem {DefaultParameters}, \hyperpage{7}
+    \subitem {DefaultParameters}, \hyperpage{8}
 
   \indexspace
 
   \item {DefaultParameters}, \hyperpage{7}
     \subitem {alpha\_sa}, \hyperpage{7}
     \subitem {alpha\_sd}, \hyperpage{7}
-    \subitem {crossoverRate\_ga}, \hyperpage{7}
+    \subitem {crossoverRate\_ga}, \hyperpage{8}
     \subitem {generations\_ga}, \hyperpage{8}
     \subitem {maxIter\_cg}, \hyperpage{8}
     \subitem {maxIter\_sa}, \hyperpage{8}
@@ -32,87 +32,84 @@
     \subitem {mutationRate\_ga}, \hyperpage{8}
     \subitem {populationSize\_ga}, \hyperpage{8}
     \subitem {T0\_sa}, \hyperpage{8}
-    \subitem {Tmin\_sa}, \hyperpage{8}
-    \subitem {tol\_cg}, \hyperpage{8}
-    \subitem {tol\_sd}, \hyperpage{8}
+    \subitem {Tmin\_sa}, \hyperpage{9}
+    \subitem {tol\_cg}, \hyperpage{9}
+    \subitem {tol\_sd}, \hyperpage{9}
     \subitem {x0}, \hyperpage{9}
     \subitem {y0}, \hyperpage{9}
   \item {displayDefaultParameters}
-    \subitem {utils.cpp}, \hyperpage{28}
-    \subitem {utils.h}, \hyperpage{30}
+    \subitem {utils.cpp}, \hyperpage{36}
+    \subitem {utils.h}, \hyperpage{40}
   \item {duration}
-    \subitem {Result}, \hyperpage{10}
+    \subitem {Result}, \hyperpage{11}
 
   \indexspace
 
   \item {f}
-    \subitem {Result}, \hyperpage{10}
+    \subitem {Result}, \hyperpage{11}
   \item {fitness}
-    \subitem {Individual}, \hyperpage{9}
-  \item {functions.cpp}, \hyperpage{11}
-    \subitem {computeGradient}, \hyperpage{11}
-    \subitem {functionToMinimize}, \hyperpage{11}
-    \subitem {lineSearchBacktracking}, \hyperpage{12}
-  \item {functions.h}, \hyperpage{12}
+    \subitem {Individual}, \hyperpage{10}
+  \item {functions.cpp}, \hyperpage{13}
     \subitem {computeGradient}, \hyperpage{13}
     \subitem {functionToMinimize}, \hyperpage{13}
-    \subitem {lineSearchBacktracking}, \hyperpage{13}
+    \subitem {lineSearchBacktracking}, \hyperpage{14}
+  \item {functions.h}, \hyperpage{15}
+    \subitem {computeGradient}, \hyperpage{15}
+    \subitem {functionToMinimize}, \hyperpage{15}
+    \subitem {lineSearchBacktracking}, \hyperpage{16}
   \item {functionToMinimize}
-    \subitem {functions.cpp}, \hyperpage{11}
-    \subitem {functions.h}, \hyperpage{13}
+    \subitem {functions.cpp}, \hyperpage{13}
+    \subitem {functions.h}, \hyperpage{15}
 
   \indexspace
 
   \item {generations\_ga}
     \subitem {DefaultParameters}, \hyperpage{8}
   \item {geneticAlgorithm}
-    \subitem {methods.cpp}, \hyperpage{18}
-    \subitem {methods.h}, \hyperpage{22}
+    \subitem {methods.cpp}, \hyperpage{23}
+    \subitem {methods.h}, \hyperpage{30}
 
   \indexspace
 
   \item {Individual}, \hyperpage{9}
-    \subitem {fitness}, \hyperpage{9}
-    \subitem {Individual}, \hyperpage{9}
-    \subitem {x}, \hyperpage{9}
+    \subitem {fitness}, \hyperpage{10}
+    \subitem {Individual}, \hyperpage{10}
+    \subitem {x}, \hyperpage{10}
     \subitem {y}, \hyperpage{10}
   \item {iterations}
-    \subitem {Result}, \hyperpage{10}
+    \subitem {Result}, \hyperpage{11}
 
   \indexspace
 
   \item {lineSearchBacktracking}
-    \subitem {functions.cpp}, \hyperpage{12}
-    \subitem {functions.h}, \hyperpage{13}
+    \subitem {functions.cpp}, \hyperpage{14}
+    \subitem {functions.h}, \hyperpage{16}
 
   \indexspace
 
   \item {main}
-    \subitem {main.cpp}, \hyperpage{15}
-  \item {main.cpp}, \hyperpage{14}
-    \subitem {main}, \hyperpage{15}
+    \subitem {main.cpp}, \hyperpage{18}
+  \item {main.cpp}, \hyperpage{17}
+    \subitem {main}, \hyperpage{18}
   \item {maxIter\_cg}
     \subitem {DefaultParameters}, \hyperpage{8}
   \item {maxIter\_sa}
     \subitem {DefaultParameters}, \hyperpage{8}
   \item {maxIter\_sd}
     \subitem {DefaultParameters}, \hyperpage{8}
-  \item {methods.cpp}, \hyperpage{16}
-    \subitem {conjugateGradient}, \hyperpage{17}
-    \subitem {geneticAlgorithm}, \hyperpage{18}
-    \subitem {simulatedAnnealing}, \hyperpage{19}
-    \subitem {steepestDescent}, \hyperpage{19}
-  \item {methods.h}, \hyperpage{20}
-    \subitem {conjugateGradient}, \hyperpage{21}
-    \subitem {geneticAlgorithm}, \hyperpage{22}
-    \subitem {simulatedAnnealing}, \hyperpage{23}
-    \subitem {steepestDescent}, \hyperpage{23}
+  \item {methods.cpp}, \hyperpage{21}
+    \subitem {conjugateGradient}, \hyperpage{22}
+    \subitem {geneticAlgorithm}, \hyperpage{23}
+    \subitem {simulatedAnnealing}, \hyperpage{24}
+    \subitem {steepestDescent}, \hyperpage{25}
+  \item {methods.h}, \hyperpage{28}
+    \subitem {conjugateGradient}, \hyperpage{29}
+    \subitem {geneticAlgorithm}, \hyperpage{30}
+    \subitem {simulatedAnnealing}, \hyperpage{31}
+    \subitem {steepestDescent}, \hyperpage{31}
+  \item {Minimum Finder}, \hyperpage{1}
   \item {mutationRate\_ga}
     \subitem {DefaultParameters}, \hyperpage{8}
-
-  \indexspace
-
-  \item {Optimization Algorithms Solver}, \hyperpage{1}
 
   \indexspace
 
@@ -121,48 +118,48 @@
 
   \indexspace
 
-  \item {Result}, \hyperpage{10}
-    \subitem {duration}, \hyperpage{10}
-    \subitem {f}, \hyperpage{10}
-    \subitem {iterations}, \hyperpage{10}
-    \subitem {x}, \hyperpage{10}
-    \subitem {y}, \hyperpage{10}
+  \item {Result}, \hyperpage{11}
+    \subitem {duration}, \hyperpage{11}
+    \subitem {f}, \hyperpage{11}
+    \subitem {iterations}, \hyperpage{11}
+    \subitem {x}, \hyperpage{11}
+    \subitem {y}, \hyperpage{11}
 
   \indexspace
 
   \item {simulatedAnnealing}
-    \subitem {methods.cpp}, \hyperpage{19}
-    \subitem {methods.h}, \hyperpage{23}
+    \subitem {methods.cpp}, \hyperpage{24}
+    \subitem {methods.h}, \hyperpage{31}
   \item {steepestDescent}
-    \subitem {methods.cpp}, \hyperpage{19}
-    \subitem {methods.h}, \hyperpage{23}
-  \item {structs.h}, \hyperpage{25}
+    \subitem {methods.cpp}, \hyperpage{25}
+    \subitem {methods.h}, \hyperpage{31}
+  \item {structs.h}, \hyperpage{33}
 
   \indexspace
 
   \item {T0\_sa}
     \subitem {DefaultParameters}, \hyperpage{8}
   \item {Tmin\_sa}
-    \subitem {DefaultParameters}, \hyperpage{8}
+    \subitem {DefaultParameters}, \hyperpage{9}
   \item {tol\_cg}
-    \subitem {DefaultParameters}, \hyperpage{8}
+    \subitem {DefaultParameters}, \hyperpage{9}
   \item {tol\_sd}
-    \subitem {DefaultParameters}, \hyperpage{8}
+    \subitem {DefaultParameters}, \hyperpage{9}
 
   \indexspace
 
-  \item {utils.cpp}, \hyperpage{26}
-    \subitem {compareMethods}, \hyperpage{27}
-    \subitem {displayDefaultParameters}, \hyperpage{28}
-  \item {utils.h}, \hyperpage{29}
-    \subitem {compareMethods}, \hyperpage{30}
-    \subitem {displayDefaultParameters}, \hyperpage{30}
+  \item {utils.cpp}, \hyperpage{34}
+    \subitem {compareMethods}, \hyperpage{35}
+    \subitem {displayDefaultParameters}, \hyperpage{36}
+  \item {utils.h}, \hyperpage{39}
+    \subitem {compareMethods}, \hyperpage{39}
+    \subitem {displayDefaultParameters}, \hyperpage{40}
 
   \indexspace
 
   \item {x}
-    \subitem {Individual}, \hyperpage{9}
-    \subitem {Result}, \hyperpage{10}
+    \subitem {Individual}, \hyperpage{10}
+    \subitem {Result}, \hyperpage{11}
   \item {x0}
     \subitem {DefaultParameters}, \hyperpage{9}
 
@@ -170,7 +167,7 @@
 
   \item {y}
     \subitem {Individual}, \hyperpage{10}
-    \subitem {Result}, \hyperpage{10}
+    \subitem {Result}, \hyperpage{11}
   \item {y0}
     \subitem {DefaultParameters}, \hyperpage{9}
 

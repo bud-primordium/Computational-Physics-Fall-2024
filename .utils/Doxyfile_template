@@ -43,7 +43,7 @@ PDF_HYPERLINKS         = YES
 USE_PDFLATEX           = YES
 
 # 源代码浏览功能
-SOURCE_BROWSER         = NO
+SOURCE_BROWSER         = YES
 INLINE_SOURCES         = YES
 
 # 图表设置（启用 Graphviz）

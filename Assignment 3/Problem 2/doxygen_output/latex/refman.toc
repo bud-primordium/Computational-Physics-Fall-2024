@@ -11,54 +11,58 @@
 \contentsline {subsubsection}{\numberline {3.1.2.1}AskRunAgain()}{6}{subsubsection.3.1.2.1}%
 \contentsline {subsubsection}{\numberline {3.1.2.2}SelectInputFile()}{6}{subsubsection.3.1.2.2}%
 \contentsline {subsubsection}{\numberline {3.1.2.3}WaitForExit()}{7}{subsubsection.3.1.2.3}%
-\contentsline {section}{\numberline {3.2}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{7}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Detailed Description}{8}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Function Documentation}{8}{subsection.3.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.2.1}AskRunAgain()}{8}{subsubsection.3.2.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2.2}SelectInputFile()}{9}{subsubsection.3.2.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.2.3}WaitForExit()}{9}{subsubsection.3.2.2.3}%
-\contentsline {section}{\numberline {3.3}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{10}{section.3.3}%
-\contentsline {section}{\numberline {3.4}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{10}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{10}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Function Documentation}{11}{subsection.3.4.2}%
-\contentsline {subsubsection}{\numberline {3.4.2.1}main()}{11}{subsubsection.3.4.2.1}%
-\contentsline {section}{\numberline {3.5}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{11}{section.3.5}%
+\contentsline {section}{\numberline {3.2}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{7}{section.3.2}%
+\contentsline {section}{\numberline {3.3}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{9}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{9}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Function Documentation}{10}{subsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.1}AskRunAgain()}{10}{subsubsection.3.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.3.2.2}SelectInputFile()}{10}{subsubsection.3.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.3}WaitForExit()}{11}{subsubsection.3.3.2.3}%
+\contentsline {section}{\numberline {3.4}interaction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{11}{section.3.4}%
+\contentsline {section}{\numberline {3.5}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{12}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Detailed Description}{12}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}Function Documentation}{13}{subsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.2.1}BackSubstitution()}{13}{subsubsection.3.5.2.1}%
-\contentsline {subsubsection}{\numberline {3.5.2.2}DetermineRank()}{14}{subsubsection.3.5.2.2}%
-\contentsline {subsubsection}{\numberline {3.5.2.3}Eliminate()}{14}{subsubsection.3.5.2.3}%
-\contentsline {subsubsection}{\numberline {3.5.2.4}Exchange()}{15}{subsubsection.3.5.2.4}%
-\contentsline {subsubsection}{\numberline {3.5.2.5}GaussianElimination()}{15}{subsubsection.3.5.2.5}%
-\contentsline {subsubsection}{\numberline {3.5.2.6}IdentifyPivots()}{16}{subsubsection.3.5.2.6}%
-\contentsline {subsubsection}{\numberline {3.5.2.7}Pivoting()}{16}{subsubsection.3.5.2.7}%
-\contentsline {subsubsection}{\numberline {3.5.2.8}ShowGeneralSolution()}{17}{subsubsection.3.5.2.8}%
-\contentsline {section}{\numberline {3.6}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{18}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Detailed Description}{19}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Function Documentation}{20}{subsection.3.6.2}%
-\contentsline {subsubsection}{\numberline {3.6.2.1}BackSubstitution()}{20}{subsubsection.3.6.2.1}%
-\contentsline {subsubsection}{\numberline {3.6.2.2}DetermineRank()}{20}{subsubsection.3.6.2.2}%
-\contentsline {subsubsection}{\numberline {3.6.2.3}GaussianElimination()}{21}{subsubsection.3.6.2.3}%
-\contentsline {subsubsection}{\numberline {3.6.2.4}IdentifyPivots()}{21}{subsubsection.3.6.2.4}%
-\contentsline {subsubsection}{\numberline {3.6.2.5}ShowGeneralSolution()}{21}{subsubsection.3.6.2.5}%
-\contentsline {section}{\numberline {3.7}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{22}{section.3.7}%
-\contentsline {section}{\numberline {3.8}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{22}{section.3.8}%
-\contentsline {subsection}{\numberline {3.8.1}Detailed Description}{23}{subsection.3.8.1}%
-\contentsline {subsection}{\numberline {3.8.2}Function Documentation}{23}{subsection.3.8.2}%
-\contentsline {subsubsection}{\numberline {3.8.2.1}CheckConsistency()}{23}{subsubsection.3.8.2.1}%
-\contentsline {subsubsection}{\numberline {3.8.2.2}DisplaySolution()}{24}{subsubsection.3.8.2.2}%
-\contentsline {subsubsection}{\numberline {3.8.2.3}InitMatrix()}{24}{subsubsection.3.8.2.3}%
-\contentsline {subsubsection}{\numberline {3.8.2.4}ShowEquations()}{25}{subsubsection.3.8.2.4}%
-\contentsline {subsubsection}{\numberline {3.8.2.5}StartTimer()}{26}{subsubsection.3.8.2.5}%
-\contentsline {subsubsection}{\numberline {3.8.2.6}StopTimer()}{26}{subsubsection.3.8.2.6}%
-\contentsline {section}{\numberline {3.9}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{26}{section.3.9}%
-\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{27}{subsection.3.9.1}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}main()}{13}{subsubsection.3.5.2.1}%
+\contentsline {section}{\numberline {3.6}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{13}{section.3.6}%
+\contentsline {section}{\numberline {3.7}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{14}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Detailed Description}{15}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Function Documentation}{16}{subsection.3.7.2}%
+\contentsline {subsubsection}{\numberline {3.7.2.1}BackSubstitution()}{16}{subsubsection.3.7.2.1}%
+\contentsline {subsubsection}{\numberline {3.7.2.2}DetermineRank()}{17}{subsubsection.3.7.2.2}%
+\contentsline {subsubsection}{\numberline {3.7.2.3}Eliminate()}{17}{subsubsection.3.7.2.3}%
+\contentsline {subsubsection}{\numberline {3.7.2.4}Exchange()}{18}{subsubsection.3.7.2.4}%
+\contentsline {subsubsection}{\numberline {3.7.2.5}GaussianElimination()}{18}{subsubsection.3.7.2.5}%
+\contentsline {subsubsection}{\numberline {3.7.2.6}IdentifyPivots()}{19}{subsubsection.3.7.2.6}%
+\contentsline {subsubsection}{\numberline {3.7.2.7}Pivoting()}{20}{subsubsection.3.7.2.7}%
+\contentsline {subsubsection}{\numberline {3.7.2.8}ShowGeneralSolution()}{20}{subsubsection.3.7.2.8}%
+\contentsline {section}{\numberline {3.8}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{22}{section.3.8}%
+\contentsline {section}{\numberline {3.9}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{25}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{26}{subsection.3.9.1}%
 \contentsline {subsection}{\numberline {3.9.2}Function Documentation}{27}{subsection.3.9.2}%
-\contentsline {subsubsection}{\numberline {3.9.2.1}CheckConsistency()}{27}{subsubsection.3.9.2.1}%
-\contentsline {subsubsection}{\numberline {3.9.2.2}DisplaySolution()}{28}{subsubsection.3.9.2.2}%
-\contentsline {subsubsection}{\numberline {3.9.2.3}InitMatrix()}{28}{subsubsection.3.9.2.3}%
-\contentsline {subsubsection}{\numberline {3.9.2.4}ShowEquations()}{28}{subsubsection.3.9.2.4}%
-\contentsline {subsubsection}{\numberline {3.9.2.5}StartTimer()}{29}{subsubsection.3.9.2.5}%
-\contentsline {subsubsection}{\numberline {3.9.2.6}StopTimer()}{29}{subsubsection.3.9.2.6}%
-\contentsline {section}{\numberline {3.10}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{29}{section.3.10}%
-\contentsline {chapter}{Index}{31}{section*.18}%
+\contentsline {subsubsection}{\numberline {3.9.2.1}BackSubstitution()}{27}{subsubsection.3.9.2.1}%
+\contentsline {subsubsection}{\numberline {3.9.2.2}DetermineRank()}{27}{subsubsection.3.9.2.2}%
+\contentsline {subsubsection}{\numberline {3.9.2.3}GaussianElimination()}{28}{subsubsection.3.9.2.3}%
+\contentsline {subsubsection}{\numberline {3.9.2.4}IdentifyPivots()}{28}{subsubsection.3.9.2.4}%
+\contentsline {subsubsection}{\numberline {3.9.2.5}ShowGeneralSolution()}{28}{subsubsection.3.9.2.5}%
+\contentsline {section}{\numberline {3.10}methods.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{29}{section.3.10}%
+\contentsline {section}{\numberline {3.11}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp File Reference}{29}{section.3.11}%
+\contentsline {subsection}{\numberline {3.11.1}Detailed Description}{30}{subsection.3.11.1}%
+\contentsline {subsection}{\numberline {3.11.2}Function Documentation}{30}{subsection.3.11.2}%
+\contentsline {subsubsection}{\numberline {3.11.2.1}CheckConsistency()}{30}{subsubsection.3.11.2.1}%
+\contentsline {subsubsection}{\numberline {3.11.2.2}DisplaySolution()}{31}{subsubsection.3.11.2.2}%
+\contentsline {subsubsection}{\numberline {3.11.2.3}InitMatrix()}{31}{subsubsection.3.11.2.3}%
+\contentsline {subsubsection}{\numberline {3.11.2.4}ShowEquations()}{32}{subsubsection.3.11.2.4}%
+\contentsline {subsubsection}{\numberline {3.11.2.5}StartTimer()}{33}{subsubsection.3.11.2.5}%
+\contentsline {subsubsection}{\numberline {3.11.2.6}StopTimer()}{33}{subsubsection.3.11.2.6}%
+\contentsline {section}{\numberline {3.12}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{33}{section.3.12}%
+\contentsline {section}{\numberline {3.13}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{35}{section.3.13}%
+\contentsline {subsection}{\numberline {3.13.1}Detailed Description}{36}{subsection.3.13.1}%
+\contentsline {subsection}{\numberline {3.13.2}Function Documentation}{36}{subsection.3.13.2}%
+\contentsline {subsubsection}{\numberline {3.13.2.1}CheckConsistency()}{36}{subsubsection.3.13.2.1}%
+\contentsline {subsubsection}{\numberline {3.13.2.2}DisplaySolution()}{37}{subsubsection.3.13.2.2}%
+\contentsline {subsubsection}{\numberline {3.13.2.3}InitMatrix()}{37}{subsubsection.3.13.2.3}%
+\contentsline {subsubsection}{\numberline {3.13.2.4}ShowEquations()}{37}{subsubsection.3.13.2.4}%
+\contentsline {subsubsection}{\numberline {3.13.2.5}StartTimer()}{38}{subsubsection.3.13.2.5}%
+\contentsline {subsubsection}{\numberline {3.13.2.6}StopTimer()}{38}{subsubsection.3.13.2.6}%
+\contentsline {section}{\numberline {3.14}utils.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{38}{section.3.14}%
+\contentsline {chapter}{Index}{39}{section*.18}%

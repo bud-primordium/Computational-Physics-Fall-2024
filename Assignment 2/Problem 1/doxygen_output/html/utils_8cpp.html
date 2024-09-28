@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.12.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Root-Finding Algorithms Solver: utils.cpp File Reference</title>
+  <title>Root Finder: utils.cpp File Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@
             <tr id="projectrow">
               <td id="projectalign">
                 <div id="projectname">
-                  Root-Finding Algorithms Solver
+                  Root Finder
                   <span id="projectnumber">&#160;1.0</span>
                 </div>
                 <div id="projectbrief">Using various numerical methods</div>
@@ -215,7 +215,9 @@ $(function(){initNavTree('utils_8cpp.html',''); initResizable(true); });
 <area shape="poly" title=" " alt="" coords="357,180,417,218,414,223,354,184"/>
 </map>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="utils_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a741da7b7db7708497c097df37d8fcd76" id="r_a741da7b7db7708497c097df37d8fcd76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a741da7b7db7708497c097df37d8fcd76">run_method</a> (const std::string &amp;method_name, std::function&lt; long double(long double, long double, long double, int, std::vector&lt; std::string &gt; &amp;, int)&gt; method_func, long double a, long double b, long double tol, int max_iter, int decimal_places)</td></tr>
@@ -251,6 +253,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00297">297</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  298</span>{</div>
 <div class="line"><span class="lineno">  299</span>    <span class="keywordflow">if</span> (tol &lt;= 0)</div>
 <div class="line"><span class="lineno">  300</span>        <span class="keywordflow">return</span> 0;</div>
@@ -273,6 +277,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00141">141</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  142</span>{</div>
 <div class="line"><span class="lineno">  143</span>    <span class="comment">// Define intervals for three roots</span></div>
 <div class="line"><span class="lineno">  144</span>    std::vector&lt;std::pair&lt;long double, long double&gt;&gt; intervals = {</div>
@@ -363,12 +369,12 @@ Variables</h2></td></tr>
 <div class="line"><span class="lineno">  229</span> </div>
 <div class="line"><span class="lineno">  230</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\nNote: Precision is set to 1e-14, output displays 15 decimal places.\n\n&quot;</span>;</div>
 <div class="line"><span class="lineno">  231</span>}</div>
-<div class="ttc" id="amethods_8cpp_html_a5c5d08f0d638df97122fca856cbd6c6b"><div class="ttname"><a href="methods_8cpp.html#a5c5d08f0d638df97122fca856cbd6c6b">bisection</a></div><div class="ttdeci">long double bisection(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> methods.cpp:17</div></div>
-<div class="ttc" id="amethods_8cpp_html_a7011422538c9322b29a10585a99b35dd"><div class="ttname"><a href="methods_8cpp.html#a7011422538c9322b29a10585a99b35dd">hybrid_method</a></div><div class="ttdeci">long double hybrid_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> methods.cpp:76</div></div>
-<div class="ttc" id="amethods_8cpp_html_a904e4b29ac65aeeca56344c40c4e0c56"><div class="ttname"><a href="methods_8cpp.html#a904e4b29ac65aeeca56344c40c4e0c56">ridder_method</a></div><div class="ttdeci">long double ridder_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> methods.cpp:226</div></div>
-<div class="ttc" id="amethods_8cpp_html_a9f87d7e5146cd41484273b9a8c8d60ff"><div class="ttname"><a href="methods_8cpp.html#a9f87d7e5146cd41484273b9a8c8d60ff">newton_raphson</a></div><div class="ttdeci">long double newton_raphson(long double x0, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> methods.cpp:51</div></div>
-<div class="ttc" id="amethods_8cpp_html_aadf1073b5a8b2ccf7d66fafa42dade9c"><div class="ttname"><a href="methods_8cpp.html#aadf1073b5a8b2ccf7d66fafa42dade9c">brent_method</a></div><div class="ttdeci">long double brent_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> methods.cpp:139</div></div>
-<div class="ttc" id="astruct_root_info_html"><div class="ttname"><a href="struct_root_info.html">RootInfo</a></div><div class="ttdef"><b>Definition</b> methods.h:18</div></div>
+<div class="ttc" id="amethods_8cpp_html_a5c5d08f0d638df97122fca856cbd6c6b"><div class="ttname"><a href="methods_8cpp.html#a5c5d08f0d638df97122fca856cbd6c6b">bisection</a></div><div class="ttdeci">long double bisection(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00017">methods.cpp:17</a></div></div>
+<div class="ttc" id="amethods_8cpp_html_a7011422538c9322b29a10585a99b35dd"><div class="ttname"><a href="methods_8cpp.html#a7011422538c9322b29a10585a99b35dd">hybrid_method</a></div><div class="ttdeci">long double hybrid_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00076">methods.cpp:76</a></div></div>
+<div class="ttc" id="amethods_8cpp_html_a904e4b29ac65aeeca56344c40c4e0c56"><div class="ttname"><a href="methods_8cpp.html#a904e4b29ac65aeeca56344c40c4e0c56">ridder_method</a></div><div class="ttdeci">long double ridder_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00226">methods.cpp:226</a></div></div>
+<div class="ttc" id="amethods_8cpp_html_a9f87d7e5146cd41484273b9a8c8d60ff"><div class="ttname"><a href="methods_8cpp.html#a9f87d7e5146cd41484273b9a8c8d60ff">newton_raphson</a></div><div class="ttdeci">long double newton_raphson(long double x0, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00051">methods.cpp:51</a></div></div>
+<div class="ttc" id="amethods_8cpp_html_aadf1073b5a8b2ccf7d66fafa42dade9c"><div class="ttname"><a href="methods_8cpp.html#aadf1073b5a8b2ccf7d66fafa42dade9c">brent_method</a></div><div class="ttdeci">long double brent_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places)</div><div class="ttdef"><b>Definition</b> <a href="methods_8cpp_source.html#l00139">methods.cpp:139</a></div></div>
+<div class="ttc" id="astruct_root_info_html"><div class="ttname"><a href="struct_root_info.html">RootInfo</a></div><div class="ttdef"><b>Definition</b> <a href="methods_8h_source.html#l00017">methods.h:18</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -405,6 +411,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00234">234</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  235</span>{</div>
 <div class="line"><span class="lineno">  236</span>    <span class="comment">// List of available methods</span></div>
 <div class="line"><span class="lineno">  237</span>    std::vector&lt;std::string&gt; available_methods = {<span class="stringliteral">&quot;Bisection Method&quot;</span>, <span class="stringliteral">&quot;Hybrid Method&quot;</span>, <span class="stringliteral">&quot;Brent Method&quot;</span>, <span class="stringliteral">&quot;Ridder Method&quot;</span>, <span class="stringliteral">&quot;Newton-Raphson Method&quot;</span>, <span class="stringliteral">&quot;Problem Steps Mode&quot;</span>, <span class="stringliteral">&quot;Compare All Methods&quot;</span>};</div>
@@ -511,6 +519,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00027">27</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   31</span>{</div>
 <div class="line"><span class="lineno">   32</span>    std::vector&lt;std::string&gt; iterations;</div>
 <div class="line"><span class="lineno">   33</span>    <span class="keywordtype">long</span> <span class="keywordtype">double</span> root = method_func(a, b, tol, max_iter, iterations, decimal_places);</div>
@@ -536,7 +546,7 @@ Variables</h2></td></tr>
 <div class="line"><span class="lineno">   53</span>    }</div>
 <div class="line"><span class="lineno">   54</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Iterations Count: &quot;</span> &lt;&lt; iterations.size() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><span class="lineno">   55</span>}</div>
-<div class="ttc" id="autils_8cpp_html_a4390b70f634a01cb926c274e249f9e8b"><div class="ttname"><a href="#a4390b70f634a01cb926c274e249f9e8b">summary</a></div><div class="ttdeci">std::map&lt; std::string, std::vector&lt; RootInfo &gt; &gt; summary</div><div class="ttdef"><b>Definition</b> utils.cpp:24</div></div>
+<div class="ttc" id="autils_8cpp_html_a4390b70f634a01cb926c274e249f9e8b"><div class="ttname"><a href="#a4390b70f634a01cb926c274e249f9e8b">summary</a></div><div class="ttdeci">std::map&lt; std::string, std::vector&lt; RootInfo &gt; &gt; summary</div><div class="ttdef"><b>Definition</b> <a href="utils_8cpp_source.html#l00024">utils.cpp:24</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -578,12 +588,14 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00305">305</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  308</span>{</div>
 <div class="line"><span class="lineno">  309</span>    <span class="keywordtype">int</span> decimal_places = <a class="code hl_function" href="#affdd5b83d06537b3199b863a5990313d">calculate_decimal_places</a>(tol);</div>
 <div class="line"><span class="lineno">  310</span>    <a class="code hl_function" href="#a741da7b7db7708497c097df37d8fcd76">run_method</a>(method_name, method_func, a, b, tol, max_iter, decimal_places);</div>
 <div class="line"><span class="lineno">  311</span>}</div>
-<div class="ttc" id="autils_8cpp_html_a741da7b7db7708497c097df37d8fcd76"><div class="ttname"><a href="#a741da7b7db7708497c097df37d8fcd76">run_method</a></div><div class="ttdeci">void run_method(const std::string &amp;method_name, std::function&lt; long double(long double, long double, long double, int, std::vector&lt; std::string &gt; &amp;, int)&gt; method_func, long double a, long double b, long double tol, int max_iter, int decimal_places)</div><div class="ttdef"><b>Definition</b> utils.cpp:27</div></div>
-<div class="ttc" id="autils_8cpp_html_affdd5b83d06537b3199b863a5990313d"><div class="ttname"><a href="#affdd5b83d06537b3199b863a5990313d">calculate_decimal_places</a></div><div class="ttdeci">int calculate_decimal_places(long double tol)</div><div class="ttdef"><b>Definition</b> utils.cpp:297</div></div>
+<div class="ttc" id="autils_8cpp_html_a741da7b7db7708497c097df37d8fcd76"><div class="ttname"><a href="#a741da7b7db7708497c097df37d8fcd76">run_method</a></div><div class="ttdeci">void run_method(const std::string &amp;method_name, std::function&lt; long double(long double, long double, long double, int, std::vector&lt; std::string &gt; &amp;, int)&gt; method_func, long double a, long double b, long double tol, int max_iter, int decimal_places)</div><div class="ttdef"><b>Definition</b> <a href="utils_8cpp_source.html#l00027">utils.cpp:27</a></div></div>
+<div class="ttc" id="autils_8cpp_html_affdd5b83d06537b3199b863a5990313d"><div class="ttname"><a href="#affdd5b83d06537b3199b863a5990313d">calculate_decimal_places</a></div><div class="ttdeci">int calculate_decimal_places(long double tol)</div><div class="ttdef"><b>Definition</b> <a href="utils_8cpp_source.html#l00297">utils.cpp:297</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -601,6 +613,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00058">58</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   59</span>{</div>
 <div class="line"><span class="lineno">   60</span>    <span class="comment">// Define intervals for three roots</span></div>
 <div class="line"><span class="lineno">   61</span>    std::vector&lt;std::pair&lt;long double, long double&gt;&gt; intervals = {</div>
@@ -696,6 +710,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00024">24</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 
 </div>
 </div>

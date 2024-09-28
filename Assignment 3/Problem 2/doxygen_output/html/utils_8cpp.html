@@ -194,7 +194,9 @@ $(function(){initNavTree('utils_8cpp.html',''); initResizable(true); });
 <area shape="poly" title=" " alt="" coords="130,105,172,142,168,146,126,109"/>
 </map>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="utils_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aaa4c42442dbb69abecbaced455bd3d5c" id="r_aaa4c42442dbb69abecbaced455bd3d5c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa4c42442dbb69abecbaced455bd3d5c">InitMatrix</a> (vector&lt; vector&lt; double &gt; &gt; &amp;m, const string &amp;filename, int &amp;rows, int &amp;cols)</td></tr>
@@ -217,6 +219,8 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of utility functions for matrix operations. </p>
 <p>This file contains the implementations of functions that handle reading matrices from <code>.in</code> files and displaying the corresponding system of linear equations. These utility functions are essential for the initialization and output of matrix data used in solving linear systems. </p>
+
+<p class="definition">Definition in file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="af58df231724b448df3738086ef230a8b" name="af58df231724b448df3738086ef230a8b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af58df231724b448df3738086ef230a8b">&#9670;&#160;</a></span>CheckConsistency()</h2>
@@ -254,6 +258,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true If the system is consistent. </dd>
 <dd>
 false If the system is inconsistent.    </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00123">123</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  124</span>{</div>
 <div class="line"><span class="lineno">  125</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; rows; i++)</div>
 <div class="line"><span class="lineno">  126</span>    {</div>
@@ -298,6 +304,8 @@ false If the system is inconsistent.    </dd></dl>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00147">147</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  148</span>{</div>
 <div class="line"><span class="lineno">  149</span>    cout &lt;&lt; <span class="stringliteral">&quot;The system has a unique solution:&quot;</span> &lt;&lt; endl;</div>
 <div class="line"><span class="lineno">  150</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; solution.size(); i++)</div>
@@ -350,6 +358,8 @@ false If the system is inconsistent.    </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>true If the matrix was successfully initialized. </dd>
 <dd>
 false If there was an error during initialization.    </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00024">24</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   25</span>{</div>
 <div class="line"><span class="lineno">   26</span>    ifstream in(filename);</div>
 <div class="line"><span class="lineno">   27</span>    <span class="keywordflow">if</span> (!in.is_open())</div>
@@ -435,6 +445,8 @@ false If there was an error during initialization.    </dd></dl>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00078">78</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   79</span>{</div>
 <div class="line"><span class="lineno">   80</span>    cout &lt;&lt; <span class="stringliteral">&quot;The current system of linear equations is:&quot;</span> &lt;&lt; endl;</div>
 <div class="line"><span class="lineno">   81</span> </div>
@@ -492,6 +504,8 @@ false If there was an error during initialization.    </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00157">157</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  158</span>{</div>
 <div class="line"><span class="lineno">  159</span>    <span class="keywordflow">return</span> chrono::steady_clock::now();</div>
 <div class="line"><span class="lineno">  160</span>}</div>
@@ -512,6 +526,8 @@ false If there was an error during initialization.    </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8cpp_source.html#l00162">162</a> of file <a class="el" href="utils_8cpp_source.html">utils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  163</span>{</div>
 <div class="line"><span class="lineno">  164</span>    <span class="keyword">auto</span> end = chrono::steady_clock::now();</div>
 <div class="line"><span class="lineno">  165</span>    chrono::duration&lt;double&gt; elapsed = end - start;</div>

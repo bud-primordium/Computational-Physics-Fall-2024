@@ -1,5 +1,5 @@
 /**
- * @mainpage Root-Finding Algorithms Solver
+ * @mainpage Root Finder
  *
  * Using various numerical methods
  *

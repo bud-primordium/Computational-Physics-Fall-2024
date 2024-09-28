@@ -63,34 +63,62 @@ def copy_file_safe(src, dst):
         logging.error(f"复制文件时出错: {e}")
 
 
-def create_readme_redirect(parent_dir, html_dir):
-    """创建 readme.html 并自动重定向到 index.html"""
-    readme_path = os.path.join(parent_dir, "readme.html")
-    relative_html_path = os.path.relpath(
-        os.path.join(html_dir, "index.html"), parent_dir
-    )
+# def create_readme_redirect(parent_dir, html_dir):
+#     """创建 readme.html 并自动重定向到 index.html"""
+#     readme_path = os.path.join(parent_dir, "readme.html")
+#     relative_html_path = os.path.relpath(
+#         os.path.join(html_dir, "index.html"), parent_dir
+#     )
 
-    # 确保使用正斜杠作为路径分隔符
-    relative_html_path = relative_html_path.replace("\\", "/")
+#     # 确保使用正斜杠作为路径分隔符
+#     relative_html_path = relative_html_path.replace("\\", "/")
 
-    # 创建 readme.html，包含重定向逻辑
-    with open(readme_path, "w", encoding="utf-8") as readme:
-        readme.write(
-            f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="refresh" content="0; url=./{relative_html_path}" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Documentation</title>
-</head>
-<body>
-    <p>If you are not redirected automatically, follow this <a href="./{relative_html_path}">link to the documentation</a>.</p>
-</body>
-</html>
-"""
-        )
-    logging.info(f"readme.html 已在 {parent_dir} 中创建，带有自动重定向功能")
+#     # 创建 readme.html，包含重定向逻辑
+#     with open(readme_path, "w", encoding="utf-8") as readme:
+#         readme.write(
+#             f"""<!DOCTYPE html>
+# <html lang="en">
+# <head>
+#     <meta http-equiv="refresh" content="0; url=./{relative_html_path}" />
+#     <meta charset="UTF-8">
+#     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#     <title>Redirecting to Documentation</title>
+# </head>
+# <body>
+#     <p>If you are not redirected automatically, follow this <a href="./{relative_html_path}">link to the documentation</a>.</p>
+# </body>
+# </html>
+# """
+#         )
+#     logging.info(f"readme.html 已在 {parent_dir} 中创建，带有自动重定向功能")
+
+
+def create_doxygen_html(startpath):
+    # 定义路径
+    parent_dir = os.path.dirname(startpath)
+    html_dir = os.path.join(parent_dir, "doxygen_output", "html")
+    index_html_path = os.path.join(html_dir, "index.html")
+    doxygen_html_path = os.path.join(parent_dir, "Doxygen.html")
+
+    # 读取 index.html 内容
+    if os.path.exists(index_html_path):
+        with open(index_html_path, "r", encoding="utf-8") as file:
+            content = file.read()
+
+        # 添加 <base> 标签
+        base_tag = '<base href="./doxygen_output/html/" />\n'
+        content = content.replace("<head>", f"<head>\n{base_tag}", 1)
+
+        # 写入 Doxygen.html
+        with open(doxygen_html_path, "w", encoding="utf-8") as file:
+            file.write(content)
+        logging.info(f"已创建 {doxygen_html_path}")
+
+        # 自动打开 Doxygen.html
+        webbrowser.open_new_tab(doxygen_html_path)
+        logging.info(f"已打开 {doxygen_html_path}")
+    else:
+        logging.error(f"无法找到 {index_html_path}")
 
 
 def generate_doxygen(startpath, project_name=None):
@@ -175,17 +203,8 @@ def generate_doxygen(startpath, project_name=None):
         logging.error(str(e))
         return
 
-    # 创建 readme.html 重定向到 index.html
-    parent_dir = os.path.dirname(startpath)
-    create_readme_redirect(parent_dir, html_dir)
-
-    # 自动打开 readme.html
-    readme_html_path = os.path.join(parent_dir, "readme.html")
-    if os.path.exists(readme_html_path):
-        webbrowser.open_new_tab(readme_html_path)
-        logging.info(f"已打开 {readme_html_path}")
-    else:
-        logging.error(f"无法找到 {readme_html_path}")
+    # 创建index.html的重定向base之后的Doxygen.html并打开
+    create_doxygen_html(startpath)
 
     # 运行 make.bat 来编译 LaTeX 生成 PDF
     make_bat_path = os.path.join(latex_dir, "make.bat")

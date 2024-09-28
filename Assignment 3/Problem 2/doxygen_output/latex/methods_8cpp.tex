@@ -54,6 +54,10 @@ Gilbert Young
 
 This file implements key algorithms such as Gaussian elimination with partial pivoting, back-\/substitution, and rank determination. It also includes functionality to display the general solution when the system has infinitely many solutions. 
 
+Definition in file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
+
+
+
 \doxysubsection{Function Documentation}
 \Hypertarget{methods_8cpp_ac670b993a182e328bad2b2a3ba950388}\index{methods.cpp@{methods.cpp}!BackSubstitution@{BackSubstitution}}
 \index{BackSubstitution@{BackSubstitution}!methods.cpp@{methods.cpp}}
@@ -81,6 +85,10 @@ true If a unique solution exists.
 
 false If the system is inconsistent.    
 \end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00137}{137}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
+
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00138\ \{}
@@ -154,6 +162,10 @@ Determines the rank of the coefficient matrix A (excluding augmented column).
 int The rank of the matrix A.    
 \end{DoxyReturn}
 
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00188}{188}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
+
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00189\ \{}
 \DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{int}\ rank\ =\ 0;}
@@ -184,6 +196,10 @@ bool Eliminate (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>
 
 
 Performs elimination on the matrix to form an upper triangular matrix. 
+
+
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
@@ -223,6 +239,10 @@ void Exchange (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$
 Swaps two rows in the matrix and outputs the action. 
 
 
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
+
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00041\ \{}
 \DoxyCodeLine{00042\ \ \ \ \ swap(m[row1],\ m[row2]);}
@@ -252,6 +272,10 @@ Performs Gaussian elimination on the augmented matrix with partial pivoting.
 \begin{DoxyReturn}{Returns}
 int Number of row exchanges performed during elimination.    
 \end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
+
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00076\ \{}
@@ -336,6 +360,10 @@ Identifies the pivot columns in the matrix.
 std\+::vector$<$int$>$ A vector containing the indices of the pivot columns.    
 \end{DoxyReturn}
 
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00320}{320}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
+
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00321\ \{}
 \DoxyCodeLine{00322\ \ \ \ \ vector<int>\ pivots;}
@@ -368,6 +396,10 @@ int Pivoting (\begin{DoxyParamCaption}\item[{const vector$<$ vector$<$ double $>
 
 
 Performs partial pivoting and returns the row index with the maximum pivot. 
+
+
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
@@ -408,6 +440,10 @@ Displays the general solution for systems with infinitely many solutions.
 {\em rank} & The rank of the coefficient matrix A.    \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{methods_8cpp_source_l00211}{211}} of file \mbox{\hyperlink{methods_8cpp_source}{methods.\+cpp}}.
+
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00212\ \{}

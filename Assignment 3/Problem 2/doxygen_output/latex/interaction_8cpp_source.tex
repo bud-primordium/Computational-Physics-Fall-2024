@@ -1,0 +1,99 @@
+\doxysection{interaction.\+cpp}
+\hypertarget{interaction_8cpp_source}{}\label{interaction_8cpp_source}\mbox{\hyperlink{interaction_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interaction_8h}{interaction.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00021}00021\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00024}\mbox{\hyperlink{interaction_8cpp_a2d487cfe8d671b913c99aec6a02b382a}{00024}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{interaction_8cpp_a2d487cfe8d671b913c99aec6a02b382a}{SelectInputFile}}()}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00025}00025\ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00026}00026\ \ \ \ \ vector<string>\ in\_files;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&entry\ :\ filesystem::directory\_iterator(filesystem::current\_path()))}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00028}00028\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry.is\_regular\_file())}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ filename\ =\ entry.path().filename().string();}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (filename.size()\ >=\ 3\ \&\&\ filename.substr(filename.size()\ -\/\ 3)\ ==\ \textcolor{stringliteral}{"{}.in"{}})}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ in\_files.push\_back(filename);}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00037}00037\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{string}\ selected\_file;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (in\_files.empty())}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00041}00041\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}No\ .in\ files\ found\ in\ the\ current\ directory."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00044}00044\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (in\_files.size()\ ==\ 1)}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00046}00046\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ selected\_file\ =\ in\_files[0];}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Found\ one\ .in\ file:\ "{}}\ <<\ selected\_file\ <<\ \textcolor{stringliteral}{"{}.\ Automatically\ selecting\ it."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00051}00051\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Multiple\ .in\ files\ found.\ Please\ select\ one:"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ in\_files.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}.\ "{}}\ <<\ in\_files[i]\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ file\_choice;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Improved\ input\ validation}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Enter\ the\ number\ of\ the\ file\ you\ want\ to\ use\ (1-\/"{}}\ <<\ in\_files.size()\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ cin\ >>\ file\_choice;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cin.fail()\ ||\ file\_choice\ <\ 1\ ||\ file\_choice\ >\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(in\_files.size()))}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cin.clear();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ error\ flags}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cin.ignore(numeric\_limits<streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});\ \textcolor{comment}{//\ Clear\ input\ buffer}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ input.\ Please\ enter\ a\ number\ between\ 1\ and\ "{}}\ <<\ in\_files.size()\ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ selected\_file\ =\ in\_files[file\_choice\ -\/\ 1];}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00077}00077\ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{keywordflow}{return}\ selected\_file;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00079}00079\ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00082}\mbox{\hyperlink{interaction_8cpp_ac0c03a1432857a1e55bb86ca977cd544}{00082}}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{interaction_8cpp_ac0c03a1432857a1e55bb86ca977cd544}{AskRunAgain}}()}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00083}00083\ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{char}\ choice;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00086}00086\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nDo\ you\ want\ to\ run\ the\ program\ again?\ (y/n):\ "{}};}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ cin\ >>\ choice;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (choice\ ==\ \textcolor{charliteral}{'y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'Y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'n'}\ ||\ choice\ ==\ \textcolor{charliteral}{'N'})}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ input.\ Please\ enter\ 'y'\ or\ 'n'."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00098}00098\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{return}\ choice;}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00100}00100\ \}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00103}\mbox{\hyperlink{interaction_8cpp_ac8baab338f6d1846a193b06303693cea}{00103}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{interaction_8cpp_ac8baab338f6d1846a193b06303693cea}{WaitForExit}}()}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00104}00104\ \{}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00105}00105\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPress\ Enter\ to\ exit..."{}};}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00106}00106\ \ \ \ \ cin.ignore(numeric\_limits<streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});\ \textcolor{comment}{//\ Clear\ input\ buffer}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00107}00107\ \ \ \ \ cin.get();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ Enter\ key}}
+\DoxyCodeLine{\Hypertarget{interaction_8cpp_source_l00108}00108\ \}}
+
+\end{DoxyCode}

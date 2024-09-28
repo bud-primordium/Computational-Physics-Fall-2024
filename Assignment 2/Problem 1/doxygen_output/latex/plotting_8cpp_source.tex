@@ -1,0 +1,114 @@
+\doxysection{plotting.\+cpp}
+\hypertarget{plotting_8cpp_source}{}\label{plotting_8cpp_source}\mbox{\hyperlink{plotting_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00002}00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00003}00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 01:47}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00004}00004\ \textcolor{comment}{@File\_name:\ plotting.cpp}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00005}00005\ \textcolor{comment}{@IDE:\ VSCode}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00006}00006\ \textcolor{comment}{@Formatter:\ Clang-\/Format}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00007}00007\ \textcolor{comment}{@Description:\ Definition\ of\ function\ to\ plot\ f(x)\ on\ a\ grid.}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00008}00008\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{plotting_8h}{plotting.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{functions_8h}{functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00019}00019\ \textcolor{comment}{//\ Function\ to\ plot\ f(x)\ on\ a\ grid}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00020}\mbox{\hyperlink{plotting_8cpp_a4af2dc379bb28d4833a1dd980e511e36}{00020}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{plotting_8cpp_a4af2dc379bb28d4833a1dd980e511e36}{plot\_function}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x\_min,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x\_max,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ y\_min,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ y\_max,}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ label\_interval)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00022}00022\ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00023}00023\ \ \ \ \ std::vector<std::string>\ grid(height,\ std::string(width,\ \textcolor{charliteral}{'\ '}));}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordtype}{int}\ x\_axis\ =\ -\/1,\ y\_axis\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{comment}{//\ Determine\ x-\/axis\ position}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (y\_min\ <=\ 0\ \&\&\ y\_max\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00028}00028\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ x\_axis\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round((0\ -\/\ y\_min)\ /\ (y\_max\ -\/\ y\_min)\ *\ (height\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00030}00030\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ Determine\ y-\/axis\ position}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\_min\ <=\ 0\ \&\&\ x\_max\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00034}00034\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ y\_axis\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round((0\ -\/\ x\_min)\ /\ (x\_max\ -\/\ x\_min)\ *\ (width\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ Plot\ the\ function}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ width;\ ++i)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00040}00040\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x\ =\ x\_min\ +\ i\ *\ (x\_max\ -\/\ x\_min)\ /\ (width\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ y\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(x);}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (y\ <\ y\_min\ ||\ y\ >\ y\_max)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ j\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round((y\ -\/\ y\_min)\ /\ (y\_max\ -\/\ y\_min)\ *\ (height\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ >=\ 0\ \&\&\ j\ <\ height)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ grid[height\ -\/\ 1\ -\/\ j][i]\ =\ \textcolor{charliteral}{'*'};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{comment}{//\ Draw\ x-\/axis}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\_axis\ !=\ -\/1)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00054}00054\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ width;\ ++i)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[x\_axis][i]\ ==\ \textcolor{charliteral}{'\ '})}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[x\_axis][i]\ =\ \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00060}00060\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ Draw\ y-\/axis}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (y\_axis\ !=\ -\/1)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00064}00064\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ height;\ ++i)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[i][y\_axis]\ ==\ \textcolor{charliteral}{'\ '})}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[i][y\_axis]\ =\ \textcolor{charliteral}{'|'};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00070}00070\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//\ Draw\ origin}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\_axis\ !=\ -\/1\ \&\&\ y\_axis\ !=\ -\/1)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00074}00074\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ grid[x\_axis][y\_axis]\ =\ \textcolor{charliteral}{'+'};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{comment}{//\ Print\ the\ grid}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00079}00079\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nFunction\ Plot:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&row\ :\ grid)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00081}00081\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ std::cout\ <<\ row\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//\ Print\ x-\/axis\ labels}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00086}00086\ \ \ \ \ std::string\ label\_line(width,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ label\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(ceil(x\_min\ /\ label\_interval))\ *\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_interval);}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ label\ <=\ static\_cast<int>(floor(x\_max\ /\ label\_interval))\ *\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_interval);}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ label\ +=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_interval))}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00090}00090\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ relative\_pos\ =\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(label)\ -\/\ x\_min)\ /\ (x\_max\ -\/\ x\_min);}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pos\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round(relative\_pos\ *\ (width\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ std::ostringstream\ oss\_label;}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ oss\_label\ <<\ std::fixed\ <<\ std::setprecision(0)\ <<\ label;}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ std::string\ label\_str\ =\ oss\_label.str();}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ start\_pos\ =\ pos\ -\/\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_str.length()\ /\ 2);}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (start\_pos\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ start\_pos\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (start\_pos\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(label\_str.length())\ >\ width)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ label\_str.length();\ ++i)}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ label\_line[start\_pos\ +\ i]\ =\ label\_str[i];}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00105}00105\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00106}00106\ \ \ \ \ std::cout\ <<\ label\_line\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00107}00107\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}x\ range:\ ["{}}\ <<\ x\_min\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ x\_max\ <<\ \textcolor{stringliteral}{"{}]\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00108}00108\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}y\ range:\ ["{}}\ <<\ y\_min\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ y\_max\ <<\ \textcolor{stringliteral}{"{}]\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{plotting_8cpp_source_l00109}00109\ \}}
+
+\end{DoxyCode}

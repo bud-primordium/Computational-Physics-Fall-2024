@@ -1,0 +1,227 @@
+\doxysection{methods.\+cpp}
+\hypertarget{methods_8cpp_source}{}\label{methods_8cpp_source}\mbox{\hyperlink{methods_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00002}00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00003}00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 08:56}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00004}00004\ \textcolor{comment}{@File\_name:\ methods.cpp}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00005}00005\ \textcolor{comment}{@Description:}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00006}00006\ \textcolor{comment}{Implementation\ file\ containing\ definitions\ of\ the\ optimization\ methods:}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00007}00007\ \textcolor{comment}{1.\ Steepest\ Descent\ Method}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00008}00008\ \textcolor{comment}{2.\ Conjugate\ Gradient\ Method}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00009}00009\ \textcolor{comment}{3.\ Simulated\ Annealing}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00010}00010\ \textcolor{comment}{4.\ Genetic\ Algorithm}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00011}00011\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{methods_8h}{methods.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{functions_8h}{functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00021}00021\ \textcolor{comment}{//\ Steepest\ Descent\ Method}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00022}\mbox{\hyperlink{methods_8cpp_aa2bec146e419affb8eb2b1fe5fdd4c2c}{00022}}\ \mbox{\hyperlink{struct_result}{Result}}\ \mbox{\hyperlink{methods_8cpp_aa2bec146e419affb8eb2b1fe5fdd4c2c}{steepestDescent}}(\textcolor{keywordtype}{double}\ x0,\ \textcolor{keywordtype}{double}\ y0,\ \textcolor{keywordtype}{double}\ alpha,\ \textcolor{keywordtype}{int}\ maxIter,\ \textcolor{keywordtype}{double}\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00023}00023\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ x0,\ y\ =\ y0,\ dx,\ dy;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00027}00027\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ maxIter;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00030}00030\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{functions_8cpp_a3dea8e4f38da09eb8030e2a81c7f5313}{computeGradient}}(x,\ y,\ dx,\ dy);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ norm\ =\ sqrt(dx\ *\ dx\ +\ dy\ *\ dy);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (norm\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ positions}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ x\ -\/=\ alpha\ *\ dx;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ y\ -\/=\ alpha\ *\ dy;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00045}00045\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00046}00046\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00047}00047\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ y;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00048}00048\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x,\ y);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00052}00052\ \textcolor{comment}{//\ Nonlinear\ Conjugate\ Gradient\ Method\ (Fletcher-\/Reeves)}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00053}\mbox{\hyperlink{methods_8cpp_ab83d34604c4245c59dd7964fc09f4bde}{00053}}\ \mbox{\hyperlink{struct_result}{Result}}\ \mbox{\hyperlink{methods_8cpp_ab83d34604c4245c59dd7964fc09f4bde}{conjugateGradient}}(\textcolor{keywordtype}{double}\ x0,\ \textcolor{keywordtype}{double}\ y0,\ \textcolor{keywordtype}{int}\ maxIter,\ \textcolor{keywordtype}{double}\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00054}00054\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00055}00055\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ x0,\ y\ =\ y0,\ dx,\ dy;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00058}00058\ \ \ \ \ \mbox{\hyperlink{functions_8cpp_a3dea8e4f38da09eb8030e2a81c7f5313}{computeGradient}}(x,\ y,\ dx,\ dy);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{double}\ g0\ =\ dx\ *\ dx\ +\ dy\ *\ dy;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{double}\ d\_x\ =\ -\/dx;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{double}\ d\_y\ =\ -\/dy;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00062}00062\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ maxIter;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00065}00065\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Line\ search\ to\ find\ optimal\ alpha}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ alpha\ =\ \mbox{\hyperlink{functions_8cpp_adaf177859093fe4a87da0a768c48bfbc}{lineSearchBacktracking}}(x,\ y,\ d\_x,\ d\_y);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ positions}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ x\ +=\ alpha\ *\ d\_x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ y\ +=\ alpha\ *\ d\_y;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compute\ new\ gradient}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ new\_dx,\ new\_dy;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{functions_8cpp_a3dea8e4f38da09eb8030e2a81c7f5313}{computeGradient}}(x,\ y,\ new\_dx,\ new\_dy);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ gk\_new\ =\ new\_dx\ *\ new\_dx\ +\ new\_dy\ *\ new\_dy;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ for\ convergence}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sqrt(gk\_new)\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compute\ beta\ (Fletcher-\/Reeves)}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ beta\ =\ gk\_new\ /\ g0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ directions}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ d\_x\ =\ -\/new\_dx\ +\ beta\ *\ d\_x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ d\_y\ =\ -\/new\_dy\ +\ beta\ *\ d\_y;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ gradient\ magnitude}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ g0\ =\ gk\_new;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00089}00089\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00091}00091\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00092}00092\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00093}00093\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00094}00094\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ y;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00095}00095\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x,\ y);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00099}00099\ \textcolor{comment}{//\ Simulated\ Annealing}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00100}\mbox{\hyperlink{methods_8cpp_a1b37d5f500d8064487a5321a10625575}{00100}}\ \mbox{\hyperlink{struct_result}{Result}}\ \mbox{\hyperlink{methods_8cpp_a1b37d5f500d8064487a5321a10625575}{simulatedAnnealing}}(\textcolor{keywordtype}{double}\ x0,\ \textcolor{keywordtype}{double}\ y0,\ \textcolor{keywordtype}{double}\ T0,\ \textcolor{keywordtype}{double}\ Tmin,\ \textcolor{keywordtype}{double}\ alpha,\ \textcolor{keywordtype}{int}\ maxIter)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00101}00101\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00102}00102\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00103}00103\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ x0,\ y\ =\ y0,\ f\_current\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x,\ y);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordtype}{double}\ T\ =\ T0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00106}00106\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00108}00108\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ maxIter\ \&\&\ T\ >\ Tmin;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00109}00109\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ new\ candidate\ solution}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ x\_new\ =\ x\ +\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ y\_new\ =\ y\ +\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ f\_new\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(x\_new,\ y\_new);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ delta\ =\ f\_new\ -\/\ f\_current;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Accept\ new\ solution\ if\ better,\ or\ with\ a\ probability}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (delta\ <\ 0\ ||\ exp(-\/delta\ /\ T)\ >\ ((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX))}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ x\_new;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ y\_new;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ f\_current\ =\ f\_new;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cool\ down}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ T\ *=\ alpha;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ i\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00127}00127\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00129}00129\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00130}00130\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00131}00131\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00132}00132\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ y;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00133}00133\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ f\_current;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00135}00135\ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00137}00137\ \textcolor{comment}{//\ Genetic\ Algorithm}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00138}\mbox{\hyperlink{methods_8cpp_ac232b96177b1e35952375d87e108e7df}{00138}}\ \mbox{\hyperlink{struct_result}{Result}}\ \mbox{\hyperlink{methods_8cpp_ac232b96177b1e35952375d87e108e7df}{geneticAlgorithm}}(\textcolor{keywordtype}{int}\ populationSize,\ \textcolor{keywordtype}{int}\ generations,\ \textcolor{keywordtype}{double}\ mutationRate,\ \textcolor{keywordtype}{double}\ crossoverRate)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00139}00139\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00140}00140\ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00142}00142\ \ \ \ \ std::vector<Individual>\ population(populationSize);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00143}00143\ \ \ \ \ \textcolor{keywordtype}{double}\ xMin\ =\ -\/10.0,\ xMax\ =\ 10.0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordtype}{double}\ yMin\ =\ -\/10.0,\ yMax\ =\ 10.0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{comment}{//\ Initialize\ population}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00147}00147\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&ind\ :\ population)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00148}00148\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ ind.x\ =\ xMin\ +\ (xMax\ -\/\ xMin)\ *\ ((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ ind.y\ =\ yMin\ +\ (yMax\ -\/\ yMin)\ *\ ((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ ind.fitness\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(ind.x,\ ind.y);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00152}00152\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00154}00154\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ =\ generations\ *\ populationSize;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ gen\ =\ 0;\ gen\ <\ generations;\ ++gen)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00157}00157\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Selection\ (Tournament\ Selection)}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ std::vector<Individual>\ newPopulation;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ populationSize;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ a\ =\ rand()\ \%\ populationSize;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ b\ =\ rand()\ \%\ populationSize;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_individual}{Individual}}\ parent\ =\ population[a].\mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}}\ <\ population[b].fitness\ ?\ population[a]\ :\ population[b];}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation.push\_back(parent);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Crossover\ (Single-\/point)}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ populationSize\ -\/\ 1;\ i\ +=\ 2)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX)\ <\ crossoverRate)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ alpha\ =\ (double)rand()\ /\ RAND\_MAX;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_x1\ =\ alpha\ *\ newPopulation[i].x\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i\ +\ 1].x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_y1\ =\ alpha\ *\ newPopulation[i].y\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i\ +\ 1].y;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_x2\ =\ alpha\ *\ newPopulation[i\ +\ 1].x\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i].x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ temp\_y2\ =\ alpha\ *\ newPopulation[i\ +\ 1].y\ +\ (1\ -\/\ alpha)\ *\ newPopulation[i].y;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i].x\ =\ temp\_x1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i].y\ =\ temp\_y1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i\ +\ 1].x\ =\ temp\_x2;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPopulation[i\ +\ 1].y\ =\ temp\_y2;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mutation}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&ind\ :\ newPopulation)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (((\textcolor{keywordtype}{double})rand()\ /\ RAND\_MAX)\ <\ mutationRate)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.x\ +=\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.y\ +=\ ((double)rand()\ /\ RAND\_MAX\ -\/\ 0.5);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clamp\ to\ search\ space}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.x\ <\ xMin)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.x\ =\ xMin;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.x\ >\ xMax)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.x\ =\ xMax;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.y\ <\ yMin)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.y\ =\ yMin;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.y\ >\ yMax)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ind.y\ =\ yMax;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ ind.fitness\ =\ \mbox{\hyperlink{functions_8cpp_a6f5f972e9112da556e489568c516f962}{functionToMinimize}}(ind.x,\ ind.y);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ population\ =\ newPopulation;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00206}00206\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00208}00208\ \ \ \ \ \textcolor{comment}{//\ Find\ best\ individual}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00209}00209\ \ \ \ \ \mbox{\hyperlink{struct_individual}{Individual}}\ best\ =\ population[0];}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00210}00210\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&ind\ :\ population)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00211}00211\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ind.fitness\ <\ best.\mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}})}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ best\ =\ ind;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00214}00214\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00216}00216\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00217}00217\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ =\ std::chrono::duration<double>(end\ -\/\ start).count();}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00218}00218\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ =\ best.\mbox{\hyperlink{struct_individual_a697b625e5ee14d913d6d11693fdb8462}{x}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00219}00219\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ =\ best.\mbox{\hyperlink{struct_individual_abbc071c6c3dd08f7caf4d7ce554a2f76}{y}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00220}00220\ \ \ \ \ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ =\ best.\mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00221}00221\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00222}00222\ \}}
+
+\end{DoxyCode}

@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Root-Finding Algorithms Solver", "index.html", [
+  [ "Root Finder", "index.html", [
     [ "Classes", "annotated.html", [
       [ "Key Features", "index.html#autotoc_md0", null ],
       [ "How to Use", "index.html#autotoc_md1", null ],

@@ -1,72 +1,72 @@
 \doxysection{structs.\+h}
 \hypertarget{structs_8h_source}{}\label{structs_8h_source}\mbox{\hyperlink{structs_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
-\DoxyCodeLine{00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 08:56}}
-\DoxyCodeLine{00004\ \textcolor{comment}{@File\_name:\ structs.h}}
-\DoxyCodeLine{00005\ \textcolor{comment}{@Description:}}
-\DoxyCodeLine{00006\ \textcolor{comment}{Header\ file\ containing\ the\ definitions\ of\ data\ structures\ used\ in\ the\ optimization\ algorithms:}}
-\DoxyCodeLine{00007\ \textcolor{comment}{1.\ Individual:\ structure\ to\ store\ coordinates\ and\ fitness\ for\ the\ Genetic\ Algorithm.}}
-\DoxyCodeLine{00008\ \textcolor{comment}{2.\ DefaultParameters:\ structure\ for\ default\ parameters\ for\ all\ algorithms.}}
-\DoxyCodeLine{00009\ \textcolor{comment}{3.\ Result:\ structure\ to\ store\ the\ optimization\ results.}}
-\DoxyCodeLine{00010\ \textcolor{comment}{*/}}
-\DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ STRUCTS\_H}}
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ STRUCTS\_H}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00016\ }
-\DoxyCodeLine{00017\ \textcolor{comment}{//\ Structure\ to\ store\ coordinates\ and\ fitness\ for\ Genetic\ Algorithm}}
-\DoxyCodeLine{00018\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_individual}{Individual}}}
-\DoxyCodeLine{00019\ \{}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_individual_a697b625e5ee14d913d6d11693fdb8462}{x}};}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_individual_abbc071c6c3dd08f7caf4d7ce554a2f76}{y}};}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}};}
-\DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ Constructor\ for\ easier\ initialization}}
-\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{struct_individual_a8c07f29157ca6a0316408f932d7a22ea}{Individual}}(\textcolor{keywordtype}{double}\ x\_val\ =\ 0,\ \textcolor{keywordtype}{double}\ y\_val\ =\ 0)\ :\ \mbox{\hyperlink{struct_individual_a697b625e5ee14d913d6d11693fdb8462}{x}}(x\_val),\ \mbox{\hyperlink{struct_individual_abbc071c6c3dd08f7caf4d7ce554a2f76}{y}}(y\_val),\ \mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}}(0)\ \{\}}
-\DoxyCodeLine{00026\ \};}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \textcolor{comment}{//\ Structure\ for\ default\ parameters}}
-\DoxyCodeLine{00029\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_default_parameters}{DefaultParameters}}}
-\DoxyCodeLine{00030\ \{}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Initial\ points}}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}}\ =\ 0.0;}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}}\ =\ 0.0;}
-\DoxyCodeLine{00034\ }
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Steepest\ Descent\ parameters}}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}}\ =\ 0.0050;}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}}\ =\ 1e-\/8;}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}}\ =\ 100000;}
-\DoxyCodeLine{00039\ }
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//\ Conjugate\ Gradient\ parameters}}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}}\ =\ 1e-\/8;}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}}\ =\ 100000;}
-\DoxyCodeLine{00043\ }
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Simulated\ Annealing\ parameters}}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}}\ =\ 2000.0;}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}}\ =\ 1e-\/8;}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}}\ =\ 0.99;}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}}\ =\ 200000;}
-\DoxyCodeLine{00049\ }
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Genetic\ Algorithm\ parameters}}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}}\ =\ 100;}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}}\ =\ 5000;}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}}\ =\ 0.02;}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}}\ =\ 0.8;}
-\DoxyCodeLine{00055\ \};}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \textcolor{comment}{//\ Structure\ to\ store\ optimization\ results}}
-\DoxyCodeLine{00058\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_result}{Result}}}
-\DoxyCodeLine{00059\ \{}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}};}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}};}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}};}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}};}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}};\ \textcolor{comment}{//\ in\ seconds}}
-\DoxyCodeLine{00065\ \};}
-\DoxyCodeLine{00066\ }
-\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ STRUCTS\_H}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00002}00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00003}00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 08:56}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00004}00004\ \textcolor{comment}{@File\_name:\ structs.h}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00005}00005\ \textcolor{comment}{@Description:}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00006}00006\ \textcolor{comment}{Header\ file\ containing\ the\ definitions\ of\ data\ structures\ used\ in\ the\ optimization\ algorithms:}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00007}00007\ \textcolor{comment}{1.\ Individual:\ structure\ to\ store\ coordinates\ and\ fitness\ for\ the\ Genetic\ Algorithm.}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00008}00008\ \textcolor{comment}{2.\ DefaultParameters:\ structure\ for\ default\ parameters\ for\ all\ algorithms.}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00009}00009\ \textcolor{comment}{3.\ Result:\ structure\ to\ store\ the\ optimization\ results.}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00010}00010\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00012}00012\ \textcolor{preprocessor}{\#ifndef\ STRUCTS\_H}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00013}00013\ \textcolor{preprocessor}{\#define\ STRUCTS\_H}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00017}00017\ \textcolor{comment}{//\ Structure\ to\ store\ coordinates\ and\ fitness\ for\ Genetic\ Algorithm}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00018}\mbox{\hyperlink{struct_individual}{00018}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_individual}{Individual}}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00019}00019\ \{}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00020}\mbox{\hyperlink{struct_individual_a697b625e5ee14d913d6d11693fdb8462}{00020}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_individual_a697b625e5ee14d913d6d11693fdb8462}{x}};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00021}\mbox{\hyperlink{struct_individual_abbc071c6c3dd08f7caf4d7ce554a2f76}{00021}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_individual_abbc071c6c3dd08f7caf4d7ce554a2f76}{y}};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00022}\mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{00022}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00024}00024\ \ \ \ \ \textcolor{comment}{//\ Constructor\ for\ easier\ initialization}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00025}\mbox{\hyperlink{struct_individual_a8c07f29157ca6a0316408f932d7a22ea}{00025}}\ \ \ \ \ \mbox{\hyperlink{struct_individual_a8c07f29157ca6a0316408f932d7a22ea}{Individual}}(\textcolor{keywordtype}{double}\ x\_val\ =\ 0,\ \textcolor{keywordtype}{double}\ y\_val\ =\ 0)\ :\ \mbox{\hyperlink{struct_individual_a697b625e5ee14d913d6d11693fdb8462}{x}}(x\_val),\ \mbox{\hyperlink{struct_individual_abbc071c6c3dd08f7caf4d7ce554a2f76}{y}}(y\_val),\ \mbox{\hyperlink{struct_individual_aa836a17c3f643f8b5d9032161c8a07ae}{fitness}}(0)\ \{\}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00026}00026\ \};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00028}00028\ \textcolor{comment}{//\ Structure\ for\ default\ parameters}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00029}\mbox{\hyperlink{struct_default_parameters}{00029}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_default_parameters}{DefaultParameters}}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00030}00030\ \{}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ Initial\ points}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00032}\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{00032}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}}\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00033}\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{00033}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}}\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00035}00035\ \ \ \ \ \textcolor{comment}{//\ Steepest\ Descent\ parameters}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00036}\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{00036}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}}\ =\ 0.0050;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00037}\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{00037}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}}\ =\ 1e-\/8;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00038}\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{00038}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}}\ =\ 100000;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//\ Conjugate\ Gradient\ parameters}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00041}\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{00041}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}}\ =\ 1e-\/8;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00042}\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{00042}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}}\ =\ 100000;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00044}00044\ \ \ \ \ \textcolor{comment}{//\ Simulated\ Annealing\ parameters}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00045}\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{00045}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}}\ =\ 2000.0;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00046}\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{00046}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}}\ =\ 1e-\/8;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00047}\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{00047}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}}\ =\ 0.99;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00048}\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{00048}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}}\ =\ 200000;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//\ Genetic\ Algorithm\ parameters}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00051}\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{00051}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}}\ =\ 100;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00052}\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{00052}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}}\ =\ 5000;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00053}\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{00053}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}}\ =\ 0.02;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00054}\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{00054}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}}\ =\ 0.8;}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00055}00055\ \};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00057}00057\ \textcolor{comment}{//\ Structure\ to\ store\ optimization\ results}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00058}\mbox{\hyperlink{struct_result}{00058}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_result}{Result}}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00059}00059\ \{}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00060}\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{00060}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00061}\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{00061}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00062}\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{00062}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00063}\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{00063}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00064}\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{00064}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}};\ \textcolor{comment}{//\ in\ seconds}}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00065}00065\ \};}
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{structs_8h_source_l00067}00067\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ STRUCTS\_H}}
 
 \end{DoxyCode}

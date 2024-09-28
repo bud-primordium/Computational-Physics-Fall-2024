@@ -1,0 +1,150 @@
+\doxysection{utils.\+cpp}
+\hypertarget{utils_8cpp_source}{}\label{utils_8cpp_source}\mbox{\hyperlink{utils_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00019}00019\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00024}\mbox{\hyperlink{utils_8cpp_aaa4c42442dbb69abecbaced455bd3d5c}{00024}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8cpp_aaa4c42442dbb69abecbaced455bd3d5c}{InitMatrix}}(vector<vector<double>>\ \&m,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&filename,\ \textcolor{keywordtype}{int}\ \&rows,\ \textcolor{keywordtype}{int}\ \&cols)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00025}00025\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00026}00026\ \ \ \ \ ifstream\ in(filename);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (!in.is\_open())}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00028}00028\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Cannot\ open\ file\ "{}}\ <<\ filename\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00031}00031\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{comment}{//\ Read\ the\ matrix\ dimensions\ dynamically}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{string}\ line;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00035}00035\ \ \ \ \ rows\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00036}00036\ \ \ \ \ cols\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00037}00037\ \ \ \ \ vector<vector<double>>\ temp\_matrix;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{while}\ (getline(in,\ line))}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00039}00039\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (line.empty())}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ Skip\ empty\ lines}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ vector<double>\ row;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ num;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ istringstream\ iss(line);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (iss\ >>\ num)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ row.push\_back(num);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cols\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ cols\ =\ row.size();}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(row.size())\ !=\ cols)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Inconsistent\ number\ of\ columns\ in\ the\ file."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ in.close();}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ temp\_matrix.push\_back(row);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ rows++;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00062}00062\ \ \ \ \ in.close();}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (rows\ ==\ 0\ ||\ cols\ <\ 2)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00065}00065\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ The\ matrix\ must\ have\ at\ least\ one\ equation\ and\ one\ variable."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00068}00068\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ Assign\ to\ m}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00071}00071\ \ \ \ \ m\ =\ temp\_matrix;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00073}00073\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00078}\mbox{\hyperlink{utils_8cpp_ac18af39e38edc89ae42a05b2a1c2c3fd}{00078}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_ac18af39e38edc89ae42a05b2a1c2c3fd}{ShowEquations}}(\textcolor{keyword}{const}\ vector<vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00079}00079\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00080}00080\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ current\ system\ of\ linear\ equations\ is:"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00083}00083\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ equation\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ coefficient\ is\ an\ integer}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ coeff\ =\ round(m[i][j]\ *\ 1e12)\ /\ 1e12;\ \textcolor{comment}{//\ Handle\ floating-\/point\ precision}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(coeff\ -\/\ round(coeff))\ <\ 1e-\/12)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ to\_string(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\textcolor{keyword}{>}(round(coeff)))\ +\ \textcolor{stringliteral}{"{}\ x"{}}\ +\ to\_string(j\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ precision\ for\ floating-\/point\ numbers}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ to\_string(round(m[i][j]\ *\ 10000)\ /\ 10000.0)\ +\ \textcolor{stringliteral}{"{}\ x"{}}\ +\ to\_string(j\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ <\ cols\ -\/\ 2)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ \textcolor{stringliteral}{"{}\ +\ "{}};\ \textcolor{comment}{//\ Add\ space\ around\ '+'\ for\ better\ readability}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Handle\ constant\ term}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ const\_term\ =\ round(m[i][cols\ -\/\ 1]\ *\ 1e12)\ /\ 1e12;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(const\_term\ -\/\ round(const\_term))\ <\ 1e-\/12)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ \textcolor{stringliteral}{"{}\ =\ "{}}\ +\ to\_string(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\textcolor{keyword}{>}(round(const\_term)));}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ equation\ +=\ \textcolor{stringliteral}{"{}\ =\ "{}}\ +\ to\_string(round(m[i][cols\ -\/\ 1]\ *\ 10000)\ /\ 10000.0);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ cout\ <<\ equation\ <<\ endl;\ \textcolor{comment}{//\ Output\ the\ equation}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00116}00116\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00117}00117\ \ \ \ \ cout\ <<\ endl;\ \textcolor{comment}{//\ Add\ a\ blank\ line\ at\ the\ end}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00118}00118\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00123}\mbox{\hyperlink{utils_8cpp_af58df231724b448df3738086ef230a8b}{00123}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8cpp_af58df231724b448df3738086ef230a8b}{CheckConsistency}}(\textcolor{keyword}{const}\ vector<vector<double>>\ \&m,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00124}00124\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00125}00125\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00126}00126\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ all\_zero\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols\ -\/\ 1;\ j++)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(m[i][j])\ >\ 1e-\/12)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ all\_zero\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_zero\ \&\&\ fabs(m[i][cols\ -\/\ 1])\ >\ 1e-\/12)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00140}00140\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00142}00142\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00147}\mbox{\hyperlink{utils_8cpp_a202c189a299ce2b4234e13fe6462b5fd}{00147}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_a202c189a299ce2b4234e13fe6462b5fd}{DisplaySolution}}(\textcolor{keyword}{const}\ vector<double>\ \&solution)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00148}00148\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00149}00149\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ system\ has\ a\ unique\ solution:"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00150}00150\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ solution.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00151}00151\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}x"{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ =\ "{}}\ <<\ fixed\ <<\ setprecision(4)\ <<\ solution[i]\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00153}00153\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00154}00154\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00156}00156\ \textcolor{comment}{//\ Timing\ functions}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00157}\mbox{\hyperlink{utils_8cpp_ad599ccd0a91c3a7617ea5230269b01b9}{00157}}\ chrono::steady\_clock::time\_point\ \mbox{\hyperlink{utils_8cpp_ad599ccd0a91c3a7617ea5230269b01b9}{StartTimer}}()}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00158}00158\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00159}00159\ \ \ \ \ \textcolor{keywordflow}{return}\ chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00160}00160\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00162}\mbox{\hyperlink{utils_8cpp_a2bcb5f113e10162896f518b3b1dad4a3}{00162}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_a2bcb5f113e10162896f518b3b1dad4a3}{StopTimer}}(\textcolor{keyword}{const}\ chrono::steady\_clock::time\_point\ \&start)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00163}00163\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00164}00164\ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00165}00165\ \ \ \ \ chrono::duration<double>\ elapsed\ =\ end\ -\/\ start;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00166}00166\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Time\ elapsed:\ "{}}\ <<\ elapsed.count()\ <<\ \textcolor{stringliteral}{"{}\ seconds."{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00167}00167\ \}}
+
+\end{DoxyCode}

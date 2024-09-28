@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['optimization_20algorithms_20solver_0',['Optimization Algorithms Solver',['../index.html',1,'']]]
+  ['minimum_20finder_0',['Minimum Finder',['../index.html',1,'']]]
 ];

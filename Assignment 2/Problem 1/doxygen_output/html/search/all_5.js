@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['get_5fuser_5finput_0',['get_user_input',['../utils_8cpp.html#ab2dd4669db3c565fb842e2a791a69eca',1,'get_user_input(long double &amp;a, long double &amp;b, long double &amp;x0, std::string &amp;method_name, long double &amp;tol):&#160;utils.cpp'],['../utils_8h.html#ab2dd4669db3c565fb842e2a791a69eca',1,'get_user_input(long double &amp;a, long double &amp;b, long double &amp;x0, std::string &amp;method_name, long double &amp;tol):&#160;utils.cpp']]]
+  ['how_20to_20use_0',['How to Use',['../index.html#autotoc_md1',1,'']]],
+  ['hybrid_5fmethod_1',['hybrid_method',['../methods_8cpp.html#a7011422538c9322b29a10585a99b35dd',1,'hybrid_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp'],['../methods_8h.html#a7011422538c9322b29a10585a99b35dd',1,'hybrid_method(long double a, long double b, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp']]]
 ];

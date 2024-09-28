@@ -1,44 +1,44 @@
 \doxysection{methods.\+h}
 \hypertarget{methods_8h_source}{}\label{methods_8h_source}\mbox{\hyperlink{methods_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
-\DoxyCodeLine{00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 01:47}}
-\DoxyCodeLine{00004\ \textcolor{comment}{@File\_name:\ methods.h}}
-\DoxyCodeLine{00005\ \textcolor{comment}{@IDE:\ VSCode}}
-\DoxyCodeLine{00006\ \textcolor{comment}{@Formatter:\ Clang-\/Format}}
-\DoxyCodeLine{00007\ \textcolor{comment}{@Description:\ Declaration\ of\ various\ root-\/finding\ methods.}}
-\DoxyCodeLine{00008\ \textcolor{comment}{*/}}
-\DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ METHODS\_H}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ METHODS\_H}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{functions_8h}{functions.h}}"{}}}
-\DoxyCodeLine{00016\ }
-\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_root_info}{RootInfo}}}
-\DoxyCodeLine{00018\ \{}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_root_info_aae239adcc4024e8ed99709cd3cecd6be}{root}};\ \ \ \textcolor{comment}{//\ Root\ value}}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_root_info_aed40f44795767d1c1f6da77ee8fa245c}{iterations}};\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ iterations}}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_root_info_a8598a142e82d1e0aa448e73e951d9d52}{decimal\_places}};\ \textcolor{comment}{//\ Number\ of\ decimal\ places\ to\ display}}
-\DoxyCodeLine{00022\ \};}
-\DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \textcolor{comment}{//\ Bisection\ Method}}
-\DoxyCodeLine{00025\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \textcolor{comment}{//\ Newton-\/Raphson\ Method}}
-\DoxyCodeLine{00028\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x0,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \textcolor{comment}{//\ Hybrid\ Method\ (Bisection\ +\ Newton-\/Raphson)}}
-\DoxyCodeLine{00031\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
-\DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \textcolor{comment}{//\ Brent's\ Method}}
-\DoxyCodeLine{00034\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_aadf1073b5a8b2ccf7d66fafa42dade9c}{brent\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00036\ \textcolor{comment}{//\ Ridder's\ Method}}
-\DoxyCodeLine{00037\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a904e4b29ac65aeeca56344c40c4e0c56}{ridder\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ METHODS\_H}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00002}00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00003}00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 01:47}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00004}00004\ \textcolor{comment}{@File\_name:\ methods.h}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00005}00005\ \textcolor{comment}{@IDE:\ VSCode}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00006}00006\ \textcolor{comment}{@Formatter:\ Clang-\/Format}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00007}00007\ \textcolor{comment}{@Description:\ Declaration\ of\ various\ root-\/finding\ methods.}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00008}00008\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifndef\ METHODS\_H}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ METHODS\_H}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{functions_8h}{functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00017}\mbox{\hyperlink{struct_root_info}{00017}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_root_info}{RootInfo}}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00019}\mbox{\hyperlink{struct_root_info_aae239adcc4024e8ed99709cd3cecd6be}{00019}}\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_root_info_aae239adcc4024e8ed99709cd3cecd6be}{root}};\ \ \ \textcolor{comment}{//\ Root\ value}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00020}\mbox{\hyperlink{struct_root_info_aed40f44795767d1c1f6da77ee8fa245c}{00020}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_root_info_aed40f44795767d1c1f6da77ee8fa245c}{iterations}};\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ iterations}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00021}\mbox{\hyperlink{struct_root_info_a8598a142e82d1e0aa448e73e951d9d52}{00021}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_root_info_a8598a142e82d1e0aa448e73e951d9d52}{decimal\_places}};\ \textcolor{comment}{//\ Number\ of\ decimal\ places\ to\ display}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00022}00022\ \};}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00024}00024\ \textcolor{comment}{//\ Bisection\ Method}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00025}00025\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00027}00027\ \textcolor{comment}{//\ Newton-\/Raphson\ Method}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00028}00028\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x0,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00030}00030\ \textcolor{comment}{//\ Hybrid\ Method\ (Bisection\ +\ Newton-\/Raphson)}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00031}00031\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00033}00033\ \textcolor{comment}{//\ Brent's\ Method}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00034}00034\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_aadf1073b5a8b2ccf7d66fafa42dade9c}{brent\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00036}00036\ \textcolor{comment}{//\ Ridder's\ Method}}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00037}00037\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8h_a904e4b29ac65aeeca56344c40c4e0c56}{ridder\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{methods_8h_source_l00039}00039\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ METHODS\_H}}
 
 \end{DoxyCode}

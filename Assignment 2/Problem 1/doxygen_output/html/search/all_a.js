@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['newton_5fraphson_0',['newton_raphson',['../methods_8cpp.html#a9f87d7e5146cd41484273b9a8c8d60ff',1,'newton_raphson(long double x0, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp'],['../methods_8h.html#a9f87d7e5146cd41484273b9a8c8d60ff',1,'newton_raphson(long double x0, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp']]]
+  ['plot_5ffunction_0',['plot_function',['../plotting_8cpp.html#a4af2dc379bb28d4833a1dd980e511e36',1,'plot_function(long double x_min, long double x_max, long double y_min, long double y_max, int width, int height, long double label_interval):&#160;plotting.cpp'],['../plotting_8h.html#abd157cfd43a1503fec0f9ed1807babe2',1,'plot_function(long double x_min, long double x_max, long double y_min, long double y_max, int width=60, int height=20, long double label_interval=1.0):&#160;plotting.cpp']]],
+  ['plotting_2ecpp_1',['plotting.cpp',['../plotting_8cpp.html',1,'']]],
+  ['plotting_2eh_2',['plotting.h',['../plotting_8h.html',1,'']]]
 ];

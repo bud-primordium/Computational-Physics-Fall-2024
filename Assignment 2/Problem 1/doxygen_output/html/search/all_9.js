@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main.cpp']]],
-  ['main_2ecpp_1',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['methods_2ecpp_2',['methods.cpp',['../methods_8cpp.html',1,'']]],
-  ['methods_2eh_3',['methods.h',['../methods_8h.html',1,'']]]
+  ['newton_5fraphson_0',['newton_raphson',['../methods_8cpp.html#a9f87d7e5146cd41484273b9a8c8d60ff',1,'newton_raphson(long double x0, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp'],['../methods_8h.html#a9f87d7e5146cd41484273b9a8c8d60ff',1,'newton_raphson(long double x0, long double tol, int max_iter, std::vector&lt; std::string &gt; &amp;iterations, int decimal_places):&#160;methods.cpp']]]
 ];

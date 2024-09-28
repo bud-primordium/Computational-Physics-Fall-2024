@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="An enhanced version of the 24-game solver using recursive search and pruning.">
+    <meta name="author" content="Gilbert Young" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> 24-Game Solver </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/local.css" rel="stylesheet">
+      <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="./js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="./index.html">24-Game Solver <small>2.0</small></a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="./sourcefile/game24_ultra.f90.html">Source File</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./program/game24_ultra.html">Program</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="./search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <!-- Main component for a primary marketing message or call to action -->
+    <div class="p-5 mb-4 bg-light border rounded-3" id="jumbotron">
+      <p>An enhanced version of the 24-game solver using recursive search and pruning.</p>
+        <p> Find us on&hellip;</p>
+      <p>
+        <a class="btn btn-lg btn-primary" href="https://github.com/bud-primordium/Computational-Physics-Fall-2024/tree/main/Assignment%201/Problem%202" role="button">GitHub</a>
+        
+        
+        
+        
+        <a class="btn btn-lg btn-danger" style="float:right" href="https://github.com/bud-primordium/Computational-Physics-Fall-2024/releases/tag/game24" role="button">Download the Source</a>
+      </p>
+    </div>
+
+      <div class="row" id='text'>
+        <div class=col-md-8>
+          <h1>24-Game Solver</h1>
+          <h1>24-Game Solver</h1>
+<h2>Overview</h2>
+<p>The <strong>24-Game Solver</strong> is designed to solve the classic 24-point game by using recursive search with pruning techniques. It also includes OpenMP parallelization to leverage multi-core processors and provides a progress bar for real-time monitoring during the search process.</p>
+<p>Users can either use the default settings or customize them according to their preferences. The program outputs include:</p>
+<ul>
+<li>The first valid solution to the 24-game.</li>
+<li>Detailed recursive steps and expressions for the solution.</li>
+</ul>
+<p>Additionally, the solver supports varying numbers of inputs (up to 8) and halts the search as soon as a valid solution is found.</p>
+<h2>Features</h2>
+<ul>
+<li><strong>Recursive Search with Pruning</strong>: The solver efficiently explores number combinations to reach the target value of 24.</li>
+<li><strong>Progress Bar</strong>: Visual feedback is provided during the search process, showing the percentage of progress.</li>
+<li><strong>OpenMP Parallelization</strong>: The solver utilizes OpenMP to speed up the recursive search on multi-core systems.</li>
+<li><strong>Commutative Operation Optimization</strong>: Optimizes operations such as addition and multiplication to avoid redundant calculations.</li>
+<li><strong>Supports Up to 8 Inputs</strong>: Flexible input options for solving the 24-game with different numbers of inputs.</li>
+<li><strong>Automatic Halting</strong>: The solver stops as soon as it finds the first valid solution, saving computational resources.</li>
+</ul>
+<h2>How to Use</h2>
+<ol>
+<li><strong>Compile the Program</strong><br>
+   Ensure you have a Fortran compiler that supports OpenMP (e.g., <code>gfortran</code>). Compile the program with OpenMP support:</li>
+</ol>
+<p><code>bash
+   gfortran -fopenmp -O3 -march=native -o game24_ultra src/game24_ultra.f90</code></p>
+<p>@note Note</p>
+<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="nv">OpenMP</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">essential</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">maximizing</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">performance</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">solver</span>.<span class="w"> </span><span class="nv">It</span><span class="err">&#39;s highly recommended to compile the program with optimization flags like `-O3` for maximum optimization and `-march=native` to leverage the specific features of your CPU architecture.</span><span class="w"></span>
+</code></pre></div>
+
+<ol>
+<li><strong>Run the Program</strong><br>
+   Execute the compiled program:</li>
+</ol>
+<p><code>bash
+   ./game24_ultra</code></p>
+<ol>
+<li><strong>Follow the Prompts</strong>  </li>
+<li><strong>Enter the Number of Inputs</strong>: Specify how many numbers (between 1 and 8) you want to use.</li>
+<li><strong>Provide Input Numbers or Card Values</strong>: Input the numbers or card values (<code>A=1</code>, <code>J=11</code>, <code>Q=12</code>, <code>K=13</code>).</li>
+<li><strong>View the Solution</strong>: The program will display the first valid solution found or notify you if no solution exists.</li>
+</ol>
+        </div>
+          <div class="col-md-4">
+            <div class="card card-body bg-light">
+              <h2 class="card-title">Developer Info</h2>
+              <h4 class="card-text">Gilbert Young</h4>
+              <p class="card-text"><p>An atypical physics student</p></p>
+                <div class="text-center"><div class="btn-group" role="group">
+                      <a class="btn btn-lg btn-primary" href="mailto:gilbertyoung0015@gmail.com"><i class="fa fa-envelope fa-lg"></i></a>
+                    
+                    <a class="btn btn-lg btn-primary" href="https://github.com/bud-primordium"><i class="fa fa-github fa-lg"></i></a>
+                    
+                    
+                    
+                    
+                    
+                    
+                </div></div>
+            </div>
+          </div>
+      </div>
+        <div class="row">
+          <hr>
+          <div class="col-xs-6 col-sm-4">
+            <div>
+              <h3>Source Files</h3>
+              <ul><li><a href='sourcefile\game24_ultra.f90.html'>game24_ultra.f90</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/files.html"><em>All source files&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4">
+            <div>
+              <h3>Modules</h3>
+              <ul><li><a href='module\game24_module.html'>game24_module</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/modules.html"><em>All modules&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4">
+            <div>
+              <h3>Procedures</h3>
+              <ul><li><a href='proc\convert_to_number.html'>convert_to_number</a></li><li><a href='proc\create_new_arrays.html'>create_new_arrays</a></li><li><a href='proc\remove_decimal_zeros.html'>remove_decimal_zeros</a></li><li><a href='proc\solve_24.html'>solve_24</a></li><li><a href='proc\update_progress_bar.html'>update_progress_bar</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              24-Game Solver
+ was developed by Gilbert Young<br>              &copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="./tipuesearch/tipuesearch_content.js"></script>
+          <script src="./tipuesearch/tipuesearch_set.js"></script>
+          <script src="./tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

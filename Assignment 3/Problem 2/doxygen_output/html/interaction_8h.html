@@ -206,6 +206,8 @@ Functions</h2></td></tr>
 <div class="textblock"><p>User interaction functions. </p>
 <dl class="section author"><dt>Author</dt><dd>Gilbert Young </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2024/09/25 </dd></dl>
+
+<p class="definition">Definition in file <a class="el" href="interaction_8h_source.html">interaction.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="ac0c03a1432857a1e55bb86ca977cd544" name="ac0c03a1432857a1e55bb86ca977cd544"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac0c03a1432857a1e55bb86ca977cd544">&#9670;&#160;</a></span>AskRunAgain()</h2>
@@ -223,6 +225,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return char The user's choice ('y', 'Y', 'n', 'N'). </p>
+
+<p class="definition">Definition at line <a class="el" href="interaction_8cpp_source.html#l00082">82</a> of file <a class="el" href="interaction_8cpp_source.html">interaction.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   83</span>{</div>
 <div class="line"><span class="lineno">   84</span>    <span class="keywordtype">char</span> choice;</div>
 <div class="line"><span class="lineno">   85</span>    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
@@ -260,6 +264,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Allows the user to select an input <code>.in</code> file from the current directory.Returns an empty string if no file is selected. </p>
+
+<p class="definition">Definition at line <a class="el" href="interaction_8cpp_source.html#l00024">24</a> of file <a class="el" href="interaction_8cpp_source.html">interaction.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   25</span>{</div>
 <div class="line"><span class="lineno">   26</span>    vector&lt;string&gt; in_files;</div>
 <div class="line"><span class="lineno">   27</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;entry : filesystem::directory_iterator(filesystem::current_path()))</div>
@@ -334,6 +340,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Waits for the user to press Enter before exiting. </p>
+
+<p class="definition">Definition at line <a class="el" href="interaction_8cpp_source.html#l00103">103</a> of file <a class="el" href="interaction_8cpp_source.html">interaction.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  104</span>{</div>
 <div class="line"><span class="lineno">  105</span>    cout &lt;&lt; <span class="stringliteral">&quot;\nPress Enter to exit...&quot;</span>;</div>
 <div class="line"><span class="lineno">  106</span>    cin.ignore(numeric_limits&lt;streamsize&gt;::max(), <span class="charliteral">&#39;\n&#39;</span>); <span class="comment">// Clear input buffer</span></div>

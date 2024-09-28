@@ -1,0 +1,287 @@
+\doxysection{methods.\+cpp}
+\hypertarget{methods_8cpp_source}{}\label{methods_8cpp_source}\mbox{\hyperlink{methods_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00002}00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00003}00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 01:47}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00004}00004\ \textcolor{comment}{@File\_name:\ methods.cpp}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00005}00005\ \textcolor{comment}{@IDE:\ VSCode}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00006}00006\ \textcolor{comment}{@Formatter:\ Clang-\/Format}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00007}00007\ \textcolor{comment}{@Description:\ Implementation\ of\ various\ root-\/finding\ methods.}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00008}00008\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{methods_8h}{methods.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00016}00016\ \textcolor{comment}{//\ Bisection\ Method\ implementation}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00017}\mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{00017}}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00021}00021\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Bisection\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00024}00024\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ a;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00028}00028\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ c\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fc\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(c);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((b\ -\/\ a)\ /\ 2.0L\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fc\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fc;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fc;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00050}00050\ \textcolor{comment}{//\ Newton-\/Raphson\ Method\ implementation}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00051}\mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{00051}}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x0,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00052}00052\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00055}00055\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fx0\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(x0);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fpx0\ =\ \mbox{\hyperlink{functions_8cpp_abd103b781cb9df3cc08d894ad8925864}{f\_prime}}(x0);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fpx0\ ==\ 0.0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ method\ fails.\ Derivative\ zero.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ x1\ =\ x0\ -\/\ fx0\ /\ fpx0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ x0\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ x0}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ x1\ =\ "{}}\ <<\ x1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(x1\ -\/\ x0)\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ x0\ =\ x1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00071}00071\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{return}\ x1;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00073}00073\ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00075}00075\ \textcolor{comment}{//\ Hybrid\ Method\ implementation}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00076}\mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{00076}}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00077}00077\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00080}00080\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Hybrid\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ a;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00087}00087\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ c\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fc\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(c);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((b\ -\/\ a)\ /\ 2.0L\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fpc\ =\ \mbox{\hyperlink{functions_8cpp_abd103b781cb9df3cc08d894ad8925864}{f\_prime}}(c);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fpc\ !=\ 0.0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ d\ =\ c\ -\/\ fc\ /\ fpc;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d\ >\ a\ \&\&\ d\ <\ b)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fd\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(d);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::ostringstream\ oss\_newton;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oss\_newton\ <<\ \textcolor{stringliteral}{"{}Newton\ Step:\ c\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ c}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ d\ =\ "{}}\ <<\ d;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iterations.push\_back(oss\_newton.str());}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(d\ -\/\ c)\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fd\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ d;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fd;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ d;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fd;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fallback\ to\ bisection}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fc\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fc;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fc;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00134}00134\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00135}00135\ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00136}00136\ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00138}00138\ \textcolor{comment}{//\ Brent's\ Method\ implementation}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00139}\mbox{\hyperlink{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c}{00139}}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c}{brent\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00140}00140\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00142}00142\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00143}00143\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Brent's\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00146}00146\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00148}00148\ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(fa)\ <\ fabs(fb))}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00149}00149\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ std::swap(a,\ b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ std::swap(fa,\ fb);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00152}00152\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ a,\ fc\ =\ fa,\ s\ =\ b,\ fs\ =\ fb;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00155}00155\ \ \ \ \ \textcolor{keywordtype}{bool}\ mflag\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00156}00156\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ d\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00158}00158\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00159}00159\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fb\ !=\ fc\ \&\&\ fa\ !=\ fc)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Inverse\ quadratic\ interpolation}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ (a\ *\ fb\ *\ fc)\ /\ ((fa\ -\/\ fb)\ *\ (fa\ -\/\ fc))\ +}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (b\ *\ fa\ *\ fc)\ /\ ((fb\ -\/\ fa)\ *\ (fb\ -\/\ fc))\ +}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (c\ *\ fa\ *\ fb)\ /\ ((fc\ -\/\ fa)\ *\ (fc\ -\/\ fb));}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Secant\ method}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ b\ -\/\ fb\ *\ (b\ -\/\ a)\ /\ (fb\ -\/\ fa);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Conditions\ to\ accept\ s}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition1\ =\ (s\ <\ (3\ *\ a\ +\ b)\ /\ 4.0L\ ||\ s\ >\ b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition2\ =\ (mflag\ \&\&\ fabs(s\ -\/\ b)\ >=\ fabs(b\ -\/\ c)\ /\ 2.0L);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition3\ =\ (!mflag\ \&\&\ fabs(s\ -\/\ b)\ >=\ fabs(c\ -\/\ d)\ /\ 2.0L);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition4\ =\ (mflag\ \&\&\ fabs(b\ -\/\ c)\ <\ tol);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ condition5\ =\ (!mflag\ \&\&\ fabs(c\ -\/\ d)\ <\ tol);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (condition1\ ||\ condition2\ ||\ condition3\ ||\ condition4\ ||\ condition5)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bisection\ method}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ mflag\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ mflag\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fs\_new\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(s);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ a\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ b\ =\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{},\ s\ =\ "{}}\ <<\ s;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ d\ =\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ c\ =\ b;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ fc\ =\ fb;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fs\_new\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ s;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fs\_new;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ s;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fs\_new;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(fa)\ <\ fabs(fb))}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(a,\ b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(fa,\ fb);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(b\ -\/\ a)\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00220}00220\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{return}\ b;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00223}00223\ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00225}00225\ \textcolor{comment}{//\ Ridder's\ Method\ implementation}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00226}\mbox{\hyperlink{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56}{00226}}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56}{ridder\_method}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00227}00227\ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00228}00228\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fa\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(a),\ fb\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00229}00229\ \ \ \ \ \textcolor{keywordflow}{if}\ (fa\ *\ fb\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00230}00230\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Ridder's\ method\ fails.\ f(a)\ and\ f(b)\ should\ have\ opposite\ signs.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00233}00233\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00235}00235\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ ++i)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00236}00236\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ c\ =\ 0.5L\ *\ (a\ +\ b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fc\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(c);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ s\_sq\ =\ fc\ *\ fc\ -\/\ fa\ *\ fb;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\_sq\ <\ 0.0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Ridder's\ method\ fails.\ Square\ root\ of\ negative\ number.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NAN;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ s\ =\ sqrt(s\_sq);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ ==\ 0.0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ sign\ =\ ((fa\ -\/\ fb)\ <\ 0)\ ?\ -\/1.0L\ :\ 1.0L;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x\ =\ c\ +\ (c\ -\/\ a)\ *\ fc\ /\ s\ *\ sign;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ fx\ =\ \mbox{\hyperlink{functions_8cpp_a3d8724d7a78194d2fa13ed626b494f05}{f}}(x);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00253}00253\ \ \ \ \ \ \ \ \ oss\ <<\ \textcolor{stringliteral}{"{}Step\ "{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ iterations.push\_back(oss.str());}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(fx)\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fc\ *\ fx\ <\ 0.0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ c;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fc;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fx;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (fa\ *\ fx\ <\ 0.0)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ fb\ =\ fx;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ x;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ fa\ =\ fx;}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(b\ -\/\ a)\ <\ tol)}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00279}00279\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00280}00280\ }
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00281}00281\ \ \ \ \ \textcolor{keywordflow}{return}\ 0.5L\ *\ (a\ +\ b);}
+\DoxyCodeLine{\Hypertarget{methods_8cpp_source_l00282}00282\ \}}
+
+\end{DoxyCode}

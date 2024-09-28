@@ -7,5 +7,6 @@ var searchData=
   ['maxiter_5fsd_4',['maxIter_sd',['../struct_default_parameters.html#a9f31f2dcc90508f41122bce5aa200c4b',1,'DefaultParameters']]],
   ['methods_2ecpp_5',['methods.cpp',['../methods_8cpp.html',1,'']]],
   ['methods_2eh_6',['methods.h',['../methods_8h.html',1,'']]],
-  ['mutationrate_5fga_7',['mutationRate_ga',['../struct_default_parameters.html#af1de7b6cd09f1ca2737ab2cb0dc0b198',1,'DefaultParameters']]]
+  ['minimum_20finder_7',['Minimum Finder',['../index.html',1,'']]],
+  ['mutationrate_5fga_8',['mutationRate_ga',['../struct_default_parameters.html#af1de7b6cd09f1ca2737ab2cb0dc0b198',1,'DefaultParameters']]]
 ];

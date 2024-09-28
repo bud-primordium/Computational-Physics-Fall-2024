@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Optimization Algorithms Solver", "index.html", [
+  [ "Minimum Finder", "index.html", [
     [ "Classes", "annotated.html", [
       [ "Features", "index.html#autotoc_md0", null ],
       [ "Usage", "index.html#autotoc_md1", null ],

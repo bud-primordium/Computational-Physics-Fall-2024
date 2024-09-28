@@ -1,0 +1,316 @@
+\doxysection{utils.\+cpp}
+\hypertarget{utils_8cpp_source}{}\label{utils_8cpp_source}\mbox{\hyperlink{utils_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00002}00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00003}00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 01:47}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00004}00004\ \textcolor{comment}{@File\_name:\ utils.cpp}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00005}00005\ \textcolor{comment}{@IDE:\ VSCode}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00006}00006\ \textcolor{comment}{@Formatter:\ Clang-\/Format}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00007}00007\ \textcolor{comment}{@Description:\ Implementation\ of\ utility\ functions\ for\ running\ methods\ and\ handling\ user\ input.}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00008}00008\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{methods_8h}{methods.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{functions_8h}{functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{plotting_8h}{plotting.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00024}\mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{00024}}\ std::map<std::string,\ std::vector<RootInfo>>\ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00026}00026\ \textcolor{comment}{//\ Function\ to\ run\ the\ method\ and\ display\ results}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00027}\mbox{\hyperlink{utils_8cpp_a741da7b7db7708497c097df37d8fcd76}{00027}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_a741da7b7db7708497c097df37d8fcd76}{run\_method}}(\textcolor{keyword}{const}\ std::string\ \&method\_name,}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>\ method\_func,}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ decimal\_places)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00031}00031\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00032}00032\ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ method\_func(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ decimal\_places\};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[method\_name].emplace\_back(info);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ Display\ results}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00039}00039\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nMethod:\ "{}}\ <<\ method\_name\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ ==\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}})}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00041}00041\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Initial\ guess:\ x0\ =\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ a\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00043}00043\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00045}00045\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Interval:\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(2)\ <<\ a\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ b\ <<\ \textcolor{stringliteral}{"{}]\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00047}00047\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00048}00048\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(decimal\_places)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00049}00049\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&iter\ :\ iterations)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00051}00051\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ std::cout\ <<\ iter\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00053}00053\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00054}00054\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations\ Count:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00055}00055\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00057}00057\ \textcolor{comment}{//\ Function\ to\ run\ the\ problem\ steps}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00058}\mbox{\hyperlink{utils_8cpp_aa1ee0d68640cc06d6f48f95f72011820}{00058}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_aa1ee0d68640cc06d6f48f95f72011820}{run\_problem\_steps}}()}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00059}00059\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ Define\ intervals\ for\ three\ roots}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00061}00061\ \ \ \ \ std::vector<std::pair<long\ double,\ long\ double>>\ intervals\ =\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \{-\/3.0L,\ -\/2.0L\},\ \textcolor{comment}{//\ Negative\ root}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \{0.0L,\ 1.0L\},\ \ \ \textcolor{comment}{//\ First\ positive\ root}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \{1.0L,\ 3.0L\}\ \ \ \ \textcolor{comment}{//\ Second\ positive\ root}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00065}00065\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{comment}{//\ Vector\ to\ store\ roots\ found\ in\ part\ (i)}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00068}00068\ \ \ \ \ std::vector<long\ double>\ found\_roots;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ Define\ tolerances\ and\ maximum\ iterations}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\_bisection\ =\ 1e-\/4L;\ \textcolor{comment}{//\ 4\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\_newton\ =\ 1e-\/14L;\ \ \ \textcolor{comment}{//\ 14\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\_hybrid\ =\ 1e-\/14L;\ \ \ \textcolor{comment}{//\ 14\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_iter\ =\ 1000;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00076}00076\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n-\/-\/-\/\ Problem\ Steps\ Execution\ -\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{comment}{//\ Part\ (i):\ Bisection\ Method\ to\ find\ three\ roots\ to\ 4\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00079}00079\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPart\ (i):\ Bisection\ Method\ to\ find\ roots\ to\ 4\ decimal\ places\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&interval\ :\ intervals)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00081}00081\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ \mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(interval.first,\ interval.second,\ tol\_bisection,\ max\_iter,\ iterations,\ 4);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 4\};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[\textcolor{stringliteral}{"{}Bisection\ Method"{}}].emplace\_back(info);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ the\ found\ root}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ found\_roots.emplace\_back(root);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root\ in\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(2)\ <<\ interval.first\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ interval.second\ <<\ \textcolor{stringliteral}{"{}]:\ "{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00093}00093\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{comment}{//\ Part\ (ii):\ Newton-\/Raphson\ Method\ to\ refine\ the\ three\ roots\ to\ 14\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00096}00096\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPart\ (ii):\ Newton-\/Raphson\ Method\ to\ refine\ roots\ to\ 14\ decimal\ places\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&x0\ :\ found\_roots)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00098}00098\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ \mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(x0,\ tol\_newton,\ max\_iter,\ iterations,\ 14);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 14\};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[\textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}}].emplace\_back(info);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Refined\ root\ starting\ from\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ x0\ <<\ \textcolor{stringliteral}{"{}:\ "{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::fixed\ <<\ std::setprecision(14)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00107}00107\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00109}00109\ \ \ \ \ \textcolor{comment}{//\ Part\ (iii):\ Hybrid\ Method\ to\ find\ three\ roots\ to\ 14\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00110}00110\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPart\ (iii):\ Hybrid\ Method\ to\ find\ roots\ to\ 14\ decimal\ places\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00111}00111\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&interval\ :\ intervals)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00112}00112\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ \mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(interval.first,\ interval.second,\ tol\_hybrid,\ max\_iter,\ iterations,\ 14);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 14\};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}[\textcolor{stringliteral}{"{}Hybrid\ Method"{}}].emplace\_back(info);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root\ in\ ["{}}\ <<\ std::fixed\ <<\ std::setprecision(2)\ <<\ interval.first\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ interval.second\ <<\ \textcolor{stringliteral}{"{}]\ (Hybrid):\ "{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::fixed\ <<\ std::setprecision(14)\ <<\ root\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Iterations:\ "{}}\ <<\ iterations.size()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00121}00121\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00123}00123\ \ \ \ \ \textcolor{comment}{//\ Output\ summary\ of\ results\ for\ problem\ steps}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00124}00124\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n-\/-\/-\/\ Summary\ of\ Problem\ Steps\ Results\ -\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00125}00125\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&method\ :\ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}})}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00126}00126\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nMethod:\ "{}}\ <<\ method.first\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ idx\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&info\ :\ method.second)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ \ Root\ "{}}\ <<\ idx++\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(info.decimal\_places)\ <<\ info.root}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ |\ Iterations:\ "{}}\ <<\ info.iterations\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00134}00134\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00136}00136\ \ \ \ \ \textcolor{comment}{//\ Clear\ summary\ for\ next\ run}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00137}00137\ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a4390b70f634a01cb926c274e249f9e8b}{summary}}.clear();}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00138}00138\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00140}00140\ \textcolor{comment}{//\ Function\ to\ compare\ all\ methods}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00141}\mbox{\hyperlink{utils_8cpp_a46f2f3e19644302067ff30bc43942b3b}{00141}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_a46f2f3e19644302067ff30bc43942b3b}{compare\_all\_methods}}()}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00142}00142\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00143}00143\ \ \ \ \ \textcolor{comment}{//\ Define\ intervals\ for\ three\ roots}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00144}00144\ \ \ \ \ std::vector<std::pair<long\ double,\ long\ double>>\ intervals\ =\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \{-\/3.0L,\ -\/2.0L\},\ \textcolor{comment}{//\ Negative\ root}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \{0.0L,\ 1.0L\},\ \ \ \textcolor{comment}{//\ First\ positive\ root}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \{1.0L,\ 3.0L\}\ \ \ \ \textcolor{comment}{//\ Second\ positive\ root}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00148}00148\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00150}00150\ \ \ \ \ \textcolor{comment}{//\ Define\ tolerances\ and\ maximum\ iterations}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00151}00151\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol\ =\ 1e-\/14L;\ \textcolor{comment}{//\ 14\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00152}00152\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_iter\ =\ 1000;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{comment}{//\ List\ of\ methods\ to\ compare}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00155}00155\ \ \ \ \ std::vector<std::pair<std::string,\ std::function<\textcolor{keywordtype}{long}\ double(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>>>\ methods\ =\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Bisection\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a5c5d08f0d638df97122fca856cbd6c6b}{bisection}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ Newton-\/Raphson,\ use\ the\ midpoint\ as\ the\ initial\ guess}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ initial\_guess\ =\ (a\ +\ b)\ /\ 2.0L;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a9f87d7e5146cd41484273b9a8c8d60ff}{newton\_raphson}}(initial\_guess,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Hybrid\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a7011422538c9322b29a10585a99b35dd}{hybrid\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Brent's\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_aadf1073b5a8b2ccf7d66fafa42dade9c}{brent\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \}\},}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}Ridder's\ Method"{}},\ [](\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,\ std::vector<std::string>\ \&iterations,\ \textcolor{keywordtype}{int}\ decimal\_places)\ -\/>\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{methods_8cpp_a904e4b29ac65aeeca56344c40c4e0c56}{ridder\_method}}(a,\ b,\ tol,\ max\_iter,\ iterations,\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \}\}\};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00179}00179\ \ \ \ \ \textcolor{comment}{//\ Store\ comparison\ results}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00180}00180\ \ \ \ \ std::map<std::string,\ std::vector<RootInfo>>\ comparison\_results;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00182}00182\ \ \ \ \ \textcolor{comment}{//\ Run\ each\ method\ for\ each\ interval}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00183}00183\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&method\ :\ methods)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00184}00184\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&interval\ :\ intervals)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ iterations;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ root\ =\ method.second(interval.first,\ interval.second,\ tol,\ max\_iter,\ iterations,\ 15);\ \textcolor{comment}{//\ 1e-\/14\ -\/>\ 15\ decimal\ places}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_root_info}{RootInfo}}\ info\{root,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(iterations.size()),\ 15\};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ comparison\_results[method.first].emplace\_back(info);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00192}00192\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00194}00194\ \ \ \ \ \textcolor{comment}{//\ Display\ comparison\ table}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00195}00195\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n-\/-\/-\/\ Comparison\ of\ All\ Methods\ (Precision:\ 1e-\/14)\ -\/-\/-\/\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00197}00197\ \ \ \ \ \textcolor{comment}{//\ Table\ header}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00198}00198\ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(25)\ <<\ \textcolor{stringliteral}{"{}Method"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}Root\ 1\ (-\/3,-\/2)"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Iterations"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}Root\ 2\ (0,1)"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Iterations"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}Root\ 3\ (1,3)"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Iterations"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00206}00206\ \ \ \ \ \textcolor{comment}{//\ Separator}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00207}00207\ \ \ \ \ std::cout\ <<\ std::string(130,\ \textcolor{charliteral}{'-\/'})\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00209}00209\ \ \ \ \ \textcolor{comment}{//\ Table\ rows}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00210}00210\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&method\ :\ methods)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00211}00211\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(25)\ <<\ method.first;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ intervals.size();\ ++i)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (comparison\_results[method.first][i].root\ !=\ comparison\_results[method.first][i].root)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ for\ NAN}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}N/A"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::left\ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}N/A"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::left\ <<\ std::setw(30)\ <<\ std::fixed\ <<\ std::setprecision(15)\ <<\ comparison\_results[method.first][i].root}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::left\ <<\ std::setw(15)\ <<\ comparison\_results[method.first][i].iterations;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00228}00228\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00230}00230\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nNote:\ Precision\ is\ set\ to\ 1e-\/14,\ output\ displays\ 15\ decimal\ places.\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00231}00231\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00233}00233\ \textcolor{comment}{//\ Function\ to\ get\ user\ input}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00234}\mbox{\hyperlink{utils_8cpp_ab2dd4669db3c565fb842e2a791a69eca}{00234}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_ab2dd4669db3c565fb842e2a791a69eca}{get\_user\_input}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&x0,\ std::string\ \&method\_name,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&tol)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00235}00235\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00236}00236\ \ \ \ \ \textcolor{comment}{//\ List\ of\ available\ methods}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00237}00237\ \ \ \ \ std::vector<std::string>\ available\_methods\ =\ \{\textcolor{stringliteral}{"{}Bisection\ Method"{}},\ \textcolor{stringliteral}{"{}Hybrid\ Method"{}},\ \textcolor{stringliteral}{"{}Brent\ Method"{}},\ \textcolor{stringliteral}{"{}Ridder\ Method"{}},\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}},\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}},\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}}\};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00239}00239\ \ \ \ \ \textcolor{comment}{//\ Display\ available\ methods}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00240}00240\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nAvailable\ methods:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00241}00241\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ available\_methods.size();\ ++i)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00242}00242\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ std::cout\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}.\ "{}}\ <<\ available\_methods[i]\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00244}00244\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00246}00246\ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ select\ a\ method}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00247}00247\ \ \ \ \ \textcolor{keywordtype}{int}\ method\_choice;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00248}00248\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Select\ a\ method\ (1-\/"{}}\ <<\ available\_methods.size()\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00249}00249\ \ \ \ \ std::cin\ >>\ method\_choice;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00250}00250\ \ \ \ \ \textcolor{keywordflow}{while}\ (method\_choice\ <\ 1\ ||\ method\_choice\ >\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(available\_methods.size()))}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00251}00251\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ choice.\ Please\ select\ a\ method\ (1-\/"{}}\ <<\ available\_methods.size()\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00253}00253\ \ \ \ \ \ \ \ \ std::cin\ >>\ method\_choice;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00254}00254\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00255}00255\ \ \ \ \ method\_name\ =\ available\_methods[method\_choice\ -\/\ 1];}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00257}00257\ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ ==\ \textcolor{stringliteral}{"{}Newton-\/Raphson\ Method"{}})}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00258}00258\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ input\ initial\ guess\ x0}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ guess\ x0:\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ std::cin\ >>\ x0;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00262}00262\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00263}00263\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (method\_name\ !=\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}}\ \&\&\ method\_name\ !=\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}})}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00264}00264\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ input\ interval\ [a,\ b]}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ interval\ [a,\ b]:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}a\ =\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ std::cin\ >>\ a;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}b\ =\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ std::cin\ >>\ b;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (a\ >=\ b)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ interval.\ 'a'\ should\ be\ less\ than\ 'b'.\ Please\ re-\/enter:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}a\ =\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ a;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}b\ =\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ b;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00279}00279\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00280}00280\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00281}00281\ \ \ \ \ \textcolor{keywordflow}{if}\ (method\_name\ !=\ \textcolor{stringliteral}{"{}Problem\ Steps\ Mode"{}}\ \&\&\ method\_name\ !=\ \textcolor{stringliteral}{"{}Compare\ All\ Methods"{}})}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00282}00282\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prompt\ user\ to\ input\ desired\ precision}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ desired\ precision\ (e.g.,\ 1e-\/14,\ up\ to\ 1e-\/16):\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ std::cin\ >>\ tol;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ min\_tol\ =\ 1e-\/16L;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ max\_tol\ =\ 1e-\/4L;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (tol\ <\ min\_tol\ ||\ tol\ >\ max\_tol)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Precision\ out\ of\ bounds\ ("{}}\ <<\ min\_tol\ <<\ \textcolor{stringliteral}{"{}\ to\ "{}}\ <<\ max\_tol\ <<\ \textcolor{stringliteral}{"{}).\ Please\ re-\/enter:\ "{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ tol;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00293}00293\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00294}00294\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00296}00296\ \textcolor{comment}{//\ Function\ to\ calculate\ decimal\ places\ based\ on\ tolerance}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00297}\mbox{\hyperlink{utils_8cpp_affdd5b83d06537b3199b863a5990313d}{00297}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{utils_8cpp_affdd5b83d06537b3199b863a5990313d}{calculate\_decimal\_places}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00298}00298\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00299}00299\ \ \ \ \ \textcolor{keywordflow}{if}\ (tol\ <=\ 0)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00301}00301\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(ceil(-\/log10(tol)))\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00302}00302\ \}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00304}00304\ \textcolor{comment}{//\ Function\ to\ run\ the\ method\ and\ display\ results\ (for\ user-\/selected\ methods)}}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00305}\mbox{\hyperlink{utils_8cpp_a1c73efca06aba6c88572f806f8b31fea}{00305}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8cpp_a1c73efca06aba6c88572f806f8b31fea}{run\_method\_user\_selection}}(\textcolor{keyword}{const}\ std::string\ \&method\_name,}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>\ method\_func,}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter)}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00308}00308\ \{}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00309}00309\ \ \ \ \ \textcolor{keywordtype}{int}\ decimal\_places\ =\ \mbox{\hyperlink{utils_8cpp_affdd5b83d06537b3199b863a5990313d}{calculate\_decimal\_places}}(tol);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00310}00310\ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a741da7b7db7708497c097df37d8fcd76}{run\_method}}(method\_name,\ method\_func,\ a,\ b,\ tol,\ max\_iter,\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8cpp_source_l00311}00311\ \}}
+
+\end{DoxyCode}

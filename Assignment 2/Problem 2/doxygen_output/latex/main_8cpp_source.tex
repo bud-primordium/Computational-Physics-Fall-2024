@@ -1,0 +1,145 @@
+\doxysection{main.\+cpp}
+\hypertarget{main_8cpp_source}{}\label{main_8cpp_source}\mbox{\hyperlink{main_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00041}00041\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00042}00042\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00043}00043\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00044}00044\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00045}00045\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00046}00046\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{methods_8h}{methods.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00047}00047\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00049}\mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00049}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00050}00050\ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00051}00051\ \ \ \ \ srand(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\textcolor{keyword}{>}(time(0)));}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordtype}{char}\ choice;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00053}00053\ \ \ \ \ \mbox{\hyperlink{struct_default_parameters}{DefaultParameters}}\ params;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00056}00056\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nOptimization\ Algorithms\ Menu:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}1.\ Steepest\ Descent\ Method\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}2.\ Conjugate\ Gradient\ Method\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}3.\ Simulated\ Annealing\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}4.\ Genetic\ Algorithm\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}5.\ Compare\ All\ Methods\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ your\ choice\ (1-\/5):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ option;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ std::cin\ >>\ option;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (option\ >=\ 1\ \&\&\ option\ <=\ 4)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_ab9fce7eff03a2d09b1bfc6e09a14b538}{displayDefaultParameters}}(params,\ option);}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n1.\ Use\ default\ parameters\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}2.\ Customize\ parameters\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ your\ choice\ (1-\/2):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ subOption;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ subOption;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_result}{Result}}\ res;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (subOption\ ==\ 1)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Run\ method\ with\ default\ parameters}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (option\ ==\ 1)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_aa2bec146e419affb8eb2b1fe5fdd4c2c}{steepestDescent}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 2)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ab83d34604c4245c59dd7964fc09f4bde}{conjugateGradient}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}},\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 3)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_a1b37d5f500d8064487a5321a10625575}{simulatedAnnealing}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 4)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ac232b96177b1e35952375d87e108e7df}{geneticAlgorithm}}(params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ results}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nResults:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ at\ ("{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ <<\ \textcolor{stringliteral}{"{})\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ value:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Total\ iterations:\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Execution\ Time:\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ <<\ \textcolor{stringliteral}{"{}\ seconds\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (subOption\ ==\ 2)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Customize\ parameters}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ x\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ y\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (option\ ==\ 1)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ learning\ rate\ alpha\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ maximum\ iterations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ tolerance\ (default\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_aa2bec146e419affb8eb2b1fe5fdd4c2c}{steepestDescent}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a97b278e6b5574157b6a190b5424e79cb}{alpha\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_a9f31f2dcc90508f41122bce5aa200c4b}{maxIter\_sd}},\ params.\mbox{\hyperlink{struct_default_parameters_aa757fe3dadc55a0d3d65668fcab59441}{tol\_sd}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 2)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ maximum\ iterations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ tolerance\ (default\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ab83d34604c4245c59dd7964fc09f4bde}{conjugateGradient}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_a7315484dcdf746fb29d9c5ccbf82c222}{maxIter\_cg}},\ params.\mbox{\hyperlink{struct_default_parameters_a79357bb6073f2f5065ca2a8cc111c8d7}{tol\_cg}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 3)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ initial\ temperature\ T0\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ minimum\ temperature\ Tmin\ (default\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(6)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ cooling\ rate\ alpha\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ maximum\ iterations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_a1b37d5f500d8064487a5321a10625575}{simulatedAnnealing}}(params.\mbox{\hyperlink{struct_default_parameters_a29fc967f8e28bba2c14af35a53733db0}{x0}},\ params.\mbox{\hyperlink{struct_default_parameters_ab1ff502bd32cdc78a88f86f7b169912a}{y0}},\ params.\mbox{\hyperlink{struct_default_parameters_ad3f74e3d907c875b742cded4d2add4ea}{T0\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_afcfa18eb88d4d074195d174e71c110d0}{Tmin\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_ac1ad453dd649a05828080f531e52c6de}{alpha\_sa}},\ params.\mbox{\hyperlink{struct_default_parameters_a50e3d87d421c657b476c0fda69093f8c}{maxIter\_sa}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 4)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ population\ size\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ number\ of\ generations\ (default\ "{}}\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ mutation\ rate\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ crossover\ rate\ (default\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}}\ <<\ \textcolor{stringliteral}{"{}):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{methods_8cpp_ac232b96177b1e35952375d87e108e7df}{geneticAlgorithm}}(params.\mbox{\hyperlink{struct_default_parameters_a6fb878a4918a14be1ca553828478e6e4}{populationSize\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a60a7967b7b101dc8d41ea3fc20f0e9ce}{generations\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_af1de7b6cd09f1ca2737ab2cb0dc0b198}{mutationRate\_ga}},\ params.\mbox{\hyperlink{struct_default_parameters_a4b81ca93571c6ffa799b1be2f1e5488e}{crossoverRate\_ga}});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ results}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nResults:\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ at\ ("{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a57cfd9b1fd54da97e44c717199e6ed82}{x}}\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a48c419d1661b003ef584437bf085f074}{y}}\ <<\ \textcolor{stringliteral}{"{})\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Minimum\ value:\ "{}}\ <<\ std::fixed\ <<\ std::setprecision(4)\ <<\ res.\mbox{\hyperlink{struct_result_a3563a6341067c26efa01dfd4ec7d3de3}{f}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Total\ iterations:\ "{}}\ <<\ res.\mbox{\hyperlink{struct_result_a7bf71a0e0d60fdad07fc9921b9d7cf76}{iterations}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Execution\ Time:\ "{}}\ <<\ std::scientific\ <<\ std::setprecision(3)\ <<\ res.\mbox{\hyperlink{struct_result_a03f8bed98b8d4caf4529f6e4a5910df6}{duration}}\ <<\ \textcolor{stringliteral}{"{}\ seconds\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ sub-\/option.\ Please\ select\ 1\ or\ 2.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (option\ ==\ 5)}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compare\ all\ methods\ with\ default\ parameters}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8cpp_a7d0093d88cfdc13aeb89a018184df54a}{compareMethods}}(params);}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ option.\ Please\ select\ 1-\/5.\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ask\ user\ if\ they\ want\ to\ run\ again}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nDo\ you\ want\ to\ run\ the\ program\ again?\ (y/n):\ "{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ std::cin\ >>\ choice;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00172}00172\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (choice\ ==\ \textcolor{charliteral}{'y'}\ ||\ choice\ ==\ \textcolor{charliteral}{'Y'});}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00174}00174\ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ user\ input\ before\ exiting}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00175}00175\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nPress\ Enter\ to\ exit..."{}};}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00176}00176\ \ \ \ \ std::cin.ignore(std::numeric\_limits<std::streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});\ \textcolor{comment}{//\ Clear\ input\ buffer}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00177}00177\ \ \ \ \ std::cin.get();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ Enter\ key}}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00179}00179\ \}}
+
+\end{DoxyCode}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['algorithms_20solver_0',['Root-Finding Algorithms Solver',['../index.html',1,'']]]
+  ['finder_0',['Root Finder',['../index.html',1,'']]]
 ];

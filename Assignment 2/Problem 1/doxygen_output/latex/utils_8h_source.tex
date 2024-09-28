@@ -1,49 +1,49 @@
 \doxysection{utils.\+h}
 \hypertarget{utils_8h_source}{}\label{utils_8h_source}\mbox{\hyperlink{utils_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
-\DoxyCodeLine{00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 01:47}}
-\DoxyCodeLine{00004\ \textcolor{comment}{@File\_name:\ utils.h}}
-\DoxyCodeLine{00005\ \textcolor{comment}{@IDE:\ VSCode}}
-\DoxyCodeLine{00006\ \textcolor{comment}{@Formatter:\ Clang-\/Format}}
-\DoxyCodeLine{00007\ \textcolor{comment}{@Description:\ Declarations\ of\ utility\ functions\ for\ running\ methods\ and\ handling\ user\ input.}}
-\DoxyCodeLine{00008\ \textcolor{comment}{*/}}
-\DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <functional>}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <map>}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{methods_8h}{methods.h}}"{}}}
-\DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \textcolor{keyword}{extern}\ std::map<std::string,\ std::vector<RootInfo>>\ \mbox{\hyperlink{utils_8h_a4390b70f634a01cb926c274e249f9e8b}{summary}};}
-\DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \textcolor{comment}{//\ Function\ to\ run\ the\ method\ and\ display\ results}}
-\DoxyCodeLine{00022\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a741da7b7db7708497c097df37d8fcd76}{run\_method}}(\textcolor{keyword}{const}\ std::string\ \&method\_name,}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>\ method\_func,}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ decimal\_places);}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \textcolor{comment}{//\ Function\ to\ run\ the\ problem\ steps}}
-\DoxyCodeLine{00028\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_aa1ee0d68640cc06d6f48f95f72011820}{run\_problem\_steps}}();}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \textcolor{comment}{//\ Function\ to\ compare\ all\ methods}}
-\DoxyCodeLine{00031\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a46f2f3e19644302067ff30bc43942b3b}{compare\_all\_methods}}();}
-\DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \textcolor{comment}{//\ Function\ to\ get\ user\ input}}
-\DoxyCodeLine{00034\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_ab2dd4669db3c565fb842e2a791a69eca}{get\_user\_input}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&x0,\ std::string\ \&method\_name,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&tol);}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00036\ \textcolor{comment}{//\ Function\ to\ calculate\ decimal\ places\ based\ on\ tolerance}}
-\DoxyCodeLine{00037\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{utils_8h_affdd5b83d06537b3199b863a5990313d}{calculate\_decimal\_places}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol);}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \textcolor{comment}{//\ Function\ to\ run\ the\ method\ and\ display\ results\ (for\ user-\/selected\ methods)}}
-\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a1c73efca06aba6c88572f806f8b31fea}{run\_method\_user\_selection}}(\textcolor{keyword}{const}\ std::string\ \&method\_name,}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>\ method\_func,}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter);}
-\DoxyCodeLine{00043\ }
-\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_H}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00002}00002\ \textcolor{comment}{@Author:\ Gilbert\ Young}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00003}00003\ \textcolor{comment}{@Time:\ 2024/09/19\ 01:47}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00004}00004\ \textcolor{comment}{@File\_name:\ utils.h}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00005}00005\ \textcolor{comment}{@IDE:\ VSCode}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00006}00006\ \textcolor{comment}{@Formatter:\ Clang-\/Format}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00007}00007\ \textcolor{comment}{@Description:\ Declarations\ of\ utility\ functions\ for\ running\ methods\ and\ handling\ user\ input.}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00008}00008\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{methods_8h}{methods.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00019}00019\ \textcolor{keyword}{extern}\ std::map<std::string,\ std::vector<RootInfo>>\ \mbox{\hyperlink{utils_8h_a4390b70f634a01cb926c274e249f9e8b}{summary}};}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00021}00021\ \textcolor{comment}{//\ Function\ to\ run\ the\ method\ and\ display\ results}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00022}00022\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a741da7b7db7708497c097df37d8fcd76}{run\_method}}(\textcolor{keyword}{const}\ std::string\ \&method\_name,}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>\ method\_func,}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter,}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ decimal\_places);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00027}00027\ \textcolor{comment}{//\ Function\ to\ run\ the\ problem\ steps}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00028}00028\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_aa1ee0d68640cc06d6f48f95f72011820}{run\_problem\_steps}}();}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00030}00030\ \textcolor{comment}{//\ Function\ to\ compare\ all\ methods}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00031}00031\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a46f2f3e19644302067ff30bc43942b3b}{compare\_all\_methods}}();}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00033}00033\ \textcolor{comment}{//\ Function\ to\ get\ user\ input}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00034}00034\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_ab2dd4669db3c565fb842e2a791a69eca}{get\_user\_input}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&x0,\ std::string\ \&method\_name,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&tol);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00036}00036\ \textcolor{comment}{//\ Function\ to\ calculate\ decimal\ places\ based\ on\ tolerance}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00037}00037\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{utils_8h_affdd5b83d06537b3199b863a5990313d}{calculate\_decimal\_places}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00039}00039\ \textcolor{comment}{//\ Function\ to\ run\ the\ method\ and\ display\ results\ (for\ user-\/selected\ methods)}}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00040}00040\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8h_a1c73efca06aba6c88572f806f8b31fea}{run\_method\_user\_selection}}(\textcolor{keyword}{const}\ std::string\ \&method\_name,}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ \textcolor{keywordtype}{int},\ std::vector<std::string>\ \&,\ \textcolor{keywordtype}{int})>\ method\_func,}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ tol,\ \textcolor{keywordtype}{int}\ max\_iter);}
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{utils_8h_source_l00044}00044\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_H}}
 
 \end{DoxyCode}

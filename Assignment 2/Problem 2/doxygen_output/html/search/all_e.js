@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['x_0',['x',['../struct_individual.html#a697b625e5ee14d913d6d11693fdb8462',1,'Individual::x'],['../struct_result.html#a57cfd9b1fd54da97e44c717199e6ed82',1,'Result::x']]],
-  ['x0_1',['x0',['../struct_default_parameters.html#a29fc967f8e28bba2c14af35a53733db0',1,'DefaultParameters']]]
+  ['y_0',['y',['../struct_individual.html#abbc071c6c3dd08f7caf4d7ce554a2f76',1,'Individual::y'],['../struct_result.html#a48c419d1661b003ef584437bf085f074',1,'Result::y']]],
+  ['y0_1',['y0',['../struct_default_parameters.html#ab1ff502bd32cdc78a88f86f7b169912a',1,'DefaultParameters']]]
 ];

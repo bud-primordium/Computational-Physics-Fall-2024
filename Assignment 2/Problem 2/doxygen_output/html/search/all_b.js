@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['simulatedannealing_0',['simulatedAnnealing',['../methods_8cpp.html#a1b37d5f500d8064487a5321a10625575',1,'simulatedAnnealing(double x0, double y0, double T0, double Tmin, double alpha, int maxIter):&#160;methods.cpp'],['../methods_8h.html#a1b37d5f500d8064487a5321a10625575',1,'simulatedAnnealing(double x0, double y0, double T0, double Tmin, double alpha, int maxIter):&#160;methods.cpp']]],
-  ['solver_1',['Optimization Algorithms Solver',['../index.html',1,'']]],
-  ['steepestdescent_2',['steepestDescent',['../methods_8cpp.html#aa2bec146e419affb8eb2b1fe5fdd4c2c',1,'steepestDescent(double x0, double y0, double alpha, int maxIter, double tol):&#160;methods.cpp'],['../methods_8h.html#aa2bec146e419affb8eb2b1fe5fdd4c2c',1,'steepestDescent(double x0, double y0, double alpha, int maxIter, double tol):&#160;methods.cpp']]],
-  ['structs_2eh_3',['structs.h',['../structs_8h.html',1,'']]]
+  ['t0_5fsa_0',['T0_sa',['../struct_default_parameters.html#ad3f74e3d907c875b742cded4d2add4ea',1,'DefaultParameters']]],
+  ['tmin_5fsa_1',['Tmin_sa',['../struct_default_parameters.html#afcfa18eb88d4d074195d174e71c110d0',1,'DefaultParameters']]],
+  ['tol_5fcg_2',['tol_cg',['../struct_default_parameters.html#a79357bb6073f2f5065ca2a8cc111c8d7',1,'DefaultParameters']]],
+  ['tol_5fsd_3',['tol_sd',['../struct_default_parameters.html#aa757fe3dadc55a0d3d65668fcab59441',1,'DefaultParameters']]]
 ];

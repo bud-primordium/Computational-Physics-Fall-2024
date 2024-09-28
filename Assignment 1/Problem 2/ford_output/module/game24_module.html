@@ -1,0 +1,1046 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="An enhanced version of the 24-game solver using recursive search and pruning.">
+    <meta name="author" content="Gilbert Young" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>game24_module &ndash; 24-Game Solver</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">24-Game Solver <small>2.0</small></a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../sourcefile/game24_ultra.f90.html">Source File</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../program/game24_ultra.html">Program</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>game24_module
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="100.0% of total for modules and submodules.">188 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/game24_ultra.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='..\sourcefile\game24_ultra.f90.html'>game24_ultra.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">game24_module</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/game24_module.html#variable-max_limit">max_limit</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-expr_len">expr_len</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-total_calls_n6">total_calls_n6</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-total_calls_n7">total_calls_n7</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-total_calls_n8">total_calls_n8</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-total_calls">total_calls</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-completed_calls">completed_calls</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-last_percentage">last_percentage</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-progress_bar_width">progress_bar_width</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-carriage_return">carriage_return</a>
+            <a class="list-group-item" href="../module/game24_module.html#variable-show_progress">show_progress</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/game24_module.html#proc-convert_to_number">convert_to_number</a>
+            <a class="list-group-item" href="../module/game24_module.html#proc-remove_decimal_zeros">remove_decimal_zeros</a>
+            <a class="list-group-item" href="../module/game24_module.html#proc-create_new_arrays">create_new_arrays</a>
+            <a class="list-group-item" href="../module/game24_module.html#proc-update_progress_bar">update_progress_bar</a>
+            <a class="list-group-item" href="../module/game24_module.html#proc-solve_24">solve_24</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>The main entry point for the 24-game solver, utilizing recursive search, progress bar, and OpenMP parallelization.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='https://www.openmp.org/spec-html/5.1/openmpch3.html#x156-1890003'>omp_lib</a></li>
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.1.1 (20240910.0053)
+ -->
+<!-- Title: module~~game24_module~~UsesGraph Pages: 1 -->
+<svg id="modulegame24_moduleUsesGraph" width="222pt" height="74pt"
+ viewBox="0.00 0.00 221.54 73.52" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~game24_module~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 69.52)">
+<title>module~~game24_module~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-69.52 217.54,-69.52 217.54,4 -4,4"/>
+<!-- module~game24_module -->
+<g id="module~~game24_module~~UsesGraph_node1" class="node">
+<title>module~game24_module</title>
+<polygon fill="none" stroke="black" points="213.54,-44.52 121.77,-44.52 121.77,-21 213.54,-21 213.54,-44.52"/>
+<text text-anchor="middle" x="167.65" y="-28.78" font-family="Helvetica,sans-Serif" font-size="10.50">game24_module</text>
+</g>
+<!-- iso_fortran_env -->
+<g id="module~~game24_module~~UsesGraph_node2" class="node">
+<title>iso_fortran_env</title>
+<g id="a_module~~game24_module~~UsesGraph_node2"><a xlink:href="http://fortranwiki.org/fortran/show/iso_fortran_env" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="85.77,-65.52 0,-65.52 0,-42 85.77,-42 85.77,-65.52"/>
+<text text-anchor="middle" x="42.88" y="-49.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+</g>
+<!-- module~game24_module&#45;&gt;iso_fortran_env -->
+<g id="module~~game24_module~~UsesGraph_edge1" class="edge">
+<title>module~game24_module&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#ff0000" stroke-dasharray="5,2" d="M121.29,-40.52C113.49,-41.85 105.32,-43.25 97.33,-44.62"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="96.97,-41.13 87.71,-46.26 98.15,-48.03 96.97,-41.13"/>
+</g>
+<!-- omp_lib -->
+<g id="module~~game24_module~~UsesGraph_node3" class="node">
+<title>omp_lib</title>
+<g id="a_module~~game24_module~~UsesGraph_node3"><a xlink:href="https://www.openmp.org/spec-html/5.1/openmpch3.html#x156-1890003" xlink:title="omp_lib">
+<polygon fill="#337ab7" stroke="#337ab7" points="69.88,-23.52 15.88,-23.52 15.88,0 69.88,0 69.88,-23.52"/>
+<text text-anchor="middle" x="42.88" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">omp_lib</text>
+</a>
+</g>
+</g>
+<!-- module~game24_module&#45;&gt;omp_lib -->
+<g id="module~~game24_module~~UsesGraph_edge2" class="edge">
+<title>module~game24_module&#45;&gt;omp_lib</title>
+<path fill="none" stroke="#ff0000" stroke-dasharray="5,2" d="M121.29,-25C108.11,-22.75 93.87,-20.31 81.24,-18.15"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="82.12,-14.75 71.67,-16.51 80.94,-21.65 82.12,-14.75"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.1.1 (20240910.0053)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="485pt" height="32pt"
+ viewBox="0.00 0.00 485.13 31.52" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 27.52)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-27.52 481.13,-27.52 481.13,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-23.52 0,-23.52 0,0 54,0 54,-23.52"/>
+<text text-anchor="middle" x="27" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="137.76,-23.52 72.24,-23.52 72.24,0 137.76,0 137.76,-23.52"/>
+<text text-anchor="middle" x="105" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="218.63,-23.52 155.37,-23.52 155.37,0 218.63,0 218.63,-23.52"/>
+<text text-anchor="middle" x="187" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="291,-23.52 237,-23.52 237,0 291,0 291,-23.52"/>
+<text text-anchor="middle" x="264" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="363,-23.52 309,-23.52 309,0 363,0 363,-23.52"/>
+<text text-anchor="middle" x="336" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="477.13,-23.52 380.87,-23.52 380.87,0 477.13,0 477.13,-23.52"/>
+<text text-anchor="middle" x="429" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ Where possible, edges connecting nodes are
+given different colours to make them easier to distinguish in
+large graphs.</div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.1.1 (20240910.0053)
+ -->
+<!-- Title: module~~game24_module~~UsedByGraph Pages: 1 -->
+<svg id="modulegame24_moduleUsedByGraph" width="213pt" height="32pt"
+ viewBox="0.00 0.00 213.29 31.52" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~game24_module~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 27.52)">
+<title>module~~game24_module~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-27.52 209.29,-27.52 209.29,4 -4,4"/>
+<!-- module~game24_module -->
+<g id="module~~game24_module~~UsedByGraph_node1" class="node">
+<title>module~game24_module</title>
+<polygon fill="none" stroke="black" points="91.77,-23.52 0,-23.52 0,0 91.77,0 91.77,-23.52"/>
+<text text-anchor="middle" x="45.88" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50">game24_module</text>
+</g>
+<!-- program~game24_ultra -->
+<g id="module~~game24_module~~UsedByGraph_node2" class="node">
+<title>program~game24_ultra</title>
+<g id="a_module~~game24_module~~UsedByGraph_node2"><a xlink:href="../program/game24_ultra.html" xlink:title="game24_ultra">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="205.29,-23.52 127.77,-23.52 127.77,0 205.29,0 205.29,-23.52"/>
+<text text-anchor="middle" x="166.53" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">game24_ultra</text>
+</a>
+</g>
+</g>
+<!-- program~game24_ultra&#45;&gt;module~game24_module -->
+<g id="module~~game24_module~~UsedByGraph_edge1" class="edge">
+<title>program~game24_ultra&#45;&gt;module~game24_module</title>
+<path fill="none" stroke="#ff0000" stroke-dasharray="5,2" d="M127.34,-11.76C119.69,-11.76 111.51,-11.76 103.4,-11.76"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="103.56,-8.26 93.56,-11.76 103.56,-15.26 103.56,-8.26"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 12.1.1 (20240910.0053)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="485pt" height="32pt"
+ viewBox="0.00 0.00 485.13 31.52" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 27.52)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-27.52 481.13,-27.52 481.13,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-23.52 0,-23.52 0,0 54,0 54,-23.52"/>
+<text text-anchor="middle" x="27" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="137.76,-23.52 72.24,-23.52 72.24,0 137.76,0 137.76,-23.52"/>
+<text text-anchor="middle" x="105" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="218.63,-23.52 155.37,-23.52 155.37,0 218.63,0 218.63,-23.52"/>
+<text text-anchor="middle" x="187" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="291,-23.52 237,-23.52 237,0 291,0 291,-23.52"/>
+<text text-anchor="middle" x="264" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="363,-23.52 309,-23.52 309,0 363,0 363,-23.52"/>
+<text text-anchor="middle" x="336" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="477.13,-23.52 380.87,-23.52 380.87,0 477.13,0 477.13,-23.52"/>
+<text text-anchor="middle" x="429" y="-7.78" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ Where possible, edges connecting nodes are
+given different colours to make them easier to distinguish in
+large graphs.</div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-max_limit"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>max_limit</strong></td>
+<td> =</td>
+                <td>8</td>
+            <td>
+                <p>Maximum allowed value for the number of inputs</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-expr_len"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>expr_len</strong></td>
+<td> =</td>
+                <td>200</td>
+            <td>
+                <p>Maximum length for expressions</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-total_calls_n6"></span>
+              integer(kind=int64),
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>total_calls_n6</strong></td>
+<td> =</td>
+                <td>20000000_int64</td>
+            <td>
+                <p>Precomputed total recursive calls for n=6</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-total_calls_n7"></span>
+              integer(kind=int64),
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>total_calls_n7</strong></td>
+<td> =</td>
+                <td>2648275200_int64</td>
+            <td>
+                <p>Precomputed total recursive calls for n=7</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-total_calls_n8"></span>
+              integer(kind=int64),
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>total_calls_n8</strong></td>
+<td> =</td>
+                <td>444557593600_int64</td>
+            <td>
+                <p>Precomputed total recursive calls for n=8</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-total_calls"></span>
+              integer(kind=int64),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>total_calls</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>Total number of recursive calls</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-completed_calls"></span>
+              integer(kind=int64),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>completed_calls</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>Number of completed recursive calls</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-last_percentage"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>last_percentage</strong></td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+                <p>Last percentage reported</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-progress_bar_width"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>progress_bar_width</strong></td>
+<td> =</td>
+                <td>50</td>
+            <td>
+                <p>Width of the progress bar</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-carriage_return"></span>
+              character(len=1),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>carriage_return</strong></td>
+<td> =</td>
+                <td>char(13)</td>
+            <td>
+                <p>Carriage return character</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-show_progress"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>show_progress</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+                <p>Flag to show progress bar</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-convert_to_number"></span> <h3>public  subroutine <a href='..\proc\convert_to_number.html'>convert_to_number</a>(input_str, number, ios)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Converts user input (cards or numbers) into numeric values.
+Handles card values such as 'A', 'J', 'Q', 'K'.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-input_str"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>input_str</strong></td>
+            <td>
+<p>Input: String representing the number or card value.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-number"></span>
+              real,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>number</strong></td>
+            <td>
+<p>Output: The corresponding numeric value after conversion.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ios"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ios</strong></td>
+            <td>
+<p>Output: I/O status indicator (0 for success).</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-remove_decimal_zeros"></span> <h3>public  subroutine <a href='..\proc\remove_decimal_zeros.html'>remove_decimal_zeros</a>(str, result)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Removes trailing zeros after the decimal point in a string.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-str"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>str</strong></td>
+            <td>
+<p>Input: String to remove zeros from.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-result"></span>
+              character(len=*),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>result</strong></td>
+            <td>
+<p>Output: String without trailing zeros.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-create_new_arrays"></span> <h3>public  subroutine <a href='..\proc\create_new_arrays.html'>create_new_arrays</a>(nums, exprs, idx1, idx2, result, new_expr, new_nums, new_exprs)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Creates new arrays after performing an operation.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nums"></span>
+              real,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nums</strong>(:)</td>
+            <td>
+<p>Input: Array of numbers.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exprs"></span>
+              character(len=expr_len),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>exprs</strong>(:)</td>
+            <td>
+<p>Input: Array of expressions.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-idx1"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>idx1</strong></td>
+            <td>
+<p>Input: Indices of elements to remove.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-idx2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>idx2</strong></td>
+            <td>
+<p>Input: Indices of elements to remove.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-result~2"></span>
+              real,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>result</strong></td>
+            <td>
+<p>Input: Result of the operation.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-new_expr"></span>
+              character(len=expr_len),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>new_expr</strong></td>
+            <td>
+<p>Input: New expression for the result.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-new_nums"></span>
+              real,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>new_nums</strong>(:)</td>
+            <td>
+<p>Output: New array of numbers with elements removed and result added.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-new_exprs"></span>
+              character(len=expr_len),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>new_exprs</strong>(:)</td>
+            <td>
+<p>Output: New array of expressions with elements removed and new_expr added.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-update_progress_bar"></span> <h3>public  subroutine <a href='..\proc\update_progress_bar.html'>update_progress_bar</a>()  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Updates and displays the horizontal percentage-based progress bar.</p>
+
+  <h4>Arguments</h4>
+    <em>None</em>
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-solve_24"></span> <h3>public recursive subroutine <a href='..\proc\solve_24.html'>solve_24</a>(nums, exprs, found)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Recursively solves the 24 game by trying all possible operations.
+Utilizes OpenMP tasks for parallelization.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nums~2"></span>
+              real,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nums</strong>(:)</td>
+            <td>
+<p>Input: Array of numbers.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exprs~2"></span>
+              character(len=expr_len),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>exprs</strong>(:)</td>
+            <td>
+<p>Input: Array of string expressions representing the numbers.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-found"></span>
+              logical,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>found</strong></td>
+            <td>
+<p>Input/Output: Flag indicating if a solution is found.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              24-Game Solver
+ was developed by Gilbert Young<br>              &copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
