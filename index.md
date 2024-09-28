@@ -7,13 +7,13 @@
 ### Game24 Fortran
 
 - [Doxygen](./Assignment%201/Problem%202/Doxygen.html)
+- [Ford](./Assignment%201/Problem%202/Ford.html)
 
 ## Assignment 2 [README.pdf](./Assignment%202/readme.pdf)
 
 ### Root Finder C++
 
 - [Doxygen](./Assignment%202/Problem%201/Doxygen.html)
-- [Ford](./Assignment%202/Problem%201/Ford.html)
 
 ### Optimization Algorithms C++
 
