@@ -43,7 +43,7 @@ Find the three lowest eigen states (\textbf{both} energies and wavefunctions).
 关于解析求解的方法，详情参见\textit{Griffiths}的量子力学教材，这里不再赘述。
 主要是发现没时间了（大哭）
 
-两种算法，一种针对本题的解析求解，即超越方程图解法：\texttt{./Codes/Problem 3/potential.py}，另一种是数值求解：\texttt{./Codes/Problem 3/schrodinger.py}，差分表示哈密顿矩阵，适用于更广泛的势能，偷懒都用Python实现了，不考虑效率还挺爽。
+两种算法，一种针对本题的解析求解，即超越方程图解法：\texttt{./Codes/Problem_3/potential.py}，另一种是数值求解：\texttt{./Codes/Problem_3/schrodinger.py}，差分表示哈密顿矩阵，适用于更广泛的势能，偷懒都用Python实现了，不考虑效率还挺爽。
 
 第二种方法是更普适的，有时间再推广研究研究：
 有限差分法用于离散化薛定谔方程中的二阶导数项，便于在离散网格上构造哈密顿矩阵。在一维情况下，薛定谔方程为：
@@ -149,14 +149,14 @@ Find the three lowest eigen states (\textbf{both} energies and wavefunctions).
 \subsection{结果示例}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{Problem 3/Figs/3_fun.png}
+    \includegraphics[width=1.0\textwidth]{Problem_3/Figs/3_fun.png}
     \caption{\texttt{potential.py}解析图解法}
     \label{fig:3_py_fun}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{Problem 3/Figs/3_diff.png}
+    \includegraphics[width=1.0\textwidth]{Problem_3/Figs/3_diff.png}
     \caption{\texttt{schrodinger.py}数值差分法}
     \label{fig:3_py_diff}
 \end{figure}

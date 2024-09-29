@@ -75,7 +75,7 @@ $a^5 \equiv a \pmod{30}$
 
 不过我决定使用Python进行关于哈希表加速的对比研究，因为其内置了优化后的字典类型，并通过gpt建议的多线程进一步优化，最终将运行时间从3.929s加速到了0.056s。
 
-\texttt{./Codes/Problem 1}中有算法1-3的Fortran实现，其目录内使用
+\texttt{./Codes/Problem\_1}中有算法1-3的Fortran实现，其目录内使用
 \Colorbox{cmdbg}{\lstinline[language=bash]|gfortran brute_force brute_force.f90|}
 \Colorbox{cmdbg}{\lstinline[language=bash]|gfortran mod30 mod30_trick.f90|}
 \Colorbox{cmdbg}{\lstinline[language=bash]|gfortran mod30v2 mod30_trick_reverse.f90|}
@@ -220,14 +220,14 @@ $a^5 \equiv a \pmod{30}$
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1.0\textwidth]{Problem 1/figs/comparison_f90.png}
+    \includegraphics[width=1.0\textwidth]{Problem_1/figs/comparison_f90.png}
     \caption{Fortran运行结果对比}
     \label{fig:output_f90}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=1.0\textwidth]{Problem 1/figs/comparison_py.png}
+    \includegraphics[width=1.0\textwidth]{Problem_1/figs/comparison_py.png}
     \caption{Python运行结果对比}
     \label{fig:output_py}
 \end{figure}

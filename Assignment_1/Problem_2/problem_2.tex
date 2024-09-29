@@ -134,7 +134,7 @@ For example, using the numbers 2, 3, 4, and 6, the calculation $(((4+6)-2)*3)=24
 判断结果正误的精度最初设置为$1 \times 10^{-6}$
 ,比Fortran内置的单精度\texttt{epsilon(1.0)}大些，但仍不能正确判定$8/(3-8/3) = 24$，便放宽为了$1 \times 10^{-4}$,对于4个$[1,13]$的运算尚未发现误判，但在更大规模的测试中已经发现漏洞，且转为双精度的运算开销实在过大，故在最终结果输出时加注括号与机器运算值，供用户自行检验。
 
-\texttt{./Codes/Problem 2}中有\texttt{game24\_promax.f90}与\texttt{game24\_ultra.f90}两个版本，下文的代码分析以前者为例，后者仅是在GPT o1建议下引入了多线程优化与进度条（实现原理为：提前存储$n=6,7,8$路径数，与已调用次数进行比对）。多线程优化在无解情况测试中被验证是显著有效的。在终端进入其目录，分别运行
+\texttt{./Codes/Problem\_2}中有\texttt{game24\_promax.f90}与\texttt{game24\_ultra.f90}两个版本，下文的代码分析以前者为例，后者仅是在GPT o1建议下引入了多线程优化与进度条（实现原理为：提前存储$n=6,7,8$路径数，与已调用次数进行比对）。多线程优化在无解情况测试中被验证是显著有效的。在终端进入其目录，分别运行
 
 \noindent \Colorbox{cmdbg}{\lstinline[language=bash]|gfortran game24_promax.f90 -o promax_test|}、\Colorbox{cmdbg}{\lstinline[language=bash]|gfortran -O -fopenmp game24_ultra.f90 -o ultra_test|}
 
@@ -265,14 +265,14 @@ For example, using the numbers 2, 3, 4, and 6, the calculation $(((4+6)-2)*3)=24
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.9\linewidth]{Problem 2/figs/game24_promax.png}
+    \includegraphics[width=0.9\linewidth]{Problem_2/figs/game24_promax.png}
     \caption{\texttt{Promax} 运行实例}
     \label{fig:promax}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.9\linewidth]{Problem 2/figs/game24_ultra.png}
+    \includegraphics[width=0.9\linewidth]{Problem_2/figs/game24_ultra.png}
     \caption{\texttt{Ultra} 运行实例}
     \label{fig:Ultra}
 \end{figure}
