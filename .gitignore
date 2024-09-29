@@ -49,6 +49,6 @@ Thumbs.db
 .release/
 .lectures/
 .drafts/
-./draft/
+**/.draft/
 .vscode/
 .utils/prompts.txt
