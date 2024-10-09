@@ -7,18 +7,15 @@
 #
 # This Pluto notebook allows the user to select different potential functions,
 # solve the Schrödinger equation, and visualize the results interactively.
-
-using PlutoUI
-using LinearAlgebra
+push!(LOAD_PATH, pwd())
 using Plots
+using LinearAlgebra
+
 
 # Import custom modules
-include("methods.jl")
-include("utils.jl")
-include("interaction.jl")
-using .Methods
-using .Utils
-using .Interaction
+using MyMethods
+using MyUtils
+using MyInteraction
 
 # Interactive selection of potential functions
 @bind choice Dropdown(["1", "2", "3", "4"], "Select potential function:")

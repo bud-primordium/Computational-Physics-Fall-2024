@@ -1,13 +1,13 @@
-# utils.jl
+# MyUtils.jl
 # Utility functions for the Schrödinger equation solver.
 #
 # Author: Gilbert Young
 # Date: 2024/10/08
 
-module Utils
+module MyUtils
 
 using LinearAlgebra
-using ..Methods
+using MyMethods
 
 export check_positive_v, trapezoidal_integration, get_parameters, get_potential_function, read_number, read_int, normalize_wavefunction
 

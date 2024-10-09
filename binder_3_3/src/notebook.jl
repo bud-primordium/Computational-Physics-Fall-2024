@@ -1,8 +1,149 @@
+### A Pluto.jl notebook ###
+# v0.19.46
+
+using Markdown
+using InteractiveUtils
+
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
+# ╔═╡ bb1f592e-472d-4541-a7a6-4c9d26e78a6a
+push!(LOAD_PATH, pwd())
+
+# ╔═╡ c4387808-a32a-4f05-8c6c-4d3c289dff1a
+using Plots
+
+# ╔═╡ 24bcde23-0cfc-40b3-aa9b-05b4449e91a9
+using LinearAlgebra
+
+# ╔═╡ 0693ee45-45a0-4368-8b5d-f1edb80ad835
+using PlutoUI
+
+# ╔═╡ 4cc5e981-61d6-474c-9950-62ad1313b414
+using MyMethods
+
+# ╔═╡ 21adaba8-003b-44b9-a660-2fea91e0dc7a
+using MyUtils
+
+# ╔═╡ 90ab3f34-ccb4-4d0a-94ab-8aa2e31f16e1
+using MyInteraction
+
+# ╔═╡ e34f1d1e-de82-4b90-bf69-bf3dbdd7cae4
+
+
+# ╔═╡ 21715828-f341-48bc-a661-22429f26fbe9
+# Import custom modules
+
+# ╔═╡ 6988e82a-18e0-4f75-bc79-8eda00345b8c
+# Interactive selection of potential functions
+
+# ╔═╡ caa145ab-8b68-4ff3-829c-c7c1636c4d72
+display_menu()
+
+# ╔═╡ 4f72cd25-0830-4e7e-adff-f2e8a8412190
+@bind choice Select(["3"])
+
+# ╔═╡ f1ddbf41-714e-474b-b04a-39aba4e51f6f
+N, v, s, potential_gaussian_integral_list, potential_params_list, potential_name_list, num_levels_selected = get_parameters(choice)
+
+# ╔═╡ 7dd28abf-4d89-40fa-954a-e287c998d4d0
+@bind num_levels Slider(1:10, default=3)
+
+# ╔═╡ 9c63c47b-7051-492e-adba-81d28cf48b24
+            for i in eachindex(potential_gaussian_integral_list)
+                potential_gaussian_integral = potential_gaussian_integral_list[i]
+                potential_params = potential_params_list[i]
+                potential_name = potential_name_list[i]
+
+                # Build Hamiltonian and overlap matrices
+                H, S = build_matrices(N, v, s, potential_gaussian_integral, potential_params)
+
+                # Solve the Schrödinger equation
+                energies, states = solve_schrodinger(H, S, num_levels)
+
+                # Output results
+                println("\nLowest $(num_levels) energy levels for $potential_name:")
+                for (j, E) in enumerate(energies)
+                    println("Energy Level $(j): E = $(E)")
+                end
+			end
+
+# ╔═╡ 14efcdff-b8ed-42cc-9469-682c5e3bc759
+@bind plot_choice CheckBox(default=true)
+
+# ╔═╡ 91edce2c-c4e2-46f7-8800-70d4e0d00986
+            for i in eachindex(potential_gaussian_integral_list)
+                potential_gaussian_integral = potential_gaussian_integral_list[i]
+                potential_params = potential_params_list[i]
+                potential_name = potential_name_list[i]
+
+                # Build Hamiltonian and overlap matrices
+                H, S = build_matrices(N, v, s, potential_gaussian_integral, potential_params)
+
+                # Solve the Schrödinger equation
+                energies, states = solve_schrodinger(H, S, num_levels)
+
+                # Output results
+                println("\nLowest $(num_levels) energy levels for $potential_name:")
+                for (j, E) in enumerate(energies)
+                    println("Energy Level $(j): E = $(E)")
+                end
+
+                if plot_choice 
+                    x_vals = range(-5, 5, length=200)
+
+                    # Parallel computation of wave functions
+                    wavefunctions = Vector{Vector{Float64}}(undef, num_levels)
+
+                for n in 1:num_levels
+                        ψ_n = zeros(Float64, length(x_vals))
+
+                        # Construct the wave function as a linear combination of Gaussian basis functions
+                        for k in 1:N
+                            ψ_n .+= states[k, n] * sqrt(v[k] / π) .* exp.(-v[k] .* (x_vals .- s[k]) .^ 2)
+                        end
+
+                        # Normalize the wave function using the utility function
+                        wavefunctions[n] = normalize_wavefunction(x_vals, ψ_n)
+                    end
+
+                    # Plot the precomputed wave functions
+                    plot_wavefunctions(x_vals, wavefunctions, num_levels, potential_name, potential_params)
+                end
+            end
+
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+
+[compat]
+Plots = "~1.40.8"
+PlutoUI = "~0.7.60"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
 julia_version = "1.10.5"
 manifest_format = "2.0"
-project_hash = "bd69e389c96ffa9b412fd4f44f042ecc1399f140"
+project_hash = "6e9b10408ad430728e6187bdd1c3f8c71698b429"
+
+[[deps.AbstractPlutoDingetjes]]
+deps = ["Pkg"]
+git-tree-sha1 = "6e1d2a35f2f90a4bc7c2ed98079b2ba09c35b83a"
+uuid = "6e696c72-6542-2067-7265-42206c756150"
+version = "1.3.2"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -88,12 +229,6 @@ git-tree-sha1 = "ea32b83ca4fefa1768dc84e504cc0a94fb1ab8d1"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
 version = "2.4.2"
 
-[[deps.Configurations]]
-deps = ["ExproniconLite", "OrderedCollections", "TOML"]
-git-tree-sha1 = "4358750bb58a3caefd5f37a4a0c5bfdbbf075252"
-uuid = "5218b696-f38b-4ac9-8b61-a12ec717816d"
-version = "0.17.6"
-
 [[deps.Contour]]
 git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
@@ -110,11 +245,6 @@ git-tree-sha1 = "1d0a14036acb104d9e89698bd408f63ab58cdc82"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 version = "0.18.20"
 
-[[deps.DataValueInterfaces]]
-git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
-uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
-version = "1.0.0"
-
 [[deps.Dates]]
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
@@ -130,10 +260,6 @@ deps = ["Mmap"]
 git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 version = "1.9.1"
-
-[[deps.Distributed]]
-deps = ["Random", "Serialization", "Sockets"]
-uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -163,16 +289,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "1c6317308b9dc757616f0b5cb379db10494443a7"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
 version = "2.6.2+0"
-
-[[deps.ExpressionExplorer]]
-git-tree-sha1 = "0889fdf7ac69b67b65f54b763941967e0a08b7b3"
-uuid = "21656369-7473-754a-2065-74616d696c43"
-version = "1.0.4"
-
-[[deps.ExproniconLite]]
-git-tree-sha1 = "4c9ed87a6b3cd90acf24c556f2119533435ded38"
-uuid = "55351af7-c7e9-48d6-89ff-24e801d99491"
-version = "0.10.13"
 
 [[deps.FFMPEG]]
 deps = ["FFMPEG_jll"]
@@ -217,12 +333,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
-
-[[deps.FuzzyCompletions]]
-deps = ["REPL"]
-git-tree-sha1 = "40ec72c57559a4473961bbcd12c96bcd4c2aaab4"
-uuid = "fb4132e2-a121-4a70-b8a1-d5b831dcdcc2"
-version = "0.5.4"
 
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
@@ -277,11 +387,23 @@ git-tree-sha1 = "401e4f3f30f43af2c8478fc008da50096ea5240f"
 uuid = "2e76f6c2-a576-52d4-95c1-20adfe4de566"
 version = "8.3.1+0"
 
+[[deps.Hyperscript]]
+deps = ["Test"]
+git-tree-sha1 = "179267cfa5e712760cd43dcae385d7ea90cc25a4"
+uuid = "47d2ed2b-36de-50cf-bf87-49c2cf4b8b91"
+version = "0.0.5"
+
 [[deps.HypertextLiteral]]
 deps = ["Tricks"]
 git-tree-sha1 = "7134810b1afce04bbc1045ca1985fbe81ce17653"
 uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 version = "0.9.5"
+
+[[deps.IOCapture]]
+deps = ["Logging", "Random"]
+git-tree-sha1 = "b6d6bfdd7ce25b0f9b2f6b3dd56b2673a66c8770"
+uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
+version = "0.2.5"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
@@ -291,11 +413,6 @@ uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
-
-[[deps.IteratorInterfaceExtensions]]
-git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
-uuid = "82899510-4779-5014-852e-03e436cf321d"
-version = "1.0.0"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -365,11 +482,6 @@ version = "0.16.5"
     DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
     SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
     SymEngine = "123dc426-2d89-5057-bbad-38513e3affd8"
-
-[[deps.LazilyInitializedFields]]
-git-tree-sha1 = "8f7f3cabab0fd1800699663533b6d5cb3fc0e612"
-uuid = "0e77f7df-68c5-4e49-93ce-4cd80f5598bf"
-version = "1.2.2"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -486,12 +598,6 @@ git-tree-sha1 = "2fa9ee3e63fd3a4f7a9a4f4744a52f4856de82df"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.13"
 
-[[deps.Malt]]
-deps = ["Distributed", "Logging", "RelocatableFolders", "Serialization", "Sockets"]
-git-tree-sha1 = "02a728ada9d6caae583a0f87c1dd3844f99ec3fd"
-uuid = "36869731-bdee-424d-aa32-cab38c994e3b"
-version = "1.1.2"
-
 [[deps.Markdown]]
 deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
@@ -524,12 +630,6 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
 version = "2023.1.10"
-
-[[deps.MsgPack]]
-deps = ["Serialization"]
-git-tree-sha1 = "f5db02ae992c260e4826fe78c942954b48e1d9c2"
-uuid = "99f44e22-a591-53d1-9472-aa23ef4bd671"
-version = "1.2.1"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -645,22 +745,11 @@ version = "1.40.8"
     ImageInTerminal = "d8c32880-2388-543b-8c61-d9f865259254"
     Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
-[[deps.Pluto]]
-deps = ["Base64", "Configurations", "Dates", "Downloads", "ExpressionExplorer", "FileWatching", "FuzzyCompletions", "HTTP", "HypertextLiteral", "InteractiveUtils", "Logging", "LoggingExtras", "MIMEs", "Malt", "Markdown", "MsgPack", "Pkg", "PlutoDependencyExplorer", "PrecompileSignatures", "PrecompileTools", "REPL", "RegistryInstances", "RelocatableFolders", "Scratch", "Sockets", "TOML", "Tables", "URIs", "UUIDs"]
-git-tree-sha1 = "73a74a03ac427363c4764f956f34b75e93f71514"
-uuid = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
-version = "0.19.46"
-
-[[deps.PlutoDependencyExplorer]]
-deps = ["ExpressionExplorer", "InteractiveUtils", "Markdown"]
-git-tree-sha1 = "4bc5284f77d731196d3e97f23abb732ad6f2a6e4"
-uuid = "72656b73-756c-7461-726b-72656b6b696b"
-version = "1.0.4"
-
-[[deps.PrecompileSignatures]]
-git-tree-sha1 = "18ef344185f25ee9d51d80e179f8dad33dc48eb1"
-uuid = "91cefc8d-f054-46dc-8f8c-26e11d7c5411"
-version = "3.0.3"
+[[deps.PlutoUI]]
+deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
+git-tree-sha1 = "eba4810d5e6a01f612b948c9fa94f905b49087b0"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.60"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
@@ -726,12 +815,6 @@ version = "0.6.12"
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "1.2.2"
-
-[[deps.RegistryInstances]]
-deps = ["LazilyInitializedFields", "Pkg", "TOML", "Tar"]
-git-tree-sha1 = "ffd19052caf598b8653b99404058fce14828be51"
-uuid = "2792f1a3-b283-48e8-9a74-f99dce5104f3"
-version = "0.1.0"
 
 [[deps.RelocatableFolders]]
 deps = ["SHA", "Scratch"]
@@ -809,18 +892,6 @@ version = "7.2.1+1"
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 version = "1.0.3"
-
-[[deps.TableTraits]]
-deps = ["IteratorInterfaceExtensions"]
-git-tree-sha1 = "c06b2f539df1c6efa794486abfb6ed2022561a39"
-uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
-version = "1.0.1"
-
-[[deps.Tables]]
-deps = ["DataAPI", "DataValueInterfaces", "IteratorInterfaceExtensions", "OrderedCollections", "TableTraits"]
-git-tree-sha1 = "598cd7c1f68d1e205689b1c2fe65a9f85846f297"
-uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
-version = "1.12.0"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
@@ -1185,3 +1256,25 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Wayland_jll", "Wayland_prot
 git-tree-sha1 = "9c304562909ab2bab0262639bd4f444d7bc2be37"
 uuid = "d8fb68d0-12a3-5cfd-a85a-d49703b185fd"
 version = "1.4.1+1"
+"""
+
+# ╔═╡ Cell order:
+# ╠═bb1f592e-472d-4541-a7a6-4c9d26e78a6a
+# ╠═c4387808-a32a-4f05-8c6c-4d3c289dff1a
+# ╠═24bcde23-0cfc-40b3-aa9b-05b4449e91a9
+# ╠═0693ee45-45a0-4368-8b5d-f1edb80ad835
+# ╠═e34f1d1e-de82-4b90-bf69-bf3dbdd7cae4
+# ╠═21715828-f341-48bc-a661-22429f26fbe9
+# ╠═4cc5e981-61d6-474c-9950-62ad1313b414
+# ╠═21adaba8-003b-44b9-a660-2fea91e0dc7a
+# ╠═90ab3f34-ccb4-4d0a-94ab-8aa2e31f16e1
+# ╠═6988e82a-18e0-4f75-bc79-8eda00345b8c
+# ╠═caa145ab-8b68-4ff3-829c-c7c1636c4d72
+# ╠═4f72cd25-0830-4e7e-adff-f2e8a8412190
+# ╠═f1ddbf41-714e-474b-b04a-39aba4e51f6f
+# ╠═7dd28abf-4d89-40fa-954a-e287c998d4d0
+# ╠═9c63c47b-7051-492e-adba-81d28cf48b24
+# ╠═14efcdff-b8ed-42cc-9469-682c5e3bc759
+# ╠═91edce2c-c4e2-46f7-8800-70d4e0d00986
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002

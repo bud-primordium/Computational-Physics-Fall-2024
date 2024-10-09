@@ -1,4 +1,4 @@
-# methods.jl
+# MyMethods.jl
 # Methods for solving the 1D Schrödinger equation using Gaussian basis functions
 #
 # Author: Gilbert Young
@@ -7,7 +7,7 @@
 # This module provides functions to compute overlap, kinetic energy, and potential energy integrals
 # for Gaussian basis functions and to solve the 1D Schrödinger equation using the variational method.
 
-module Methods
+module MyMethods
 
 using LinearAlgebra
 using Base.Threads  # For parallel computing

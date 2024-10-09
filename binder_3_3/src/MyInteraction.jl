@@ -1,13 +1,13 @@
-# interaction.jl
+# MyInteraction.jl
 # Interaction functions for plotting and displaying the Schrödinger equation solver results.
 #
 # Author: Gilbert Young
 # Date: 2024/10/08
 
-module Interaction
+module MyInteraction
 
 using Plots
-using ..Utils
+using MyUtils
 
 export display_menu, plot_wavefunctions
 
