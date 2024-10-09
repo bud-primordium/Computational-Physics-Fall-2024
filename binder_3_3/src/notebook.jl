@@ -56,6 +56,17 @@ N, v, s, potential_gaussian_integral_list, potential_params_list, potential_name
 # ╔═╡ 7dd28abf-4d89-40fa-954a-e287c998d4d0
 @bind num_levels Slider(1:10, default=3)
 
+# ╔═╡ d66c36b9-5da1-4c60-ab65-4ffd3898bbbd
+### Cell 10: Define plot_wavefunctions function
+function plot_wavefunctions(x_vals, wavefunctions, plot_count, potential_name, potential_params)
+    plt = plot(title="Wavefunctions for $potential_name", xlabel="x", ylabel="ψ(x)")
+    for n in 1:min(plot_count, length(wavefunctions))
+        plot!(plt, x_vals, wavefunctions[n], label="Level $n")
+    end
+    return plt  # Return the plot object
+end
+
+
 # ╔═╡ 9c63c47b-7051-492e-adba-81d28cf48b24
             for i in eachindex(potential_gaussian_integral_list)
                 potential_gaussian_integral = potential_gaussian_integral_list[i]
@@ -1273,6 +1284,7 @@ version = "1.4.1+1"
 # ╠═4f72cd25-0830-4e7e-adff-f2e8a8412190
 # ╠═f1ddbf41-714e-474b-b04a-39aba4e51f6f
 # ╠═7dd28abf-4d89-40fa-954a-e287c998d4d0
+# ╠═d66c36b9-5da1-4c60-ab65-4ffd3898bbbd
 # ╠═9c63c47b-7051-492e-adba-81d28cf48b24
 # ╠═14efcdff-b8ed-42cc-9469-682c5e3bc759
 # ╠═91edce2c-c4e2-46f7-8800-70d4e0d00986
