@@ -13,7 +13,7 @@
 
 点击以下按钮可在 Binder 上运行该项目，体验交互式求解 Schrödinger 方程的过程：
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bud-primordium/Computational-Physics-Fall-2024/main?labpath=Assignment_3%2FProblem_3%2Fsrc%2Fmain.jl)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bud-primordium/Computational-Physics-Fall-2024/binder_3_3?labpath=binder_3_3%2Fstart_pluto.jl)
 
 ## 使用方法
 
