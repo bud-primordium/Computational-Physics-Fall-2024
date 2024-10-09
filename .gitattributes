@@ -1,5 +1,6 @@
-*.html linguist-detectable=false
-*.css linguist-detectable=false
-*.js linguist-detectable=false
-*.tex linguist-detectable=false
-*.sty linguist-detectable=false
+Assignment_1/Problem_2/doxygen_output/** linguist-vendored
+Assignment_1/Problem_2/ford_output/** linguist-vendored
+Assignment_2/Problem_1/doxygen_output/** linguist-vendored
+Assignment_2/Problem_2/doxygen_output/** linguist-vendored
+Assignment_3/Problem_2/doxygen_output/** linguist-vendored
+Assignment_3/Problem_3/documenter_output/** linguist-vendored
