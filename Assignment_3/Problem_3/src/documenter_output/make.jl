@@ -9,7 +9,7 @@ makedocs(
     sitename="SchrödingerSolver Documentation",
     modules=[SchrödingerSolver],
     format=Documenter.HTML(inventory_version="1.0", prettyurls=false),
-    source="Documenter_src",
+    source="documenter_src",
     pages=[
         "Home" => "index.md",
         "Methods" => "methods.md",
