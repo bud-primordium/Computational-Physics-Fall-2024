@@ -17,9 +17,10 @@ def get_vendored_paths(root_dir, vendored_dirs):
             continue
         for folder in vendored_dirs:
             if folder in dirs:
+                # 转换路径分隔符为正斜杠
                 relative_path = os.path.relpath(
                     os.path.join(root, folder), start=root_dir
-                )
+                ).replace("\\", "/")
                 vendored_paths.append(f"{relative_path}/** linguist-vendored\n")
     return vendored_paths
 
@@ -33,9 +34,10 @@ def get_generated_file_paths(root_dir, generated_files):
             continue
         for file in files:
             if file in generated_files:
+                # 转换路径分隔符为正斜杠
                 relative_path = os.path.relpath(
                     os.path.join(root, file), start=root_dir
-                )
+                ).replace("\\", "/")
                 generated_paths.append(f"{relative_path} linguist-generated\n")
     return generated_paths
 
