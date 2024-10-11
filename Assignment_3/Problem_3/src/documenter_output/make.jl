@@ -1,4 +1,4 @@
-# Documenter_output/make.jl
+# documenter_output/make.jl
 
 # 加载 Documenter.jl
 using Documenter
