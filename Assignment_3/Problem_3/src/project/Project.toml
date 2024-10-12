@@ -1,4 +1,4 @@
-name = "SchrödingerSolver"
+name = "SchrodingerSolver"
 uuid = "44c901a1-9596-43aa-b2cd-6fc2ac4d38fa"
 
 [deps]
