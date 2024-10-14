@@ -5,6 +5,16 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
+    paths:
+      # 触发条件：index.md 文件
+      - "index.md"
+      # 使用通配符匹配所有 Assignment_x/Problem_y 目录下的 HTML 和输出文件
+      - "Assignment_*/Problem_*/doxygen_output/**"
+      - "Assignment_*/Problem_*/ford_output/**"
+      - "Assignment_*/Problem_*/src/documenter_output/**"  
+      - "Assignment_*/Problem_*/Doxygen.html"
+      - "Assignment_*/Problem_*/Ford.html"
+      - "Assignment_*/Problem_*/Documenter.html"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
