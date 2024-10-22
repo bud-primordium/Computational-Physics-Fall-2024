@@ -1,4 +1,5 @@
-\subsection{题目描述}
+\subsection{题目描述}、
+\label{sec:problem_1}
 \noindent Newton interpolation of:
 \begin{itemize}
     \item[(1)] 10 equal spacing points of \( \cos(x) \) within \( [0, \pi] \);
@@ -30,7 +31,7 @@ Compare the results with the cubic spline interpolation.
 P_n(x) &= f[x_0] + f[x_1, x_0](x - x_0) + f[x_2, x_1, x_0](x - x_0)(x - x_1) + \cdots\\
 &+ f[x_n, x_{n-1}, \dots, x_0](x - x_0)(x - x_1)\dots(x - x_{n-1}) \\
 &= f[x_0] + (x - x_0) \left( f[x_1, x_0] + (x - x_1) \left( f[x_2, x_1, x_0] + \cdots + (x - x_{n-1}) f[x_n, x_{n-1}, \dots, x_0] \right) \right)
-\end{aligned}
+\end{aligned}\label{eq:horner}
 \]
 将$n(n+1)/2$次乘法降至$n$次。似乎还有一种古老的Neville's Algorithm\footnote{详见\textit{Numerical Recipes $\S 3.1$}}，可以在局部点加速收敛。
 
