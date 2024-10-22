@@ -1,0 +1,43 @@
+\subsection{题目描述}
+\noindent The radial wave function of the 3s orbital is given by:
+
+\[
+R_{3s}(r) = \frac{1}{9\sqrt{3}} \times \left( 6 - 6 \rho + \rho^2 \right) \times Z^{3/2} \times e^{-\rho/2},
+\]
+
+where:
+\begin{itemize}
+    \item \( r \): radius expressed in atomic units (1 Bohr radius = 52.9 pm),
+    \item \( e \approx 2.71828 \),
+    \item \( Z \): effective nuclear charge for that atom,
+    \item \( \rho = \frac{2 Z r}{n} \), where \( n \) is the principal quantum number (3 for the 3s orbital).
+\end{itemize}
+
+Compute the integral \( \int_0^{40} \left| R_{3s} \right|^2 r^2 \, dr \) for a Si atom (\( Z = 14 \)) using Simpson's rule with two different radial grids:
+
+\begin{enumerate}
+    \item[(1)] \textbf{Equal spacing grids}: 
+    \[
+    r[i] = (i - 1) h, \quad i = 1, \dots, N
+    \]
+    Try different values of \( N \).
+    
+    \item[(2)] \textbf{Non-uniform integration grid}: more finely spaced at small \( r \) than at large \( r \):
+    \[
+    r[i] = r_0(e^{t[i]} - 1), \quad t[i] = (i - 1) h, \quad i = 1, \dots, N
+    \]
+    Typically, choose \( r_0 = 0.0005 \) a.u. (1 a.u. = 1 Bohr radius).
+\end{enumerate}
+
+Discuss the efficiency of each approach and explain the reasons.
+
+
+\subsection{程序描述}
+
+
+\subsection{伪代码}
+
+
+
+\subsection{结果示例}
+
