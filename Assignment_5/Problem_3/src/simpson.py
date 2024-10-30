@@ -98,7 +98,7 @@ def compute_integral_exp_spacing(
     return results
 
 
-# Theoretical expected value calculation
+# Theoretical expected value by Mathematica
 numerator = 242794431087524801
 denominator = 6561 * math.exp(1120 / 3)
 err = numerator / denominator
