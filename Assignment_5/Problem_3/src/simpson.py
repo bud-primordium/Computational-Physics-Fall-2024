@@ -9,9 +9,6 @@ r_max = 40  # Upper limit of integration in atomic units
 r0 = 0.0005  # Parameter for non-uniform grid in atomic units
 e = np.e  # Base of natural logarithm
 
-# For numerical stability, define a small epsilon
-epsilon = 1e-10
-
 
 def integrand(r, Z=14, n=3):
     """
