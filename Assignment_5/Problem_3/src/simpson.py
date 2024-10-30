@@ -95,7 +95,8 @@ def compute_integral_exp_spacing(
         t = np.linspace(0, t_max, N)
         r = r0 * (np.exp(t) - 1)
         f = integrand(r, Z, n)
-        integral = simpsons_rule(r, f)
+        frator = r0 * np.exp(t)
+        integral = simpsons_rule(t, f * frator)
         results[N] = integral
     return results
 
