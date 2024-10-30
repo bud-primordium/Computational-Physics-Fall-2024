@@ -6,20 +6,20 @@
 
 \[
 \begin{aligned}
-f_{i+2} &= f_i + 2 h f_i' + 2 h^2 f_i'' + \frac{4 h^3}{3} f_i''' + \frac{2 h^4}{3} f_i^{(4)} + \mathcal{O}(h^5), \\
-f_{i+1} &= f_i + h f_i' + \frac{h^2}{2} f_i'' + \frac{h^3}{6} f_i''' + \frac{h^4}{24} f_i^{(4)} + \mathcal{O}(h^5), \\
-f_{i-1} &= f_i - h f_i' + \frac{h^2}{2} f_i'' - \frac{h^3}{6} f_i''' + \frac{h^4}{24} f_i^{(4)} + \mathcal{O}(h^5), \\
-f_{i-2} &= f_i - 2 h f_i' + 2 h^2 f_i'' - \frac{4 h^3}{3} f_i''' + \frac{2 h^4}{3} f_i^{(4)} + \mathcal{O}(h^5).
+f_{i+2} &= f_i + 2 h f_i' + 2 h^2 f_i'' + \frac{4 h^3}{3} f_i''' + \frac{2 h^4}{3} f_i^{(4)} + \frac{8 h^5}{15} f_i^{(5)} + \mathcal{O}(h^6), \\
+f_{i+1} &= f_i + h f_i' + \frac{h^2}{2} f_i'' + \frac{h^3}{6} f_i''' + \frac{h^4}{24} f_i^{(4)} + \frac{h^5}{120} f_i^{(5)} + \mathcal{O}(h^6), \\
+f_{i-1} &= f_i - h f_i' + \frac{h^2}{2} f_i'' - \frac{h^3}{6} f_i''' + \frac{h^4}{24} f_i^{(4)} - \frac{h^5}{120} f_i^{(5)} + \mathcal{O}(h^6), \\
+f_{i-2} &= f_i - 2 h f_i' + 2 h^2 f_i'' - \frac{4 h^3}{3} f_i''' + \frac{2 h^4}{3} f_i^{(4)} - \frac{8 h^5}{15} f_i^{(5)} + \mathcal{O}(h^6).
 \end{aligned}
 \]
 
-目标是构造一个线性组合以消除一阶导数 \( f_i' \) 及三阶导数 \( f_i''' \)，不妨设：
+目标是构造一个线性组合以消除一阶导数 \( f_i' \)、三阶导数 \( f_i''' \) 及五阶导数 \( f_i^{(5)} \)，不妨设：
 
 \[
-A f_{i+2} + B f_{i+1} + C f_i + D f_{i-1} + E f_{i-2} = K f_i'' + \mathcal{O}(h^5),
+A f_{i+2} + B f_{i+1} + C f_i + D f_{i-1} + E f_{i-2} = K f_i'' + \mathcal{O}(h^6),
 \]
 
-通过匹配各阶 \( h \) 的系数，可以构建方程组，观察各系数，不妨设\( K = 12 \)并约分，改写为增广矩阵形式，并使用我们在\texttt{Assignment\_3/Problem\_2}中实现的高斯消元法解得
+通过匹配各阶 \( h \) 的系数，可以构建方程组，观察各系数，不妨设\( K = 12 \)并约分，改写为增广矩阵形式，并使用我们在\texttt{Assignment\_3/Problem\_2}中实现的高斯消元法解得（不出意外是行满秩的，有重复约束条件）
 \[
 \begin{pmatrix}
 1 & 1 & 1 & 1 & 1 & | & 0 \\
@@ -27,6 +27,7 @@ A f_{i+2} + B f_{i+1} + C f_i + D f_{i-1} + E f_{i-2} = K f_i'' + \mathcal{O}(h^
 4 & 1 & 0 & 1 & 4 & | & 24 \\
 8 & 1 & 0 & -1 & -8 & | & 0 \\
 16 & 1 & 0 & 1 & 16 & | & 0 \\
+64 & 1 & 0 & -1 & -64 & | & 0 \\
 \end{pmatrix}
 \rightarrow
 \begin{pmatrix}
@@ -54,7 +55,7 @@ E
 因此，求二阶差分的五点公式为：
 
 \[
-- f_{i+2} + 16 f_{i+1} - 30 f_i + 16 f_{i-1} - f_{i-2} = 12 h^2 f_i'' + \mathcal{O}(h^5),
+- f_{i+2} + 16 f_{i+1} - 30 f_i + 16 f_{i-1} - f_{i-2} = 12 h^2 f_i'' + \mathcal{O}(h^6),
 \]
 
 即，
