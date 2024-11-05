@@ -241,7 +241,7 @@ def quadratic_fit(n, k):
 
 def check_convergence(U0, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, tolerance=1e-4):
     """
-    检查能级的收敛性
+    检查能级的收敛性，仅用于小规模测试
     """
     previous_eigenvalues = None
     for N_fourier in range(10, max_N + 1, 10):
@@ -360,8 +360,8 @@ def main(
     else:
         print("解析方法和FFT方法计算的傅里叶系数存在显著差异。\n")
 
-    # 步骤2：进行收敛性检查
-    print("第二步：进行收敛性检查")
+    # 步骤2：进行收敛性检查，仅对小规模N进行
+    print("第二步：进行收敛性检查（仅对小规模N进行）")
     check_convergence(
         U0_J, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, tolerance=1e-4
     )
@@ -392,7 +392,7 @@ def main(
     print(f"方法A（Vq' ∈ [-{N_initial}, {N_initial}]）")
     print(f"最低三个能级（eV）：{eigenvalues_eV_A[:3]}")
     degeneracies_A = check_degeneracy(
-        eigenvalues_eV_A, tolerance=1e-2, relative=True  # 放宽容差到1e-2
+        eigenvalues_eV_A[:3], tolerance=1e-2, relative=True  # 放宽容差到1e-2
     )
     if degeneracies_A:
         print(f"Degeneracies found: {degeneracies_A}")
@@ -401,6 +401,7 @@ def main(
     print(f"计算时间：{time_A:.4f} 秒\n")
 
     # 方法B：Vq' ∈ [-2N, 2N]
+    print("方法B（Vq' ∈ [-2N, 2N]）")
     start_time_B = time.time()
     N_extended = 2 * N_initial
     V_fourier_extended = compute_Vq_analytical(N_extended, U0_J, Lw, Lb, a)
@@ -424,7 +425,7 @@ def main(
     print(f"方法B（Vq' ∈ [-{N_extended}, {N_extended}]）")
     print(f"最低三个能级（eV）：{eigenvalues_eV_B[:3]}")
     degeneracies_B = check_degeneracy(
-        eigenvalues_eV_B, tolerance=1e-2, relative=True  # 放宽容差到1e-2
+        eigenvalues_eV_B[:3], tolerance=1e-2, relative=True  # 放宽容差到1e-2
     )
     if degeneracies_B:
         print(f"Degeneracies found: {degeneracies_B}")
@@ -442,7 +443,7 @@ def main(
     else:
         print("方法A和方法B的能级差异存在显著差异。\n")
 
-    # 步骤4：使用中等规模N进行绘制，然后进行最大规模N的绘制与拟合
+    # 步骤4：使用中等规模N进行绘制，然后询问是否进行大规模N的绘制与拟合
     print("\n第四步：使用中等规模N进行能级绘制")
     # 中等规模N
     N_medium = medium_N
@@ -491,6 +492,14 @@ def main(
             num_levels=num_levels_medium,
             method_label="Medium N",
         )
+
+    # 询问用户是否进行大规模N的绘制与拟合
+    proceed_large = (
+        input("\n是否进行大规模N的能级绘制与拟合？（y/n）：").strip().lower()
+    )
+    if proceed_large != "y":
+        print("跳过大规模N的能级绘制与拟合。")
+        return
 
     # 进行最大规模N的绘制与拟合
     print("\n继续进行最大规模N的能级绘制与拟合")
@@ -568,6 +577,8 @@ def main(
         plot_wavefunctions_and_potential(
             x_large, wavefunctions_large, V_x_large, large_N, num_levels=3
         )
+
+    # 结束，不再打印 "计算完成。"
 
 
 if __name__ == "__main__":
