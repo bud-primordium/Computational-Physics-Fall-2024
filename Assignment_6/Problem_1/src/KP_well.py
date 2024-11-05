@@ -1,7 +1,7 @@
 import numpy as np
 import time
 from scipy import constants as const
-from scipy.sparse import diags, csr_matrix, coo_matrix
+from scipy.sparse import diags, coo_matrix
 from scipy.sparse.linalg import eigsh
 import matplotlib.pyplot as plt
 from scipy.fft import fft
@@ -19,7 +19,7 @@ plt.rcParams["axes.unicode_minus"] = False  # 用来正常显示负号
 
 
 def get_n_list(N):
-    """生成傅里叶级数的Python自然顺序列表：[0,1,...N,-N,...,-1]"""
+    """生成傅里叶级数的自然顺序列表：[0,1,...N,-N,...,-1]"""
     return np.concatenate((np.arange(0, N + 1), np.arange(-N, 0)))
 
 
@@ -47,7 +47,7 @@ def compute_Vq_fft(N, U0, Lw, Lb, a):
 def build_kinetic_matrix(q_values, a, hbar, m_e):
     """构建动能矩阵"""
     kinetic = (hbar**2 * (2 * np.pi * q_values / a) ** 2) / (2 * m_e)  # J
-    return diags(kinetic, offsets=0, format="csr")  #'csr'表示压缩稀疏行格式
+    return diags(kinetic, offsets=0, format="csr")  # 'csr'表示压缩稀疏行格式
 
 
 def build_potential_matrix_optimized(N, V_fourier):
@@ -90,7 +90,7 @@ def solve_eigenvalues_sparse(H_matrix, num_levels=3):
         return None, None
 
 
-def check_degeneracy(eigenvalues, tolerance=1e-5, relative=True):
+def check_degeneracy(eigenvalues, tolerance=1e-4, relative=True):
     """
     检查能级简并性
     返回简并能级及其简并度的字典
@@ -165,9 +165,12 @@ def generate_potential_vectorized(x, a, Lw, U0_J):
     return V_x
 
 
-def plot_energy_levels_swapped(eigenvalues_eV, num_levels=3):
+def plot_energy_levels(
+    eigenvalues_eV, N, num_levels=3, method_label="Method A", fit=False, k_fit=0
+):
     """
     绘制能级图，能级编号为x轴，能量为y轴，不同能级使用不同颜色
+    如果fit为True，则绘制拟合曲线
     """
     levels = np.arange(1, num_levels + 1)
     plt.figure(figsize=(10, 6))
@@ -181,15 +184,21 @@ def plot_energy_levels_swapped(eigenvalues_eV, num_levels=3):
             linestyle="--",
             alpha=0.5,
         )
-    plt.xlabel("Energy Level")
+    plt.xlabel("Energy Level (n)")
     plt.ylabel("Energy (eV)")
-    plt.title("Energy Levels (Method A)")
+    plt.title(f"Energy Levels (N={N}, {method_label})")
+
+    if fit:
+        # 拟合曲线
+        E_n_fit = quadratic_fit(levels, k_fit)
+        plt.plot(levels, E_n_fit, "r--", label=f"$k \\cdot n^2$ Fit, k={k_fit:.4f} eV")
+
     plt.legend()
     plt.grid(True)
     plt.show()
 
 
-def plot_wavefunctions_and_potential(x_values, wavefunctions, V_x, num_levels=3):
+def plot_wavefunctions_and_potential(x_values, wavefunctions, V_x, N, num_levels=3):
     """
     绘制波函数的概率密度和势能分布
     """
@@ -199,12 +208,12 @@ def plot_wavefunctions_and_potential(x_values, wavefunctions, V_x, num_levels=3)
     for i in range(num_levels):
         ax1.plot(
             x_values * 1e9,  # 将位置从米转换为纳米
-            np.abs(wavefunctions[i]) ** 2,
+            np.abs(wavefunctions[i]) ** 2 * 1e-9,  # 转换单位为1/nm
             color=colors[i],
             label=f"Level {i+1}",
         )
     ax1.set_xlabel("Position (nm)")
-    ax1.set_ylabel(r"$|\Psi(x)|^2$ (1/m)", color="tab:red")
+    ax1.set_ylabel(r"$|\Psi(x)|^2$ (1/nm)", color="tab:red")
     ax1.tick_params(axis="y", labelcolor="tab:red")
 
     # 绘制势阱
@@ -245,16 +254,14 @@ def check_convergence(U0, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, toleranc
             H_matrix, num_levels=num_levels
         )
         if eigenvalues is None or eigenvectors is None:
-            print(f"Skipping N_fourier={N_fourier} due to solver error.")
+            print(f"Skipping N={N_fourier} due to solver error.")
             continue
         # 确保排序
         sorted_indices = np.argsort(eigenvalues)
         eigenvalues = eigenvalues[sorted_indices]
         eigenvectors = eigenvectors[:, sorted_indices]
         eigenvalues_eV = eigenvalues / e
-        print(
-            f"N_fourier={N_fourier}, Lowest {num_levels} eigenvalues (eV): {eigenvalues_eV}"
-        )
+        print(f"N={N_fourier}, Lowest {num_levels} eigenvalues (eV): {eigenvalues_eV}")
         degeneracies = check_degeneracy(
             eigenvalues_eV, tolerance=tolerance, relative=True
         )
@@ -266,7 +273,7 @@ def check_convergence(U0, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, toleranc
                 previous_eigenvalues
             )
             if np.all(relative_diff < tolerance):
-                print(f"Converged at N_fourier={N_fourier}\n")
+                print(f"Converged at N={N_fourier}\n")
                 break
         previous_eigenvalues = eigenvalues_eV
     else:
@@ -275,7 +282,7 @@ def check_convergence(U0, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, toleranc
 
 def compare_fourier_methods(N_fourier, U0, Lw, Lb, a):
     """
-    比较解析方法和FFT方法计算傅里叶系数的结果，使用相对误差
+    比较解析方法和FFT方法计算傅里叶系数的结果，使用绝对误差
     """
     n_values = get_n_list(N_fourier)  # 生成自然顺序列表
 
@@ -289,24 +296,17 @@ def compare_fourier_methods(N_fourier, U0, Lw, Lb, a):
     Vq_fft = compute_Vq_fft(N_fourier, U0, Lw, Lb, a)
     time_fft = time.time() - start_time
 
-    # 结果对比：计算相对误差
-    # 避免除以零，使用掩码
-    mask = Vq_analytical != 0
-    relative_diff = np.zeros_like(Vq_analytical, dtype=float)
-    relative_diff[mask] = np.abs(Vq_analytical[mask] - Vq_fft[mask]) / np.abs(
-        Vq_analytical[mask]
-    )
-    relative_diff[~mask] = np.abs(Vq_fft[~mask])  # 当Vq_analytical为0时，使用绝对误差
-
-    max_rel_diff = np.max(relative_diff)
-    mean_rel_diff = np.mean(relative_diff)
+    # 结果对比：计算绝对误差
+    abs_diff = np.abs(Vq_analytical - Vq_fft)
+    max_abs_diff = np.max(abs_diff) / e  # 转换为 eV
+    mean_abs_diff = np.mean(abs_diff) / e  # 转换为 eV
 
     print("\n傅里叶系数计算方法比较：")
     print(f"傅里叶级数范围：[-{N_fourier}, {N_fourier}]")
-    print(f"解析方法用时：{time_analytical:.6f}秒")
-    print(f"FFT方法用时：{time_fft:.6f}秒")
-    print(f"最大相对差异：{max_rel_diff:.6e}")
-    print(f"平均相对差异：{mean_rel_diff:.6e}")
+    print(f"解析方法用时：{time_analytical:.2e}秒")
+    print(f"FFT方法用时：{time_fft:.2e}秒")
+    print(f"最大绝对差异：{max_abs_diff:.6e} eV")
+    print(f"平均绝对差异：{mean_abs_diff:.6e} eV")
 
     # 绘制对比图
     plt.figure(figsize=(12, 8))
@@ -321,10 +321,10 @@ def compare_fourier_methods(N_fourier, U0, Lw, Lb, a):
     plt.grid(True)
 
     plt.subplot(212)
-    plt.plot(n_values, relative_diff, "k-")
+    plt.plot(n_values, abs_diff / e, "k-")
     plt.xlabel("n")
-    plt.ylabel("相对差异")
-    plt.title("解析方法与FFT方法的相对差异")
+    plt.ylabel("绝对差异 (eV)")
+    plt.title("解析方法与FFT方法的绝对差异")
     plt.grid(True)
     plt.tight_layout()
     plt.show()
@@ -338,7 +338,9 @@ def main(
     Lb_nm=0.1,
     N_initial=50,
     num_levels_initial=5,
-    large_N=200,
+    medium_N=100,
+    medium_num_levels=20,
+    large_N=500,
     large_num_levels=100,
 ):
     # 单位转换
@@ -364,12 +366,12 @@ def main(
         U0_J, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, tolerance=1e-4
     )
 
-    # 步骤3：使用FFT计算得到的系数进行较小N的AB方法对比
-    print("第三步：使用FFT方法计算的傅里叶系数进行AB方法对比")
+    # 步骤3：使用解析方法计算的傅里叶系数进行AB方法对比
+    print("\n第三步：使用解析方法计算的傅里叶系数进行AB方法对比")
     # 方法A：Vq' ∈ [-N, N]
     start_time_A = time.time()
     q_values_A = get_n_list(N_initial)
-    V_fourier_A = Vq_fft  # 使用FFT方法得到的傅里叶系数
+    V_fourier_A = Vq_analytical  # 使用解析方法得到的傅里叶系数
     V_matrix_A = build_potential_matrix_optimized(N_initial, V_fourier_A)
     T_matrix_A = build_kinetic_matrix(q_values_A, a, hbar, m_e)
     H_matrix_A = T_matrix_A + V_matrix_A
@@ -387,10 +389,10 @@ def main(
     end_time_A = time.time()
     time_A = end_time_A - start_time_A
 
-    print("方法A（Vq' ∈ [-N, N]）")
+    print(f"方法A（Vq' ∈ [-{N_initial}, {N_initial}]）")
     print(f"最低三个能级（eV）：{eigenvalues_eV_A[:3]}")
     degeneracies_A = check_degeneracy(
-        eigenvalues_eV_A[:3], tolerance=1e-5, relative=True
+        eigenvalues_eV_A, tolerance=1e-2, relative=True  # 放宽容差到1e-2
     )
     if degeneracies_A:
         print(f"Degeneracies found: {degeneracies_A}")
@@ -399,12 +401,12 @@ def main(
     print(f"计算时间：{time_A:.4f} 秒\n")
 
     # 方法B：Vq' ∈ [-2N, 2N]
-    print("方法B（Vq' ∈ [-2N, 2N]）")
     start_time_B = time.time()
     N_extended = 2 * N_initial
     V_fourier_extended = compute_Vq_analytical(N_extended, U0_J, Lw, Lb, a)
-    V_matrix_B = build_potential_matrix_optimized(N_initial, V_fourier_extended)
-    H_matrix_B = T_matrix_A + V_matrix_B  # 动能矩阵不变
+    V_matrix_B = build_potential_matrix_optimized(N_extended, V_fourier_extended)
+    T_matrix_B = build_kinetic_matrix(get_n_list(N_extended), a, hbar, m_e)
+    H_matrix_B = T_matrix_B + V_matrix_B  # 动能矩阵已更新为N_extended
     eigenvalues_B, eigenvectors_B = solve_eigenvalues_sparse(
         H_matrix_B, num_levels_initial
     )
@@ -419,10 +421,10 @@ def main(
     end_time_B = time.time()
     time_B = end_time_B - start_time_B
 
-    print("方法B（Vq' ∈ [-2N, 2N]）")
+    print(f"方法B（Vq' ∈ [-{N_extended}, {N_extended}]）")
     print(f"最低三个能级（eV）：{eigenvalues_eV_B[:3]}")
     degeneracies_B = check_degeneracy(
-        eigenvalues_eV_B[:3], tolerance=1e-5, relative=True
+        eigenvalues_eV_B, tolerance=1e-2, relative=True  # 放宽容差到1e-2
     )
     if degeneracies_B:
         print(f"Degeneracies found: {degeneracies_B}")
@@ -440,73 +442,132 @@ def main(
     else:
         print("方法A和方法B的能级差异存在显著差异。\n")
 
-    # 步骤4：使用较大的N和num_levels绘制能级图，并用n^2拟合
-    print("第四步：使用较大的N和num_levels绘制能级图，并用n^2拟合")
-    large_N = 200
-    large_num_levels = 100
+    # 步骤4：使用中等规模N进行绘制，然后进行最大规模N的绘制与拟合
+    print("\n第四步：使用中等规模N进行能级绘制")
+    # 中等规模N
+    N_medium = medium_N
+    num_levels_medium = medium_num_levels
+    q_values_medium = get_n_list(N_medium)
+    V_fourier_medium = compute_Vq_analytical(N_medium, U0_J, Lw, Lb, a)
+    V_matrix_medium = build_potential_matrix_optimized(N_medium, V_fourier_medium)
+    T_matrix_medium = build_kinetic_matrix(q_values_medium, a, hbar, m_e)
+    H_matrix_medium = T_matrix_medium + V_matrix_medium
+    eigenvalues_medium, eigenvectors_medium = solve_eigenvalues_sparse(
+        H_matrix_medium, num_levels_medium
+    )
+    if eigenvalues_medium is None or eigenvectors_medium is None:
+        print("中等规模N求解失败，无法进行绘制。\n")
+    else:
+        # 确保排序
+        sorted_indices_medium = np.argsort(eigenvalues_medium)
+        eigenvalues_medium = eigenvalues_medium[sorted_indices_medium]
+        eigenvectors_medium = eigenvectors_medium[:, sorted_indices_medium]
+        eigenvalues_eV_medium = eigenvalues_medium / e
 
-    # 使用FFT方法计算傅里叶系数
-    Vq_large = compute_Vq_fft(large_N, U0_J, Lw, Lb, a)
+        # 输出部分能级信息
+        print(
+            f"N={N_medium}, Lowest {num_levels_medium} eigenvalues (eV): {eigenvalues_eV_medium[:3]}"
+        )
+        degeneracies_medium = check_degeneracy(
+            eigenvalues_eV_medium, tolerance=1e-2, relative=True  # 放宽容差到1e-2
+        )
+        if degeneracies_medium:
+            print(f"Degeneracies found: {degeneracies_medium}")
+        else:
+            print("No degeneracies found.")
+
+        # 重构波函数
+        x_medium, wavefunctions_medium = reconstruct_wavefunction_vectorized(
+            eigenvectors_medium, q_values_medium, a, num_levels=num_levels_medium
+        )
+
+        # 生成势阱
+        V_x_medium = generate_potential_vectorized(x_medium, a, Lw, U0_J)
+
+        # 绘制能级图
+        plot_energy_levels(
+            eigenvalues_eV_medium,
+            N_medium,
+            num_levels=num_levels_medium,
+            method_label="Medium N",
+        )
+
+    # 进行最大规模N的绘制与拟合
+    print("\n继续进行最大规模N的能级绘制与拟合")
+    large_N = large_N
+    large_num_levels = large_num_levels
     q_values_large = get_n_list(large_N)
-    V_matrix_large = build_potential_matrix_optimized(large_N, Vq_large)
+    V_fourier_large = compute_Vq_analytical(large_N, U0_J, Lw, Lb, a)
+    V_matrix_large = build_potential_matrix_optimized(large_N, V_fourier_large)
     T_matrix_large = build_kinetic_matrix(q_values_large, a, hbar, m_e)
     H_matrix_large = T_matrix_large + V_matrix_large
     eigenvalues_large, eigenvectors_large = solve_eigenvalues_sparse(
         H_matrix_large, large_num_levels
     )
     if eigenvalues_large is None or eigenvectors_large is None:
-        print("大规模求解失败，无法绘制能级图。\n")
-        return
-    # 确保排序
-    sorted_indices_large = np.argsort(eigenvalues_large)
-    eigenvalues_large = eigenvalues_large[sorted_indices_large]
-    eigenvectors_large = eigenvectors_large[:, sorted_indices_large]
-    eigenvalues_eV_large = eigenvalues_large / e
+        print("最大规模N求解失败，无法进行绘制。\n")
+    else:
+        # 确保排序
+        sorted_indices_large = np.argsort(eigenvalues_large)
+        eigenvalues_large = eigenvalues_large[sorted_indices_large]
+        eigenvectors_large = eigenvectors_large[:, sorted_indices_large]
+        eigenvalues_eV_large = eigenvalues_large / e
 
-    # 重构波函数
-    x_large, wavefunctions_large = reconstruct_wavefunction_vectorized(
-        eigenvectors_large, q_values_large, a, large_num_levels
-    )
+        # 输出部分能级信息
+        print(
+            f"N={large_N}, Lowest {large_num_levels} eigenvalues (eV): {eigenvalues_eV_large[:3]}"
+        )
+        degeneracies_large = check_degeneracy(
+            eigenvalues_eV_large, tolerance=1e-2, relative=True  # 放宽容差到1e-2
+        )
+        if degeneracies_large:
+            print(f"Degeneracies found: {degeneracies_large}")
+        else:
+            print("No degeneracies found.")
 
-    # 生成势阱
-    V_x_large = generate_potential_vectorized(x_large, a, Lw, U0_J)
+        # 重构波函数
+        x_large, wavefunctions_large = reconstruct_wavefunction_vectorized(
+            eigenvectors_large, q_values_large, a, num_levels=large_num_levels
+        )
 
-    # 绘制能级图
-    levels_large = np.arange(1, large_num_levels + 1)
-    plt.figure(figsize=(10, 6))
-    plt.scatter(
-        levels_large, eigenvalues_eV_large, c=levels_large, cmap="viridis", s=10
-    )
-    plt.xlabel("Energy Level")
-    plt.ylabel("Energy (eV)")
-    plt.title("Energy Levels for Large N (Method A)")
-    plt.colorbar(label="Energy Level")
-    plt.grid(True)
-    plt.show()
+        # 生成势阱
+        V_x_large = generate_potential_vectorized(x_large, a, Lw, U0_J)
 
-    # 拟合能级与n^2的关系
-    plt.figure(figsize=(10, 6))
-    plt.plot(levels_large, eigenvalues_eV_large, "bo", label="Computed Energy Levels")
+        # 绘制能级图并加入拟合曲线
+        levels_large = np.arange(1, large_num_levels + 1)
+        plt.figure(figsize=(10, 6))
+        plt.scatter(
+            levels_large,
+            eigenvalues_eV_large,
+            c=levels_large,
+            cmap="viridis",
+            s=10,
+            label="Computed Energy Levels",
+        )
+        plt.xlabel("Energy Level (n)")
+        plt.ylabel("Energy (eV)")
+        plt.title(f"Energy Levels for N={large_N} (Method A)")
+        plt.colorbar(label="Energy Level")
 
-    # 拟合
-    popt, pcov = curve_fit(quadratic_fit, levels_large, eigenvalues_eV_large)
-    k_fit = popt[0]
-    E_n_fit = quadratic_fit(levels_large, k_fit)
+        # 拟合
+        popt, pcov = curve_fit(quadratic_fit, levels_large, eigenvalues_eV_large)
+        k_fit = popt[0]
+        E_n_fit = quadratic_fit(levels_large, k_fit)
 
-    plt.plot(
-        levels_large, E_n_fit, "r--", label=f"$k \\cdot n^2$ Fit, k={k_fit:.4f} eV"
-    )
-    plt.xlabel("Energy Level")
-    plt.ylabel("Energy (eV)")
-    plt.title("Energy Levels vs $n^2$ Fit")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+        plt.plot(
+            levels_large, E_n_fit, "r--", label=f"$k \\cdot n^2$ Fit, k={k_fit:.4f} eV"
+        )
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
-    # 绘制波函数和势阱
-    plot_wavefunctions_and_potential(
-        x_large, wavefunctions_large, V_x_large, num_levels=3
-    )
+        # 输出拟合结果
+        print(f"拟合结果：k = {k_fit:.6f} eV")
+
+        # 绘制波函数和势阱
+        plot_wavefunctions_and_potential(
+            x_large, wavefunctions_large, V_x_large, large_N, num_levels=3
+        )
 
 
 if __name__ == "__main__":
