@@ -53,7 +53,7 @@ plt.plot(k_original[5:], power_original[5:], label="原始数据")
 plt.plot(k_detrended[3:], power_detrended[3:], label="去趋势后")
 plt.plot(k_windowed[3:], power_windowed[3:], label="施加汉宁窗后")
 plt.plot(
-    k_detrended_windowed[1], power_detrended_windowed[1], label="去趋势 + 汉宁窗后"
+    k_detrended_windowed[1:], power_detrended_windowed[1:], label="去趋势 + 汉宁窗后"
 )
 
 plt.xlabel(r"$k$ (频率)")
