@@ -227,23 +227,33 @@ def quadratic_fit(n, k):
     return k * n**2
 
 
-def check_convergence(U0, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, tolerance=1e-4):
+def check_convergence(
+    U0, Lw, Lb, a, hbar, m_e, num_levels=3, max_N_lg=5, tolerance=1e-4
+):
     """
     检查能级的收敛性，仅用于小规模测试
     """
     previous_eigenvalues = None
-    for N_fourier in range(10, max_N + 1, 10):
-        q_values = get_n_list(N_fourier)
-        V_fourier = compute_Vq_analytical(N_fourier, U0, Lw, Lb, a)
+    for N_fourier_lg in range(1, max_N_lg + 1, 1):
+        q_values = get_n_list((10**N_fourier_lg))
+        V_fourier = compute_Vq_analytical((10**N_fourier_lg), U0, Lw, Lb, a)
         T_matrix = build_kinetic_matrix(q_values, a, hbar, m_e)
-        V_matrix = build_potential_matrix_optimized(N_fourier, V_fourier)
+        V_matrix = build_potential_matrix_optimized((10**N_fourier_lg), V_fourier)
         H_matrix = T_matrix + V_matrix
         eigenvalues, eigenvectors = solve_eigenvalues(H_matrix, num_levels=num_levels)
         if eigenvalues is None or eigenvectors is None:
-            print(f"Skipping N={N_fourier} due to solver error.")
+            print(f"Skipping N={(10 ** N_fourier_lg)} due to solver error.")
             continue
         eigenvalues_eV = eigenvalues / e
-        print(f"N={N_fourier}, Lowest {num_levels} eigenvalues (eV): {eigenvalues_eV}")
+        formatted_eigenvalues = ", ".join([f"{val:.10e}" for val in eigenvalues_eV])
+        print(
+            f"N={(10 ** N_fourier_lg)}, Lowest {num_levels} eigenvalues (eV): {formatted_eigenvalues}"
+        )
+        for k in range(1, num_levels // 2):
+            diff = eigenvalues_eV[2 * k] - eigenvalues_eV[2 * k - 1]
+            print(
+                f"Difference between eigenvalue {2 * k+1 } and {2 * k+2} (eV): {diff:.10e}"
+            )
         degeneracies = check_degeneracy(
             eigenvalues_eV, tolerance=tolerance, relative=True
         )
@@ -257,7 +267,7 @@ def check_convergence(U0, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, toleranc
                 previous_eigenvalues
             )
             if np.all(relative_diff < tolerance):
-                print(f"Converged at N={N_fourier}\n")
+                print(f"Converged at N={(10 ** N_fourier_lg)}\n")
                 break
         previous_eigenvalues = eigenvalues_eV
     else:
@@ -368,7 +378,7 @@ def main(
     # 步骤2：进行收敛性检查，仅对小规模N进行
     print("第二步：进行收敛性检查（仅对小规模N进行）")
     check_convergence(
-        U0_J, Lw, Lb, a, hbar, m_e, num_levels=3, max_N=50, tolerance=1e-4
+        U0_J, Lw, Lb, a, hbar, m_e, num_levels=10, max_N_lg=5, tolerance=1e-10
     )
 
     # 步骤3：使用解析方法计算的傅里叶系数进行AB方法对比
