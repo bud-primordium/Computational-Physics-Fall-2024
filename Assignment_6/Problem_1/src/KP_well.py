@@ -29,8 +29,7 @@ def compute_Vq_analytical(N, U0, Lw, Lb, a):
     Vq = np.zeros(2 * N + 1, dtype=complex)
     non_zero = n_list != 0
     Vq[non_zero] = (U0 / (2 * np.pi * n_list[non_zero] * 1j)) * (
-        np.exp(-2j * np.pi * n_list[non_zero] * Lw / a)
-        - np.exp(-2j * np.pi * n_list[non_zero] * (Lw + Lb) / a)
+        np.exp(-2j * np.pi * n_list[non_zero] * Lw / a) - 1
     )
     Vq[0] = U0 * Lb / a
     return Vq
