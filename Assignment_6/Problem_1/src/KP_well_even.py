@@ -254,13 +254,13 @@ def check_convergence(
             print(
                 f"Difference between eigenvalue {2 * k+1 } and {2 * k+2} (eV): {diff:.10e}"
             )
-        degeneracies = check_degeneracy(
-            eigenvalues_eV, tolerance=tolerance, relative=True
-        )
-        if degeneracies:
-            print("Degeneracies found.")
-        else:
-            print("No degeneracies found.")
+        # degeneracies = check_degeneracy(
+        #     eigenvalues_eV, tolerance=tolerance, relative=True
+        # )
+        # if degeneracies:
+        #     print("Degeneracies found.")
+        # else:
+        #     print("No degeneracies found.")
         if previous_eigenvalues is not None:
             # 使用相对误差比较
             relative_diff = np.abs(eigenvalues_eV - previous_eigenvalues) / np.abs(
@@ -348,7 +348,7 @@ def print_energy_levels(eigenvalues_eV, num_levels=3):
 
 
 def main(
-    U0_eV=2.0,
+    U0_eV=100.0,
     Lw_nm=0.9,
     Lb_nm=0.1,
     N_initial=50,
@@ -375,11 +375,11 @@ def main(
     else:
         print("解析方法和FFT方法计算的傅里叶系数存在显著差异。\n")
 
-    # 步骤2：进行收敛性检查，仅对小规模N进行
-    print("第二步：进行收敛性检查（仅对小规模N进行）")
-    check_convergence(
-        U0_J, Lw, Lb, a, hbar, m_e, num_levels=10, max_N_lg=5, tolerance=1e-10
-    )
+    # # 步骤2：进行收敛性检查，仅对小规模N进行
+    # print("第二步：进行收敛性检查（仅对小规模N进行）")
+    # check_convergence(
+    #     U0_J, Lw, Lb, a, hbar, m_e, num_levels=10, max_N_lg=5, tolerance=1e-10
+    # )
 
     # 步骤3：使用解析方法计算的傅里叶系数进行AB方法对比
     print("\n第三步：使用解析方法计算的傅里叶系数进行AB方法对比")
@@ -442,19 +442,19 @@ def main(
             eigenvalues_medium_eV[:medium_num_levels], start=1
         ):
             print(f"  Level {idx}: {energy:.4e} eV")
-        degeneracies_medium = check_degeneracy(
-            eigenvalues_medium_eV[:medium_num_levels],
-            tolerance=1e-2,
-            relative=True,  # 放宽容差到1e-2
-        )
-        if degeneracies_medium:
-            print("Degeneracies found.\n")
-        else:
-            print("No degeneracies found.\n")
+        # degeneracies_medium = check_degeneracy(
+        #     eigenvalues_medium_eV[:medium_num_levels],
+        #     tolerance=1e-2,
+        #     relative=True,  # 放宽容差到1e-2
+        # )
+        # if degeneracies_medium:
+        #     print("Degeneracies found.\n")
+        # else:
+        #     print("No degeneracies found.\n")
 
         # 重构前三个波函数
         x_medium, wavefunctions_medium = reconstruct_wavefunction_vectorized(
-            eigenvectors_medium[:, :3], get_n_list(medium_N), a
+            eigenvectors_medium[:, 15:16], get_n_list(medium_N), a
         )
 
         # 生成势阱
@@ -491,15 +491,15 @@ def main(
         print(f"N={large_N}, Lowest {large_num_levels} eigenvalues (eV):")
         for idx, energy in enumerate(eigenvalues_large_eV[:large_num_levels], start=1):
             print(f"  Level {idx}: {energy:.4e} eV")
-        degeneracies_large = check_degeneracy(
-            eigenvalues_large_eV[:large_num_levels],
-            tolerance=1e-2,
-            relative=True,  # 放宽容差到1e-2
-        )
-        if degeneracies_large:
-            print("Degeneracies found.\n")
-        else:
-            print("No degeneracies found.\n")
+        # degeneracies_large = check_degeneracy(
+        #     eigenvalues_large_eV[:large_num_levels],
+        #     tolerance=1e-2,
+        #     relative=True,  # 放宽容差到1e-2
+        # )
+        # if degeneracies_large:
+        #     print("Degeneracies found.\n")
+        # else:
+        #     print("No degeneracies found.\n")
 
         # 绘制能级图并加入拟合曲线
         levels_large = np.arange(1, large_num_levels + 1)
