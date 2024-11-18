@@ -46,9 +46,9 @@ Thumbs.db
 *.zip
 
 #忽略草稿文件夹和发布预处理文件夹
-.release/
-.lectures/
-.drafts/
+release/
+lectures/
+drafts/
 **/.draft/
 .vscode/
-.utils/prompts.txt
+utils/prompts.txt
