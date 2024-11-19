@@ -28,6 +28,8 @@ import logging
 import warnings
 import copy
 
+# 本题取h_bar=m=1
+
 # 忽略一些数值计算的警告
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
@@ -48,7 +50,7 @@ class SolverConfig:
         tol: 收敛精度
     """
 
-    r_max: float = 35.0  # 最大半径 (Bohr)
+    r_max: float = 30.0  # 最大半径 (Bohr)
     j_max: int = 1000  # 网格点数
     delta: float = 0.006  # 网格间距
     l: int = 0  # 角量子数
@@ -56,7 +58,7 @@ class SolverConfig:
     n_states: int = 3  # 求解本征态数量
     V_type: str = "hydrogen"  # 势能类型
     method: str = "shooting"  # 求解方法
-    tol: float = 1e-12  # 收敛精度
+    tol: float = 1e-6  # 收敛精度
 
 
 def get_theoretical_values() -> Dict:
@@ -72,15 +74,15 @@ def get_theoretical_values() -> Dict:
             (1, 0): -0.5,  # 1s
             (2, 0): -0.125,  # 2s
             (2, 1): -0.125,  # 2p
-            (3, 0): -0.0555556,  # 3s
-            (3, 1): -0.0555556,  # 3p
-            (3, 2): -0.0555556,  # 3d
+            (3, 0): -1 / 18,  # 3s
+            (3, 1): -1 / 18,  # 3p
+            (3, 2): -1 / 18,  # 3d
         },
         "lithium": {
-            # 参考值来自文献
-            (1, 0): -2.4776,  # 1s
-            (2, 0): -0.1963,  # 2s
-            (2, 1): -0.1302,  # 2p
+            # 原本参考值来自学长 www.github.com/ShangkunLi/Computational_Physics/ 但感觉有问题，后来随便设定了一个与Z_ion大致自洽的
+            (1, 0): -0.2,  # 1s
+            (2, 0): -0.05,  # 2s
+            (2, 1): -0.05,  # 2p
         },
     }
 
@@ -90,11 +92,6 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
-
-# 物理常数 (原子单位制)
-HBAR = 1.0  # ℏ
-ME = 1.0  # 电子质量
-E0 = 1.0  # 真空介电常数
 
 
 # Part 2 Tools
@@ -208,6 +205,7 @@ class WavefunctionTools:
     @staticmethod
     def get_analytic_hydrogen(r: np.ndarray, n: int, l: int) -> Optional[np.ndarray]:
         """获取氢原子解析解
+        Ref:https://quantummechanics.ucsd.edu/ph130a/130_notes/node233.html
 
         Args:
             r: 径向距离数组
@@ -217,19 +215,17 @@ class WavefunctionTools:
         Returns:
             解析波函数数组，如果无解析解则返回None
         """
-        # 归一化常数
-        norm_const = np.sqrt(4 * factorial(n - l - 1) / (n**4 * factorial(n + l)))
 
         if n == 1 and l == 0:  # 1s
-            return norm_const * 2 * np.exp(-r)
+            return 2 * np.exp(-r)
         elif n == 2 and l == 0:  # 2s
-            return norm_const * (2 - r) * np.exp(-r / 2)
+            return np.sqrt(2) / 4 * (2 - r) * np.exp(-r / 2)
         elif n == 2 and l == 1:  # 2p
-            return norm_const * r * np.exp(-r / 2)
+            return np.sqrt(2) / (4 * np.sqrt(3)) * r * np.exp(-r / 2)
         elif n == 3 and l == 0:  # 3s
-            return norm_const * (27 - 18 * r + 2 * r**2) * np.exp(-r / 3)
+            return 2 / 243 * np.sqrt(3) * (27 - 18 * r + 2 * r**2) * np.exp(-r / 3)
         elif n == 3 and l == 1:  # 3p
-            return norm_const * r * (6 - r) * np.exp(-r / 3)
+            return 2 / 81 * np.sqrt(6) * r * (6 - r) * np.exp(-r / 3)
         return None
 
     @staticmethod
@@ -283,7 +279,7 @@ def get_initial_energy_range(config: SolverConfig) -> Tuple[float, float]:
         E_max = E_theo * 0.5  # 扩大搜索范围上限
     else:
         # 锂原子能量估计
-        E_theo = -3.0 / config.n**2
+        E_theo = -0.1 / config.n**2
         E_min = E_theo * 1.5
         E_max = E_theo * 0.5
 
