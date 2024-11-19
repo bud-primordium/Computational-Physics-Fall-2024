@@ -315,14 +315,28 @@ def main():
             solver = RadialSchrodingerSolver(config)
             results = solver.solve()
 
-            # 打印结果
-            if "energy" in results:
+            # 输出结果
+            if "energy" in results:  # shooting方法
                 E = results["energy"]
                 analysis = results["analysis"]
                 print(f"\n能量本征值: {E:.6f} Hartree")
                 if analysis["theoretical_E"] is not None:
                     print(f"理论值: {analysis['theoretical_E']:.6f} Hartree")
                     print(f"相对误差: {analysis['relative_error']:.6f}%")
+            elif "energies" in results:  # 有限差分法
+                print("\n计算得到的能量本征值:")
+                for i, E in enumerate(results["energies"]):
+                    print(f"E_{i}: {E:.6f} Hartree")
+
+                # 获取理论值进行对比
+                theoretical = get_theoretical_values()[args.V_type]
+                for i, E in enumerate(results["energies"]):
+                    if (args.n, args.l) in theoretical:
+                        theory = theoretical[(args.n, args.l)]
+                        error = abs((E - theory) / theory) * 100
+                        print(f"理论值: {theory:.6f} Hartree")
+                        print(f"相对误差: {error:.6f}%")
+                    break  # 只比较第一个能量值
 
     except Exception as e:
         logger.error(f"程序运行失败: {str(e)}")

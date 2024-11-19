@@ -129,8 +129,11 @@ class ShootingSolver:
             v[j] = v[j + 1] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
             dvdj[j] = dvdj[j + 1] + (k1dv + 2 * k2dv + 2 * k3dv + k4dv) / 6
 
-        # 变换回u(r)
+        # 变换回u(r)并规一化
         u = v * np.exp(self.delta * self.grid.j / 2)
+        norm = np.sqrt(np.trapz(u * u, self.grid.r))
+        if norm > 0:
+            u /= norm
         return u
 
     def shooting_solve(
@@ -154,6 +157,8 @@ class ShootingSolver:
         """
 
         def objective(E: float) -> float:
+            if E >= 0:  # 确保能量为负
+                return 1e6
             u = self.integrate_inward(E)
             nodes = WavefunctionTools.count_nodes(u)
             if nodes != target_nodes:
