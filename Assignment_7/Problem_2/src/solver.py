@@ -61,7 +61,9 @@ class ShootingSolver:
         """
         # 计算对应的 r 值
         r = self.r_p * (np.exp(self.delta * j) - 1) + self.grid.config.r_min
-        return self.V(r) + self.l * (self.l + 1) / (2 * r * r)
+        # 对离心势也截断一个safe，考虑到比1/r更高次，截断在1e-8
+        r_safe = np.maximum(r, 1e-8)  # 同时支持标量和数组
+        return self.V(r_safe) + self.l * (self.l + 1) / (2 * r_safe * r_safe)
 
     def integrate_inward(self, E: float) -> np.ndarray:
         """从外向内积分
@@ -143,7 +145,7 @@ class ShootingSolver:
 
         def objective(E: float) -> float:
             if E >= 0:  # 确保能量为负，束缚态
-                return 1e6
+                return max(1e3, 1e3 * E)  # 大的惩罚系数
 
             u = self.integrate_inward(E)
             nodes = WavefunctionTools.count_nodes(u)
@@ -165,7 +167,7 @@ class ShootingSolver:
                 return u[0]
 
         try:
-            # 使用更大的搜索范围
+            # 如果设定的搜索范围不当，使用更大的搜索范围
             E_search_min = min(E_min, -2.0 / (2 * self.grid.config.n**2))
             E_search_max = max(E_max, -0.1 / (2 * self.grid.config.n**2))
 
