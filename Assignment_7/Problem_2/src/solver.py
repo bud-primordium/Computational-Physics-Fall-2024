@@ -15,7 +15,7 @@ from scipy.optimize import root_scalar
 from typing import Tuple
 import logging
 
-from .utils import RadialGrid, WavefunctionTools
+from src.utils import RadialGrid, WavefunctionTools
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +42,26 @@ class ShootingSolver:
         self.V = V
         self.l = l
         self.delta = grid.config.delta
+        # 保存一些常用值
+        self.r_p = grid.r_p
+        self.j = grid.j
+
+    def V_eff(self, j) -> float:
+        """计算有效势
+
+        Parameters
+        ----------
+        j : 不只局限于整数
+            当前的网格索引，可以是半整数，便于rK4积分
+
+        Returns
+        -------
+        float
+            有效势
+        """
+        # 计算对应的 r 值
+        r = self.r_p * (np.exp(self.delta * j) - 1) + self.grid.config.r_min
+        return self.V(r) + self.l * (self.l + 1) / (2 * r * r)
 
     def integrate_inward(self, E: float) -> np.ndarray:
         """从外向内积分
@@ -60,119 +80,107 @@ class ShootingSolver:
         dvdj = np.zeros_like(v)
 
         # 边界条件
-        v[-1] = 0.0
-        v[-2] = 1e-12
+        v[-1] = 0
+        dvdj[-1] = -1  # 从外向内积分，不影响最终结果，只是差一个常数因子
 
-        def V_eff(j):
-            # 计算对应的 r 值
-            r = self.grid.r_p * (np.exp(self.delta * j) - 1) + self.grid.config.r_min
-            return self.V(r) + self.l * (self.l + 1) / (2 * r * r)
+        def derivative(j, v, dvdj):
+            # 计算导数，j可以不是整数
+            v_der = dvdj
+            coef = 1 / 4 + self.r_p**2 * np.exp(2 * self.delta * j) * 2 * (
+                self.V_eff(j) - E
+            )  # 注意ppt里面的公式漏了个2，因为notation好像不一样
+            dvdj_der = v * self.delta**2 * coef
+            return v_der, dvdj_der
 
-        # RK4积分
-        h = -self.delta
-        for j in range(self.grid.config.j_max - 1, -1, -1):
-            r = self.grid.r[j]
-
-            # 自适应步长
-            min_step = 1e-5
-            h = -max(self.delta * min(1.0, r), min_step)
+        # RK4积分 v与v'同步更新
+        h = -1
+        for j in range(
+            self.grid.config.j_max - 1, -1, -1
+        ):  # 注意从倒数第二个点开始填充
+            # r = self.grid.r[j]
+            # # 自适应步长
+            # min_step = 1e-5
+            # h = -max(self.delta * min(1.0, r), min_step)
 
             # RK4 steps
             # k1
-            k1v = h * dvdj[j + 1]
-            k1dv = h * (
-                -self.delta**2 / 4 * v[j + 1]
-                + 2
-                * self.grid.r_p**2
-                * self.delta**2
-                * np.exp(2 * self.delta * j)
-                * (V_eff(j) - E)
-                * v[j + 1]
-            )
+            k1v, k1dv = derivative(j + 1, v[j + 1], dvdj[j + 1])
 
             # k2
-            k2v = h * (dvdj[j + 1] + 0.5 * k1dv)
-            k2dv = h * (
-                -self.delta**2 / 4 * (v[j + 1] + 0.5 * k1v)
-                + 2
-                * self.grid.r_p**2
-                * self.delta**2
-                * np.exp(2 * self.delta * (j + 0.5))
-                * (V_eff(j + 0.5) - E)
-                * (v[j + 1] + 0.5 * k1v)
+            k2v, k2dv = derivative(
+                j + 0.5, v[j + 1] + 0.5 * h * k1v, dvdj[j + 1] + 0.5 * h * k1dv
             )
 
             # k3
-            k3v = h * (dvdj[j + 1] + 0.5 * k2dv)
-            k3dv = h * (
-                -self.delta**2 / 4 * (v[j + 1] + 0.5 * k2v)
-                + 2
-                * self.grid.r_p**2
-                * self.delta**2
-                * np.exp(2 * self.delta * (j + 0.5))
-                * (V_eff(j + 0.5) - E)
-                * (v[j + 1] + 0.5 * k2v)
+            k3v, k3dv = derivative(
+                j + 0.5, v[j + 1] + 0.5 * h * k2v, dvdj[j + 1] + 0.5 * h * k2dv
             )
 
             # k4
-            k4v = h * (dvdj[j + 1] + k3dv)
-            k4dv = h * (
-                -self.delta**2 / 4 * (v[j + 1] + k3v)
-                + 2
-                * self.grid.r_p**2
-                * self.delta**2
-                * np.exp(2 * self.delta * j)
-                * (V_eff(j) - E)
-                * (v[j + 1] + k3v)
-            )
+            k4v, k4dv = derivative(j, v[j + 1] + h * k3v, dvdj[j + 1] + h * k3dv)
 
-            v[j] = v[j + 1] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
-            dvdj[j] = dvdj[j + 1] + (k1dv + 2 * k2dv + 2 * k3dv + k4dv) / 6
+            v[j] = v[j + 1] + h / 6 * (k1v + 2 * k2v + 2 * k3v + k4v)
+            dvdj[j] = dvdj[j + 1] + h / 6 * (k1dv + 2 * k2dv + 2 * k3dv + k4dv)
 
-        # 变换回u(r)并规一化
+        # 变换回u(r)
         u = v * np.exp(self.delta * self.grid.j / 2)
-        norm = np.sqrt(np.trapz(u * u, self.grid.r))
+
+        # 改进的归一化处理
+        mask = np.abs(u) > 1e-15
+        if not np.any(mask):
+            return u  # 返回未归一化的波函数，让shooting_solve处理
+
+        norm = np.sqrt(np.trapz(u[mask] * u[mask], self.grid.r[mask]))
         if norm > 0:
             u /= norm
+
         return u
 
     def shooting_solve(
         self, E_min: float, E_max: float, target_nodes: int
     ) -> Tuple[float, np.ndarray]:
-        """打靶法求解本征值和本征函数
-
-        Parameters
-        ----------
-        E_min, E_max : float
-            能量搜索范围
-        target_nodes : int
-            目标节点数
-
-        Returns
-        -------
-        float
-            能量本征值
-        np.ndarray
-            本征函数
-        """
+        """打靶法求解本征值和本征函数"""
 
         def objective(E: float) -> float:
-            if E >= 0:  # 确保能量为负
+            if E >= 0:  # 确保能量为负，束缚态
                 return 1e6
+
             u = self.integrate_inward(E)
             nodes = WavefunctionTools.count_nodes(u)
+
+            # 改进的打靶条件
             if nodes != target_nodes:
                 return 1e3 * (nodes - target_nodes)
-            return u[0]
+
+            # 使用波函数在原点附近的行为作为判据
+            r_near = self.grid.r[:5]
+            u_near = u[:5]
+
+            if self.l == 0:
+                # s态应该在原点处有限
+                slope = np.polyfit(r_near, u_near, 1)[0]
+                return slope
+            else:
+                # l>0态应该在原点处为零
+                return u[0]
 
         try:
+            # 使用更大的搜索范围
+            E_search_min = min(E_min, -2.0 / (2 * self.grid.config.n**2))
+            E_search_max = max(E_max, -0.1 / (2 * self.grid.config.n**2))
+
             result = root_scalar(
-                objective, bracket=[E_min, E_max], method="brentq", rtol=1e-6
+                objective,
+                bracket=[E_search_min, E_search_max],
+                method="brentq",
+                rtol=1e-8,
             )
+
             if result.converged:
                 E = result.root
                 u = self.integrate_inward(E)
                 return E, u
+
             raise RuntimeError("能量求解未收敛")
 
         except Exception as e:
@@ -246,7 +254,7 @@ class FiniteDifferenceSolver:
 
         return H
 
-    def solve(self, n_states: int) -> Tuple[np.ndarray, np.ndarray]:
+    def fd_solve(self, n_states: int) -> Tuple[np.ndarray, np.ndarray]:
         """求解本征值问题
 
         Parameters

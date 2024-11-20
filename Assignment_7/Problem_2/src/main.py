@@ -124,7 +124,7 @@ class RadialSchrodingerSolver:
                 )
                 return E
             else:
-                energies, _ = self.solver.solve(1)
+                energies, _ = self.solver.fd_solve(1)
                 return energies[0]
 
         finally:
@@ -189,7 +189,7 @@ class RadialSchrodingerSolver:
 
             else:
                 # 有限差分法求解
-                energies, states = self.solver.solve(self.config.n_states)
+                energies, states = self.solver.fd_solve(self.config.n_states)
                 return {"energies": energies, "states": states}
 
         except Exception as e:

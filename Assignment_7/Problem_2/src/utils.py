@@ -53,7 +53,7 @@ class SolverConfig:
     """
 
     r_max: float = 30.0
-    r_min: float = 1e-5  # 添加最小半径
+    r_min: float = 1e-8  # 添加最小半径
     j_max: int = 1000
     delta: float = 0.006
     l: int = 0
@@ -61,7 +61,7 @@ class SolverConfig:
     n_states: int = 3
     V_type: str = "hydrogen"
     method: str = "shooting"
-    tol: float = 1e-6
+    tol: float = 1e-8
 
 
 class RadialGrid:
@@ -92,7 +92,7 @@ class RadialGrid:
         }
 
 
-class PotentialFunction:
+class PotentialFunction:  # 已经考虑了电子的负电荷
     """势能函数类"""
 
     @staticmethod

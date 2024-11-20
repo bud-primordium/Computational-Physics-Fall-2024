@@ -34,7 +34,7 @@ class WavefunctionProcessor:
         self.r = r
         self.l = l
         self.delta = delta
-        self.j = np.arange(len(r))  # 均匀网格点
+        self.j = np.arange(len(r))  # 均匀的j网格
         self.r_p = r[-1] / (np.exp(delta * (len(r) - 1)) - 1)
 
         # 计算网格变换的导数
@@ -58,9 +58,13 @@ class WavefunctionProcessor:
         return du_dr, d2u_dr2
 
     def analyze_asymptotic(
-        self, u: np.ndarray, num_points: int = 5
+        self, u: np.ndarray, num_points: int = 10
     ) -> Tuple[float, float]:
-        """分析r→0时波函数的渐进行为"""
+        """分析r→0时波函数的渐进行为
+        Returns:
+            m: r→0时的幂次（应接近l）
+            n_analyze: exp(-r/n)中的n
+        """
         # 选取近原点的几个点
         j_near_zero = self.j[:num_points]
         r_near_zero = self.r[:num_points]
@@ -69,7 +73,7 @@ class WavefunctionProcessor:
         # 对数拟合
         mask = (r_near_zero > 0) & (np.abs(u_near_zero) > 1e-15)
         if not np.any(mask):
-            return 0.0, self.l + 1
+            return self.l, 1.0  # 默认值改为l
 
         x = np.log(r_near_zero[mask])
         y = np.log(np.abs(u_near_zero[mask]))
@@ -77,7 +81,10 @@ class WavefunctionProcessor:
         A = np.vstack([x, np.ones_like(x)]).T
         m, c = np.linalg.lstsq(A, y, rcond=None)[0]
 
-        return np.exp(c), m
+        # 计算n_analyze (从c中获取)
+        n_analyze = np.exp(c)
+
+        return m, n_analyze
 
     def get_r0_values(self, u: np.ndarray) -> Tuple[float, float]:
         """获取r=0处的函数值和导数"""
