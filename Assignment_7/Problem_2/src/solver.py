@@ -352,7 +352,7 @@ class FiniteDifferenceSolver:
         # 首先求解最低本征值
         try:
             e_ground, v_ground = linalg.eigsh(
-                H, k=1, M=B, which="SA", maxiter=10000, tol=1e-8
+                H, k=1, M=B, which="SA", maxiter=500000, tol=1e-6
             )
             e_ground = e_ground[0]
         except Exception as e:
@@ -369,7 +369,7 @@ class FiniteDifferenceSolver:
                 estimated_e = e_ground / (n * n)
 
                 # 在估计值附近搜索，使用一个适当的窗口
-                window = abs(e_ground) * 0.1  # 搜索窗口可以根据需要调整
+                window = abs(e_ground) * 0.1  # 搜索窗口可以调整
 
                 try:
                     # 在估计值附近搜索，避免找到已经找到的本征值
@@ -379,7 +379,13 @@ class FiniteDifferenceSolver:
                         estimated_e - window,
                     ]:
                         e, v = linalg.eigsh(
-                            H, k=1, M=B, sigma=shift, which="LM", maxiter=10000
+                            H,
+                            k=1,
+                            M=B,
+                            sigma=shift,
+                            which="LM",
+                            maxiter=10000,
+                            tol=1e-7,
                         )
 
                         # 检查是否是新的本征值（与已有值不同）

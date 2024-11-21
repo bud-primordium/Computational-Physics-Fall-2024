@@ -127,7 +127,7 @@ class RadialSchrodingerSolver:
         """
         if n_points_list is None:
             if self.config.method == "fd":
-                n_points_list = [100, 200, 300, 400, 500, 600]
+                n_points_list = [50, 100, 150, 200, 300]
             else:
                 n_points_list = [100 * 2**i for i in range(7)]  # 到6400
 
@@ -294,7 +294,7 @@ def run_example():
         try:
             # 选择合适的网格点序列
             if method == "fd":
-                n_points_list = [100, 200, 300, 400, 500, 600]
+                n_points_list = [50, 100, 150, 200, 300]
             else:
                 n_points_list = [100, 200, 400, 800, 1600, 3200]
 
