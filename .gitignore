@@ -52,4 +52,4 @@ drafts/
 **/.draft/
 .vscode/
 utils/prompts.txt
-*/test.ipynb
+**/test.ipynb

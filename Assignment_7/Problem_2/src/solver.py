@@ -62,7 +62,7 @@ class ShootingSolver:
         # 计算对应的 r 值
         r = self.r_p * (np.exp(self.delta * j) - 1) + self.grid.config.r_min
         # 对离心势也截断一个safe，考虑到比1/r更高次，截断在1e-8
-        r_safe = np.maximum(r, 1e-8)  # 同时支持标量和数组
+        r_safe = np.maximum(r, 1e-10)  # 同时支持标量和数组
         return self.V(r_safe) + self.l * (self.l + 1) / (2 * r_safe * r_safe)
 
     def integrate_inward(self, E: float) -> np.ndarray:
@@ -139,55 +139,110 @@ class ShootingSolver:
         return u
 
     def shooting_solve(
-        self, E_min: float, E_max: float, target_nodes: int
+        self, E_min: float, E_max: float, target_nodes: int = None
     ) -> Tuple[float, np.ndarray]:
         """打靶法求解本征值和本征函数"""
+        if target_nodes is None:
+            target_nodes = self.grid.config.n - self.l - 1
 
+        # 定义目标函数的权重，可调
+        w1 = 0.5  # 对数导数误差权重
+        w2 = 5.0  # 节点数误差权重
+        w3 = 1.0  # u(r_min) 幅值误差权重
+        w4 = 1.0  # 连续性误差权重
+
+        # 定义目标函数
         def objective(E: float) -> float:
-            if E >= 0:  # 确保能量为负，束缚态
-                return max(1e3, 1e3 * E)  # 大的惩罚系数
+            # 确保能量为负，束缚态
+            if E >= 0:
+                return 1e5 * (E - E_max)  # 惩罚正能量
 
+            # 进行向内积分，得到波函数 u(r)
             u = self.integrate_inward(E)
+            r = self.grid.r
+
+            # 避免除以零，设置一个很小的 epsilon
+            epsilon = r[0]
+
+            # 1. 对数导数误差 修改为要求u'/u * r = l+1
+            num_points = 5  # 在 r = r_min 附近选取的点数
+            r_near = r[:num_points]
+            u_near = u[:num_points]
+
+            # 计算数值导数 du_dr，使用 numpy 的梯度函数
+            du_dr = np.gradient(u_near, r_near)
+
+            # 计算数值对数导数
+            log_derivative_numeric = du_dr / u_near
+
+            # 乘以 r_near，减少数值误差
+            log_derivative_scaled = log_derivative_numeric * r_near
+            # 计算误差
+            log_derivative_error = np.sum((log_derivative_scaled - (self.l + 1)) ** 2)
+
+            # 2. 节点数误差
             nodes = WavefunctionTools.count_nodes(u)
+            nodes_diff = nodes - target_nodes
+            nodes_error = nodes_diff**2  # 平方误差
 
-            # 改进的打靶条件
-            if nodes != target_nodes:
-                return 1e3 * (nodes - target_nodes)
+            # 3. u(r_min) 的幅值误差
+            u_epsilon = u[0]  # 在 r = r_min 处的波函数值
+            u_epsilon_error = u_epsilon**2  # 平方误差
 
-            # 使用波函数在原点附近的行为作为判据
-            r_near = self.grid.r[:5]
-            u_near = u[:5]
+            # 4. 连续性误差
+            du_dr_epsilon = du_dr[0]  # 在 r = ε 处的数值导数
+            # 理论导数
+            du_dr_theoretical = (self.l + 1) * u_epsilon / epsilon
+            continuity_error = (du_dr_epsilon - du_dr_theoretical) ** 2
 
-            if self.l == 0:
-                # s态应该在原点处有限
-                slope = np.polyfit(r_near, u_near, 1)[0]
-                return slope
-            else:
-                # l>0态应该在原点处为零
-                return u[0]
-
-        try:
-            # 如果设定的搜索范围不当，使用更大的搜索范围
-            E_search_min = min(E_min, -2.0 / (2 * self.grid.config.n**2))
-            E_search_max = max(E_max, -0.1 / (2 * self.grid.config.n**2))
-
-            result = root_scalar(
-                objective,
-                bracket=[E_search_min, E_search_max],
-                method="brentq",
-                rtol=1e-8,
+            # 总误差
+            total_error = (
+                w1 * log_derivative_error
+                + w2 * nodes_error
+                + w3 * u_epsilon_error
+                + w4 * continuity_error
             )
 
-            if result.converged:
-                E = result.root
-                u = self.integrate_inward(E)
-                return E, u
+            return total_error
 
+        # 使用 scipy.optimize.minimize 进行优化
+        from scipy.optimize import minimize
+
+        def objective_wrapper(E_array):
+            E = E_array[0]
+            return objective(E)
+
+        # 调用优化方法
+        # result = minimize(
+        #     objective_wrapper,
+        #     x0=[E0],
+        #     bounds=[(E_min, E_max)],
+        #     method="L-BFGS-B",  # 可以尝试其他方法，如 'Nelder-Mead'
+        #     options={"ftol": 1e-8, "disp": True},
+        # )
+
+        # 先粗优化
+        E_grid = np.linspace(E_min, E_max, 10)  # 10 个能量点的网格
+        errors = [objective(E) for E in E_grid]
+        E_coarse = E_grid[np.argmin(errors)]  # 找到误差最小值对应的 E
+
+        result = minimize(
+            objective_wrapper,
+            x0=[E_coarse],
+            bounds=[(E_min, E_max)],
+            method="Nelder-Mead",
+            options={"xatol": 1e-10, "disp": True},
+        )
+
+        if result.success:
+            optimal_E = result.x[0]
+            # 重新计算对应的波函数
+            u_optimal = self.integrate_inward(optimal_E)
+            # 对波函数进行归一化（如果需要）
+            u_optimal /= np.linalg.norm(u_optimal)
+            return optimal_E, u_optimal
+        else:
             raise RuntimeError("能量求解未收敛")
-
-        except Exception as e:
-            logger.error(f"求解失败: {str(e)}")
-            raise
 
 
 class FiniteDifferenceSolver:
