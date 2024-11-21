@@ -336,6 +336,80 @@ def main():
 
     args = parser.parse_args()
 
+    try:
+        # 3. 根据命令行参数选择执行路径
+        if args.example:
+            # 路径1：运行示例计算
+            run_example()
+
+        elif args.convergence:
+            # 路径2：进行收敛性分析
+            # 创建配置
+            config_dict = {
+                "V_type": args.V_type,
+                "n": args.n,
+                "l": args.l,
+                "method": args.method,
+            }
+            if args.j_max is not None:
+                config_dict["j_max"] = args.j_max
+
+            config = SolverConfig(**config_dict)
+
+            # 打印分析信息
+            print("\n" + "=" * 60)
+            print("进行网格收敛性分析")
+            print("=" * 60)
+            print(config.config_summary)
+
+            # 执行收敛性分析
+            solver = RadialSchrodingerSolver(config)
+            results = solver.convergence_study()
+
+            # 打印结果
+            print("\n网格收敛性分析结果:")
+            print(f"{'网格点数':>10} {'能量':>15} {'相对误差(%)':>15}")
+            print("-" * 45)
+            for n, E, err in zip(
+                results["n_points"], results["energies"], results["errors"]
+            ):
+                print(f"{n:10d} {E:15.8f} {err:15.8f}")
+
+        else:
+            # 路径3：执行单次计算
+            config_dict = {
+                "V_type": args.V_type,
+                "n": args.n,
+                "l": args.l,
+                "method": args.method,
+            }
+            if args.j_max is not None:
+                config_dict["j_max"] = args.j_max
+
+            config = SolverConfig(**config_dict)
+
+            # 打印计算信息
+            print("\n" + "=" * 60)
+            print("进行单次求解计算")
+            print("=" * 60)
+            print(config.config_summary)
+
+            # 执行计算
+            solver = RadialSchrodingerSolver(config)
+            results = solver.solve()
+
+            # 打印结果
+            if "energy" in results:
+                E = results["energy"]
+                analysis = results["analysis"]
+                print(f"\n能量本征值: {E:.6f} Hartree")
+                if analysis["theoretical_E"] is not None:
+                    print(f"理论值: {analysis['theoretical_E']:.6f} Hartree")
+                    print(f"相对误差: {analysis['relative_error']:.6f}%")
+
+    except Exception as e:
+        logger.error(f"程序运行失败: {str(e)}")
+
 
 if __name__ == "__main__":
     main()
