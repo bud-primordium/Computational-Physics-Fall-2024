@@ -12,6 +12,7 @@ Classes:
 import numpy as np
 from typing import Dict, Tuple
 import logging
+from scipy.optimize import curve_fit
 
 logger = logging.getLogger(__name__)
 
@@ -88,6 +89,7 @@ class WavefunctionProcessor:
 
     def get_r0_values(self, u: np.ndarray) -> Tuple[float, float]:
         """获取r=0处的函数值和导数"""
+        # 可能弃用，因为后面绘制的是r=r_min开始的
         if self.l == 0:
             # l=0时,外推u(0),du/dr(0)=0
             du_dr, _ = self.get_derivatives(u)
@@ -109,10 +111,24 @@ class WavefunctionProcessor:
             logger.error("波函数包含无效值")
             raise ValueError("Invalid wavefunction values")
 
-        # 处理r=0的情况
-        u0, du0_dr = self.get_r0_values(u)
+        # 处理r=r_min的情况
+        # u0, _ = self.get_r0_values(u)
+
+        # 拟合的函数模型：r^(l+1)
+        def r_behavior(r, a):
+            return a * r ** (self.l + 1)
+
+        # 使用前几个点拟合
+        fit_indices = slice(1, 7)  # 使用 u 第2~7个点（索引从1到6）
+        r_fit = self.r[fit_indices]
+        u_fit = u[fit_indices]
+
+        # 执行拟合
+        popt, _ = curve_fit(r_behavior, r_fit, u_fit)
+
+        # 根据拟合结果外推 u_full[0]
         u_full = np.copy(u)
-        u_full[0] = u0
+        u_full[0] = r_behavior(self.r[0], *popt)
 
         # 计算归一化常数(考虑非均匀网格的积分权重)
         mask = np.abs(u_full) > 1e-15
@@ -132,14 +148,14 @@ class WavefunctionProcessor:
         nonzero_r = self.r > 1e-10
         R[nonzero_r] = u_norm[nonzero_r] / self.r[nonzero_r]
 
-        # r=0处的处理
-        if self.l == 0:
-            # 使用洛必达法则: lim(r→0) u(r)/r = du/dr(0)
-            R[0] = du0_dr / norm
-        else:
-            # 使用渐进行为
-            coef, _ = self.analyze_asymptotic(u_norm)
-            R[0] = coef * self.l
+        # # r=0处的处理
+        # if self.l == 0:
+        #     # 使用洛必达法则: lim(r→0) u(r)/r = du/dr(0)
+        #     R[0] = du0_dr / norm
+        # else:
+        #     # 使用渐进行为
+        #     coef, _ = self.analyze_asymptotic(u_norm)
+        #     R[0] = coef * self.l
 
         self._verify_normalization(R, tol)
         return u_norm, R
@@ -261,7 +277,7 @@ class ConvergenceAnalyzer:
                 results["energies"].append(E)
                 if analysis["relative_error"] is not None:
                     results["errors"].append(analysis["relative_error"])
-                results["delta_h"].append(solver.config.r_max / n)
+                results["delta_h"].append(6 / n)  # r=rp(e^t-1)+r_min t_max = 6
 
             except Exception as e:
                 logger.warning(f"网格点数{n}的计算失败: {str(e)}")
