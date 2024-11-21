@@ -55,7 +55,7 @@ class SolverConfig:
     r_max: float = 30.0
     r_min: float = 1e-5  # 添加最小半径
     j_max: int = 1000
-    delta: float = 0.006
+    delta: float = 6 / j_max
     l: int = 0
     n: int = 1
     n_states: int = 3
