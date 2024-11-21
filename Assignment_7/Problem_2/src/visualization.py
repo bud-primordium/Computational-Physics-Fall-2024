@@ -16,7 +16,16 @@ logger = logging.getLogger(__name__)
 
 
 class ResultVisualizer:
-    """结果可视化类"""
+    """结果可视化类
+
+    提供原子波函数、能量和收敛性分析的可视化功能。
+    自动处理中文显示和样式优化。
+
+    Attributes
+    ----------
+    r : np.ndarray
+        径向网格点
+    """
 
     def __init__(self, r: np.ndarray):
         """初始化可视化器
@@ -86,25 +95,34 @@ class ResultVisualizer:
         l: int,
         V_type: str,
         R_analytic: Optional[np.ndarray] = None,
+        method: str = "shooting",
     ):
-        """绘制波函数
+        """绘制波函数及其概率密度分布
+
+        生成两个子图:
+        1. 波函数图：展示变换后的u(r)和物理波函数R(r)
+        2. 概率密度图：展示r²R²(r)分布
+
+        当提供解析解时，同时绘制对比曲线。
 
         Parameters
         ----------
         u : np.ndarray
-            径向波函数u(r)
+            变换坐标下的径向波函数u(r)
         R : np.ndarray
-            径向波函数R(r)
+            物理坐标下的径向波函数R(r)
         E : float
-            能量本征值
+            能量本征值(Hartree)
         n : int
             主量子数
         l : int
             角量子数
         V_type : str
-            势能类型
+            势能类型('hydrogen'或'lithium')
         R_analytic : np.ndarray, optional
-            解析解(如果有)
+            解析波函数(对氢原子部分态可用)
+        method : str
+            求解方法('shooting'或'fd')
         """
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 12))
 
@@ -115,7 +133,7 @@ class ResultVisualizer:
         ax1.plot(self.r, u, "g:", label="u(r) 数值解")
         ax1.set_xlabel("r (Bohr)")
         ax1.set_ylabel("波函数")
-        ax1.grid(True)
+        ax1.grid(True, alpha=0.3)
         ax1.legend()
 
         # 下图：概率密度
@@ -126,11 +144,15 @@ class ResultVisualizer:
             ax2.plot(self.r, prob_analytic, "r--", label="解析解概率密度")
         ax2.set_xlabel("r (Bohr)")
         ax2.set_ylabel("概率密度")
-        ax2.grid(True)
+        ax2.grid(True, alpha=0.3)
         ax2.legend()
 
-        # 总标题
-        title = f"{V_type}原子: n={n}, l={l}, E={E:.6f} Hartree"
+        # 增强标题信息
+        method_name = "打靶法" if method == "shooting" else "有限差分法"
+        title = (
+            f"{V_type.capitalize()}原子 ({method_name})\n"
+            f"量子态: n={n}, l={l} | 能量: E={E:.6f} Hartree"
+        )
         fig.suptitle(title, fontsize=14)
         plt.tight_layout()
         plt.show()
@@ -162,29 +184,54 @@ class ResultVisualizer:
         plt.grid(True)
         plt.show()
 
-    def plot_convergence_study(self, results: Dict):
-        """绘制收敛性研究结果
+    def plot_convergence_study(
+        self,
+        results: Dict,
+        V_type: str = "",
+        n: int = 1,
+        l: int = 0,
+        method: str = "shooting",
+    ):
+        """绘制收敛性分析结果
+
+        使用双对数坐标展示网格间距与相对误差的关系。
+        同时绘制二阶和四阶收敛的参考线以供比较。
 
         Parameters
         ----------
         results : Dict
-            收敛性分析结果字典
+            包含 'delta_h'(网格间距)和'errors'(相对误差)的字典
+        V_type : str
+            势能类型
+        n : int
+            主量子数
+        l : int
+            角量子数
+        method : str
+            求解方法('shooting'或'fd')
         """
         plt.figure(figsize=(10, 6))
-        plt.loglog(results["delta_h"], results["errors"], "bo-")
+        plt.loglog(results["delta_h"], results["errors"], "bo-", label="数值结果")
 
         # 添加参考线
         h = np.array(results["delta_h"])
-        plt.loglog(
-            h, h**2 * results["errors"][0] / h[0] ** 2, "r--", label="O(h²) 参考线"
-        )
-        plt.loglog(
-            h, h**4 * results["errors"][0] / h[0] ** 4, "g--", label="O(h⁴) 参考线"
-        )
+        if len(h) > 0:  # 确保有数据点
+            plt.loglog(
+                h, h**2 * results["errors"][0] / h[0] ** 2, "r--", label="O(h²) 参考线"
+            )
+            plt.loglog(
+                h, h**4 * results["errors"][0] / h[0] ** 4, "g--", label="O(h⁴) 参考线"
+            )
 
-        plt.xlabel("jδ网格间距 h (log)")
+        plt.xlabel("网格间距 h (log)")
         plt.ylabel("相对误差 % (log)")
-        plt.title("收敛性分析")
+
+        # 增强标题信息
+        method_name = "打靶法" if method == "shooting" else "有限差分法"
+        title = (
+            f"收敛性分析 ({method_name})\n" f"{V_type.capitalize()}原子: n={n}, l={l}"
+        )
+        plt.title(title)
         plt.legend()
-        plt.grid(True)
+        plt.grid(True, alpha=0.3)
         plt.show()

@@ -1,7 +1,18 @@
 """径向薛定谔方程求解主程序
 
-提供命令行接口和示例运行功能。
-整合求解、分析和可视化模块，实现完整的求解流程。
+整合各功能模块，提供完整的计算流程和用户接口。
+
+功能特点:
+- 命令行参数配置和运行控制
+- 多种原子、量子态和求解方法的示例
+- 自动化的收敛性分析流程
+- 结构化的结果输出和可视化
+
+Modules:
+    utils: 工具函数和配置类
+    solver: 数值求解方法
+    analysis: 结果分析和处理 
+    visualization: 结果可视化
 """
 
 import logging
@@ -31,7 +42,30 @@ logger = logging.getLogger(__name__)
 
 
 class RadialSchrodingerSolver:
-    """径向薛定谔方程主求解器"""
+    """径向薛定谔方程主求解器
+
+    整合配置、网格、求解器、分析器和可视化器，
+    提供完整的求解流程控制。
+
+    Attributes
+    ----------
+    config : SolverConfig
+        计算配置
+    grid : RadialGrid
+        计算网格
+    V : callable
+        势能函数
+    wave_processor : WavefunctionProcessor
+        波函数处理器
+    energy_analyzer : EnergyAnalyzer
+        能量分析器
+    visualizer : ResultVisualizer
+        结果可视化器
+    convergence_analyzer : ConvergenceAnalyzer
+        收敛性分析器
+    solver : Union[ShootingSolver, FiniteDifferenceSolver]
+        具体求解器实例
+    """
 
     def __init__(self, config: SolverConfig):
         """初始化求解器
@@ -136,15 +170,38 @@ class RadialSchrodingerSolver:
         )
 
         # 可视化结果
-        self.visualizer.plot_convergence_study(results)
+        self.visualizer.plot_convergence_study(
+            results,
+            self.config.V_type,
+            self.config.n,
+            self.config.l,
+            self.config.method,
+        )
 
     def solve(self) -> Dict:
-        """求解量子态
+        """求解指定的量子态
+
+        根据配置选择求解方法，完成求解并进行后处理：
+        1. 确定能量搜索范围
+        2. 求解本征值和本征函数
+        3. 波函数归一化和处理
+        4. 与理论值比较
+        5. 结果可视化
 
         Returns
         -------
         Dict
-            计算结果字典
+            计算结果字典，包含:
+            - energy: 本征能量
+            - wavefunction: 波函数数据
+            - analysis: 与理论值的比较
+            - all_energies: (仅FD方法)所有本征值
+            - all_states: (仅FD方法)所有本征态
+
+        Raises
+        ------
+        Exception
+            求解过程中的错误
         """
         try:
             # 获取能量范围估计
@@ -179,6 +236,7 @@ class RadialSchrodingerSolver:
                     self.config.l,
                     self.config.V_type,
                     R_analytic,
+                    method="shooting",
                 )
 
                 return {
@@ -224,6 +282,7 @@ class RadialSchrodingerSolver:
                     self.config.l,
                     self.config.V_type,
                     R_analytic,
+                    method="fd",
                 )
 
                 # 返回与shooting方法相同格式的结果
@@ -300,21 +359,45 @@ def run_example():
 
             results = solver.convergence_study(n_points_list)
 
-            # 打印分析结果
-            print("\n网格收敛性分析结果:")
-            print(f"{'网格点数':>10} {'能量':>15} {'相对误差(%)':>15}")
-            print("-" * 45)
-            for n, E, err in zip(
-                results["n_points"], results["energies"], results["errors"]
+            # 只在results不为None且包含必要数据时打印结果
+            if (
+                results
+                and "n_points" in results
+                and "energies" in results
+                and "errors" in results
             ):
-                print(f"{n:10d} {E:15.8f} {err:15.8f}")
+                print("\n网格收敛性分析结果:")
+                print(f"{'网格点数':>10} {'能量':>15} {'相对误差(%)':>15}")
+                print("-" * 45)
+                for n, E, err in zip(
+                    results["n_points"], results["energies"], results["errors"]
+                ):
+                    print(f"{n:10d} {E:15.8f} {err:15.8f}")
 
+        except KeyError as e:
+            logger.debug(f"结果数据结构不完整: {str(e)}")
         except Exception as e:
-            logger.error(f"收敛性分析失败: {str(e)}")
+            logger.error(f"收敛性分析出现错误: {str(e)}")
+            continue
 
 
 def main():
-    """主函数"""
+    """主程序入口
+
+    处理命令行参数并执行相应的计算路径:
+    1. 示例计算模式
+    2. 收敛性分析模式
+    3. 单次计算模式
+
+    支持的参数:
+    --V-type: 势能类型(hydrogen/lithium)
+    --n: 主量子数
+    --l: 角量子数
+    --method: 求解方法(shooting/fd)
+    --j-max: 网格点数
+    --example: 运行示例
+    --convergence: 进行收敛性分析
+    """
     # 1. 设置日志系统
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"

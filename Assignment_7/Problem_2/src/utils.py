@@ -3,14 +3,19 @@
 包含网格生成、势能函数、波函数工具等基础设施。
 提供配置类和理论值查询等功能支持。
 
+默认单位:
+- 长度: a bohr半径
+- 能量: hatree
+
 Classes:
-    SolverConfig: 求解器配置类
+    SolverConfig: 求解器配置类  
     RadialGrid: 径向网格工具类
     PotentialFunction: 势能函数类
     WavefunctionTools: 波函数工具类
 
 Functions:
     get_theoretical_values: 获取理论参考值
+    get_energy_bounds: 估计能量搜索范围
 """
 
 import numpy as np
@@ -130,7 +135,24 @@ class SolverConfig:
 
 
 class RadialGrid:
-    """径向网格工具类，处理非均匀网格的生成和变换"""
+    """径向网格工具类，处理非均匀网格的生成和变换
+
+    使用变换 r = r_p[exp(j*delta) - 1] + r_min 生成非均匀网格,
+    在原点附近较密,远处较疏,更适合原子波函数的数值计算。
+
+    Attributes
+    ----------
+    config : SolverConfig
+        网格配置对象
+    j : ndarray
+        均匀网格点索引
+    r_p : float
+        网格变换标度参数
+    r : ndarray
+        物理空间径向坐标
+    dr : ndarray
+        网格间距
+    """
 
     def __init__(self, config: SolverConfig):
         """初始化网格"""
@@ -157,8 +179,16 @@ class RadialGrid:
         }
 
 
-class PotentialFunction:  # 已经考虑了电子的负电荷
-    """势能函数类"""
+class PotentialFunction:
+    """势能函数类
+
+    提供不同原子的势能函数实现:
+    1. 氢原子: 库仑势 V(r) = -1/r
+    2. 锂原子: GTH赝势,包含局域和非局域部分
+       V(r) = V_loc(r) + V_nl(r)
+
+    注: 已考虑电子负电荷,势能直接给出
+    """
 
     @staticmethod
     def V_hydrogen(r: np.ndarray) -> np.ndarray:
@@ -245,7 +275,11 @@ class WavefunctionTools:
 
     @staticmethod
     def get_analytic_hydrogen(r: np.ndarray, n: int, l: int) -> Optional[np.ndarray]:
-        """获取氢原子解析解
+        """获取氢原子解析解R(r)
+
+        实现前几个低量子数态的径向波函数解析表达式:
+        R(r) = N_nl * r^l * L_n^(2l+1)(2r/n) * exp(-r/n)
+        其中N_nl为归一化系数,L_n^k为拉盖尔多项式
 
         Parameters
         ----------
@@ -259,7 +293,7 @@ class WavefunctionTools:
         Returns
         -------
         Optional[np.ndarray]
-            解析波函数,无解析解则返回None
+            解析波函数,若无解析表达式则返回None
         """
         if n == 1 and l == 0:  # 1s
             return 2 * np.exp(-r)

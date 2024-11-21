@@ -1,12 +1,18 @@
 """径向薛定谔方程求解器的分析模块
 
-包含波函数处理、能量分析和收敛性研究等功能。
-对求解得到的结果进行验证、分析和后处理。
+包含波函数处理、能量分析和收敛性研究等功能。提供数值结果的验证、分析和后处理。
+
+主要功能：
+- 波函数的归一化和导数计算
+- 渐近行为分析和小r极限处理 
+- 能量本征值与理论值比较
+- 数值方法的收敛性研究
+
 
 Classes:
-   WavefunctionProcessor: 波函数处理器
-   EnergyAnalyzer: 能量分析器
-   ConvergenceAnalyzer: 收敛性分析器
+   WavefunctionProcessor: 波函数处理器，处理归一化和导数
+   EnergyAnalyzer: 能量分析器，比较计算值和理论值
+   ConvergenceAnalyzer: 收敛性分析器，研究网格依赖性
 """
 
 import numpy as np
@@ -18,7 +24,26 @@ logger = logging.getLogger(__name__)
 
 
 class WavefunctionProcessor:
-    """波函数处理类(非均匀网格版本)"""
+    """波函数处理类(非均匀网格版本)
+
+    提供波函数的归一化、导数计算和渐近行为分析等功能。
+    特别处理了原点附近的奇异性问题。
+
+    Attributes
+    ----------
+    r : np.ndarray
+        非均匀径向网格点
+    l : int
+        角量子数
+    delta : float
+        网格变换参数
+    j : np.ndarray
+        均匀网格点索引
+    r_p : float
+        网格变换参数
+    dr_dj : np.ndarray
+        网格变换的导数
+    """
 
     def __init__(self, r: np.ndarray, l: int, delta: float):
         """初始化
@@ -62,9 +87,21 @@ class WavefunctionProcessor:
         self, u: np.ndarray, num_points: int = 10
     ) -> Tuple[float, float]:
         """分析r→0时波函数的渐进行为
-        Returns:
-            m: r→0时的幂次（应接近l）
-            n_analyze: exp(-r/n)中的n
+
+        通过对数拟合确定渐进形式：u(r) ~ r^m * exp(-r/n)
+
+        Parameters
+        ----------
+        u : np.ndarray
+            波函数值
+        num_points : int
+            用于拟合的点数
+
+        Returns
+        -------
+        Tuple[float, float]
+            (幂次m, 指数参数n)
+            m应接近l+1, n应接近主量子数
         """
         # 选取近原点的几个点
         j_near_zero = self.j[:num_points]
@@ -105,7 +142,30 @@ class WavefunctionProcessor:
     def normalize_wavefunction(
         self, u: np.ndarray, tol: float = 1e-6
     ) -> Tuple[np.ndarray, np.ndarray]:
-        """归一化波函数"""
+        """归一化波函数并计算物理波函数R(r)
+
+        1. 通过拟合处理r→0处的行为
+        2. 归一化变换后的波函数u(r)
+        3. 计算物理波函数R(r) = u(r)/r
+        4. 验证归一化条件∫|R(r)|²r²dr = 1
+
+        Parameters
+        ----------
+        u : np.ndarray
+            输入波函数u(r)
+        tol : float, optional
+            归一化精度要求
+
+        Returns
+        -------
+        Tuple[np.ndarray, np.ndarray]
+            (归一化的u(r), 对应的R(r))
+
+        Raises
+        ------
+        ValueError
+            当波函数无效或归一化失败时
+        """
         # 数值稳定性检查
         if np.any(np.isnan(u)) or np.any(np.isinf(u)):
             logger.error("波函数包含无效值")
@@ -115,7 +175,7 @@ class WavefunctionProcessor:
         # u0, _ = self.get_r0_values(u)
 
         # 拟合的函数模型：r^(l+1)
-        def r_behavior(r, a):
+        def r_behavior_u(r, a):
             return a * r ** (self.l + 1)
 
         # 使用前几个点拟合
@@ -124,11 +184,11 @@ class WavefunctionProcessor:
         u_fit = u[fit_indices]
 
         # 执行拟合
-        popt, _ = curve_fit(r_behavior, r_fit, u_fit)
+        popt, _ = curve_fit(r_behavior_u, r_fit, u_fit)
 
         # 根据拟合结果外推 u_full[0]
         u_full = np.copy(u)
-        u_full[0] = r_behavior(self.r[0], *popt)
+        u_full[0] = r_behavior_u(self.r[0], *popt)
 
         # 计算归一化常数(考虑非均匀网格的积分权重)
         mask = np.abs(u_full) > 1e-15
@@ -147,18 +207,37 @@ class WavefunctionProcessor:
         R = np.zeros_like(u_norm)
         nonzero_r = self.r > 1e-10
         R[nonzero_r] = u_norm[nonzero_r] / self.r[nonzero_r]
-        # 补丁，l>0时r=r_min处的处理
-        # 使用前几个点拟合
-        fit_indices = slice(1, 7)  # 使用 R 第2~7个点（索引从1到6）
-        r_fit = self.r[fit_indices]
-        R_fit = R[fit_indices]
 
-        # 执行拟合
-        popt, _ = curve_fit(r_behavior, r_fit, R_fit)
+        # 补丁，r=r_min附近的处理
+        # 拟合的函数模型：r^(l)
+        def r_behavior_R(r, a):
+            return a * r ** (self.l)
 
-        # 根据拟合结果外推 R_full[0]
-        R_full = np.copy(R)
-        R_full[0] = r_behavior(self.r[0], *popt)
+        if self.l == 0:
+            # 使用前几个点拟合
+            fit_indices = slice(1, 7)  # 使用 R 第2~7个点（索引从1到6）
+            r_fit = self.r[fit_indices]
+            R_fit = R[fit_indices]
+
+            # 执行拟合
+            popt, _ = curve_fit(r_behavior_R, r_fit, R_fit)
+
+            # 根据拟合结果外推 R_full[0]
+            R_full = np.copy(R)
+            R_full[0] = r_behavior_R(self.r[0], *popt)
+        else:
+            # 使用第10到第40个点进行拟合
+            fit_indices = slice(10, 40)  # 使用第10到40个点（索引从10到39）
+            r_fit = self.r[fit_indices]
+            R_fit = R[fit_indices]
+
+            # 执行拟合
+            popt, _ = curve_fit(r_behavior_R, r_fit, R_fit)
+            R_full = np.copy(R)
+            # 根据拟合结果外推前9个点
+            for i in range(9):
+                R_full[i] = r_behavior_R(self.r[i], *popt)
+
         # # r=0处的处理
         # if self.l == 0:
         #     # 使用洛必达法则: lim(r→0) u(r)/r = du/dr(0)
@@ -169,7 +248,7 @@ class WavefunctionProcessor:
         #     R[0] = coef * self.l
 
         self._verify_normalization(R, tol)
-        return u_norm, R
+        return u_norm, R_full
 
     def _verify_normalization(self, R: np.ndarray, tol: float):
         """验证波函数归一化(考虑非均匀网格)"""
@@ -261,17 +340,24 @@ class ConvergenceAnalyzer:
     def analyze_grid_convergence(self, solver, n_values: list) -> dict:
         """分析不同网格点数的收敛性
 
+        对一系列网格点数计算能量本征值，分析相对误差随
+        网格间距的变化关系，用于确定数值方法的收敛阶数。
+
         Parameters
         ----------
         solver : object
             求解器实例
         n_values : list
-            网格点数列表
+            要测试的网格点数列表
 
         Returns
         -------
         dict
-            收敛性分析结果
+            包含以下键的字典：
+            - n_points: 网格点数列表
+            - energies: 对应的能量值
+            - errors: 相对误差(%)
+            - delta_h: 网格间距
         """
         results = {"n_points": n_values, "energies": [], "errors": [], "delta_h": []}
 

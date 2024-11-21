@@ -4,6 +4,12 @@
 1. 打靶法(shooting): 从外向内积分,寻找满足边界条件的能量本征值
 2. 有限差分法(finite difference): 构建矩阵直接求解本征值问题
 
+主要特点:
+- 采用变换坐标系统，处理波函数在原点附近的奇异性
+- 使用改进的RK4方法进行数值积分
+- 引入多重评价指标确保解的物理正确性
+- 支持任意外部势能函数
+
 Classes:
     ShootingSolver: 打靶法求解器
     FiniteDifferenceSolver: 有限差分法求解器
@@ -23,7 +29,23 @@ logger = logging.getLogger(__name__)
 class ShootingSolver:
     """打靶法求解器
 
-    使用改进的RK4方法从外向内积分求解径向方程
+    使用改进的RK4方法从外向内积分求解径向方程。通过多重评价指标
+    (节点数、渐进行为、连续性等)寻找正确的能量本征值。
+
+    Attributes
+    ----------
+    grid : RadialGrid
+        计算使用的径向网格
+    V : callable
+        势能函数
+    l : int
+        角量子数
+    delta : float
+        网格变换参数
+    r_p : float
+        网格变换标度参数
+    j : ndarray
+        网格索引数组
     """
 
     def __init__(self, grid: RadialGrid, V: callable, l: int):
@@ -86,7 +108,22 @@ class ShootingSolver:
         dvdj[-1] = -1  # 从外向内积分，不影响最终结果，只是差一个常数因子
 
         def derivative(j, v, dvdj):
-            # 计算导数，j可以不是整数
+            """计算v和v'关于j的导数
+
+            Parameters
+            ----------
+            j : float
+                网格点(可以是半整数)
+            v : float
+                函数值
+            dvdj : float
+                函数导数值
+
+            Returns
+            -------
+            tuple
+                (v的导数, v'的导数)
+            """
             v_der = dvdj
             coef = 1 / 4 + self.r_p**2 * np.exp(2 * self.delta * j) * 2 * (
                 self.V_eff(j) - E
@@ -141,7 +178,35 @@ class ShootingSolver:
     def shooting_solve(
         self, E_min: float, E_max: float, target_nodes: int = None
     ) -> Tuple[float, np.ndarray]:
-        """打靶法求解本征值和本征函数"""
+        """打靶法求解本征值和本征函数
+
+        使用优化算法最小化多重目标函数:
+        1. 波函数在原点附近的对数导数误差
+        2. 波函数节点数与目标值的偏差
+        3. 波函数在r_min处的幅值误差
+        4. 波函数导数的连续性误差
+
+        Parameters
+        ----------
+        E_min : float
+            能量搜索下限
+        E_max : float
+            能量搜索上限
+        target_nodes : int, optional
+            目标节点数,默认为n-l-1
+
+        Returns
+        -------
+        float
+            能量本征值
+        np.ndarray
+            归一化的波函数
+
+        Raises
+        ------
+        RuntimeError
+            当优化算法未能收敛时抛出
+        """
         if target_nodes is None:
             target_nodes = self.grid.config.n - self.l - 1
 
@@ -288,9 +353,16 @@ class FiniteDifferenceSolver:
         return self.V(r_safe) + self.l * (self.l + 1) / (2 * r_safe * r_safe)
 
     def construct_hamiltonian(self):
-        """构建哈密顿量矩阵，对应方程：
+        """构建哈密顿量矩阵
+
+        对应变换后的径向方程:
         -[v''(j) - v(j)δ²/4] + 2δ²rp²e^(2δj)v(j)V_eff(j) = E[2δ²rp²e^(2δj)]v(j)
         从j=1开始构建方程
+
+        Returns
+        -------
+        scipy.sparse.csr_matrix
+            哈密顿量稀疏矩阵
         """
         N = len(self.j) - 1  # jmax+1个点，去掉最后一个点
         N_reduced = N - 1  # 再去掉第一个点
