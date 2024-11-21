@@ -62,32 +62,6 @@ class RadialSchrodingerSolver:
             f"n={config.n}, l={config.l}, 方法={config.method}"
         )
 
-    def convergence_study(self, n_points_list=None):
-        """进行收敛性分析
-
-        Parameters
-        ----------
-        n_points_list : list, optional
-            要测试的网格点数列表
-
-        Returns
-        -------
-        dict
-            收敛性分析结果
-        """
-        if n_points_list is None:
-            # 默认测试点数列表：从100到6400，按2的幂次递增
-            n_points_list = [100 * 2**i for i in range(7)]
-
-        results = self.convergence_analyzer.analyze_grid_convergence(
-            self, n_points_list
-        )
-
-        # 可视化结果
-        self.visualizer.plot_convergence_study(results)
-
-        return results
-
     def solve_with_points(self, n_points: int) -> float:
         """使用指定网格点数求解
 
@@ -137,6 +111,32 @@ class RadialSchrodingerSolver:
                 self.solver = ShootingSolver(self.grid, self.V, self.config.l)
             else:
                 self.solver = FiniteDifferenceSolver(self.grid, self.V, self.config.l)
+
+    def convergence_study(self, n_points_list=None) -> Dict:
+        """进行收敛性分析
+
+        Parameters
+        ----------
+        n_points_list : list, optional
+            要测试的网格点数列表
+
+        Returns
+        -------
+        dict
+            收敛性分析结果
+        """
+        if n_points_list is None:
+            if self.config.method == "fd":
+                n_points_list = [100, 200, 300, 400, 500, 600]
+            else:
+                n_points_list = [100 * 2**i for i in range(7)]  # 到6400
+
+        results = self.convergence_analyzer.analyze_grid_convergence(
+            self, n_points_list
+        )
+
+        # 可视化结果
+        self.visualizer.plot_convergence_study(results)
 
     def solve(self) -> Dict:
         """求解量子态
@@ -280,18 +280,24 @@ def run_example():
             logger.error(f"示例运行失败: {str(e)}")
             continue
 
-        # 添加收敛性分析示例
+    # 添加收敛性分析示例
+    methods = ["shooting", "fd"]
+    for method in methods:
         print("\n" + "=" * 60)
-        print("进行网格收敛性分析")
+        print(f"进行氢原子1s态 {method}方法 网格收敛性分析")
         print("=" * 60)
 
         # 使用氢原子1s态作为测试案例
-        config = SolverConfig(V_type="hydrogen", n=1, l=0, method="shooting")
+        config = SolverConfig(V_type="hydrogen", n=1, l=0, method=method)
         solver = RadialSchrodingerSolver(config)
 
         try:
-            # 进行收敛性分析
-            n_points_list = [100, 200, 400, 800, 1600, 3200]
+            # 选择合适的网格点序列
+            if method == "fd":
+                n_points_list = [100, 200, 300, 400, 500, 600]
+            else:
+                n_points_list = [100, 200, 400, 800, 1600, 3200]
+
             results = solver.convergence_study(n_points_list)
 
             # 打印分析结果
@@ -309,12 +315,12 @@ def run_example():
 
 def main():
     """主函数"""
-    # 设置日志
+    # 1. 设置日志系统
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
     )
 
-    # 命令行参数解析
+    # 2. 命令行参数解析
     parser = argparse.ArgumentParser(description="径向薛定谔方程求解器")
     parser.add_argument(
         "--V-type", choices=["hydrogen", "lithium"], default="hydrogen", help="势能类型"
@@ -322,71 +328,13 @@ def main():
     parser.add_argument("--n", type=int, default=1, help="主量子数")
     parser.add_argument("--l", type=int, default=0, help="角量子数")
     parser.add_argument(
-        "--method", choices=["shooting", "fd"], default="fd", help="求解方法"
+        "--method", choices=["shooting", "fd"], default="shooting", help="求解方法"
     )
+    parser.add_argument("--j-max", type=int, help="网格点数(可选)")
     parser.add_argument("--example", action="store_true", help="运行示例计算")
     parser.add_argument("--convergence", action="store_true", help="进行网格收敛性分析")
 
     args = parser.parse_args()
-
-    try:
-        if args.convergence:
-            # 创建配置
-            config = SolverConfig(
-                V_type=args.V_type, n=args.n, l=args.l, method=args.method
-            )
-
-            # 初始化求解器并进行收敛性分析
-            solver = RadialSchrodingerSolver(config)
-            results = solver.convergence_study()
-
-            # 打印结果
-            print("\n网格收敛性分析结果:")
-            print(f"{'网格点数':>10} {'能量':>15} {'相对误差(%)':>15}")
-            print("-" * 45)
-            for n, E, err in zip(
-                results["n_points"], results["energies"], results["errors"]
-            ):
-                print(f"{n:10d} {E:15.8f} {err:15.8f}")
-
-        elif args.example:
-            run_example()
-        else:
-            # 使用命令行参数创建配置
-            config = SolverConfig(
-                V_type=args.V_type, n=args.n, l=args.l, method=args.method
-            )
-
-            # 求解
-            solver = RadialSchrodingerSolver(config)
-            results = solver.solve()
-
-            # 输出结果
-            if "energy" in results:  # shooting方法
-                E = results["energy"]
-                analysis = results["analysis"]
-                print(f"\n能量本征值: {E:.6f} Hartree")
-                if analysis["theoretical_E"] is not None:
-                    print(f"理论值: {analysis['theoretical_E']:.6f} Hartree")
-                    print(f"相对误差: {analysis['relative_error']:.6f}%")
-            elif "energies" in results:  # 有限差分法
-                print("\n计算得到的能量本征值:")
-                for i, E in enumerate(results["energies"]):
-                    print(f"E_{i}: {E:.6f} Hartree")
-
-                # 获取理论值进行对比
-                theoretical = get_theoretical_values()[args.V_type]
-                for i, E in enumerate(results["energies"]):
-                    if (args.n, args.l) in theoretical:
-                        theory = theoretical[(args.n, args.l)]
-                        error = abs((E - theory) / theory) * 100
-                        print(f"理论值: {theory:.6f} Hartree")
-                        print(f"相对误差: {error:.6f}%")
-                    break  # 只比较第一个能量值
-
-    except Exception as e:
-        logger.error(f"程序运行失败: {str(e)}")
-        raise
 
 
 if __name__ == "__main__":
