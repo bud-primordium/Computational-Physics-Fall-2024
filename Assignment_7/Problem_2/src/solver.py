@@ -289,46 +289,113 @@ class FiniteDifferenceSolver:
 
     def construct_hamiltonian(self):
         """构建哈密顿量矩阵，对应方程：
-        -[v''(j) - v(j)δ²/4]/(2δ²rp²e^(2δj)) + v(j)V_eff(j) = Ev(j)
+        -[v''(j) - v(j)δ²/4] + 2δ²rp²e^(2δj)v(j)V_eff(j) = E[2δ²rp²e^(2δj)]v(j)
+        从j=1开始构建方程
         """
         N = len(self.j) - 1  # jmax+1个点，去掉最后一个点
-        H = lil_matrix((N, N))
+        N_reduced = N - 1  # 再去掉第一个点
+        H = lil_matrix((N_reduced, N_reduced))
 
-        # 为了数值稳定性，每个方程同乘 2δ²rp²e^(2δj)
-        # 这样方程变成：-[v''(j) - v(j)δ²/4] + 2δ²rp²e^(2δj)v(j)V_eff(j) = E[2δ²rp²e^(2δj)]v(j)
-
-        for i in range(N):
+        # 从j=1开始构建矩阵
+        for i in range(N_reduced):
+            j_actual = i + 1  # 实际的j索引
             exp_factor = (
-                2 * self.delta**2 * self.r_p**2 * np.exp(2 * self.delta * self.j[i])
+                2
+                * self.delta**2
+                * self.r_p**2
+                * np.exp(2 * self.delta * self.j[j_actual])
             )
 
             # 动能项系数
-            if i > 0:
-                H[i, i - 1] = -1  # v(j-1)系数
-            H[i, i] = 2 + self.delta**2 / 4  # v(j)系数
-            if i < N - 1:
-                H[i, i + 1] = -1  # v(j+1)系数
+            if i > 0:  # j-1项
+                H[i, i - 1] = -1
+            H[i, i] = 2 + self.delta**2 / 4  # j项
+            if i < N_reduced - 1:  # j+1项
+                H[i, i + 1] = -1
 
             # 势能项
-            H[i, i] += exp_factor * self.V_eff(self.j[i])
+            H[i, i] += exp_factor * self.V_eff(self.j[j_actual])
 
         return H.tocsr()
 
-    def fd_solve(self, n_states: int) -> Tuple[np.ndarray, np.ndarray]:
-        """求解本征值问题"""
+    def construct_B_matrix(self, N_reduced):
+        B = lil_matrix((N_reduced, N_reduced))
+        for i in range(N_reduced):
+            j_actual = i + 1
+            B[i, i] = (
+                2
+                * self.delta**2
+                * self.r_p**2
+                * np.exp(2 * self.delta * self.j[j_actual])
+            )
+        return B.tocsr()
+
+    def fd_solve(self, n_states: int) -> tuple:
+        """渐进式求解本征值问题
+
+        先求解最低本征值，然后根据1/n²规律估计后续本征值位置
+
+        Parameters
+        ----------
+        n_states : int
+            需要求解的本征态数量
+
+        Returns
+        -------
+        tuple
+            (energies, states)
+        """
+        H = self.construct_hamiltonian()
+        N_reduced = H.shape[0]
+        B = self.construct_B_matrix(N_reduced)
+
+        # 首先求解最低本征值
         try:
-            H = self.construct_hamiltonian()
+            e_ground, v_ground = linalg.eigsh(
+                H, k=1, M=B, which="SA", maxiter=10000, tol=1e-8
+            )
+            e_ground = e_ground[0]
+        except Exception as e:
+            raise RuntimeError(f"基态求解失败: {str(e)}")
 
-            # 构建广义本征值问题的B矩阵
-            B = lil_matrix((H.shape[0], H.shape[0]))
-            for i in range(H.shape[0]):
-                B[i, i] = (
-                    2 * self.delta**2 * self.r_p**2 * np.exp(2 * self.delta * self.j[i])
-                )
-            B = B.tocsr()
+        energies = [e_ground]
+        states = [v_ground]
 
-            # 求解广义本征值问题 Hv = EBv
-            energies, v_states = linalg.eigsh(H, k=n_states, M=B, which="SA")
+        # 使用找到的基态能量来估计后续本征值
+        if n_states > 1:
+            for n in range(2, n_states + 1):
+                # 根据1/n²规律估计下一个本征值
+                # 假设E_n = E_1/n²
+                estimated_e = e_ground / (n * n)
+
+                # 在估计值附近搜索，使用一个适当的窗口
+                window = abs(e_ground) * 0.1  # 搜索窗口可以根据需要调整
+
+                try:
+                    # 在估计值附近搜索，避免找到已经找到的本征值
+                    for shift in [
+                        estimated_e,
+                        estimated_e + window,
+                        estimated_e - window,
+                    ]:
+                        e, v = linalg.eigsh(
+                            H, k=1, M=B, sigma=shift, which="LM", maxiter=10000
+                        )
+
+                        # 检查是否是新的本征值（与已有值不同）
+                        if all(abs(e[0] - prev_e) > 1e-6 for prev_e in energies):
+                            energies.append(e[0])
+                            states.append(v)
+                            break
+
+                except Exception as e:
+                    print(f"激发态 {n}求解失败: {str(e)}")
+                    continue
+
+        # 合并结果并排序
+        if len(energies) > 0:
+            energies = np.array(energies)
+            v_states = np.hstack(states)
 
             # 排序
             idx = np.argsort(energies)
@@ -336,13 +403,10 @@ class FiniteDifferenceSolver:
             v_states = v_states[:, idx]
 
             # 转换回u并添加边界点
-            u_states = np.zeros((len(self.j), n_states))
-            for i in range(n_states):
-                # 添加v(jmax)=0
+            u_states = np.zeros((len(self.j), len(energies)))
+            for i in range(len(energies)):
                 v_full = np.zeros(len(self.j))
-                v_full[:-1] = v_states[:, i]
-
-                # 转换回u: u(j) = v(j)exp(jδ/2)
+                v_full[1:-1] = v_states[:, i]
                 u_states[:, i] = v_full * np.exp(self.delta * self.j / 2)
 
                 # 归一化
@@ -351,7 +415,6 @@ class FiniteDifferenceSolver:
                     u_states[:, i] /= norm
 
             return energies, u_states
-
-        except Exception as e:
+        else:
             logger.error(f"本征值求解失败: {str(e)}")
             raise
