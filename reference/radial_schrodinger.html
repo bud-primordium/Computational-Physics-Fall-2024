@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>radial_schrodinger package &mdash; Radial Schrödinger Equation Solver 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f115507d"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="radial_schrodinger" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Radial Schrödinger Equation Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">radial_schrodinger</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">radial_schrodinger package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-radial_schrodinger.analysis">radial_schrodinger.analysis module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.analysis.ConvergenceAnalyzer"><code class="docutils literal notranslate"><span class="pre">ConvergenceAnalyzer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.analysis.EnergyAnalyzer"><code class="docutils literal notranslate"><span class="pre">EnergyAnalyzer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.analysis.WavefunctionProcessor"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-radial_schrodinger.main">radial_schrodinger.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.main.RadialSchrodingerSolver"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.main.run_example"><code class="docutils literal notranslate"><span class="pre">run_example()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-radial_schrodinger.solver">radial_schrodinger.solver module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.solver.FiniteDifferenceSolver"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.solver.ShootingSolver"><code class="docutils literal notranslate"><span class="pre">ShootingSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-radial_schrodinger.utils">radial_schrodinger.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.utils.PotentialFunction"><code class="docutils literal notranslate"><span class="pre">PotentialFunction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.utils.RadialGrid"><code class="docutils literal notranslate"><span class="pre">RadialGrid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.utils.SolverConfig"><code class="docutils literal notranslate"><span class="pre">SolverConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.utils.WavefunctionTools"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.utils.get_energy_bounds"><code class="docutils literal notranslate"><span class="pre">get_energy_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.utils.get_theoretical_values"><code class="docutils literal notranslate"><span class="pre">get_theoretical_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-radial_schrodinger.visualization">radial_schrodinger.visualization module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.visualization.ResultVisualizer"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-radial_schrodinger">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.ConvergenceAnalyzer"><code class="docutils literal notranslate"><span class="pre">ConvergenceAnalyzer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.EnergyAnalyzer"><code class="docutils literal notranslate"><span class="pre">EnergyAnalyzer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.FiniteDifferenceSolver"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.PotentialFunction"><code class="docutils literal notranslate"><span class="pre">PotentialFunction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.RadialGrid"><code class="docutils literal notranslate"><span class="pre">RadialGrid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.RadialSchrodingerSolver"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.ResultVisualizer"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.ShootingSolver"><code class="docutils literal notranslate"><span class="pre">ShootingSolver</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.SolverConfig"><code class="docutils literal notranslate"><span class="pre">SolverConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.WavefunctionProcessor"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.WavefunctionTools"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.get_energy_bounds"><code class="docutils literal notranslate"><span class="pre">get_energy_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial_schrodinger.get_theoretical_values"><code class="docutils literal notranslate"><span class="pre">get_theoretical_values()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Radial Schrödinger Equation Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">radial_schrodinger</a></li>
+      <li class="breadcrumb-item active">radial_schrodinger package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/radial_schrodinger.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="radial-schrodinger-package">
+<h1>radial_schrodinger package<a class="headerlink" href="#radial-schrodinger-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-radial_schrodinger.analysis">
+<span id="radial-schrodinger-analysis-module"></span><h2>radial_schrodinger.analysis module<a class="headerlink" href="#module-radial_schrodinger.analysis" title="Link to this heading"></a></h2>
+<p>径向薛定谔方程求解器的分析模块</p>
+<p>包含波函数处理、能量分析和收敛性研究等功能。提供数值结果的验证、分析和后处理。</p>
+<p>主要功能：
+- 波函数的归一化和导数计算
+- 渐近行为分析和小r极限处理
+- 能量本征值与理论值比较
+- 数值方法的收敛性研究</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><p>WavefunctionProcessor: 波函数处理器，处理归一化和导数
+EnergyAnalyzer: 能量分析器，比较计算值和理论值
+ConvergenceAnalyzer: 收敛性分析器，研究网格依赖性</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.ConvergenceAnalyzer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.analysis.</span></span><span class="sig-name descname"><span class="pre">ConvergenceAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy_analyzer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.analysis.EnergyAnalyzer" title="radial_schrodinger.analysis.EnergyAnalyzer"><span class="pre">EnergyAnalyzer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#ConvergenceAnalyzer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.ConvergenceAnalyzer" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>收敛性分析类</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.analysis.ConvergenceAnalyzer.analyze_grid_convergence" title="radial_schrodinger.analysis.ConvergenceAnalyzer.analyze_grid_convergence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_grid_convergence</span></code></a>(solver, n_values)</p></td>
+<td><p>分析不同网格点数的收敛性</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.ConvergenceAnalyzer.analyze_grid_convergence">
+<span class="sig-name descname"><span class="pre">analyze_grid_convergence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#ConvergenceAnalyzer.analyze_grid_convergence"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.ConvergenceAnalyzer.analyze_grid_convergence" title="Link to this definition"></a></dt>
+<dd><p>分析不同网格点数的收敛性</p>
+<p>对一系列网格点数计算能量本征值，分析相对误差随
+网格间距的变化关系，用于确定数值方法的收敛阶数。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>solver</strong><span class="classifier">object</span></dt><dd><p>求解器实例</p>
+</dd>
+<dt><strong>n_values</strong><span class="classifier">list</span></dt><dd><p>要测试的网格点数列表</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>包含以下键的字典：
+- n_points: 网格点数列表
+- energies: 对应的能量值
+- errors: 相对误差(%)
+- delta_h: 网格间距</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.EnergyAnalyzer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.analysis.</span></span><span class="sig-name descname"><span class="pre">EnergyAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theoretical_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#EnergyAnalyzer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.EnergyAnalyzer" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>能量分析类</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.analysis.EnergyAnalyzer.compare_with_theory" title="radial_schrodinger.analysis.EnergyAnalyzer.compare_with_theory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compare_with_theory</span></code></a>(E, V_type, n, l)</p></td>
+<td><p>与理论值比较</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.EnergyAnalyzer.compare_with_theory">
+<span class="sig-name descname"><span class="pre">compare_with_theory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#EnergyAnalyzer.compare_with_theory"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.EnergyAnalyzer.compare_with_theory" title="Link to this definition"></a></dt>
+<dd><p>与理论值比较</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E</strong><span class="classifier">float</span></dt><dd><p>计算得到的能量</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>比较结果字典</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.WavefunctionProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.analysis.</span></span><span class="sig-name descname"><span class="pre">WavefunctionProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">非均匀网格版本</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.WavefunctionProcessor" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>提供波函数的归一化、导数计算和渐近行为分析等功能。
+特别处理了原点附近的奇异性问题。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>非均匀径向网格点</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>delta</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>j</strong><span class="classifier">np.ndarray</span></dt><dd><p>均匀网格点索引</p>
+</dd>
+<dt><strong>r_p</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>dr_dj</strong><span class="classifier">np.ndarray</span></dt><dd><p>网格变换的导数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.analysis.WavefunctionProcessor.analyze_asymptotic" title="radial_schrodinger.analysis.WavefunctionProcessor.analyze_asymptotic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_asymptotic</span></code></a>(u[, num_points])</p></td>
+<td><p>分析r→0时波函数的渐进行为</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.analysis.WavefunctionProcessor.get_derivatives" title="radial_schrodinger.analysis.WavefunctionProcessor.get_derivatives"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_derivatives</span></code></a>(u)</p></td>
+<td><p>计算波函数在非均匀网格上的导数</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.analysis.WavefunctionProcessor.get_r0_values" title="radial_schrodinger.analysis.WavefunctionProcessor.get_r0_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_r0_values</span></code></a>(u)</p></td>
+<td><p>获取r=0处的函数值和导数</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.analysis.WavefunctionProcessor.normalize_wavefunction" title="radial_schrodinger.analysis.WavefunctionProcessor.normalize_wavefunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_wavefunction</span></code></a>(r)</p></td>
+<td><p><ol class="arabic simple">
+<li><p>通过拟合处理r→0处的行为</p></li>
+</ol>
+</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.WavefunctionProcessor.analyze_asymptotic">
+<span class="sig-name descname"><span class="pre">analyze_asymptotic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.analyze_asymptotic"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.WavefunctionProcessor.analyze_asymptotic" title="Link to this definition"></a></dt>
+<dd><p>分析r→0时波函数的渐进行为</p>
+<p>通过对数拟合确定渐进形式：u(r) ~ r^m * exp(-r/n)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>波函数值</p>
+</dd>
+<dt><strong>num_points</strong><span class="classifier">int</span></dt><dd><p>用于拟合的点数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[float, float]</dt><dd><p>(幂次m, 指数参数n)
+m应接近l+1, n应接近主量子数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.WavefunctionProcessor.get_derivatives">
+<span class="sig-name descname"><span class="pre">get_derivatives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.get_derivatives"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.WavefunctionProcessor.get_derivatives" title="Link to this definition"></a></dt>
+<dd><p>计算波函数在非均匀网格上的导数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>波函数值</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[np.ndarray, np.ndarray]</dt><dd><p>一阶和二阶导数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.WavefunctionProcessor.get_r0_values">
+<span class="sig-name descname"><span class="pre">get_r0_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.get_r0_values"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.WavefunctionProcessor.get_r0_values" title="Link to this definition"></a></dt>
+<dd><p>获取r=0处的函数值和导数</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.analysis.WavefunctionProcessor.normalize_wavefunction">
+<span class="sig-name descname"><span class="pre">normalize_wavefunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.normalize_wavefunction"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.analysis.WavefunctionProcessor.normalize_wavefunction" title="Link to this definition"></a></dt>
+<dd><ol class="arabic simple">
+<li><p>通过拟合处理r→0处的行为</p></li>
+<li><p>归一化变换后的波函数u(r)</p></li>
+<li><p>计算物理波函数R(r) = u(r)/r</p></li>
+<li><p>验证归一化条件∫|R(r)|²r²dr = 1</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>输入波函数u(r)</p>
+</dd>
+<dt><strong>tol</strong><span class="classifier">float, optional</span></dt><dd><p>归一化精度要求</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[np.ndarray, np.ndarray]</dt><dd><p>(归一化的u(r), 对应的R(r))</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>当波函数无效或归一化失败时</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-radial_schrodinger.main">
+<span id="radial-schrodinger-main-module"></span><h2>radial_schrodinger.main module<a class="headerlink" href="#module-radial_schrodinger.main" title="Link to this heading"></a></h2>
+<p>径向薛定谔方程求解主程序</p>
+<p>整合各功能模块，提供完整的计算流程和用户接口。</p>
+<p>功能特点:
+- 命令行参数配置和运行控制
+- 多种原子、量子态和求解方法的示例
+- 自动化的收敛性分析流程
+- 结构化的结果输出和可视化</p>
+<dl class="simple">
+<dt>Modules:</dt><dd><p>utils: 工具函数和配置类
+solver: 数值求解方法
+analysis: 结果分析和处理
+visualization: 结果可视化</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.main.RadialSchrodingerSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.main.</span></span><span class="sig-name descname"><span class="pre">RadialSchrodingerSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.SolverConfig" title="radial_schrodinger.utils.SolverConfig"><span class="pre">SolverConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.main.RadialSchrodingerSolver" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>径向薛定谔方程主求解器</p>
+<p>整合配置、网格、求解器、分析器和可视化器，
+提供完整的求解流程控制。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config</strong><span class="classifier">SolverConfig</span></dt><dd><p>计算配置</p>
+</dd>
+<dt><strong>grid</strong><span class="classifier">RadialGrid</span></dt><dd><p>计算网格</p>
+</dd>
+<dt><strong>V</strong><span class="classifier">callable</span></dt><dd><p>势能函数</p>
+</dd>
+<dt><strong>wave_processor</strong><span class="classifier">WavefunctionProcessor</span></dt><dd><p>波函数处理器</p>
+</dd>
+<dt><strong>energy_analyzer</strong><span class="classifier">EnergyAnalyzer</span></dt><dd><p>能量分析器</p>
+</dd>
+<dt><strong>visualizer</strong><span class="classifier">ResultVisualizer</span></dt><dd><p>结果可视化器</p>
+</dd>
+<dt><strong>convergence_analyzer</strong><span class="classifier">ConvergenceAnalyzer</span></dt><dd><p>收敛性分析器</p>
+</dd>
+<dt><strong>solver</strong><span class="classifier">Union[ShootingSolver, FiniteDifferenceSolver]</span></dt><dd><p>具体求解器实例</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.main.RadialSchrodingerSolver.convergence_study" title="radial_schrodinger.main.RadialSchrodingerSolver.convergence_study"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convergence_study</span></code></a>([n_points_list])</p></td>
+<td><p>进行收敛性分析</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.main.RadialSchrodingerSolver.solve" title="radial_schrodinger.main.RadialSchrodingerSolver.solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve</span></code></a>()</p></td>
+<td><p>求解指定的量子态</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.main.RadialSchrodingerSolver.solve_with_points" title="radial_schrodinger.main.RadialSchrodingerSolver.solve_with_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve_with_points</span></code></a>(n_points)</p></td>
+<td><p>使用指定网格点数求解</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.main.RadialSchrodingerSolver.convergence_study">
+<span class="sig-name descname"><span class="pre">convergence_study</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver.convergence_study"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.main.RadialSchrodingerSolver.convergence_study" title="Link to this definition"></a></dt>
+<dd><p>进行收敛性分析</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_points_list</strong><span class="classifier">list, optional</span></dt><dd><p>要测试的网格点数列表</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>收敛性分析结果</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.main.RadialSchrodingerSolver.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver.solve"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.main.RadialSchrodingerSolver.solve" title="Link to this definition"></a></dt>
+<dd><p>求解指定的量子态</p>
+<p>根据配置选择求解方法，完成求解并进行后处理：
+1. 确定能量搜索范围
+2. 求解本征值和本征函数
+3. 波函数归一化和处理
+4. 与理论值比较
+5. 结果可视化</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Dict</dt><dd><p>计算结果字典，包含:
+- energy: 本征能量
+- wavefunction: 波函数数据
+- analysis: 与理论值的比较
+- all_energies: (仅FD方法)所有本征值
+- all_states: (仅FD方法)所有本征态</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Exception</dt><dd><p>求解过程中的错误</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.main.RadialSchrodingerSolver.solve_with_points">
+<span class="sig-name descname"><span class="pre">solve_with_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver.solve_with_points"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.main.RadialSchrodingerSolver.solve_with_points" title="Link to this definition"></a></dt>
+<dd><p>使用指定网格点数求解</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_points</strong><span class="classifier">int</span></dt><dd><p>网格点数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>计算得到的能量</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="radial_schrodinger.main.main">
+<span class="sig-prename descclassname"><span class="pre">radial_schrodinger.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#main"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.main.main" title="Link to this definition"></a></dt>
+<dd><p>主程序入口</p>
+<p>处理命令行参数并执行相应的计算路径:
+1. 示例计算模式
+2. 收敛性分析模式
+3. 单次计算模式</p>
+<p>支持的参数:
+–V-type: 势能类型(hydrogen/lithium)
+–n: 主量子数
+–l: 角量子数
+–method: 求解方法(shooting/fd)
+–j-max: 网格点数
+–example: 运行示例
+–convergence: 进行收敛性分析</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="radial_schrodinger.main.run_example">
+<span class="sig-prename descclassname"><span class="pre">radial_schrodinger.main.</span></span><span class="sig-name descname"><span class="pre">run_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#run_example"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.main.run_example" title="Link to this definition"></a></dt>
+<dd><p>运行示例计算</p>
+</dd></dl>
+
+</section>
+<section id="module-radial_schrodinger.solver">
+<span id="radial-schrodinger-solver-module"></span><h2>radial_schrodinger.solver module<a class="headerlink" href="#module-radial_schrodinger.solver" title="Link to this heading"></a></h2>
+<p>径向薛定谔方程求解器的核心求解模块</p>
+<p>实现了两种求解方法:
+1. 打靶法(shooting): 从外向内积分,寻找满足边界条件的能量本征值
+2. 有限差分法(finite difference): 构建矩阵直接求解本征值问题</p>
+<p>主要特点:
+- 采用变换坐标系统，处理波函数在原点附近的奇异性
+- 使用改进的RK4方法进行数值积分
+- 引入多重评价指标确保解的物理正确性
+- 支持任意外部势能函数</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><p>ShootingSolver: 打靶法求解器
+FiniteDifferenceSolver: 有限差分法求解器</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.FiniteDifferenceSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.solver.</span></span><span class="sig-name descname"><span class="pre">FiniteDifferenceSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.RadialGrid" title="radial_schrodinger.utils.RadialGrid"><span class="pre">RadialGrid</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.FiniteDifferenceSolver" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>有限差分法求解器</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.solver.FiniteDifferenceSolver.V_eff" title="radial_schrodinger.solver.FiniteDifferenceSolver.V_eff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_eff</span></code></a>(j)</p></td>
+<td><p>计算有效势</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.solver.FiniteDifferenceSolver.construct_hamiltonian" title="radial_schrodinger.solver.FiniteDifferenceSolver.construct_hamiltonian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_hamiltonian</span></code></a>()</p></td>
+<td><p>构建哈密顿量矩阵</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.solver.FiniteDifferenceSolver.fd_solve" title="radial_schrodinger.solver.FiniteDifferenceSolver.fd_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fd_solve</span></code></a>(n_states)</p></td>
+<td><p>渐进式求解本征值问题</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>construct_B_matrix</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.FiniteDifferenceSolver.V_eff">
+<span class="sig-name descname"><span class="pre">V_eff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.V_eff"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.FiniteDifferenceSolver.V_eff" title="Link to this definition"></a></dt>
+<dd><p>计算有效势</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>j</strong><span class="classifier">array_like</span></dt><dd><p>网格点索引</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>有效势能</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.FiniteDifferenceSolver.construct_B_matrix">
+<span class="sig-name descname"><span class="pre">construct_B_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N_reduced</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.construct_B_matrix"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.FiniteDifferenceSolver.construct_B_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.FiniteDifferenceSolver.construct_hamiltonian">
+<span class="sig-name descname"><span class="pre">construct_hamiltonian</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.construct_hamiltonian"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.FiniteDifferenceSolver.construct_hamiltonian" title="Link to this definition"></a></dt>
+<dd><p>构建哈密顿量矩阵</p>
+<p>对应变换后的径向方程:
+-[v’’(j) - v(j)δ²/4] + 2δ²rp²e^(2δj)v(j)V_eff(j) = E[2δ²rp²e^(2δj)]v(j)
+从j=1开始构建方程</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>scipy.sparse.csr_matrix</dt><dd><p>哈密顿量稀疏矩阵</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.FiniteDifferenceSolver.fd_solve">
+<span class="sig-name descname"><span class="pre">fd_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.fd_solve"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.FiniteDifferenceSolver.fd_solve" title="Link to this definition"></a></dt>
+<dd><p>渐进式求解本征值问题</p>
+<p>先求解最低本征值，然后根据1/n²规律估计后续本征值位置</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_states</strong><span class="classifier">int</span></dt><dd><p>需要求解的本征态数量</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>tuple</dt><dd><p>(energies, states)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.ShootingSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.solver.</span></span><span class="sig-name descname"><span class="pre">ShootingSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.RadialGrid" title="radial_schrodinger.utils.RadialGrid"><span class="pre">RadialGrid</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.ShootingSolver" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>打靶法求解器</p>
+<p>使用改进的RK4方法从外向内积分求解径向方程。通过多重评价指标
+(节点数、渐进行为、连续性等)寻找正确的能量本征值。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>grid</strong><span class="classifier">RadialGrid</span></dt><dd><p>计算使用的径向网格</p>
+</dd>
+<dt><strong>V</strong><span class="classifier">callable</span></dt><dd><p>势能函数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>delta</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>r_p</strong><span class="classifier">float</span></dt><dd><p>网格变换标度参数</p>
+</dd>
+<dt><strong>j</strong><span class="classifier">ndarray</span></dt><dd><p>网格索引数组</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.solver.ShootingSolver.V_eff" title="radial_schrodinger.solver.ShootingSolver.V_eff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_eff</span></code></a>(j)</p></td>
+<td><p>计算有效势</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.solver.ShootingSolver.integrate_inward" title="radial_schrodinger.solver.ShootingSolver.integrate_inward"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate_inward</span></code></a>(E)</p></td>
+<td><p>从外向内积分</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.solver.ShootingSolver.shooting_solve" title="radial_schrodinger.solver.ShootingSolver.shooting_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shooting_solve</span></code></a>(E_min, E_max[, target_nodes])</p></td>
+<td><p>打靶法求解本征值和本征函数</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.ShootingSolver.V_eff">
+<span class="sig-name descname"><span class="pre">V_eff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver.V_eff"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.ShootingSolver.V_eff" title="Link to this definition"></a></dt>
+<dd><p>计算有效势</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>j</strong><span class="classifier">不只局限于整数</span></dt><dd><p>当前的网格索引，可以是半整数，便于rK4积分</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>有效势</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.ShootingSolver.integrate_inward">
+<span class="sig-name descname"><span class="pre">integrate_inward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver.integrate_inward"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.ShootingSolver.integrate_inward" title="Link to this definition"></a></dt>
+<dd><p>从外向内积分</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E</strong><span class="classifier">float</span></dt><dd><p>能量</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>波函数u(r)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.solver.ShootingSolver.shooting_solve">
+<span class="sig-name descname"><span class="pre">shooting_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver.shooting_solve"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.solver.ShootingSolver.shooting_solve" title="Link to this definition"></a></dt>
+<dd><p>打靶法求解本征值和本征函数</p>
+<p>使用优化算法最小化多重目标函数:
+1. 波函数在原点附近的对数导数误差
+2. 波函数节点数与目标值的偏差
+3. 波函数在r_min处的幅值误差
+4. 波函数导数的连续性误差</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E_min</strong><span class="classifier">float</span></dt><dd><p>能量搜索下限</p>
+</dd>
+<dt><strong>E_max</strong><span class="classifier">float</span></dt><dd><p>能量搜索上限</p>
+</dd>
+<dt><strong>target_nodes</strong><span class="classifier">int, optional</span></dt><dd><p>目标节点数,默认为n-l-1</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>能量本征值</p>
+</dd>
+<dt>np.ndarray</dt><dd><p>归一化的波函数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>RuntimeError</dt><dd><p>当优化算法未能收敛时抛出</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-radial_schrodinger.utils">
+<span id="radial-schrodinger-utils-module"></span><h2>radial_schrodinger.utils module<a class="headerlink" href="#module-radial_schrodinger.utils" title="Link to this heading"></a></h2>
+<p>径向薛定谔方程求解器的工具模块</p>
+<p>包含网格生成、势能函数、波函数工具等基础设施。
+提供配置类和理论值查询等功能支持。</p>
+<p>默认单位:
+- 长度: a bohr半径
+- 能量: hatree</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><p>SolverConfig: 求解器配置类
+RadialGrid: 径向网格工具类
+PotentialFunction: 势能函数类
+WavefunctionTools: 波函数工具类</p>
+</dd>
+<dt>Functions:</dt><dd><p>get_theoretical_values: 获取理论参考值
+get_energy_bounds: 估计能量搜索范围</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.PotentialFunction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.utils.</span></span><span class="sig-name descname"><span class="pre">PotentialFunction</span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.PotentialFunction" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>势能函数类</p>
+<p>提供不同原子的势能函数实现:
+1. 氢原子: 库仑势 V(r) = -1/r
+2. 锂原子: GTH赝势,包含局域和非局域部分</p>
+<blockquote>
+<div><p>V(r) = V_loc(r) + V_nl(r)</p>
+</div></blockquote>
+<p>注: 已考虑电子负电荷,势能直接给出</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.utils.PotentialFunction.V_hydrogen" title="radial_schrodinger.utils.PotentialFunction.V_hydrogen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_hydrogen</span></code></a>(r)</p></td>
+<td><p>氢原子势能: V(r) = -1/r</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.utils.PotentialFunction.V_lithium" title="radial_schrodinger.utils.PotentialFunction.V_lithium"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_lithium</span></code></a>(r[, Z_ion, r_loc, C1, C2, C3, C4])</p></td>
+<td><p>锂原子赝势</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.utils.PotentialFunction.get_potential" title="radial_schrodinger.utils.PotentialFunction.get_potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_potential</span></code></a>(V_type)</p></td>
+<td><p>获取势能函数</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.PotentialFunction.V_hydrogen">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">V_hydrogen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction.V_hydrogen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.PotentialFunction.V_hydrogen" title="Link to this definition"></a></dt>
+<dd><p>氢原子势能: V(r) = -1/r</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向距离数组</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>势能数组</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.PotentialFunction.V_lithium">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">V_lithium</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z_ion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-14.0093922</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9.5099073</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1.7532723</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0834586</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction.V_lithium"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.PotentialFunction.V_lithium" title="Link to this definition"></a></dt>
+<dd><p>锂原子赝势</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向距离数组</p>
+</dd>
+<dt><strong>Z_ion</strong><span class="classifier">float, optional</span></dt><dd><p>有效核电荷</p>
+</dd>
+<dt><strong>r_loc</strong><span class="classifier">float, optional</span></dt><dd><p>局域化参数</p>
+</dd>
+<dt><strong>C1-C4</strong><span class="classifier">float, optional</span></dt><dd><p>势能参数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>势能数组</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.PotentialFunction.get_potential">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction.get_potential"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.PotentialFunction.get_potential" title="Link to this definition"></a></dt>
+<dd><p>获取势能函数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型(‘hydrogen’或’lithium’)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>callable</dt><dd><p>对应的势能函数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.RadialGrid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.utils.</span></span><span class="sig-name descname"><span class="pre">RadialGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.SolverConfig" title="radial_schrodinger.utils.SolverConfig"><span class="pre">SolverConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#RadialGrid"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.RadialGrid" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>径向网格工具类，处理非均匀网格的生成和变换</p>
+<p>使用变换 r = r_p[exp(j*delta) - 1] + r_min 生成非均匀网格,
+在原点附近较密,远处较疏,更适合原子波函数的数值计算。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config</strong><span class="classifier">SolverConfig</span></dt><dd><p>网格配置对象</p>
+</dd>
+<dt><strong>j</strong><span class="classifier">ndarray</span></dt><dd><p>均匀网格点索引</p>
+</dd>
+<dt><strong>r_p</strong><span class="classifier">float</span></dt><dd><p>网格变换标度参数</p>
+</dd>
+<dt><strong>r</strong><span class="classifier">ndarray</span></dt><dd><p>物理空间径向坐标</p>
+</dd>
+<dt><strong>dr</strong><span class="classifier">ndarray</span></dt><dd><p>网格间距</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.utils.RadialGrid.get_grid_info" title="radial_schrodinger.utils.RadialGrid.get_grid_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_grid_info</span></code></a>()</p></td>
+<td><p>返回网格信息</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.utils.RadialGrid.setup_grid" title="radial_schrodinger.utils.RadialGrid.setup_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_grid</span></code></a>()</p></td>
+<td><p>设置非均匀网格，使用变换 r = r_p[exp(j*delta) - 1] + r_min</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.RadialGrid.get_grid_info">
+<span class="sig-name descname"><span class="pre">get_grid_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#RadialGrid.get_grid_info"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.RadialGrid.get_grid_info" title="Link to this definition"></a></dt>
+<dd><p>返回网格信息</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.RadialGrid.setup_grid">
+<span class="sig-name descname"><span class="pre">setup_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#RadialGrid.setup_grid"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.RadialGrid.setup_grid" title="Link to this definition"></a></dt>
+<dd><p>设置非均匀网格，使用变换 r = r_p[exp(j*delta) - 1] + r_min</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.utils.</span></span><span class="sig-name descname"><span class="pre">SolverConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'hydrogen'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shooting'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#SolverConfig"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>求解器配置类</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r_max</strong><span class="classifier">float</span></dt><dd><p>最大径向距离 (Bohr)</p>
+</dd>
+<dt><strong>r_min</strong><span class="classifier">float</span></dt><dd><p>最小径向距离 (Bohr)</p>
+</dd>
+<dt><strong>j_max</strong><span class="classifier">int</span></dt><dd><p>径向网格点数</p>
+</dd>
+<dt><strong>delta</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>n_states</strong><span class="classifier">int</span></dt><dd><p>需要求解的本征态数量</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型 (‘hydrogen’ 或 ‘lithium’)</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>求解方法 (‘shooting’ 或 ‘fd’)</p>
+</dd>
+<dt><strong>tol</strong><span class="classifier">float</span></dt><dd><p>收敛精度</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.V_type">
+<span class="sig-name descname"><span class="pre">V_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hydrogen'</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.V_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.config_summary">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config_summary</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.config_summary" title="Link to this definition"></a></dt>
+<dd><p>返回配置摘要信息</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.delta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.j_max">
+<span class="sig-name descname"><span class="pre">j_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.j_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.l">
+<span class="sig-name descname"><span class="pre">l</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.l" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.method">
+<span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shooting'</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.method" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.n">
+<span class="sig-name descname"><span class="pre">n</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.n" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.n_states">
+<span class="sig-name descname"><span class="pre">n_states</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.n_states" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.r_max">
+<span class="sig-name descname"><span class="pre">r_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30.0</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.r_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.r_min">
+<span class="sig-name descname"><span class="pre">r_min</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-05</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.r_min" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.SolverConfig.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-08</span></em><a class="headerlink" href="#radial_schrodinger.utils.SolverConfig.tol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.WavefunctionTools">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.utils.</span></span><span class="sig-name descname"><span class="pre">WavefunctionTools</span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#WavefunctionTools"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.WavefunctionTools" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>波函数工具类</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.utils.WavefunctionTools.count_nodes" title="radial_schrodinger.utils.WavefunctionTools.count_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">count_nodes</span></code></a>(u[, eps])</p></td>
+<td><p>计算波函数节点数</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.utils.WavefunctionTools.get_analytic_hydrogen" title="radial_schrodinger.utils.WavefunctionTools.get_analytic_hydrogen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_analytic_hydrogen</span></code></a>(r)</p></td>
+<td><p>实现前几个低量子数态的径向波函数解析表达式: R(r) = N_nl * r^l * L_n^(2l+1)(2r/n) * exp(-r/n) 其中N_nl为归一化系数,L_n^k为拉盖尔多项式</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.WavefunctionTools.count_nodes">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">count_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#WavefunctionTools.count_nodes"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.WavefunctionTools.count_nodes" title="Link to this definition"></a></dt>
+<dd><p>计算波函数节点数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>波函数数组</p>
+</dd>
+<dt><strong>eps</strong><span class="classifier">float, optional</span></dt><dd><p>判定零点的阈值</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>int</dt><dd><p>节点数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.WavefunctionTools.get_analytic_hydrogen">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_analytic_hydrogen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#WavefunctionTools.get_analytic_hydrogen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.WavefunctionTools.get_analytic_hydrogen" title="Link to this definition"></a></dt>
+<dd><p>实现前几个低量子数态的径向波函数解析表达式:
+R(r) = N_nl * r^l * L_n^(2l+1)(2r/n) * exp(-r/n)
+其中N_nl为归一化系数,L_n^k为拉盖尔多项式</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向距离数组</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Optional[np.ndarray]</dt><dd><p>解析波函数,若无解析表达式则返回None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.get_energy_bounds">
+<span class="sig-prename descclassname"><span class="pre">radial_schrodinger.utils.</span></span><span class="sig-name descname"><span class="pre">get_energy_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#get_energy_bounds"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.get_energy_bounds" title="Link to this definition"></a></dt>
+<dd><p>获取不同原子的能量范围估计</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[float, float]</dt><dd><p>(E_min, E_max) 能量范围估计</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="radial_schrodinger.utils.get_theoretical_values">
+<span class="sig-prename descclassname"><span class="pre">radial_schrodinger.utils.</span></span><span class="sig-name descname"><span class="pre">get_theoretical_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Hartree单位</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#get_theoretical_values"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.utils.get_theoretical_values" title="Link to this definition"></a></dt>
+<dd><p>获取理论参考值(Hartree单位)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Dict</dt><dd><p>不同原子的能量本征值字典
+格式: {原子类型: {(n,l): 能量}}</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-radial_schrodinger.visualization">
+<span id="radial-schrodinger-visualization-module"></span><h2>radial_schrodinger.visualization module<a class="headerlink" href="#module-radial_schrodinger.visualization" title="Link to this heading"></a></h2>
+<p>径向薛定谔方程求解器的可视化模块</p>
+<p>负责绘制波函数、概率密度、能量扫描结果等图像。
+提供结果可视化和分析展示功能。</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><p>ResultVisualizer: 结果可视化类</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.visualization.ResultVisualizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.visualization.</span></span><span class="sig-name descname"><span class="pre">ResultVisualizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.visualization.ResultVisualizer" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>结果可视化类</p>
+<p>提供原子波函数、能量和收敛性分析的可视化功能。
+自动处理中文显示和样式优化。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向网格点</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.visualization.ResultVisualizer.plot_convergence_study" title="radial_schrodinger.visualization.ResultVisualizer.plot_convergence_study"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_convergence_study</span></code></a>(results[, V_type, n, ...])</p></td>
+<td><p>绘制收敛性分析结果</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.visualization.ResultVisualizer.plot_energy_scan" title="radial_schrodinger.visualization.ResultVisualizer.plot_energy_scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_energy_scan</span></code></a>(E_array, u0_array, n, l, V_type)</p></td>
+<td><p>绘制能量扫描结果</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.visualization.ResultVisualizer.plot_wavefunction" title="radial_schrodinger.visualization.ResultVisualizer.plot_wavefunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_wavefunction</span></code></a>(u, R, E, n, l, V_type[, ...])</p></td>
+<td><p>绘制波函数及其概率密度分布</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.visualization.ResultVisualizer.plot_convergence_study">
+<span class="sig-name descname"><span class="pre">plot_convergence_study</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shooting'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer.plot_convergence_study"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.visualization.ResultVisualizer.plot_convergence_study" title="Link to this definition"></a></dt>
+<dd><p>绘制收敛性分析结果</p>
+<p>使用双对数坐标展示网格间距与相对误差的关系。
+同时绘制二阶和四阶收敛的参考线以供比较。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>results</strong><span class="classifier">Dict</span></dt><dd><p>包含 ‘delta_h’(网格间距)和’errors’(相对误差)的字典</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>求解方法(‘shooting’或’fd’)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.visualization.ResultVisualizer.plot_energy_scan">
+<span class="sig-name descname"><span class="pre">plot_energy_scan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u0_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer.plot_energy_scan"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.visualization.ResultVisualizer.plot_energy_scan" title="Link to this definition"></a></dt>
+<dd><p>绘制能量扫描结果</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E_array</strong><span class="classifier">np.ndarray</span></dt><dd><p>能量数组</p>
+</dd>
+<dt><strong>u0_array</strong><span class="classifier">np.ndarray</span></dt><dd><p>对应的u(0)值</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.visualization.ResultVisualizer.plot_wavefunction">
+<span class="sig-name descname"><span class="pre">plot_wavefunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_analytic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shooting'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer.plot_wavefunction"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.visualization.ResultVisualizer.plot_wavefunction" title="Link to this definition"></a></dt>
+<dd><p>绘制波函数及其概率密度分布</p>
+<p>生成两个子图:
+1. 波函数图：展示变换后的u(r)和物理波函数R(r)
+2. 概率密度图：展示r²R²(r)分布</p>
+<p>当提供解析解时，同时绘制对比曲线。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>变换坐标下的径向波函数u(r)</p>
+</dd>
+<dt><strong>R</strong><span class="classifier">np.ndarray</span></dt><dd><p>物理坐标下的径向波函数R(r)</p>
+</dd>
+<dt><strong>E</strong><span class="classifier">float</span></dt><dd><p>能量本征值(Hartree)</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型(‘hydrogen’或’lithium’)</p>
+</dd>
+<dt><strong>R_analytic</strong><span class="classifier">np.ndarray, optional</span></dt><dd><p>解析波函数(对氢原子部分态可用)</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>求解方法(‘shooting’或’fd’)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-radial_schrodinger">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-radial_schrodinger" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.ConvergenceAnalyzer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">ConvergenceAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy_analyzer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.analysis.EnergyAnalyzer" title="radial_schrodinger.analysis.EnergyAnalyzer"><span class="pre">EnergyAnalyzer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#ConvergenceAnalyzer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ConvergenceAnalyzer" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>收敛性分析类</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.ConvergenceAnalyzer.analyze_grid_convergence" title="radial_schrodinger.ConvergenceAnalyzer.analyze_grid_convergence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_grid_convergence</span></code></a>(solver, n_values)</p></td>
+<td><p>分析不同网格点数的收敛性</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.ConvergenceAnalyzer.analyze_grid_convergence">
+<span class="sig-name descname"><span class="pre">analyze_grid_convergence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#ConvergenceAnalyzer.analyze_grid_convergence"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ConvergenceAnalyzer.analyze_grid_convergence" title="Link to this definition"></a></dt>
+<dd><p>分析不同网格点数的收敛性</p>
+<p>对一系列网格点数计算能量本征值，分析相对误差随
+网格间距的变化关系，用于确定数值方法的收敛阶数。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>solver</strong><span class="classifier">object</span></dt><dd><p>求解器实例</p>
+</dd>
+<dt><strong>n_values</strong><span class="classifier">list</span></dt><dd><p>要测试的网格点数列表</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>包含以下键的字典：
+- n_points: 网格点数列表
+- energies: 对应的能量值
+- errors: 相对误差(%)
+- delta_h: 网格间距</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.EnergyAnalyzer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">EnergyAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theoretical_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#EnergyAnalyzer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.EnergyAnalyzer" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>能量分析类</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.EnergyAnalyzer.compare_with_theory" title="radial_schrodinger.EnergyAnalyzer.compare_with_theory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compare_with_theory</span></code></a>(E, V_type, n, l)</p></td>
+<td><p>与理论值比较</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.EnergyAnalyzer.compare_with_theory">
+<span class="sig-name descname"><span class="pre">compare_with_theory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#EnergyAnalyzer.compare_with_theory"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.EnergyAnalyzer.compare_with_theory" title="Link to this definition"></a></dt>
+<dd><p>与理论值比较</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E</strong><span class="classifier">float</span></dt><dd><p>计算得到的能量</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>比较结果字典</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.FiniteDifferenceSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">FiniteDifferenceSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.RadialGrid" title="radial_schrodinger.utils.RadialGrid"><span class="pre">RadialGrid</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.FiniteDifferenceSolver" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>有限差分法求解器</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.FiniteDifferenceSolver.V_eff" title="radial_schrodinger.FiniteDifferenceSolver.V_eff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_eff</span></code></a>(j)</p></td>
+<td><p>计算有效势</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.FiniteDifferenceSolver.construct_hamiltonian" title="radial_schrodinger.FiniteDifferenceSolver.construct_hamiltonian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_hamiltonian</span></code></a>()</p></td>
+<td><p>构建哈密顿量矩阵</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.FiniteDifferenceSolver.fd_solve" title="radial_schrodinger.FiniteDifferenceSolver.fd_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fd_solve</span></code></a>(n_states)</p></td>
+<td><p>渐进式求解本征值问题</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>construct_B_matrix</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.FiniteDifferenceSolver.V_eff">
+<span class="sig-name descname"><span class="pre">V_eff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.V_eff"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.FiniteDifferenceSolver.V_eff" title="Link to this definition"></a></dt>
+<dd><p>计算有效势</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>j</strong><span class="classifier">array_like</span></dt><dd><p>网格点索引</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>有效势能</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.FiniteDifferenceSolver.construct_B_matrix">
+<span class="sig-name descname"><span class="pre">construct_B_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N_reduced</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.construct_B_matrix"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.FiniteDifferenceSolver.construct_B_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.FiniteDifferenceSolver.construct_hamiltonian">
+<span class="sig-name descname"><span class="pre">construct_hamiltonian</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.construct_hamiltonian"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.FiniteDifferenceSolver.construct_hamiltonian" title="Link to this definition"></a></dt>
+<dd><p>构建哈密顿量矩阵</p>
+<p>对应变换后的径向方程:
+-[v’’(j) - v(j)δ²/4] + 2δ²rp²e^(2δj)v(j)V_eff(j) = E[2δ²rp²e^(2δj)]v(j)
+从j=1开始构建方程</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>scipy.sparse.csr_matrix</dt><dd><p>哈密顿量稀疏矩阵</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.FiniteDifferenceSolver.fd_solve">
+<span class="sig-name descname"><span class="pre">fd_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#FiniteDifferenceSolver.fd_solve"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.FiniteDifferenceSolver.fd_solve" title="Link to this definition"></a></dt>
+<dd><p>渐进式求解本征值问题</p>
+<p>先求解最低本征值，然后根据1/n²规律估计后续本征值位置</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_states</strong><span class="classifier">int</span></dt><dd><p>需要求解的本征态数量</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>tuple</dt><dd><p>(energies, states)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.PotentialFunction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">PotentialFunction</span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.PotentialFunction" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>势能函数类</p>
+<p>提供不同原子的势能函数实现:
+1. 氢原子: 库仑势 V(r) = -1/r
+2. 锂原子: GTH赝势,包含局域和非局域部分</p>
+<blockquote>
+<div><p>V(r) = V_loc(r) + V_nl(r)</p>
+</div></blockquote>
+<p>注: 已考虑电子负电荷,势能直接给出</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.PotentialFunction.V_hydrogen" title="radial_schrodinger.PotentialFunction.V_hydrogen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_hydrogen</span></code></a>(r)</p></td>
+<td><p>氢原子势能: V(r) = -1/r</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.PotentialFunction.V_lithium" title="radial_schrodinger.PotentialFunction.V_lithium"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_lithium</span></code></a>(r[, Z_ion, r_loc, C1, C2, C3, C4])</p></td>
+<td><p>锂原子赝势</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.PotentialFunction.get_potential" title="radial_schrodinger.PotentialFunction.get_potential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_potential</span></code></a>(V_type)</p></td>
+<td><p>获取势能函数</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.PotentialFunction.V_hydrogen">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">V_hydrogen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction.V_hydrogen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.PotentialFunction.V_hydrogen" title="Link to this definition"></a></dt>
+<dd><p>氢原子势能: V(r) = -1/r</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向距离数组</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>势能数组</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.PotentialFunction.V_lithium">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">V_lithium</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z_ion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-14.0093922</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9.5099073</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1.7532723</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0834586</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction.V_lithium"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.PotentialFunction.V_lithium" title="Link to this definition"></a></dt>
+<dd><p>锂原子赝势</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向距离数组</p>
+</dd>
+<dt><strong>Z_ion</strong><span class="classifier">float, optional</span></dt><dd><p>有效核电荷</p>
+</dd>
+<dt><strong>r_loc</strong><span class="classifier">float, optional</span></dt><dd><p>局域化参数</p>
+</dd>
+<dt><strong>C1-C4</strong><span class="classifier">float, optional</span></dt><dd><p>势能参数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>势能数组</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.PotentialFunction.get_potential">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#PotentialFunction.get_potential"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.PotentialFunction.get_potential" title="Link to this definition"></a></dt>
+<dd><p>获取势能函数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型(‘hydrogen’或’lithium’)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>callable</dt><dd><p>对应的势能函数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.RadialGrid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">RadialGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.SolverConfig" title="radial_schrodinger.utils.SolverConfig"><span class="pre">SolverConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#RadialGrid"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.RadialGrid" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>径向网格工具类，处理非均匀网格的生成和变换</p>
+<p>使用变换 r = r_p[exp(j*delta) - 1] + r_min 生成非均匀网格,
+在原点附近较密,远处较疏,更适合原子波函数的数值计算。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config</strong><span class="classifier">SolverConfig</span></dt><dd><p>网格配置对象</p>
+</dd>
+<dt><strong>j</strong><span class="classifier">ndarray</span></dt><dd><p>均匀网格点索引</p>
+</dd>
+<dt><strong>r_p</strong><span class="classifier">float</span></dt><dd><p>网格变换标度参数</p>
+</dd>
+<dt><strong>r</strong><span class="classifier">ndarray</span></dt><dd><p>物理空间径向坐标</p>
+</dd>
+<dt><strong>dr</strong><span class="classifier">ndarray</span></dt><dd><p>网格间距</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.RadialGrid.get_grid_info" title="radial_schrodinger.RadialGrid.get_grid_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_grid_info</span></code></a>()</p></td>
+<td><p>返回网格信息</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.RadialGrid.setup_grid" title="radial_schrodinger.RadialGrid.setup_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_grid</span></code></a>()</p></td>
+<td><p>设置非均匀网格，使用变换 r = r_p[exp(j*delta) - 1] + r_min</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.RadialGrid.get_grid_info">
+<span class="sig-name descname"><span class="pre">get_grid_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#RadialGrid.get_grid_info"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.RadialGrid.get_grid_info" title="Link to this definition"></a></dt>
+<dd><p>返回网格信息</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.RadialGrid.setup_grid">
+<span class="sig-name descname"><span class="pre">setup_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#RadialGrid.setup_grid"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.RadialGrid.setup_grid" title="Link to this definition"></a></dt>
+<dd><p>设置非均匀网格，使用变换 r = r_p[exp(j*delta) - 1] + r_min</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.RadialSchrodingerSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">RadialSchrodingerSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.SolverConfig" title="radial_schrodinger.utils.SolverConfig"><span class="pre">SolverConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.RadialSchrodingerSolver" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>径向薛定谔方程主求解器</p>
+<p>整合配置、网格、求解器、分析器和可视化器，
+提供完整的求解流程控制。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config</strong><span class="classifier">SolverConfig</span></dt><dd><p>计算配置</p>
+</dd>
+<dt><strong>grid</strong><span class="classifier">RadialGrid</span></dt><dd><p>计算网格</p>
+</dd>
+<dt><strong>V</strong><span class="classifier">callable</span></dt><dd><p>势能函数</p>
+</dd>
+<dt><strong>wave_processor</strong><span class="classifier">WavefunctionProcessor</span></dt><dd><p>波函数处理器</p>
+</dd>
+<dt><strong>energy_analyzer</strong><span class="classifier">EnergyAnalyzer</span></dt><dd><p>能量分析器</p>
+</dd>
+<dt><strong>visualizer</strong><span class="classifier">ResultVisualizer</span></dt><dd><p>结果可视化器</p>
+</dd>
+<dt><strong>convergence_analyzer</strong><span class="classifier">ConvergenceAnalyzer</span></dt><dd><p>收敛性分析器</p>
+</dd>
+<dt><strong>solver</strong><span class="classifier">Union[ShootingSolver, FiniteDifferenceSolver]</span></dt><dd><p>具体求解器实例</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.RadialSchrodingerSolver.convergence_study" title="radial_schrodinger.RadialSchrodingerSolver.convergence_study"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convergence_study</span></code></a>([n_points_list])</p></td>
+<td><p>进行收敛性分析</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.RadialSchrodingerSolver.solve" title="radial_schrodinger.RadialSchrodingerSolver.solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve</span></code></a>()</p></td>
+<td><p>求解指定的量子态</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.RadialSchrodingerSolver.solve_with_points" title="radial_schrodinger.RadialSchrodingerSolver.solve_with_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve_with_points</span></code></a>(n_points)</p></td>
+<td><p>使用指定网格点数求解</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.RadialSchrodingerSolver.convergence_study">
+<span class="sig-name descname"><span class="pre">convergence_study</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver.convergence_study"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.RadialSchrodingerSolver.convergence_study" title="Link to this definition"></a></dt>
+<dd><p>进行收敛性分析</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_points_list</strong><span class="classifier">list, optional</span></dt><dd><p>要测试的网格点数列表</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>收敛性分析结果</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.RadialSchrodingerSolver.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver.solve"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.RadialSchrodingerSolver.solve" title="Link to this definition"></a></dt>
+<dd><p>求解指定的量子态</p>
+<p>根据配置选择求解方法，完成求解并进行后处理：
+1. 确定能量搜索范围
+2. 求解本征值和本征函数
+3. 波函数归一化和处理
+4. 与理论值比较
+5. 结果可视化</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Dict</dt><dd><p>计算结果字典，包含:
+- energy: 本征能量
+- wavefunction: 波函数数据
+- analysis: 与理论值的比较
+- all_energies: (仅FD方法)所有本征值
+- all_states: (仅FD方法)所有本征态</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Exception</dt><dd><p>求解过程中的错误</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.RadialSchrodingerSolver.solve_with_points">
+<span class="sig-name descname"><span class="pre">solve_with_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/main.html#RadialSchrodingerSolver.solve_with_points"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.RadialSchrodingerSolver.solve_with_points" title="Link to this definition"></a></dt>
+<dd><p>使用指定网格点数求解</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_points</strong><span class="classifier">int</span></dt><dd><p>网格点数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>计算得到的能量</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.ResultVisualizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">ResultVisualizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ResultVisualizer" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>结果可视化类</p>
+<p>提供原子波函数、能量和收敛性分析的可视化功能。
+自动处理中文显示和样式优化。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向网格点</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.ResultVisualizer.plot_convergence_study" title="radial_schrodinger.ResultVisualizer.plot_convergence_study"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_convergence_study</span></code></a>(results[, V_type, n, ...])</p></td>
+<td><p>绘制收敛性分析结果</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.ResultVisualizer.plot_energy_scan" title="radial_schrodinger.ResultVisualizer.plot_energy_scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_energy_scan</span></code></a>(E_array, u0_array, n, l, V_type)</p></td>
+<td><p>绘制能量扫描结果</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.ResultVisualizer.plot_wavefunction" title="radial_schrodinger.ResultVisualizer.plot_wavefunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_wavefunction</span></code></a>(u, R, E, n, l, V_type[, ...])</p></td>
+<td><p>绘制波函数及其概率密度分布</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.ResultVisualizer.plot_convergence_study">
+<span class="sig-name descname"><span class="pre">plot_convergence_study</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shooting'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer.plot_convergence_study"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ResultVisualizer.plot_convergence_study" title="Link to this definition"></a></dt>
+<dd><p>绘制收敛性分析结果</p>
+<p>使用双对数坐标展示网格间距与相对误差的关系。
+同时绘制二阶和四阶收敛的参考线以供比较。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>results</strong><span class="classifier">Dict</span></dt><dd><p>包含 ‘delta_h’(网格间距)和’errors’(相对误差)的字典</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>求解方法(‘shooting’或’fd’)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.ResultVisualizer.plot_energy_scan">
+<span class="sig-name descname"><span class="pre">plot_energy_scan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u0_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer.plot_energy_scan"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ResultVisualizer.plot_energy_scan" title="Link to this definition"></a></dt>
+<dd><p>绘制能量扫描结果</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E_array</strong><span class="classifier">np.ndarray</span></dt><dd><p>能量数组</p>
+</dd>
+<dt><strong>u0_array</strong><span class="classifier">np.ndarray</span></dt><dd><p>对应的u(0)值</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.ResultVisualizer.plot_wavefunction">
+<span class="sig-name descname"><span class="pre">plot_wavefunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_analytic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shooting'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/visualization.html#ResultVisualizer.plot_wavefunction"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ResultVisualizer.plot_wavefunction" title="Link to this definition"></a></dt>
+<dd><p>绘制波函数及其概率密度分布</p>
+<p>生成两个子图:
+1. 波函数图：展示变换后的u(r)和物理波函数R(r)
+2. 概率密度图：展示r²R²(r)分布</p>
+<p>当提供解析解时，同时绘制对比曲线。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>变换坐标下的径向波函数u(r)</p>
+</dd>
+<dt><strong>R</strong><span class="classifier">np.ndarray</span></dt><dd><p>物理坐标下的径向波函数R(r)</p>
+</dd>
+<dt><strong>E</strong><span class="classifier">float</span></dt><dd><p>能量本征值(Hartree)</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型(‘hydrogen’或’lithium’)</p>
+</dd>
+<dt><strong>R_analytic</strong><span class="classifier">np.ndarray, optional</span></dt><dd><p>解析波函数(对氢原子部分态可用)</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>求解方法(‘shooting’或’fd’)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.ShootingSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">ShootingSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#radial_schrodinger.utils.RadialGrid" title="radial_schrodinger.utils.RadialGrid"><span class="pre">RadialGrid</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ShootingSolver" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>打靶法求解器</p>
+<p>使用改进的RK4方法从外向内积分求解径向方程。通过多重评价指标
+(节点数、渐进行为、连续性等)寻找正确的能量本征值。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>grid</strong><span class="classifier">RadialGrid</span></dt><dd><p>计算使用的径向网格</p>
+</dd>
+<dt><strong>V</strong><span class="classifier">callable</span></dt><dd><p>势能函数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>delta</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>r_p</strong><span class="classifier">float</span></dt><dd><p>网格变换标度参数</p>
+</dd>
+<dt><strong>j</strong><span class="classifier">ndarray</span></dt><dd><p>网格索引数组</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.ShootingSolver.V_eff" title="radial_schrodinger.ShootingSolver.V_eff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V_eff</span></code></a>(j)</p></td>
+<td><p>计算有效势</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.ShootingSolver.integrate_inward" title="radial_schrodinger.ShootingSolver.integrate_inward"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate_inward</span></code></a>(E)</p></td>
+<td><p>从外向内积分</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.ShootingSolver.shooting_solve" title="radial_schrodinger.ShootingSolver.shooting_solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shooting_solve</span></code></a>(E_min, E_max[, target_nodes])</p></td>
+<td><p>打靶法求解本征值和本征函数</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.ShootingSolver.V_eff">
+<span class="sig-name descname"><span class="pre">V_eff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver.V_eff"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ShootingSolver.V_eff" title="Link to this definition"></a></dt>
+<dd><p>计算有效势</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>j</strong><span class="classifier">不只局限于整数</span></dt><dd><p>当前的网格索引，可以是半整数，便于rK4积分</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>有效势</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.ShootingSolver.integrate_inward">
+<span class="sig-name descname"><span class="pre">integrate_inward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver.integrate_inward"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ShootingSolver.integrate_inward" title="Link to this definition"></a></dt>
+<dd><p>从外向内积分</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E</strong><span class="classifier">float</span></dt><dd><p>能量</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>波函数u(r)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.ShootingSolver.shooting_solve">
+<span class="sig-name descname"><span class="pre">shooting_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/solver.html#ShootingSolver.shooting_solve"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.ShootingSolver.shooting_solve" title="Link to this definition"></a></dt>
+<dd><p>打靶法求解本征值和本征函数</p>
+<p>使用优化算法最小化多重目标函数:
+1. 波函数在原点附近的对数导数误差
+2. 波函数节点数与目标值的偏差
+3. 波函数在r_min处的幅值误差
+4. 波函数导数的连续性误差</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>E_min</strong><span class="classifier">float</span></dt><dd><p>能量搜索下限</p>
+</dd>
+<dt><strong>E_max</strong><span class="classifier">float</span></dt><dd><p>能量搜索上限</p>
+</dd>
+<dt><strong>target_nodes</strong><span class="classifier">int, optional</span></dt><dd><p>目标节点数,默认为n-l-1</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>能量本征值</p>
+</dd>
+<dt>np.ndarray</dt><dd><p>归一化的波函数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>RuntimeError</dt><dd><p>当优化算法未能收敛时抛出</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">SolverConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'hydrogen'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shooting'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#SolverConfig"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.SolverConfig" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>求解器配置类</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r_max</strong><span class="classifier">float</span></dt><dd><p>最大径向距离 (Bohr)</p>
+</dd>
+<dt><strong>r_min</strong><span class="classifier">float</span></dt><dd><p>最小径向距离 (Bohr)</p>
+</dd>
+<dt><strong>j_max</strong><span class="classifier">int</span></dt><dd><p>径向网格点数</p>
+</dd>
+<dt><strong>delta</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>n_states</strong><span class="classifier">int</span></dt><dd><p>需要求解的本征态数量</p>
+</dd>
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型 (‘hydrogen’ 或 ‘lithium’)</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>求解方法 (‘shooting’ 或 ‘fd’)</p>
+</dd>
+<dt><strong>tol</strong><span class="classifier">float</span></dt><dd><p>收敛精度</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.V_type">
+<span class="sig-name descname"><span class="pre">V_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hydrogen'</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.V_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.config_summary">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config_summary</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.config_summary" title="Link to this definition"></a></dt>
+<dd><p>返回配置摘要信息</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.delta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.j_max">
+<span class="sig-name descname"><span class="pre">j_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.j_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.l">
+<span class="sig-name descname"><span class="pre">l</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.l" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.method">
+<span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shooting'</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.method" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.n">
+<span class="sig-name descname"><span class="pre">n</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.n" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.n_states">
+<span class="sig-name descname"><span class="pre">n_states</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.n_states" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.r_max">
+<span class="sig-name descname"><span class="pre">r_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30.0</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.r_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.r_min">
+<span class="sig-name descname"><span class="pre">r_min</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-05</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.r_min" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="radial_schrodinger.SolverConfig.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-08</span></em><a class="headerlink" href="#radial_schrodinger.SolverConfig.tol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">WavefunctionProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">非均匀网格版本</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionProcessor" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>提供波函数的归一化、导数计算和渐近行为分析等功能。
+特别处理了原点附近的奇异性问题。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>非均匀径向网格点</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+<dt><strong>delta</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>j</strong><span class="classifier">np.ndarray</span></dt><dd><p>均匀网格点索引</p>
+</dd>
+<dt><strong>r_p</strong><span class="classifier">float</span></dt><dd><p>网格变换参数</p>
+</dd>
+<dt><strong>dr_dj</strong><span class="classifier">np.ndarray</span></dt><dd><p>网格变换的导数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.WavefunctionProcessor.analyze_asymptotic" title="radial_schrodinger.WavefunctionProcessor.analyze_asymptotic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_asymptotic</span></code></a>(u[, num_points])</p></td>
+<td><p>分析r→0时波函数的渐进行为</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.WavefunctionProcessor.get_derivatives" title="radial_schrodinger.WavefunctionProcessor.get_derivatives"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_derivatives</span></code></a>(u)</p></td>
+<td><p>计算波函数在非均匀网格上的导数</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.WavefunctionProcessor.get_r0_values" title="radial_schrodinger.WavefunctionProcessor.get_r0_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_r0_values</span></code></a>(u)</p></td>
+<td><p>获取r=0处的函数值和导数</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.WavefunctionProcessor.normalize_wavefunction" title="radial_schrodinger.WavefunctionProcessor.normalize_wavefunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_wavefunction</span></code></a>(r)</p></td>
+<td><p><ol class="arabic simple">
+<li><p>通过拟合处理r→0处的行为</p></li>
+</ol>
+</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionProcessor.analyze_asymptotic">
+<span class="sig-name descname"><span class="pre">analyze_asymptotic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.analyze_asymptotic"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionProcessor.analyze_asymptotic" title="Link to this definition"></a></dt>
+<dd><p>分析r→0时波函数的渐进行为</p>
+<p>通过对数拟合确定渐进形式：u(r) ~ r^m * exp(-r/n)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>波函数值</p>
+</dd>
+<dt><strong>num_points</strong><span class="classifier">int</span></dt><dd><p>用于拟合的点数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[float, float]</dt><dd><p>(幂次m, 指数参数n)
+m应接近l+1, n应接近主量子数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionProcessor.get_derivatives">
+<span class="sig-name descname"><span class="pre">get_derivatives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.get_derivatives"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionProcessor.get_derivatives" title="Link to this definition"></a></dt>
+<dd><p>计算波函数在非均匀网格上的导数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>波函数值</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[np.ndarray, np.ndarray]</dt><dd><p>一阶和二阶导数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionProcessor.get_r0_values">
+<span class="sig-name descname"><span class="pre">get_r0_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.get_r0_values"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionProcessor.get_r0_values" title="Link to this definition"></a></dt>
+<dd><p>获取r=0处的函数值和导数</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionProcessor.normalize_wavefunction">
+<span class="sig-name descname"><span class="pre">normalize_wavefunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/analysis.html#WavefunctionProcessor.normalize_wavefunction"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionProcessor.normalize_wavefunction" title="Link to this definition"></a></dt>
+<dd><ol class="arabic simple">
+<li><p>通过拟合处理r→0处的行为</p></li>
+<li><p>归一化变换后的波函数u(r)</p></li>
+<li><p>计算物理波函数R(r) = u(r)/r</p></li>
+<li><p>验证归一化条件∫|R(r)|²r²dr = 1</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>输入波函数u(r)</p>
+</dd>
+<dt><strong>tol</strong><span class="classifier">float, optional</span></dt><dd><p>归一化精度要求</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[np.ndarray, np.ndarray]</dt><dd><p>(归一化的u(r), 对应的R(r))</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>当波函数无效或归一化失败时</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionTools">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">WavefunctionTools</span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#WavefunctionTools"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionTools" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>波函数工具类</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#radial_schrodinger.WavefunctionTools.count_nodes" title="radial_schrodinger.WavefunctionTools.count_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">count_nodes</span></code></a>(u[, eps])</p></td>
+<td><p>计算波函数节点数</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#radial_schrodinger.WavefunctionTools.get_analytic_hydrogen" title="radial_schrodinger.WavefunctionTools.get_analytic_hydrogen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_analytic_hydrogen</span></code></a>(r)</p></td>
+<td><p>实现前几个低量子数态的径向波函数解析表达式: R(r) = N_nl * r^l * L_n^(2l+1)(2r/n) * exp(-r/n) 其中N_nl为归一化系数,L_n^k为拉盖尔多项式</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionTools.count_nodes">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">count_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#WavefunctionTools.count_nodes"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionTools.count_nodes" title="Link to this definition"></a></dt>
+<dd><p>计算波函数节点数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>u</strong><span class="classifier">np.ndarray</span></dt><dd><p>波函数数组</p>
+</dd>
+<dt><strong>eps</strong><span class="classifier">float, optional</span></dt><dd><p>判定零点的阈值</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>int</dt><dd><p>节点数</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="radial_schrodinger.WavefunctionTools.get_analytic_hydrogen">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_analytic_hydrogen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#WavefunctionTools.get_analytic_hydrogen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.WavefunctionTools.get_analytic_hydrogen" title="Link to this definition"></a></dt>
+<dd><p>实现前几个低量子数态的径向波函数解析表达式:
+R(r) = N_nl * r^l * L_n^(2l+1)(2r/n) * exp(-r/n)
+其中N_nl为归一化系数,L_n^k为拉盖尔多项式</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">np.ndarray</span></dt><dd><p>径向距离数组</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">int</span></dt><dd><p>角量子数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Optional[np.ndarray]</dt><dd><p>解析波函数,若无解析表达式则返回None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="radial_schrodinger.get_energy_bounds">
+<span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">get_energy_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#get_energy_bounds"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.get_energy_bounds" title="Link to this definition"></a></dt>
+<dd><p>获取不同原子的能量范围估计</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>V_type</strong><span class="classifier">str</span></dt><dd><p>势能类型</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>主量子数</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[float, float]</dt><dd><p>(E_min, E_max) 能量范围估计</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="radial_schrodinger.get_theoretical_values">
+<span class="sig-prename descclassname"><span class="pre">radial_schrodinger.</span></span><span class="sig-name descname"><span class="pre">get_theoretical_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Hartree单位</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/radial_schrodinger/utils.html#get_theoretical_values"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#radial_schrodinger.get_theoretical_values" title="Link to this definition"></a></dt>
+<dd><p>获取理论参考值(Hartree单位)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Dict</dt><dd><p>不同原子的能量本征值字典
+格式: {原子类型: {(n,l): 能量}}</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="modules.html" class="btn btn-neutral float-left" title="radial_schrodinger" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, Gilbert Young。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

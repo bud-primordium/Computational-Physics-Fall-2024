@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>radial_schrodinger.main &mdash; Radial Schrödinger Equation Solver 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f115507d"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Radial Schrödinger Equation Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/modules.html">radial_schrodinger</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Radial Schrödinger Equation Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">radial_schrodinger.main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>radial_schrodinger.main 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;径向薛定谔方程求解主程序</span>
+
+<span class="sd">整合各功能模块，提供完整的计算流程和用户接口。</span>
+
+<span class="sd">功能特点:</span>
+<span class="sd">- 命令行参数配置和运行控制</span>
+<span class="sd">- 多种原子、量子态和求解方法的示例</span>
+<span class="sd">- 自动化的收敛性分析流程</span>
+<span class="sd">- 结构化的结果输出和可视化</span>
+
+<span class="sd">Modules:</span>
+<span class="sd">    utils: 工具函数和配置类</span>
+<span class="sd">    solver: 数值求解方法</span>
+<span class="sd">    analysis: 结果分析和处理 </span>
+<span class="sd">    visualization: 结果可视化</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+
+<span class="c1"># # 添加src目录到Python路径</span>
+<span class="c1"># sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SolverConfig</span><span class="p">,</span>
+    <span class="n">RadialGrid</span><span class="p">,</span>
+    <span class="n">PotentialFunction</span><span class="p">,</span>
+    <span class="n">WavefunctionTools</span><span class="p">,</span>
+    <span class="n">get_theoretical_values</span><span class="p">,</span>
+    <span class="n">get_energy_bounds</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.solver</span> <span class="kn">import</span> <span class="n">ShootingSolver</span><span class="p">,</span> <span class="n">FiniteDifferenceSolver</span>
+<span class="kn">from</span> <span class="nn">.analysis</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">WavefunctionProcessor</span><span class="p">,</span>
+    <span class="n">EnergyAnalyzer</span><span class="p">,</span>
+    <span class="n">ConvergenceAnalyzer</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.visualization</span> <span class="kn">import</span> <span class="n">ResultVisualizer</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="RadialSchrodingerSolver">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver">[文档]</a>
+<span class="k">class</span> <span class="nc">RadialSchrodingerSolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;径向薛定谔方程主求解器</span>
+
+<span class="sd">    整合配置、网格、求解器、分析器和可视化器，</span>
+<span class="sd">    提供完整的求解流程控制。</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    config : SolverConfig</span>
+<span class="sd">        计算配置</span>
+<span class="sd">    grid : RadialGrid</span>
+<span class="sd">        计算网格</span>
+<span class="sd">    V : callable</span>
+<span class="sd">        势能函数</span>
+<span class="sd">    wave_processor : WavefunctionProcessor</span>
+<span class="sd">        波函数处理器</span>
+<span class="sd">    energy_analyzer : EnergyAnalyzer</span>
+<span class="sd">        能量分析器</span>
+<span class="sd">    visualizer : ResultVisualizer</span>
+<span class="sd">        结果可视化器</span>
+<span class="sd">    convergence_analyzer : ConvergenceAnalyzer</span>
+<span class="sd">        收敛性分析器</span>
+<span class="sd">    solver : Union[ShootingSolver, FiniteDifferenceSolver]</span>
+<span class="sd">        具体求解器实例</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">SolverConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化求解器</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        config : SolverConfig</span>
+<span class="sd">            求解器配置</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="c1"># 初始化组件</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">RadialGrid</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">PotentialFunction</span><span class="o">.</span><span class="n">get_potential</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wave_processor</span> <span class="o">=</span> <span class="n">WavefunctionProcessor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_analyzer</span> <span class="o">=</span> <span class="n">EnergyAnalyzer</span><span class="p">(</span><span class="n">get_theoretical_values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span> <span class="o">=</span> <span class="n">ResultVisualizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convergence_analyzer</span> <span class="o">=</span> <span class="n">ConvergenceAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_analyzer</span><span class="p">)</span>
+
+        <span class="c1"># 选择求解器</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;shooting&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">ShootingSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">FiniteDifferenceSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;初始化</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="si">}</span><span class="s2">原子求解器: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;n=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, l=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="si">}</span><span class="s2">, 方法=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="RadialSchrodingerSolver.solve_with_points">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver.solve_with_points">[文档]</a>
+    <span class="k">def</span> <span class="nf">solve_with_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;使用指定网格点数求解</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_points : int</span>
+<span class="sd">            网格点数</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            计算得到的能量</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 保存原始配置</span>
+        <span class="n">original_j_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">j_max</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># 更新网格点数</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">j_max</span> <span class="o">=</span> <span class="n">n_points</span>
+            <span class="c1"># 重新初始化网格</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">RadialGrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+
+            <span class="c1"># 重新初始化求解器</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;shooting&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">ShootingSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">FiniteDifferenceSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+
+            <span class="c1"># 求解</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;shooting&quot;</span><span class="p">:</span>
+                <span class="c1"># 获取能量范围估计</span>
+                <span class="n">E_min</span><span class="p">,</span> <span class="n">E_max</span> <span class="o">=</span> <span class="n">get_energy_bounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+                <span class="n">E</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">shooting_solve</span><span class="p">(</span>
+                    <span class="n">E_min</span><span class="p">,</span> <span class="n">E_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">E</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">energies</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">fd_solve</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">energies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># 恢复原始配置</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">j_max</span> <span class="o">=</span> <span class="n">original_j_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">RadialGrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="c1"># 重新初始化求解器</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;shooting&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">ShootingSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">FiniteDifferenceSolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RadialSchrodingerSolver.convergence_study">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver.convergence_study">[文档]</a>
+    <span class="k">def</span> <span class="nf">convergence_study</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_points_list</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;进行收敛性分析</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_points_list : list, optional</span>
+<span class="sd">            要测试的网格点数列表</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            收敛性分析结果</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">n_points_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;fd&quot;</span><span class="p">:</span>
+                <span class="n">n_points_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_points_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span>  <span class="c1"># 到6400</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convergence_analyzer</span><span class="o">.</span><span class="n">analyze_grid_convergence</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">n_points_list</span>
+        <span class="p">)</span>
+
+        <span class="c1"># 可视化结果</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span><span class="o">.</span><span class="n">plot_convergence_study</span><span class="p">(</span>
+            <span class="n">results</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RadialSchrodingerSolver.solve">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver.solve">[文档]</a>
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;求解指定的量子态</span>
+
+<span class="sd">        根据配置选择求解方法，完成求解并进行后处理：</span>
+<span class="sd">        1. 确定能量搜索范围</span>
+<span class="sd">        2. 求解本征值和本征函数</span>
+<span class="sd">        3. 波函数归一化和处理</span>
+<span class="sd">        4. 与理论值比较</span>
+<span class="sd">        5. 结果可视化</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Dict</span>
+<span class="sd">            计算结果字典，包含:</span>
+<span class="sd">            - energy: 本征能量</span>
+<span class="sd">            - wavefunction: 波函数数据</span>
+<span class="sd">            - analysis: 与理论值的比较</span>
+<span class="sd">            - all_energies: (仅FD方法)所有本征值</span>
+<span class="sd">            - all_states: (仅FD方法)所有本征态</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            求解过程中的错误</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># 获取能量范围估计</span>
+            <span class="n">E_min</span><span class="p">,</span> <span class="n">E_max</span> <span class="o">=</span> <span class="n">get_energy_bounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;shooting&quot;</span><span class="p">:</span>
+                <span class="c1"># 打靶法求解</span>
+                <span class="n">E</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">shooting_solve</span><span class="p">(</span>
+                    <span class="n">E_min</span><span class="p">,</span> <span class="n">E_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="p">)</span>
+                <span class="c1"># 处理波函数</span>
+                <span class="n">u_norm</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wave_processor</span><span class="o">.</span><span class="n">normalize_wavefunction</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+                <span class="c1"># 分析结果</span>
+                <span class="n">analysis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_analyzer</span><span class="o">.</span><span class="n">compare_with_theory</span><span class="p">(</span>
+                    <span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span>
+                <span class="p">)</span>
+
+                <span class="c1"># 获取解析解(如果有)</span>
+                <span class="n">R_analytic</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span> <span class="o">==</span> <span class="s2">&quot;hydrogen&quot;</span><span class="p">:</span>
+                    <span class="n">R_analytic</span> <span class="o">=</span> <span class="n">WavefunctionTools</span><span class="o">.</span><span class="n">get_analytic_hydrogen</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># 可视化</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span><span class="o">.</span><span class="n">plot_wavefunction</span><span class="p">(</span>
+                    <span class="n">u_norm</span><span class="p">,</span>
+                    <span class="n">R</span><span class="p">,</span>
+                    <span class="n">E</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span>
+                    <span class="n">R_analytic</span><span class="p">,</span>
+                    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;shooting&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;energy&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+                    <span class="s2">&quot;wavefunction&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="n">u_norm</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span> <span class="s2">&quot;R_analytic&quot;</span><span class="p">:</span> <span class="n">R_analytic</span><span class="p">},</span>
+                    <span class="s2">&quot;analysis&quot;</span><span class="p">:</span> <span class="n">analysis</span><span class="p">,</span>
+                <span class="p">}</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 有限差分法求解</span>
+                <span class="n">energies</span><span class="p">,</span> <span class="n">states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">fd_solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n_states</span><span class="p">)</span>
+
+                <span class="c1"># 选择指定(n,l)对应的态</span>
+                <span class="n">state_idx</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 默认取最低能态</span>
+                <span class="c1"># 如果n和l指定的不是基态，需要找到对应的激发态</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">state_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span>
+
+                <span class="n">E</span> <span class="o">=</span> <span class="n">energies</span><span class="p">[</span><span class="n">state_idx</span><span class="p">]</span>
+                <span class="n">u</span> <span class="o">=</span> <span class="n">states</span><span class="p">[:,</span> <span class="n">state_idx</span><span class="p">]</span>
+
+                <span class="c1"># 处理波函数</span>
+                <span class="n">u_norm</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wave_processor</span><span class="o">.</span><span class="n">normalize_wavefunction</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+                <span class="c1"># 分析结果</span>
+                <span class="n">analysis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_analyzer</span><span class="o">.</span><span class="n">compare_with_theory</span><span class="p">(</span>
+                    <span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span>
+                <span class="p">)</span>
+
+                <span class="c1"># 获取解析解(如果有)</span>
+                <span class="n">R_analytic</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span> <span class="o">==</span> <span class="s2">&quot;hydrogen&quot;</span><span class="p">:</span>
+                    <span class="n">R_analytic</span> <span class="o">=</span> <span class="n">WavefunctionTools</span><span class="o">.</span><span class="n">get_analytic_hydrogen</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># 可视化</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span><span class="o">.</span><span class="n">plot_wavefunction</span><span class="p">(</span>
+                    <span class="n">u_norm</span><span class="p">,</span>
+                    <span class="n">R</span><span class="p">,</span>
+                    <span class="n">E</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span>
+                    <span class="n">R_analytic</span><span class="p">,</span>
+                    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;fd&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="c1"># 返回与shooting方法相同格式的结果</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;energy&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+                    <span class="s2">&quot;wavefunction&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="n">u_norm</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span> <span class="s2">&quot;R_analytic&quot;</span><span class="p">:</span> <span class="n">R_analytic</span><span class="p">},</span>
+                    <span class="s2">&quot;analysis&quot;</span><span class="p">:</span> <span class="n">analysis</span><span class="p">,</span>
+                <span class="p">}</span>
+
+                <span class="c1"># 额外添加所有本征态的信息</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;all_energies&quot;</span><span class="p">:</span> <span class="n">energies</span><span class="p">,</span> <span class="s2">&quot;all_states&quot;</span><span class="p">:</span> <span class="n">states</span><span class="p">})</span>
+
+                <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;求解失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="run_example">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.main.run_example">[文档]</a>
+<span class="k">def</span> <span class="nf">run_example</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;运行示例计算&quot;&quot;&quot;</span>
+    <span class="c1"># 配置示例</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># 氢原子基态</span>
+        <span class="n">SolverConfig</span><span class="p">(</span><span class="n">V_type</span><span class="o">=</span><span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;shooting&quot;</span><span class="p">),</span>
+        <span class="c1"># 氢原子2s态</span>
+        <span class="n">SolverConfig</span><span class="p">(</span><span class="n">V_type</span><span class="o">=</span><span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;shooting&quot;</span><span class="p">),</span>
+        <span class="c1"># 氢原子2p态</span>
+        <span class="n">SolverConfig</span><span class="p">(</span><span class="n">V_type</span><span class="o">=</span><span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;shooting&quot;</span><span class="p">),</span>
+        <span class="c1"># 锂原子基态</span>
+        <span class="n">SolverConfig</span><span class="p">(</span><span class="n">V_type</span><span class="o">=</span><span class="s2">&quot;lithium&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;shooting&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;求解</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="si">}</span><span class="s2">原子: n=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, l=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">l</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;使用</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2">方法&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">solver</span> <span class="o">=</span> <span class="n">RadialSchrodingerSolver</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+            <span class="c1"># 打印能量</span>
+            <span class="k">if</span> <span class="s2">&quot;energy&quot;</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">E</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">]</span>
+                <span class="n">analysis</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">能量本征值: </span><span class="si">{</span><span class="n">E</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> Hartree&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">analysis</span><span class="p">[</span><span class="s2">&quot;theoretical_E&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;理论值: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;theoretical_E&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> Hartree&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;相对误差: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;relative_error&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;示例运行失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+    <span class="c1"># 添加收敛性分析示例</span>
+    <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;shooting&quot;</span><span class="p">,</span> <span class="s2">&quot;fd&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;进行氢原子1s态 </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">方法 网格收敛性分析&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+        <span class="c1"># 使用氢原子1s态作为测试案例</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">SolverConfig</span><span class="p">(</span><span class="n">V_type</span><span class="o">=</span><span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">RadialSchrodingerSolver</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># 选择合适的网格点序列</span>
+            <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;fd&quot;</span><span class="p">:</span>
+                <span class="n">n_points_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_points_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">1600</span><span class="p">,</span> <span class="mi">3200</span><span class="p">]</span>
+
+            <span class="n">results</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">convergence_study</span><span class="p">(</span><span class="n">n_points_list</span><span class="p">)</span>
+
+            <span class="c1"># 只在results不为None且包含必要数据时打印结果</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">results</span>
+                <span class="ow">and</span> <span class="s2">&quot;n_points&quot;</span> <span class="ow">in</span> <span class="n">results</span>
+                <span class="ow">and</span> <span class="s2">&quot;energies&quot;</span> <span class="ow">in</span> <span class="n">results</span>
+                <span class="ow">and</span> <span class="s2">&quot;errors&quot;</span> <span class="ow">in</span> <span class="n">results</span>
+            <span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">网格收敛性分析结果:&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;网格点数&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;能量&#39;</span><span class="si">:</span><span class="s2">&gt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;相对误差(%)&#39;</span><span class="si">:</span><span class="s2">&gt;15</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">err</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;n_points&quot;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;energies&quot;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;errors&quot;</span><span class="p">]</span>
+                <span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">10d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">E</span><span class="si">:</span><span class="s2">15.8f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">err</span><span class="si">:</span><span class="s2">15.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;结果数据结构不完整: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;收敛性分析出现错误: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.main.main">[文档]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;主程序入口</span>
+
+<span class="sd">    处理命令行参数并执行相应的计算路径:</span>
+<span class="sd">    1. 示例计算模式</span>
+<span class="sd">    2. 收敛性分析模式</span>
+<span class="sd">    3. 单次计算模式</span>
+
+<span class="sd">    支持的参数:</span>
+<span class="sd">    --V-type: 势能类型(hydrogen/lithium)</span>
+<span class="sd">    --n: 主量子数</span>
+<span class="sd">    --l: 角量子数</span>
+<span class="sd">    --method: 求解方法(shooting/fd)</span>
+<span class="sd">    --j-max: 网格点数</span>
+<span class="sd">    --example: 运行示例</span>
+<span class="sd">    --convergence: 进行收敛性分析</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 1. 设置日志系统</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+        <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 2. 命令行参数解析</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;径向薛定谔方程求解器&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--V-type&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span> <span class="s2">&quot;lithium&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;势能类型&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--n&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;主量子数&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--l&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;角量子数&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--method&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;shooting&quot;</span><span class="p">,</span> <span class="s2">&quot;fd&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;shooting&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;求解方法&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--j-max&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;网格点数(可选)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--example&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;运行示例计算&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--convergence&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;进行网格收敛性分析&quot;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 3. 根据命令行参数选择执行路径</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">example</span><span class="p">:</span>
+            <span class="c1"># 路径1：运行示例计算</span>
+            <span class="n">run_example</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">convergence</span><span class="p">:</span>
+            <span class="c1"># 路径2：进行收敛性分析</span>
+            <span class="c1"># 创建配置</span>
+            <span class="n">config_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;V_type&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span>
+                <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+                <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">l</span><span class="p">,</span>
+                <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">j_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;j_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">j_max</span>
+
+            <span class="n">config</span> <span class="o">=</span> <span class="n">SolverConfig</span><span class="p">(</span><span class="o">**</span><span class="n">config_dict</span><span class="p">)</span>
+
+            <span class="c1"># 打印分析信息</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;进行网格收敛性分析&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">config_summary</span><span class="p">)</span>
+
+            <span class="c1"># 执行收敛性分析</span>
+            <span class="n">solver</span> <span class="o">=</span> <span class="n">RadialSchrodingerSolver</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">convergence_study</span><span class="p">()</span>
+
+            <span class="c1"># 打印结果</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">网格收敛性分析结果:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;网格点数&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;能量&#39;</span><span class="si">:</span><span class="s2">&gt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;相对误差(%)&#39;</span><span class="si">:</span><span class="s2">&gt;15</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">err</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                <span class="n">results</span><span class="p">[</span><span class="s2">&quot;n_points&quot;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;energies&quot;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;errors&quot;</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">10d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">E</span><span class="si">:</span><span class="s2">15.8f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">err</span><span class="si">:</span><span class="s2">15.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 路径3：执行单次计算</span>
+            <span class="n">config_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;V_type&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span>
+                <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+                <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">l</span><span class="p">,</span>
+                <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">j_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;j_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">j_max</span>
+
+            <span class="n">config</span> <span class="o">=</span> <span class="n">SolverConfig</span><span class="p">(</span><span class="o">**</span><span class="n">config_dict</span><span class="p">)</span>
+
+            <span class="c1"># 打印计算信息</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;进行单次求解计算&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">config_summary</span><span class="p">)</span>
+
+            <span class="c1"># 执行计算</span>
+            <span class="n">solver</span> <span class="o">=</span> <span class="n">RadialSchrodingerSolver</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+            <span class="c1"># 打印结果</span>
+            <span class="k">if</span> <span class="s2">&quot;energy&quot;</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">E</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">]</span>
+                <span class="n">analysis</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">能量本征值: </span><span class="si">{</span><span class="n">E</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> Hartree&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">analysis</span><span class="p">[</span><span class="s2">&quot;theoretical_E&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;理论值: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;theoretical_E&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> Hartree&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;相对误差: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;relative_error&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;程序运行失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, Gilbert Young。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

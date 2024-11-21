@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>radial_schrodinger.analysis &mdash; Radial Schrödinger Equation Solver 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f115507d"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Radial Schrödinger Equation Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/modules.html">radial_schrodinger</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Radial Schrödinger Equation Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">radial_schrodinger.analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>radial_schrodinger.analysis 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;径向薛定谔方程求解器的分析模块</span>
+
+<span class="sd">包含波函数处理、能量分析和收敛性研究等功能。提供数值结果的验证、分析和后处理。</span>
+
+<span class="sd">主要功能：</span>
+<span class="sd">- 波函数的归一化和导数计算</span>
+<span class="sd">- 渐近行为分析和小r极限处理 </span>
+<span class="sd">- 能量本征值与理论值比较</span>
+<span class="sd">- 数值方法的收敛性研究</span>
+
+
+<span class="sd">Classes:</span>
+<span class="sd">   WavefunctionProcessor: 波函数处理器，处理归一化和导数</span>
+<span class="sd">   EnergyAnalyzer: 能量分析器，比较计算值和理论值</span>
+<span class="sd">   ConvergenceAnalyzer: 收敛性分析器，研究网格依赖性</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WavefunctionProcessor">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor">[文档]</a>
+<span class="k">class</span> <span class="nc">WavefunctionProcessor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;波函数处理类(非均匀网格版本)</span>
+
+<span class="sd">    提供波函数的归一化、导数计算和渐近行为分析等功能。</span>
+<span class="sd">    特别处理了原点附近的奇异性问题。</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : np.ndarray</span>
+<span class="sd">        非均匀径向网格点</span>
+<span class="sd">    l : int</span>
+<span class="sd">        角量子数</span>
+<span class="sd">    delta : float</span>
+<span class="sd">        网格变换参数</span>
+<span class="sd">    j : np.ndarray</span>
+<span class="sd">        均匀网格点索引</span>
+<span class="sd">    r_p : float</span>
+<span class="sd">        网格变换参数</span>
+<span class="sd">    dr_dj : np.ndarray</span>
+<span class="sd">        网格变换的导数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : np.ndarray</span>
+<span class="sd">            非均匀径向网格点</span>
+<span class="sd">        l : int</span>
+<span class="sd">            角量子数</span>
+<span class="sd">        delta : float</span>
+<span class="sd">            网格变换参数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="n">l</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>  <span class="c1"># 均匀的j网格</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># 计算网格变换的导数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dr_dj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WavefunctionProcessor.get_derivatives">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.get_derivatives">[文档]</a>
+    <span class="k">def</span> <span class="nf">get_derivatives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算波函数在非均匀网格上的导数</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        u : np.ndarray</span>
+<span class="sd">            波函数值</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[np.ndarray, np.ndarray]</span>
+<span class="sd">            一阶和二阶导数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">du_dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">d2u_dr2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">du_dr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">du_dr</span><span class="p">,</span> <span class="n">d2u_dr2</span></div>
+
+
+<div class="viewcode-block" id="WavefunctionProcessor.analyze_asymptotic">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.analyze_asymptotic">[文档]</a>
+    <span class="k">def</span> <span class="nf">analyze_asymptotic</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;分析r→0时波函数的渐进行为</span>
+
+<span class="sd">        通过对数拟合确定渐进形式：u(r) ~ r^m * exp(-r/n)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        u : np.ndarray</span>
+<span class="sd">            波函数值</span>
+<span class="sd">        num_points : int</span>
+<span class="sd">            用于拟合的点数</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[float, float]</span>
+<span class="sd">            (幂次m, 指数参数n)</span>
+<span class="sd">            m应接近l+1, n应接近主量子数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 选取近原点的几个点</span>
+        <span class="n">j_near_zero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">[:</span><span class="n">num_points</span><span class="p">]</span>
+        <span class="n">r_near_zero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[:</span><span class="n">num_points</span><span class="p">]</span>
+        <span class="n">u_near_zero</span> <span class="o">=</span> <span class="n">u</span><span class="p">[:</span><span class="n">num_points</span><span class="p">]</span>
+
+        <span class="c1"># 对数拟合</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_near_zero</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u_near_zero</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-15</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="mf">1.0</span>  <span class="c1"># 默认值改为l</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">r_near_zero</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u_near_zero</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># 计算n_analyze (从c中获取)</span>
+        <span class="n">n_analyze</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">m</span><span class="p">,</span> <span class="n">n_analyze</span></div>
+
+
+<div class="viewcode-block" id="WavefunctionProcessor.get_r0_values">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.get_r0_values">[文档]</a>
+    <span class="k">def</span> <span class="nf">get_r0_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取r=0处的函数值和导数&quot;&quot;&quot;</span>
+        <span class="c1"># 可能弃用，因为后面绘制的是r=r_min开始的</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># l=0时,外推u(0),du/dr(0)=0</span>
+            <span class="n">du_dr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_derivatives</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+            <span class="n">u0</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">du_dr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 一阶泰勒展开</span>
+            <span class="k">return</span> <span class="n">u0</span><span class="p">,</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># l&gt;0时,u(0)=0,通过渐进行为确定du/dr(0)</span>
+            <span class="n">coef</span><span class="p">,</span> <span class="n">power</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyze_asymptotic</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">power</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;渐进指数</span><span class="si">{</span><span class="n">power</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">与预期值</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">差异较大&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">coef</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WavefunctionProcessor.normalize_wavefunction">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.normalize_wavefunction">[文档]</a>
+    <span class="k">def</span> <span class="nf">normalize_wavefunction</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;归一化波函数并计算物理波函数R(r)</span>
+
+<span class="sd">        1. 通过拟合处理r→0处的行为</span>
+<span class="sd">        2. 归一化变换后的波函数u(r)</span>
+<span class="sd">        3. 计算物理波函数R(r) = u(r)/r</span>
+<span class="sd">        4. 验证归一化条件∫|R(r)|²r²dr = 1</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        u : np.ndarray</span>
+<span class="sd">            输入波函数u(r)</span>
+<span class="sd">        tol : float, optional</span>
+<span class="sd">            归一化精度要求</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[np.ndarray, np.ndarray]</span>
+<span class="sd">            (归一化的u(r), 对应的R(r))</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            当波函数无效或归一化失败时</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 数值稳定性检查</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">u</span><span class="p">)):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;波函数包含无效值&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid wavefunction values&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 处理r=r_min的情况</span>
+        <span class="c1"># u0, _ = self.get_r0_values(u)</span>
+
+        <span class="c1"># 拟合的函数模型：r^(l+1)</span>
+        <span class="k">def</span> <span class="nf">r_behavior_u</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># 使用前几个点拟合</span>
+        <span class="n">fit_indices</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1"># 使用 u 第2~7个点（索引从1到6）</span>
+        <span class="n">r_fit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">fit_indices</span><span class="p">]</span>
+        <span class="n">u_fit</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">fit_indices</span><span class="p">]</span>
+
+        <span class="c1"># 执行拟合</span>
+        <span class="n">popt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">r_behavior_u</span><span class="p">,</span> <span class="n">r_fit</span><span class="p">,</span> <span class="n">u_fit</span><span class="p">)</span>
+
+        <span class="c1"># 根据拟合结果外推 u_full[0]</span>
+        <span class="n">u_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="n">u_full</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">r_behavior_u</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
+
+        <span class="c1"># 计算归一化常数(考虑非均匀网格的积分权重)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u_full</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-15</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;波函数全为零&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Zero wavefunction&quot;</span><span class="p">)</span>
+
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">u_full</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">u_full</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">norm</span> <span class="o">&lt;</span> <span class="mf">1e-15</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;归一化常数接近零&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Normalization constant too small&quot;</span><span class="p">)</span>
+
+        <span class="n">u_norm</span> <span class="o">=</span> <span class="n">u_full</span> <span class="o">/</span> <span class="n">norm</span>
+
+        <span class="c1"># 计算R(r) = u(r)/r</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">u_norm</span><span class="p">)</span>
+        <span class="n">nonzero_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">&gt;</span> <span class="mf">1e-10</span>
+        <span class="n">R</span><span class="p">[</span><span class="n">nonzero_r</span><span class="p">]</span> <span class="o">=</span> <span class="n">u_norm</span><span class="p">[</span><span class="n">nonzero_r</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">nonzero_r</span><span class="p">]</span>
+
+        <span class="c1"># 补丁，r=r_min附近的处理</span>
+        <span class="c1"># 拟合的函数模型：r^(l)</span>
+        <span class="k">def</span> <span class="nf">r_behavior_R</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># 使用前几个点拟合</span>
+            <span class="n">fit_indices</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1"># 使用 R 第2~7个点（索引从1到6）</span>
+            <span class="n">r_fit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">fit_indices</span><span class="p">]</span>
+            <span class="n">R_fit</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">fit_indices</span><span class="p">]</span>
+
+            <span class="c1"># 执行拟合</span>
+            <span class="n">popt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">r_behavior_R</span><span class="p">,</span> <span class="n">r_fit</span><span class="p">,</span> <span class="n">R_fit</span><span class="p">)</span>
+
+            <span class="c1"># 根据拟合结果外推 R_full[0]</span>
+            <span class="n">R_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+            <span class="n">R_full</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">r_behavior_R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 使用第10到第40个点进行拟合</span>
+            <span class="n">fit_indices</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>  <span class="c1"># 使用第10到40个点（索引从10到39）</span>
+            <span class="n">r_fit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">fit_indices</span><span class="p">]</span>
+            <span class="n">R_fit</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">fit_indices</span><span class="p">]</span>
+
+            <span class="c1"># 执行拟合</span>
+            <span class="n">popt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">r_behavior_R</span><span class="p">,</span> <span class="n">r_fit</span><span class="p">,</span> <span class="n">R_fit</span><span class="p">)</span>
+            <span class="n">R_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+            <span class="c1"># 根据拟合结果外推前9个点</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+                <span class="n">R_full</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">r_behavior_R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
+
+        <span class="c1"># # r=0处的处理</span>
+        <span class="c1"># if self.l == 0:</span>
+        <span class="c1">#     # 使用洛必达法则: lim(r→0) u(r)/r = du/dr(0)</span>
+        <span class="c1">#     R[0] = du0_dr / norm</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     # 使用渐进行为</span>
+        <span class="c1">#     coef, _ = self.analyze_asymptotic(u_norm)</span>
+        <span class="c1">#     R[0] = coef * self.l</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verify_normalization</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">tol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">u_norm</span><span class="p">,</span> <span class="n">R_full</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_verify_normalization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">R</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;验证波函数归一化(考虑非均匀网格)&quot;&quot;&quot;</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e10</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;无有效值用于归一化检验&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No valid values for normalization check&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 在非均匀网格上积分</span>
+        <span class="n">integrand</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">norm</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;归一化积分结果无效&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid normalization integral&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tol</span> <span class="o">&lt;</span> <span class="n">norm</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">tol</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;归一化检验失败: ∫|R(r)|²r²dr = </span><span class="si">{</span><span class="n">norm</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Normalization check failed: </span><span class="si">{</span><span class="n">norm</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="EnergyAnalyzer">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.EnergyAnalyzer">[文档]</a>
+<span class="k">class</span> <span class="nc">EnergyAnalyzer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;能量分析类&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theoretical_values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        theoretical_values : Dict</span>
+<span class="sd">            理论值字典</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theoretical_values</span> <span class="o">=</span> <span class="n">theoretical_values</span>
+
+<div class="viewcode-block" id="EnergyAnalyzer.compare_with_theory">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.EnergyAnalyzer.compare_with_theory">[文档]</a>
+    <span class="k">def</span> <span class="nf">compare_with_theory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;与理论值比较</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        E : float</span>
+<span class="sd">            计算得到的能量</span>
+<span class="sd">        V_type : str</span>
+<span class="sd">            势能类型</span>
+<span class="sd">        n : int</span>
+<span class="sd">            主量子数</span>
+<span class="sd">        l : int</span>
+<span class="sd">            角量子数</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            比较结果字典</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+        <span class="n">theory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theoretical_values</span><span class="p">[</span><span class="n">V_type</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;numerical_E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+            <span class="s2">&quot;theoretical_E&quot;</span><span class="p">:</span> <span class="n">theory</span><span class="p">,</span>
+            <span class="s2">&quot;relative_error&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">theory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rel_error</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">E</span> <span class="o">-</span> <span class="n">theory</span><span class="p">)</span> <span class="o">/</span> <span class="n">theory</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;relative_error&quot;</span><span class="p">:</span> <span class="n">rel_error</span><span class="p">,</span>
+                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;good&quot;</span> <span class="k">if</span> <span class="n">rel_error</span> <span class="o">&lt;</span> <span class="mf">1.0</span> <span class="k">else</span> <span class="s2">&quot;warning&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ConvergenceAnalyzer">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.ConvergenceAnalyzer">[文档]</a>
+<span class="k">class</span> <span class="nc">ConvergenceAnalyzer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;收敛性分析类&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_analyzer</span><span class="p">:</span> <span class="n">EnergyAnalyzer</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy_analyzer : EnergyAnalyzer</span>
+<span class="sd">            能量分析器实例</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_analyzer</span> <span class="o">=</span> <span class="n">energy_analyzer</span>
+
+<div class="viewcode-block" id="ConvergenceAnalyzer.analyze_grid_convergence">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.analysis.ConvergenceAnalyzer.analyze_grid_convergence">[文档]</a>
+    <span class="k">def</span> <span class="nf">analyze_grid_convergence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">n_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;分析不同网格点数的收敛性</span>
+
+<span class="sd">        对一系列网格点数计算能量本征值，分析相对误差随</span>
+<span class="sd">        网格间距的变化关系，用于确定数值方法的收敛阶数。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        solver : object</span>
+<span class="sd">            求解器实例</span>
+<span class="sd">        n_values : list</span>
+<span class="sd">            要测试的网格点数列表</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            包含以下键的字典：</span>
+<span class="sd">            - n_points: 网格点数列表</span>
+<span class="sd">            - energies: 对应的能量值</span>
+<span class="sd">            - errors: 相对误差(%)</span>
+<span class="sd">            - delta_h: 网格间距</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;n_points&quot;</span><span class="p">:</span> <span class="n">n_values</span><span class="p">,</span> <span class="s2">&quot;energies&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;delta_h&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_values</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># 使用新的网格点数求解</span>
+                <span class="n">E</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve_with_points</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+                <span class="c1"># 计算误差</span>
+                <span class="n">analysis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_analyzer</span><span class="o">.</span><span class="n">compare_with_theory</span><span class="p">(</span>
+                    <span class="n">E</span><span class="p">,</span> <span class="n">solver</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">V_type</span><span class="p">,</span> <span class="n">solver</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">solver</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">l</span>
+                <span class="p">)</span>
+
+                <span class="n">results</span><span class="p">[</span><span class="s2">&quot;energies&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">analysis</span><span class="p">[</span><span class="s2">&quot;relative_error&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;errors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis</span><span class="p">[</span><span class="s2">&quot;relative_error&quot;</span><span class="p">])</span>
+                <span class="n">results</span><span class="p">[</span><span class="s2">&quot;delta_h&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">6</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># r=rp(e^t-1)+r_min t_max = 6</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;网格点数</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">的计算失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, Gilbert Young。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

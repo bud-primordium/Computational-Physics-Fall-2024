@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>radial_schrodinger.solver &mdash; Radial Schrödinger Equation Solver 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f115507d"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Radial Schrödinger Equation Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/modules.html">radial_schrodinger</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Radial Schrödinger Equation Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">radial_schrodinger.solver</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>radial_schrodinger.solver 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;径向薛定谔方程求解器的核心求解模块</span>
+
+<span class="sd">实现了两种求解方法:</span>
+<span class="sd">1. 打靶法(shooting): 从外向内积分,寻找满足边界条件的能量本征值</span>
+<span class="sd">2. 有限差分法(finite difference): 构建矩阵直接求解本征值问题</span>
+
+<span class="sd">主要特点:</span>
+<span class="sd">- 采用变换坐标系统，处理波函数在原点附近的奇异性</span>
+<span class="sd">- 使用改进的RK4方法进行数值积分</span>
+<span class="sd">- 引入多重评价指标确保解的物理正确性</span>
+<span class="sd">- 支持任意外部势能函数</span>
+
+<span class="sd">Classes:</span>
+<span class="sd">    ShootingSolver: 打靶法求解器</span>
+<span class="sd">    FiniteDifferenceSolver: 有限差分法求解器</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">linalg</span><span class="p">,</span> <span class="n">lil_matrix</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root_scalar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">RadialGrid</span><span class="p">,</span> <span class="n">WavefunctionTools</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ShootingSolver">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver">[文档]</a>
+<span class="k">class</span> <span class="nc">ShootingSolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;打靶法求解器</span>
+
+<span class="sd">    使用改进的RK4方法从外向内积分求解径向方程。通过多重评价指标</span>
+<span class="sd">    (节点数、渐进行为、连续性等)寻找正确的能量本征值。</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid : RadialGrid</span>
+<span class="sd">        计算使用的径向网格</span>
+<span class="sd">    V : callable</span>
+<span class="sd">        势能函数</span>
+<span class="sd">    l : int</span>
+<span class="sd">        角量子数</span>
+<span class="sd">    delta : float</span>
+<span class="sd">        网格变换参数</span>
+<span class="sd">    r_p : float</span>
+<span class="sd">        网格变换标度参数</span>
+<span class="sd">    j : ndarray</span>
+<span class="sd">        网格索引数组</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">RadialGrid</span><span class="p">,</span> <span class="n">V</span><span class="p">:</span> <span class="nb">callable</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化求解器</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        grid : RadialGrid</span>
+<span class="sd">            网格对象</span>
+<span class="sd">        V : callable</span>
+<span class="sd">            势能函数</span>
+<span class="sd">        l : int</span>
+<span class="sd">            角量子数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">V</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="n">l</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">delta</span>
+        <span class="c1"># 保存一些常用值</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">r_p</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">j</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">j</span>
+
+<div class="viewcode-block" id="ShootingSolver.V_eff">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver.V_eff">[文档]</a>
+    <span class="k">def</span> <span class="nf">V_eff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算有效势</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        j : 不只局限于整数</span>
+<span class="sd">            当前的网格索引，可以是半整数，便于rK4积分</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            有效势</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 计算对应的 r 值</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">r_min</span>
+        <span class="c1"># 对离心势也截断一个safe，考虑到比1/r更高次，截断在1e-8</span>
+        <span class="n">r_safe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">)</span>  <span class="c1"># 同时支持标量和数组</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">(</span><span class="n">r_safe</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r_safe</span> <span class="o">*</span> <span class="n">r_safe</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ShootingSolver.integrate_inward">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver.integrate_inward">[文档]</a>
+    <span class="k">def</span> <span class="nf">integrate_inward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;从外向内积分</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        E : float</span>
+<span class="sd">            能量</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            波函数u(r)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">j_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">dvdj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="c1"># 边界条件</span>
+        <span class="n">v</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">dvdj</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># 从外向内积分，不影响最终结果，只是差一个常数因子</span>
+
+        <span class="k">def</span> <span class="nf">derivative</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dvdj</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;计算v和v&#39;关于j的导数</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            j : float</span>
+<span class="sd">                网格点(可以是半整数)</span>
+<span class="sd">            v : float</span>
+<span class="sd">                函数值</span>
+<span class="sd">            dvdj : float</span>
+<span class="sd">                函数导数值</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            tuple</span>
+<span class="sd">                (v的导数, v&#39;的导数)</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">v_der</span> <span class="o">=</span> <span class="n">dvdj</span>
+            <span class="n">coef</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">V_eff</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="n">E</span>
+            <span class="p">)</span>  <span class="c1"># 注意ppt里面的公式漏了个2，因为notation好像不一样</span>
+            <span class="n">dvdj_der</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">coef</span>
+            <span class="k">return</span> <span class="n">v_der</span><span class="p">,</span> <span class="n">dvdj_der</span>
+
+        <span class="c1"># RK4积分 v与v&#39;同步更新</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">j_max</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="p">):</span>  <span class="c1"># 注意从倒数第二个点开始填充</span>
+            <span class="c1"># r = self.grid.r[j]</span>
+            <span class="c1"># # 自适应步长</span>
+            <span class="c1"># min_step = 1e-5</span>
+            <span class="c1"># h = -max(self.delta * min(1.0, r), min_step)</span>
+
+            <span class="c1"># RK4 steps</span>
+            <span class="c1"># k1</span>
+            <span class="n">k1v</span><span class="p">,</span> <span class="n">k1dv</span> <span class="o">=</span> <span class="n">derivative</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dvdj</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># k2</span>
+            <span class="n">k2v</span><span class="p">,</span> <span class="n">k2dv</span> <span class="o">=</span> <span class="n">derivative</span><span class="p">(</span>
+                <span class="n">j</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1v</span><span class="p">,</span> <span class="n">dvdj</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1dv</span>
+            <span class="p">)</span>
+
+            <span class="c1"># k3</span>
+            <span class="n">k3v</span><span class="p">,</span> <span class="n">k3dv</span> <span class="o">=</span> <span class="n">derivative</span><span class="p">(</span>
+                <span class="n">j</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k2v</span><span class="p">,</span> <span class="n">dvdj</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k2dv</span>
+            <span class="p">)</span>
+
+            <span class="c1"># k4</span>
+            <span class="n">k4v</span><span class="p">,</span> <span class="n">k4dv</span> <span class="o">=</span> <span class="n">derivative</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k3v</span><span class="p">,</span> <span class="n">dvdj</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k3dv</span><span class="p">)</span>
+
+            <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1v</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k2v</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k3v</span> <span class="o">+</span> <span class="n">k4v</span><span class="p">)</span>
+            <span class="n">dvdj</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dvdj</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1dv</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k2dv</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k3dv</span> <span class="o">+</span> <span class="n">k4dv</span><span class="p">)</span>
+
+        <span class="c1"># 变换回u(r)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">j</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># 改进的归一化处理</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-15</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">u</span>  <span class="c1"># 返回未归一化的波函数，让shooting_solve处理</span>
+
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">u</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">norm</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">u</span> <span class="o">/=</span> <span class="n">norm</span>
+
+        <span class="k">return</span> <span class="n">u</span></div>
+
+
+<div class="viewcode-block" id="ShootingSolver.shooting_solve">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver.shooting_solve">[文档]</a>
+    <span class="k">def</span> <span class="nf">shooting_solve</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">E_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">E_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">target_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;打靶法求解本征值和本征函数</span>
+
+<span class="sd">        使用优化算法最小化多重目标函数:</span>
+<span class="sd">        1. 波函数在原点附近的对数导数误差</span>
+<span class="sd">        2. 波函数节点数与目标值的偏差</span>
+<span class="sd">        3. 波函数在r_min处的幅值误差</span>
+<span class="sd">        4. 波函数导数的连续性误差</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        E_min : float</span>
+<span class="sd">            能量搜索下限</span>
+<span class="sd">        E_max : float</span>
+<span class="sd">            能量搜索上限</span>
+<span class="sd">        target_nodes : int, optional</span>
+<span class="sd">            目标节点数,默认为n-l-1</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            能量本征值</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            归一化的波函数</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            当优化算法未能收敛时抛出</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">target_nodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">target_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># 定义目标函数的权重，可调</span>
+        <span class="n">w1</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># 对数导数误差权重</span>
+        <span class="n">w2</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># 节点数误差权重</span>
+        <span class="n">w3</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># u(r_min) 幅值误差权重</span>
+        <span class="n">w4</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># 连续性误差权重</span>
+
+        <span class="c1"># 定义目标函数</span>
+        <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+            <span class="c1"># 确保能量为负，束缚态</span>
+            <span class="k">if</span> <span class="n">E</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mf">1e5</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">-</span> <span class="n">E_max</span><span class="p">)</span>  <span class="c1"># 惩罚正能量</span>
+
+            <span class="c1"># 进行向内积分，得到波函数 u(r)</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrate_inward</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">r</span>
+
+            <span class="c1"># 避免除以零，设置一个很小的 epsilon</span>
+            <span class="n">epsilon</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># 1. 对数导数误差 修改为要求u&#39;/u * r = l+1</span>
+            <span class="n">num_points</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 在 r = r_min 附近选取的点数</span>
+            <span class="n">r_near</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:</span><span class="n">num_points</span><span class="p">]</span>
+            <span class="n">u_near</span> <span class="o">=</span> <span class="n">u</span><span class="p">[:</span><span class="n">num_points</span><span class="p">]</span>
+
+            <span class="c1"># 计算数值导数 du_dr，使用 numpy 的梯度函数</span>
+            <span class="n">du_dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">u_near</span><span class="p">,</span> <span class="n">r_near</span><span class="p">)</span>
+
+            <span class="c1"># 计算数值对数导数</span>
+            <span class="n">log_derivative_numeric</span> <span class="o">=</span> <span class="n">du_dr</span> <span class="o">/</span> <span class="n">u_near</span>
+
+            <span class="c1"># 乘以 r_near，减少数值误差</span>
+            <span class="n">log_derivative_scaled</span> <span class="o">=</span> <span class="n">log_derivative_numeric</span> <span class="o">*</span> <span class="n">r_near</span>
+            <span class="c1"># 计算误差</span>
+            <span class="n">log_derivative_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">log_derivative_scaled</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># 2. 节点数误差</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="n">WavefunctionTools</span><span class="o">.</span><span class="n">count_nodes</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+            <span class="n">nodes_diff</span> <span class="o">=</span> <span class="n">nodes</span> <span class="o">-</span> <span class="n">target_nodes</span>
+            <span class="n">nodes_error</span> <span class="o">=</span> <span class="n">nodes_diff</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># 平方误差</span>
+
+            <span class="c1"># 3. u(r_min) 的幅值误差</span>
+            <span class="n">u_epsilon</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 在 r = r_min 处的波函数值</span>
+            <span class="n">u_epsilon_error</span> <span class="o">=</span> <span class="n">u_epsilon</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># 平方误差</span>
+
+            <span class="c1"># 4. 连续性误差</span>
+            <span class="n">du_dr_epsilon</span> <span class="o">=</span> <span class="n">du_dr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 在 r = ε 处的数值导数</span>
+            <span class="c1"># 理论导数</span>
+            <span class="n">du_dr_theoretical</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_epsilon</span> <span class="o">/</span> <span class="n">epsilon</span>
+            <span class="n">continuity_error</span> <span class="o">=</span> <span class="p">(</span><span class="n">du_dr_epsilon</span> <span class="o">-</span> <span class="n">du_dr_theoretical</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+            <span class="c1"># 总误差</span>
+            <span class="n">total_error</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">w1</span> <span class="o">*</span> <span class="n">log_derivative_error</span>
+                <span class="o">+</span> <span class="n">w2</span> <span class="o">*</span> <span class="n">nodes_error</span>
+                <span class="o">+</span> <span class="n">w3</span> <span class="o">*</span> <span class="n">u_epsilon_error</span>
+                <span class="o">+</span> <span class="n">w4</span> <span class="o">*</span> <span class="n">continuity_error</span>
+            <span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">total_error</span>
+
+        <span class="c1"># 使用 scipy.optimize.minimize 进行优化</span>
+        <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+        <span class="k">def</span> <span class="nf">objective_wrapper</span><span class="p">(</span><span class="n">E_array</span><span class="p">):</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">E_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">objective</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+
+        <span class="c1"># 先粗优化</span>
+        <span class="n">E_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">E_min</span><span class="p">,</span> <span class="n">E_max</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># 10 个能量点的网格</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">objective</span><span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="k">for</span> <span class="n">E</span> <span class="ow">in</span> <span class="n">E_grid</span><span class="p">]</span>
+        <span class="n">E_coarse</span> <span class="o">=</span> <span class="n">E_grid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">errors</span><span class="p">)]</span>  <span class="c1"># 找到误差最小值对应的 E</span>
+
+        <span class="c1"># 调用优化方法</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+            <span class="n">objective_wrapper</span><span class="p">,</span>
+            <span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="n">E_coarse</span><span class="p">],</span>
+            <span class="n">bounds</span><span class="o">=</span><span class="p">[(</span><span class="n">E_min</span><span class="p">,</span> <span class="n">E_max</span><span class="p">)],</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span>  <span class="c1"># 可以尝试其他方法，如 &#39;Nelder-Mead&#39;</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ftol&quot;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;maxls&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span>  <span class="c1"># 增加最大线搜索次数</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="n">optimal_E</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># 重新计算对应的波函数</span>
+            <span class="n">u_optimal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrate_inward</span><span class="p">(</span><span class="n">optimal_E</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">optimal_E</span><span class="p">,</span> <span class="n">u_optimal</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;l-bfgs-b未收敛: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">,改用Nelder-Mead&quot;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+                <span class="n">objective_wrapper</span><span class="p">,</span>
+                <span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="n">E_coarse</span><span class="p">],</span>
+                <span class="n">bounds</span><span class="o">=</span><span class="p">[(</span><span class="n">E_min</span><span class="p">,</span> <span class="n">E_max</span><span class="p">)],</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;Nelder-Mead&quot;</span><span class="p">,</span>
+                <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;xatol&quot;</span><span class="p">:</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;maxiter&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">},</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                <span class="n">optimal_E</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">u_optimal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrate_inward</span><span class="p">(</span><span class="n">optimal_E</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">optimal_E</span><span class="p">,</span> <span class="n">u_optimal</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Nelder-Mead也未收敛&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="FiniteDifferenceSolver">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver">[文档]</a>
+<span class="k">class</span> <span class="nc">FiniteDifferenceSolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;有限差分法求解器&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">RadialGrid</span><span class="p">,</span> <span class="n">V</span><span class="p">:</span> <span class="nb">callable</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化求解器</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        grid : RadialGrid</span>
+<span class="sd">            网格对象</span>
+<span class="sd">        V : callable</span>
+<span class="sd">            势能函数</span>
+<span class="sd">        l : int</span>
+<span class="sd">            角量子数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">V</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="n">l</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">delta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">r_p</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">j</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">j</span>
+
+<div class="viewcode-block" id="FiniteDifferenceSolver.V_eff">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.V_eff">[文档]</a>
+    <span class="k">def</span> <span class="nf">V_eff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算有效势</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        j : array_like</span>
+<span class="sd">            网格点索引</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            有效势能</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">r_min</span>
+        <span class="n">r_safe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">(</span><span class="n">r_safe</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r_safe</span> <span class="o">*</span> <span class="n">r_safe</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FiniteDifferenceSolver.construct_hamiltonian">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.construct_hamiltonian">[文档]</a>
+    <span class="k">def</span> <span class="nf">construct_hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;构建哈密顿量矩阵</span>
+
+<span class="sd">        对应变换后的径向方程:</span>
+<span class="sd">        -[v&#39;&#39;(j) - v(j)δ²/4] + 2δ²rp²e^(2δj)v(j)V_eff(j) = E[2δ²rp²e^(2δj)]v(j)</span>
+<span class="sd">        从j=1开始构建方程</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        scipy.sparse.csr_matrix</span>
+<span class="sd">            哈密顿量稀疏矩阵</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># jmax+1个点，去掉最后一个点</span>
+        <span class="n">N_reduced</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># 再去掉第一个点</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">lil_matrix</span><span class="p">((</span><span class="n">N_reduced</span><span class="p">,</span> <span class="n">N_reduced</span><span class="p">))</span>
+
+        <span class="c1"># 从j=1开始构建矩阵</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_reduced</span><span class="p">):</span>
+            <span class="n">j_actual</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 实际的j索引</span>
+            <span class="n">exp_factor</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="mi">2</span>
+                <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span>
+                <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span><span class="o">**</span><span class="mi">2</span>
+                <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">[</span><span class="n">j_actual</span><span class="p">])</span>
+            <span class="p">)</span>
+
+            <span class="c1"># 动能项系数</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># j-1项</span>
+                <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span>  <span class="c1"># j项</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N_reduced</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># j+1项</span>
+                <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="c1"># 势能项</span>
+            <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">exp_factor</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">V_eff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">[</span><span class="n">j_actual</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">H</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FiniteDifferenceSolver.construct_B_matrix">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.construct_B_matrix">[文档]</a>
+    <span class="k">def</span> <span class="nf">construct_B_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N_reduced</span><span class="p">):</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">lil_matrix</span><span class="p">((</span><span class="n">N_reduced</span><span class="p">,</span> <span class="n">N_reduced</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_reduced</span><span class="p">):</span>
+            <span class="n">j_actual</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="mi">2</span>
+                <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span>
+                <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span><span class="o">**</span><span class="mi">2</span>
+                <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">[</span><span class="n">j_actual</span><span class="p">])</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">B</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FiniteDifferenceSolver.fd_solve">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.fd_solve">[文档]</a>
+    <span class="k">def</span> <span class="nf">fd_solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_states</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;渐进式求解本征值问题</span>
+
+<span class="sd">        先求解最低本征值，然后根据1/n²规律估计后续本征值位置</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_states : int</span>
+<span class="sd">            需要求解的本征态数量</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            (energies, states)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_hamiltonian</span><span class="p">()</span>
+        <span class="n">N_reduced</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_B_matrix</span><span class="p">(</span><span class="n">N_reduced</span><span class="p">)</span>
+
+        <span class="c1"># 首先求解最低本征值</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">e_ground</span><span class="p">,</span> <span class="n">v_ground</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">eigsh</span><span class="p">(</span>
+                <span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="n">B</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;SA&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">500000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span>
+            <span class="p">)</span>
+            <span class="n">e_ground</span> <span class="o">=</span> <span class="n">e_ground</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;基态求解失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">energies</span> <span class="o">=</span> <span class="p">[</span><span class="n">e_ground</span><span class="p">]</span>
+        <span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="n">v_ground</span><span class="p">]</span>
+
+        <span class="c1"># 使用找到的基态能量来估计后续本征值</span>
+        <span class="k">if</span> <span class="n">n_states</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_states</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="c1"># 根据1/n²规律估计下一个本征值</span>
+                <span class="c1"># 假设E_n = E_1/n²</span>
+                <span class="n">estimated_e</span> <span class="o">=</span> <span class="n">e_ground</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+
+                <span class="c1"># 在估计值附近搜索，使用一个适当的窗口</span>
+                <span class="n">window</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">e_ground</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>  <span class="c1"># 搜索窗口可以调整</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># 在估计值附近搜索，避免找到已经找到的本征值</span>
+                    <span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="p">[</span>
+                        <span class="n">estimated_e</span><span class="p">,</span>
+                        <span class="n">estimated_e</span> <span class="o">+</span> <span class="n">window</span><span class="p">,</span>
+                        <span class="n">estimated_e</span> <span class="o">-</span> <span class="n">window</span><span class="p">,</span>
+                    <span class="p">]:</span>
+                        <span class="n">e</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">eigsh</span><span class="p">(</span>
+                            <span class="n">H</span><span class="p">,</span>
+                            <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">M</span><span class="o">=</span><span class="n">B</span><span class="p">,</span>
+                            <span class="n">sigma</span><span class="o">=</span><span class="n">shift</span><span class="p">,</span>
+                            <span class="n">which</span><span class="o">=</span><span class="s2">&quot;LM&quot;</span><span class="p">,</span>
+                            <span class="n">maxiter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+                            <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="c1"># 检查是否是新的本征值（与已有值不同）</span>
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">prev_e</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-6</span> <span class="k">for</span> <span class="n">prev_e</span> <span class="ow">in</span> <span class="n">energies</span><span class="p">):</span>
+                            <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                            <span class="k">break</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;激发态 </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">求解失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+
+        <span class="c1"># 合并结果并排序</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span>
+            <span class="n">v_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+
+            <span class="c1"># 排序</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span>
+            <span class="n">energies</span> <span class="o">=</span> <span class="n">energies</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">v_states</span> <span class="o">=</span> <span class="n">v_states</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+
+            <span class="c1"># 转换回u并添加边界点</span>
+            <span class="n">u_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">)):</span>
+                <span class="n">v_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">))</span>
+                <span class="n">v_full</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v_states</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="n">u_states</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v_full</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">j</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+                <span class="c1"># 归一化</span>
+                <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">u_states</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">u_states</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">r</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">norm</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">u_states</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">norm</span>
+
+            <span class="k">return</span> <span class="n">energies</span><span class="p">,</span> <span class="n">u_states</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;本征值求解失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, Gilbert Young。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

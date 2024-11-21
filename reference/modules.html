@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>radial_schrodinger &mdash; Radial Schrödinger Equation Solver 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f115507d"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="radial_schrodinger package" href="radial_schrodinger.html" />
+    <link rel="prev" title="径向薛定谔方程求解器" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Radial Schrödinger Equation Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">radial_schrodinger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html">radial_schrodinger package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Radial Schrödinger Equation Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">radial_schrodinger</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/modules.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="radial-schrodinger">
+<h1>radial_schrodinger<a class="headerlink" href="#radial-schrodinger" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="radial_schrodinger.html">radial_schrodinger package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html#module-radial_schrodinger.analysis">radial_schrodinger.analysis module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.ConvergenceAnalyzer"><code class="docutils literal notranslate"><span class="pre">ConvergenceAnalyzer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.ConvergenceAnalyzer.analyze_grid_convergence"><code class="docutils literal notranslate"><span class="pre">ConvergenceAnalyzer.analyze_grid_convergence()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.EnergyAnalyzer"><code class="docutils literal notranslate"><span class="pre">EnergyAnalyzer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.EnergyAnalyzer.compare_with_theory"><code class="docutils literal notranslate"><span class="pre">EnergyAnalyzer.compare_with_theory()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.analyze_asymptotic"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.analyze_asymptotic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.get_derivatives"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.get_derivatives()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.get_r0_values"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.get_r0_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.analysis.WavefunctionProcessor.normalize_wavefunction"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.normalize_wavefunction()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html#module-radial_schrodinger.main">radial_schrodinger.main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver.convergence_study"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver.convergence_study()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver.solve"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver.solve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.main.RadialSchrodingerSolver.solve_with_points"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver.solve_with_points()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.main.run_example"><code class="docutils literal notranslate"><span class="pre">run_example()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html#module-radial_schrodinger.solver">radial_schrodinger.solver module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.V_eff"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.V_eff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.construct_B_matrix"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.construct_B_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.construct_hamiltonian"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.construct_hamiltonian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.FiniteDifferenceSolver.fd_solve"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.fd_solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver"><code class="docutils literal notranslate"><span class="pre">ShootingSolver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver.V_eff"><code class="docutils literal notranslate"><span class="pre">ShootingSolver.V_eff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver.integrate_inward"><code class="docutils literal notranslate"><span class="pre">ShootingSolver.integrate_inward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.solver.ShootingSolver.shooting_solve"><code class="docutils literal notranslate"><span class="pre">ShootingSolver.shooting_solve()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html#module-radial_schrodinger.utils">radial_schrodinger.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction"><code class="docutils literal notranslate"><span class="pre">PotentialFunction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction.V_hydrogen"><code class="docutils literal notranslate"><span class="pre">PotentialFunction.V_hydrogen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction.V_lithium"><code class="docutils literal notranslate"><span class="pre">PotentialFunction.V_lithium()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction.get_potential"><code class="docutils literal notranslate"><span class="pre">PotentialFunction.get_potential()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.RadialGrid"><code class="docutils literal notranslate"><span class="pre">RadialGrid</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.RadialGrid.get_grid_info"><code class="docutils literal notranslate"><span class="pre">RadialGrid.get_grid_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.RadialGrid.setup_grid"><code class="docutils literal notranslate"><span class="pre">RadialGrid.setup_grid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig"><code class="docutils literal notranslate"><span class="pre">SolverConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.V_type"><code class="docutils literal notranslate"><span class="pre">SolverConfig.V_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.config_summary"><code class="docutils literal notranslate"><span class="pre">SolverConfig.config_summary</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.delta"><code class="docutils literal notranslate"><span class="pre">SolverConfig.delta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.j_max"><code class="docutils literal notranslate"><span class="pre">SolverConfig.j_max</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.l"><code class="docutils literal notranslate"><span class="pre">SolverConfig.l</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.method"><code class="docutils literal notranslate"><span class="pre">SolverConfig.method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.n"><code class="docutils literal notranslate"><span class="pre">SolverConfig.n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.n_states"><code class="docutils literal notranslate"><span class="pre">SolverConfig.n_states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.r_max"><code class="docutils literal notranslate"><span class="pre">SolverConfig.r_max</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.r_min"><code class="docutils literal notranslate"><span class="pre">SolverConfig.r_min</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.SolverConfig.tol"><code class="docutils literal notranslate"><span class="pre">SolverConfig.tol</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.WavefunctionTools"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.WavefunctionTools.count_nodes"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools.count_nodes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.WavefunctionTools.get_analytic_hydrogen"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools.get_analytic_hydrogen()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.get_energy_bounds"><code class="docutils literal notranslate"><span class="pre">get_energy_bounds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.utils.get_theoretical_values"><code class="docutils literal notranslate"><span class="pre">get_theoretical_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html#module-radial_schrodinger.visualization">radial_schrodinger.visualization module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.visualization.ResultVisualizer"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.visualization.ResultVisualizer.plot_convergence_study"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer.plot_convergence_study()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.visualization.ResultVisualizer.plot_energy_scan"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer.plot_energy_scan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.visualization.ResultVisualizer.plot_wavefunction"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer.plot_wavefunction()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="radial_schrodinger.html#module-radial_schrodinger">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ConvergenceAnalyzer"><code class="docutils literal notranslate"><span class="pre">ConvergenceAnalyzer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ConvergenceAnalyzer.analyze_grid_convergence"><code class="docutils literal notranslate"><span class="pre">ConvergenceAnalyzer.analyze_grid_convergence()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.EnergyAnalyzer"><code class="docutils literal notranslate"><span class="pre">EnergyAnalyzer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.EnergyAnalyzer.compare_with_theory"><code class="docutils literal notranslate"><span class="pre">EnergyAnalyzer.compare_with_theory()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.FiniteDifferenceSolver"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.FiniteDifferenceSolver.V_eff"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.V_eff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.FiniteDifferenceSolver.construct_B_matrix"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.construct_B_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.FiniteDifferenceSolver.construct_hamiltonian"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.construct_hamiltonian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.FiniteDifferenceSolver.fd_solve"><code class="docutils literal notranslate"><span class="pre">FiniteDifferenceSolver.fd_solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.PotentialFunction"><code class="docutils literal notranslate"><span class="pre">PotentialFunction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.PotentialFunction.V_hydrogen"><code class="docutils literal notranslate"><span class="pre">PotentialFunction.V_hydrogen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.PotentialFunction.V_lithium"><code class="docutils literal notranslate"><span class="pre">PotentialFunction.V_lithium()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.PotentialFunction.get_potential"><code class="docutils literal notranslate"><span class="pre">PotentialFunction.get_potential()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.RadialGrid"><code class="docutils literal notranslate"><span class="pre">RadialGrid</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.RadialGrid.get_grid_info"><code class="docutils literal notranslate"><span class="pre">RadialGrid.get_grid_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.RadialGrid.setup_grid"><code class="docutils literal notranslate"><span class="pre">RadialGrid.setup_grid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.RadialSchrodingerSolver"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.RadialSchrodingerSolver.convergence_study"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver.convergence_study()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.RadialSchrodingerSolver.solve"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver.solve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.RadialSchrodingerSolver.solve_with_points"><code class="docutils literal notranslate"><span class="pre">RadialSchrodingerSolver.solve_with_points()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ResultVisualizer"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ResultVisualizer.plot_convergence_study"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer.plot_convergence_study()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ResultVisualizer.plot_energy_scan"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer.plot_energy_scan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ResultVisualizer.plot_wavefunction"><code class="docutils literal notranslate"><span class="pre">ResultVisualizer.plot_wavefunction()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ShootingSolver"><code class="docutils literal notranslate"><span class="pre">ShootingSolver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ShootingSolver.V_eff"><code class="docutils literal notranslate"><span class="pre">ShootingSolver.V_eff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ShootingSolver.integrate_inward"><code class="docutils literal notranslate"><span class="pre">ShootingSolver.integrate_inward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.ShootingSolver.shooting_solve"><code class="docutils literal notranslate"><span class="pre">ShootingSolver.shooting_solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig"><code class="docutils literal notranslate"><span class="pre">SolverConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.V_type"><code class="docutils literal notranslate"><span class="pre">SolverConfig.V_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.config_summary"><code class="docutils literal notranslate"><span class="pre">SolverConfig.config_summary</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.delta"><code class="docutils literal notranslate"><span class="pre">SolverConfig.delta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.j_max"><code class="docutils literal notranslate"><span class="pre">SolverConfig.j_max</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.l"><code class="docutils literal notranslate"><span class="pre">SolverConfig.l</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.method"><code class="docutils literal notranslate"><span class="pre">SolverConfig.method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.n"><code class="docutils literal notranslate"><span class="pre">SolverConfig.n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.n_states"><code class="docutils literal notranslate"><span class="pre">SolverConfig.n_states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.r_max"><code class="docutils literal notranslate"><span class="pre">SolverConfig.r_max</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.r_min"><code class="docutils literal notranslate"><span class="pre">SolverConfig.r_min</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.SolverConfig.tol"><code class="docutils literal notranslate"><span class="pre">SolverConfig.tol</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionProcessor"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionProcessor.analyze_asymptotic"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.analyze_asymptotic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionProcessor.get_derivatives"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.get_derivatives()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionProcessor.get_r0_values"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.get_r0_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionProcessor.normalize_wavefunction"><code class="docutils literal notranslate"><span class="pre">WavefunctionProcessor.normalize_wavefunction()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionTools"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionTools.count_nodes"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools.count_nodes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.WavefunctionTools.get_analytic_hydrogen"><code class="docutils literal notranslate"><span class="pre">WavefunctionTools.get_analytic_hydrogen()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.get_energy_bounds"><code class="docutils literal notranslate"><span class="pre">get_energy_bounds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="radial_schrodinger.html#radial_schrodinger.get_theoretical_values"><code class="docutils literal notranslate"><span class="pre">get_theoretical_values()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../index.html" class="btn btn-neutral float-left" title="径向薛定谔方程求解器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="radial_schrodinger.html" class="btn btn-neutral float-right" title="radial_schrodinger package" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, Gilbert Young。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
