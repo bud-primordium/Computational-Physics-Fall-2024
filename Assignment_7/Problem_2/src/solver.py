@@ -223,7 +223,7 @@ class ShootingSolver:
             x0=[E_coarse],
             bounds=[(E_min, E_max)],
             method="L-BFGS-B",  # 可以尝试其他方法，如 'Nelder-Mead'
-            options={"ftol": 1e-8, "disp": True, "maxls": 50},  # 增加最大线搜索次数
+            options={"ftol": 1e-8, "disp": False, "maxls": 50},  # 增加最大线搜索次数
         )
 
         if result.success:
@@ -238,7 +238,7 @@ class ShootingSolver:
                 x0=[E_coarse],
                 bounds=[(E_min, E_max)],
                 method="Nelder-Mead",
-                options={"xatol": 1e-10, "disp": True, "maxiter": 1000},
+                options={"xatol": 1e-10, "disp": False, "maxiter": 1000},
             )
             if result.success:
                 optimal_E = result.x[0]
