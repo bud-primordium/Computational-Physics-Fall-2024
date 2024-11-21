@@ -21,7 +21,7 @@ from scipy.optimize import root_scalar
 from typing import Tuple
 import logging
 
-from src.utils import RadialGrid, WavefunctionTools
+from .utils import RadialGrid, WavefunctionTools
 
 logger = logging.getLogger(__name__)
 

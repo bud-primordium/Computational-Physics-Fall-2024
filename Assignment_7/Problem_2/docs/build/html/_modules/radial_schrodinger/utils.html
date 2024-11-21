@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>radial_schrodinger.utils &mdash; Radial Schrödinger Equation Solver 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f115507d"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Radial Schrödinger Equation Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/modules.html">radial_schrodinger</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Radial Schrödinger Equation Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">radial_schrodinger.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>radial_schrodinger.utils 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;径向薛定谔方程求解器的工具模块</span>
+
+<span class="sd">包含网格生成、势能函数、波函数工具等基础设施。</span>
+<span class="sd">提供配置类和理论值查询等功能支持。</span>
+
+<span class="sd">默认单位:</span>
+<span class="sd">- 长度: a bohr半径</span>
+<span class="sd">- 能量: hatree</span>
+
+<span class="sd">Classes:</span>
+<span class="sd">    SolverConfig: 求解器配置类  </span>
+<span class="sd">    RadialGrid: 径向网格工具类</span>
+<span class="sd">    PotentialFunction: 势能函数类</span>
+<span class="sd">    WavefunctionTools: 波函数工具类</span>
+
+<span class="sd">Functions:</span>
+<span class="sd">    get_theoretical_values: 获取理论参考值</span>
+<span class="sd">    get_energy_bounds: 估计能量搜索范围</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">erf</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># 设置日志</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SolverConfig">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.SolverConfig">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">SolverConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;求解器配置类</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_max : float</span>
+<span class="sd">        最大径向距离 (Bohr)</span>
+<span class="sd">    r_min : float</span>
+<span class="sd">        最小径向距离 (Bohr)</span>
+<span class="sd">    j_max : int</span>
+<span class="sd">        径向网格点数</span>
+<span class="sd">    delta : float</span>
+<span class="sd">        网格变换参数</span>
+<span class="sd">    l : int</span>
+<span class="sd">        角量子数</span>
+<span class="sd">    n : int</span>
+<span class="sd">        主量子数</span>
+<span class="sd">    n_states : int</span>
+<span class="sd">        需要求解的本征态数量</span>
+<span class="sd">    V_type : str</span>
+<span class="sd">        势能类型 (&#39;hydrogen&#39; 或 &#39;lithium&#39;)</span>
+<span class="sd">    method : str</span>
+<span class="sd">        求解方法 (&#39;shooting&#39; 或 &#39;fd&#39;)</span>
+<span class="sd">    tol : float</span>
+<span class="sd">        收敛精度</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span>
+    <span class="n">r_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span>
+    <span class="n">j_max</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 现在是可选的，由方法决定默认值</span>
+    <span class="n">delta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 由j_max计算得到</span>
+    <span class="n">l</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">n_states</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">V_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hydrogen&quot;</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;shooting&quot;</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;配置初始化后的验证和处理&quot;&quot;&quot;</span>
+        <span class="c1"># 验证输入参数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_inputs</span><span class="p">()</span>
+
+        <span class="c1"># 设置默认网格点数</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">j_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">j_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_j_max</span><span class="p">()</span>
+
+        <span class="c1"># 设置网格变换参数</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">j_max</span>
+
+    <span class="k">def</span> <span class="nf">_validate_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;验证输入参数的有效性&quot;&quot;&quot;</span>
+        <span class="c1"># 验证量子数</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;主量子数n必须为正整数&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;角量子数l必须为非负整数&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;角量子数l必须小于主量子数n&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 验证势能类型</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">V_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span> <span class="s2">&quot;lithium&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;不支持的势能类型&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 验证求解方法</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;shooting&quot;</span><span class="p">,</span> <span class="s2">&quot;fd&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;不支持的求解方法&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 验证物理参数</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_max</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_min</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;r_max必须大于r_min&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_min</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;r_min必须为正数&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 如果手动指定了j_max，验证其范围</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">j_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;fd&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">j_max</span> <span class="o">&gt;</span> <span class="mi">640</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;有限差分法的j_max不能超过640&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">j_max</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;网格点数过少，建议至少50个点&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_default_j_max</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;根据求解方法返回默认的网格点数&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;shooting&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1000</span>  <span class="c1"># 打靶法默认使用1000个点</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">300</span>  <span class="c1"># 有限差分法默认使用300个点</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">config_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回配置摘要信息&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;求解配置:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  原子类型: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">V_type</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  量子数: n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, l=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  求解方法: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  网格点数: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">j_max</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  网格范围: [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r_min</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">] Bohr&quot;</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RadialGrid">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.RadialGrid">[文档]</a>
+<span class="k">class</span> <span class="nc">RadialGrid</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;径向网格工具类，处理非均匀网格的生成和变换</span>
+
+<span class="sd">    使用变换 r = r_p[exp(j*delta) - 1] + r_min 生成非均匀网格,</span>
+<span class="sd">    在原点附近较密,远处较疏,更适合原子波函数的数值计算。</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    config : SolverConfig</span>
+<span class="sd">        网格配置对象</span>
+<span class="sd">    j : ndarray</span>
+<span class="sd">        均匀网格点索引</span>
+<span class="sd">    r_p : float</span>
+<span class="sd">        网格变换标度参数</span>
+<span class="sd">    r : ndarray</span>
+<span class="sd">        物理空间径向坐标</span>
+<span class="sd">    dr : ndarray</span>
+<span class="sd">        网格间距</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">SolverConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化网格&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_grid</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RadialGrid.setup_grid">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.RadialGrid.setup_grid">[文档]</a>
+    <span class="k">def</span> <span class="nf">setup_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置非均匀网格，使用变换 r = r_p[exp(j*delta) - 1] + r_min&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">j_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">r_max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">r_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">j_max</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_p</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">r_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RadialGrid.get_grid_info">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.RadialGrid.get_grid_info">[文档]</a>
+    <span class="k">def</span> <span class="nf">get_grid_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回网格信息&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span>
+            <span class="s2">&quot;dr&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span>
+            <span class="s2">&quot;r_min&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;r_max&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;n_points&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">),</span>
+        <span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PotentialFunction">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction">[文档]</a>
+<span class="k">class</span> <span class="nc">PotentialFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;势能函数类</span>
+
+<span class="sd">    提供不同原子的势能函数实现:</span>
+<span class="sd">    1. 氢原子: 库仑势 V(r) = -1/r</span>
+<span class="sd">    2. 锂原子: GTH赝势,包含局域和非局域部分</span>
+<span class="sd">       V(r) = V_loc(r) + V_nl(r)</span>
+
+<span class="sd">    注: 已考虑电子负电荷,势能直接给出</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PotentialFunction.V_hydrogen">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction.V_hydrogen">[文档]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">V_hydrogen</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;氢原子势能: V(r) = -1/r</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : np.ndarray</span>
+<span class="sd">            径向距离数组</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            势能数组</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r_safe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_safe</span></div>
+
+
+<div class="viewcode-block" id="PotentialFunction.V_lithium">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction.V_lithium">[文档]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">V_lithium</span><span class="p">(</span>
+        <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">Z_ion</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">r_loc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span>
+        <span class="n">C1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">14.0093922</span><span class="p">,</span>
+        <span class="n">C2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.5099073</span><span class="p">,</span>
+        <span class="n">C3</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.7532723</span><span class="p">,</span>
+        <span class="n">C4</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0834586</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;锂原子赝势</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : np.ndarray</span>
+<span class="sd">            径向距离数组</span>
+<span class="sd">        Z_ion : float, optional</span>
+<span class="sd">            有效核电荷</span>
+<span class="sd">        r_loc : float, optional</span>
+<span class="sd">            局域化参数</span>
+<span class="sd">        C1-C4 : float, optional</span>
+<span class="sd">            势能参数</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            势能数组</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r_safe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="c1"># 库仑项</span>
+        <span class="n">term1</span> <span class="o">=</span> <span class="o">-</span><span class="n">Z_ion</span> <span class="o">/</span> <span class="n">r_safe</span> <span class="o">*</span> <span class="n">erf</span><span class="p">(</span><span class="n">r_safe</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">r_loc</span><span class="p">))</span>
+        <span class="c1"># 局域项</span>
+        <span class="n">exp_term</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_safe</span> <span class="o">/</span> <span class="n">r_loc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">term2</span> <span class="o">=</span> <span class="n">exp_term</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="n">C1</span>
+            <span class="o">+</span> <span class="n">C2</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_safe</span> <span class="o">/</span> <span class="n">r_loc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="o">+</span> <span class="n">C3</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_safe</span> <span class="o">/</span> <span class="n">r_loc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span>
+            <span class="o">+</span> <span class="n">C4</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_safe</span> <span class="o">/</span> <span class="n">r_loc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">6</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span></div>
+
+
+<div class="viewcode-block" id="PotentialFunction.get_potential">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.PotentialFunction.get_potential">[文档]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_potential</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">V_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取势能函数</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        V_type : str</span>
+<span class="sd">            势能类型(&#39;hydrogen&#39;或&#39;lithium&#39;)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        callable</span>
+<span class="sd">            对应的势能函数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">V_type</span> <span class="o">==</span> <span class="s2">&quot;hydrogen&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">V_hydrogen</span>
+        <span class="k">elif</span> <span class="n">V_type</span> <span class="o">==</span> <span class="s2">&quot;lithium&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">V_lithium</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未知的势能类型: </span><span class="si">{</span><span class="n">V_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="WavefunctionTools">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.WavefunctionTools">[文档]</a>
+<span class="k">class</span> <span class="nc">WavefunctionTools</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;波函数工具类&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="WavefunctionTools.get_analytic_hydrogen">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.WavefunctionTools.get_analytic_hydrogen">[文档]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_analytic_hydrogen</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取氢原子解析解R(r)</span>
+
+<span class="sd">        实现前几个低量子数态的径向波函数解析表达式:</span>
+<span class="sd">        R(r) = N_nl * r^l * L_n^(2l+1)(2r/n) * exp(-r/n)</span>
+<span class="sd">        其中N_nl为归一化系数,L_n^k为拉盖尔多项式</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : np.ndarray</span>
+<span class="sd">            径向距离数组</span>
+<span class="sd">        n : int</span>
+<span class="sd">            主量子数</span>
+<span class="sd">        l : int</span>
+<span class="sd">            角量子数</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Optional[np.ndarray]</span>
+<span class="sd">            解析波函数,若无解析表达式则返回None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 1s</span>
+            <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 2s</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># 2p</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 3s</span>
+            <span class="k">return</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">243</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">27</span> <span class="o">-</span> <span class="mi">18</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># 3p</span>
+            <span class="k">return</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">81</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="p">(</span><span class="mi">6</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="WavefunctionTools.count_nodes">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.WavefunctionTools.count_nodes">[文档]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">count_nodes</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算波函数节点数</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        u : np.ndarray</span>
+<span class="sd">            波函数数组</span>
+<span class="sd">        eps : float, optional</span>
+<span class="sd">            判定零点的阈值</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            节点数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">u_filtered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">signbit</span><span class="p">(</span><span class="n">u_filtered</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="get_theoretical_values">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.get_theoretical_values">[文档]</a>
+<span class="k">def</span> <span class="nf">get_theoretical_values</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;获取理论参考值(Hartree单位)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Dict</span>
+<span class="sd">        不同原子的能量本征值字典</span>
+<span class="sd">        格式: {原子类型: {(n,l): 能量}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;hydrogen&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># 1s</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.125</span><span class="p">,</span>  <span class="c1"># 2s</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.125</span><span class="p">,</span>  <span class="c1"># 2p</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">18</span><span class="p">,</span>  <span class="c1"># 3s</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">18</span><span class="p">,</span>  <span class="c1"># 3p</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;lithium&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="o">-</span><span class="mf">4.45824675547</span><span class="p">,</span>  <span class="c1"># 1s</span>
+            <span class="c1"># 跑了无数次收敛性分析出来的结果</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="o">-</span><span class="mf">1.115432223</span><span class="p">,</span>  <span class="c1"># 2s</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="o">-</span><span class="mf">1.12227869831</span><span class="p">,</span>  <span class="c1"># 2p</span>
+        <span class="p">},</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="get_energy_bounds">
+<a class="viewcode-back" href="../../reference/radial_schrodinger.html#radial_schrodinger.utils.get_energy_bounds">[文档]</a>
+<span class="k">def</span> <span class="nf">get_energy_bounds</span><span class="p">(</span><span class="n">V_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;获取不同原子的能量范围估计</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    V_type : str</span>
+<span class="sd">        势能类型</span>
+<span class="sd">    n : int</span>
+<span class="sd">        主量子数</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[float, float]</span>
+<span class="sd">        (E_min, E_max) 能量范围估计</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">V_type</span> <span class="o">==</span> <span class="s2">&quot;hydrogen&quot;</span><span class="p">:</span>
+        <span class="c1"># 氢原子：E = -0.5/n^2 (精确值)</span>
+        <span class="n">E_center</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+        <span class="c1"># 在精确值附近留出足够余量</span>
+        <span class="k">return</span> <span class="n">E_center</span> <span class="o">*</span> <span class="mf">1.3</span><span class="p">,</span> <span class="n">E_center</span> <span class="o">*</span> <span class="mf">0.7</span>
+
+    <span class="k">elif</span> <span class="n">V_type</span> <span class="o">==</span> <span class="s2">&quot;lithium&quot;</span><span class="p">:</span>
+        <span class="c1"># 锂原子：基态约为 -4.5，高激发态近似 -4.5/n^2</span>
+        <span class="n">E_center</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+        <span class="c1"># 由于赝势的复杂性，留出更大的余量</span>
+        <span class="k">return</span> <span class="n">E_center</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">E_center</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未知的原子类型: </span><span class="si">{</span><span class="n">V_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, Gilbert Young。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
