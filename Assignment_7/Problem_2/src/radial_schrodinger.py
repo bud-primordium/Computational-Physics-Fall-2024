@@ -279,7 +279,7 @@ def get_initial_energy_range(config: SolverConfig) -> Tuple[float, float]:
         E_max = E_theo * 0.5  # 扩大搜索范围上限
     else:
         # 锂原子能量估计
-        E_theo = -0.1 / config.n**2
+        E_theo = -4.5 / config.n**2
         E_min = E_theo * 1.5
         E_max = E_theo * 0.5
 
