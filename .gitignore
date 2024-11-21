@@ -53,3 +53,6 @@ drafts/
 .vscode/
 utils/prompts.txt
 **/test.ipynb
+
+#忽略egg-info文件夹
+*.egg-info/
