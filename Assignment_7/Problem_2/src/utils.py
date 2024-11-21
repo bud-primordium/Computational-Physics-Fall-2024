@@ -16,7 +16,7 @@ Functions:
 import numpy as np
 from scipy.special import erf
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 import logging
 
 # 设置日志
@@ -248,6 +248,37 @@ def get_theoretical_values() -> Dict:
         "lithium": {
             (1, 0): -4.462,  # 1s
             (2, 0): -1.116,  # 2s
-            (2, 1): -1.122,  # 2p
+            (2, 1): -1.12227869831,  # 2p
         },
     }
+
+
+def get_energy_bounds(V_type: str, n: int) -> Tuple[float, float]:
+    """获取不同原子的能量范围估计
+
+    Parameters
+    ----------
+    V_type : str
+        势能类型
+    n : int
+        主量子数
+
+    Returns
+    -------
+    Tuple[float, float]
+        (E_min, E_max) 能量范围估计
+    """
+    if V_type == "hydrogen":
+        # 氢原子：E = -0.5/n^2 (精确值)
+        E_center = -0.5 / (n * n)
+        # 在精确值附近留出足够余量
+        return E_center * 1.3, E_center * 0.7
+
+    elif V_type == "lithium":
+        # 锂原子：基态约为 -4.5，高激发态近似 -4.5/n^2
+        E_center = -4.5 / (n * n)
+        # 由于赝势的复杂性，留出更大的余量
+        return E_center * 1.5, E_center * 0.5
+
+    else:
+        raise ValueError(f"未知的原子类型: {V_type}")

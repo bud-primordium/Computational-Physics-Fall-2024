@@ -20,6 +20,7 @@ from src.utils import (
     PotentialFunction,
     WavefunctionTools,
     get_theoretical_values,
+    get_energy_bounds,
 )
 from src.solver import ShootingSolver, FiniteDifferenceSolver
 from src.analysis import WavefunctionProcessor, EnergyAnalyzer, ConvergenceAnalyzer
@@ -75,7 +76,7 @@ class RadialSchrodingerSolver:
             收敛性分析结果
         """
         if n_points_list is None:
-            # 默认测试点数列表：从100到10000，按2的幂次递增
+            # 默认测试点数列表：从100到6400，按2的幂次递增
             n_points_list = [100 * 2**i for i in range(7)]
 
         results = self.convergence_analyzer.analyze_grid_convergence(
@@ -117,8 +118,8 @@ class RadialSchrodingerSolver:
 
             # 求解
             if self.config.method == "shooting":
-                E_min = -1.5 / (2 * self.config.n**2)
-                E_max = -0.5 / (2 * self.config.n**2)
+                # 获取能量范围估计
+                E_min, E_max = get_energy_bounds(self.config.V_type, self.config.n)
                 E, _ = self.solver.shooting_solve(
                     E_min, E_max, self.config.n - self.config.l - 1
                 )
@@ -146,9 +147,8 @@ class RadialSchrodingerSolver:
             计算结果字典
         """
         try:
-            # 能量范围估计
-            E_min = -1.5 / (2 * self.config.n**2)
-            E_max = -0.5 / (2 * self.config.n**2)
+            # 获取能量范围估计
+            E_min, E_max = get_energy_bounds(self.config.V_type, self.config.n)
 
             if self.config.method == "shooting":
                 # 打靶法求解
@@ -190,7 +190,53 @@ class RadialSchrodingerSolver:
             else:
                 # 有限差分法求解
                 energies, states = self.solver.fd_solve(self.config.n_states)
-                return {"energies": energies, "states": states}
+
+                # 选择指定(n,l)对应的态
+                state_idx = 0  # 默认取最低能态
+                # 如果n和l指定的不是基态，需要找到对应的激发态
+                if self.config.n > 1:
+                    state_idx = self.config.n - self.config.l - 1
+
+                E = energies[state_idx]
+                u = states[:, state_idx]
+
+                # 处理波函数
+                u_norm, R = self.wave_processor.normalize_wavefunction(u)
+
+                # 分析结果
+                analysis = self.energy_analyzer.compare_with_theory(
+                    E, self.config.V_type, self.config.n, self.config.l
+                )
+
+                # 获取解析解(如果有)
+                R_analytic = None
+                if self.config.V_type == "hydrogen":
+                    R_analytic = WavefunctionTools.get_analytic_hydrogen(
+                        self.grid.r, self.config.n, self.config.l
+                    )
+
+                # 可视化
+                self.visualizer.plot_wavefunction(
+                    u_norm,
+                    R,
+                    E,
+                    self.config.n,
+                    self.config.l,
+                    self.config.V_type,
+                    R_analytic,
+                )
+
+                # 返回与shooting方法相同格式的结果
+                result = {
+                    "energy": E,
+                    "wavefunction": {"u": u_norm, "R": R, "R_analytic": R_analytic},
+                    "analysis": analysis,
+                }
+
+                # 额外添加所有本征态的信息
+                result.update({"all_energies": energies, "all_states": states})
+
+                return result
 
         except Exception as e:
             logger.error(f"求解失败: {str(e)}")

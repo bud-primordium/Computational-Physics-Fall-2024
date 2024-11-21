@@ -112,7 +112,7 @@ class ResultVisualizer:
         ax1.plot(self.r, R, "b-", label="R(r) 数值解")
         if R_analytic is not None:
             ax1.plot(self.r, R_analytic, "r--", label="R(r) 解析解")
-        ax1.plot(self.r, u, "g:", label="u(r)")
+        ax1.plot(self.r, u, "g:", label="u(r) 数值解")
         ax1.set_xlabel("r (Bohr)")
         ax1.set_ylabel("波函数")
         ax1.grid(True)
@@ -182,7 +182,7 @@ class ResultVisualizer:
             h, h**4 * results["errors"][0] / h[0] ** 4, "g--", label="O(h⁴) 参考线"
         )
 
-        plt.xlabel("网格间距 h (log)")
+        plt.xlabel("jδ网格间距 h (log)")
         plt.ylabel("相对误差 % (log)")
         plt.title("收敛性分析")
         plt.legend()

@@ -223,16 +223,8 @@ class ShootingSolver:
             x0=[E_coarse],
             bounds=[(E_min, E_max)],
             method="L-BFGS-B",  # 可以尝试其他方法，如 'Nelder-Mead'
-            options={"ftol": 1e-8, "disp": True},
+            options={"ftol": 1e-8, "disp": True, "maxls": 50},  # 增加最大线搜索次数
         )
-        # result = minimize(
-        #     objective_wrapper,
-        #     x0=[E_coarse],
-        #     bounds=[(E_min, E_max)],
-        #     method="Nelder-Mead",
-        #     options={"xatol": 1e-10, "disp": True},
-        # )
-        # 弃用的无导数''Nelder-Mead''方法，精度不高
 
         if result.success:
             optimal_E = result.x[0]
@@ -240,7 +232,20 @@ class ShootingSolver:
             u_optimal = self.integrate_inward(optimal_E)
             return optimal_E, u_optimal
         else:
-            raise RuntimeError("能量求解未收敛")
+            logger.debug(f"l-bfgs-b未收敛: {result.message},改用Nelder-Mead")
+            result = minimize(
+                objective_wrapper,
+                x0=[E_coarse],
+                bounds=[(E_min, E_max)],
+                method="Nelder-Mead",
+                options={"xatol": 1e-10, "disp": True, "maxiter": 1000},
+            )
+            if result.success:
+                optimal_E = result.x[0]
+                u_optimal = self.integrate_inward(optimal_E)
+                return optimal_E, u_optimal
+            else:
+                raise RuntimeError("Nelder-Mead也未收敛")
 
 
 class FiniteDifferenceSolver:
@@ -261,86 +266,91 @@ class FiniteDifferenceSolver:
         self.grid = grid
         self.V = V
         self.l = l
+        self.delta = grid.config.delta
+        self.r_p = grid.r_p
+        self.j = grid.j
 
-    def construct_hamiltonian(self):
-        """构建哈密顿量矩阵
-
-        Returns
-        -------
-        scipy.sparse.spmatrix
-            哈密顿量稀疏矩阵
-        """
-        N = len(self.grid.r)
-        delta = self.grid.config.delta
-
-        # 动能项
-        d2_coef = np.exp(-2 * delta * self.grid.j) / (delta**2)
-        d1_coef = -np.exp(-delta * self.grid.j) / (2 * delta)
-
-        # 势能和角动量项
-        diag = (
-            -2 * d2_coef
-            + self.V(self.grid.r)
-            + self.l * (self.l + 1) / (2 * self.grid.r**2)
-        )
-
-        # 非对角项
-        upper = d2_coef[:-1] + d1_coef[:-1]
-        lower = d2_coef[:-1] - d1_coef[:-1]
-
-        # 使用 LIL 格式构建稀疏矩阵
-        H = lil_matrix((N, N))
-
-        # 设置对角线元素
-        H.setdiag(diag)
-
-        # 设置上下对角线元素
-        H.setdiag(lower, k=-1)
-        H.setdiag(upper, k=1)
-
-        # 边界条件
-        H[0, :] = 0
-        H[-1, :] = 0
-        H[0, 0] = 1.0
-        H[-1, -1] = 1.0
-
-        # 转换为 CSR 格式
-        H = H.tocsr()
-
-        return H
-
-    def fd_solve(self, n_states: int) -> Tuple[np.ndarray, np.ndarray]:
-        """求解本征值问题
+    def V_eff(self, j) -> float:
+        """计算有效势
 
         Parameters
         ----------
-        n_states : int
-            需要求解的本征态数量
+        j : array_like
+            网格点索引
 
         Returns
         -------
-        np.ndarray
-            本征能量
-        np.ndarray
-            本征态波函数
+        float
+            有效势能
         """
-        H = self.construct_hamiltonian()
+        r = self.r_p * (np.exp(self.delta * j) - 1) + self.grid.config.r_min
+        r_safe = np.maximum(r, 1e-10)
+        return self.V(r_safe) + self.l * (self.l + 1) / (2 * r_safe * r_safe)
 
+    def construct_hamiltonian(self):
+        """构建哈密顿量矩阵，对应方程：
+        -[v''(j) - v(j)δ²/4]/(2δ²rp²e^(2δj)) + v(j)V_eff(j) = Ev(j)
+        """
+        N = len(self.j) - 1  # jmax+1个点，去掉最后一个点
+        H = lil_matrix((N, N))
+
+        # 为了数值稳定性，每个方程同乘 2δ²rp²e^(2δj)
+        # 这样方程变成：-[v''(j) - v(j)δ²/4] + 2δ²rp²e^(2δj)v(j)V_eff(j) = E[2δ²rp²e^(2δj)]v(j)
+
+        for i in range(N):
+            exp_factor = (
+                2 * self.delta**2 * self.r_p**2 * np.exp(2 * self.delta * self.j[i])
+            )
+
+            # 动能项系数
+            if i > 0:
+                H[i, i - 1] = -1  # v(j-1)系数
+            H[i, i] = 2 + self.delta**2 / 4  # v(j)系数
+            if i < N - 1:
+                H[i, i + 1] = -1  # v(j+1)系数
+
+            # 势能项
+            H[i, i] += exp_factor * self.V_eff(self.j[i])
+
+        return H.tocsr()
+
+    def fd_solve(self, n_states: int) -> Tuple[np.ndarray, np.ndarray]:
+        """求解本征值问题"""
         try:
-            # 求解本征值问题
-            energies, states = linalg.eigsh(H, k=n_states, which="SA")
+            H = self.construct_hamiltonian()
 
-            # 排序和归一化
+            # 构建广义本征值问题的B矩阵
+            B = lil_matrix((H.shape[0], H.shape[0]))
+            for i in range(H.shape[0]):
+                B[i, i] = (
+                    2 * self.delta**2 * self.r_p**2 * np.exp(2 * self.delta * self.j[i])
+                )
+            B = B.tocsr()
+
+            # 求解广义本征值问题 Hv = EBv
+            energies, v_states = linalg.eigsh(H, k=n_states, M=B, which="SA")
+
+            # 排序
             idx = np.argsort(energies)
             energies = energies[idx]
-            states = states[:, idx]
+            v_states = v_states[:, idx]
 
-            for i in range(states.shape[1]):
-                norm = np.sqrt(np.trapz(states[:, i] ** 2, self.grid.r))
+            # 转换回u并添加边界点
+            u_states = np.zeros((len(self.j), n_states))
+            for i in range(n_states):
+                # 添加v(jmax)=0
+                v_full = np.zeros(len(self.j))
+                v_full[:-1] = v_states[:, i]
+
+                # 转换回u: u(j) = v(j)exp(jδ/2)
+                u_states[:, i] = v_full * np.exp(self.delta * self.j / 2)
+
+                # 归一化
+                norm = np.sqrt(np.trapz(u_states[:, i] * u_states[:, i], self.grid.r))
                 if norm > 0:
-                    states[:, i] /= norm
+                    u_states[:, i] /= norm
 
-            return energies, states
+            return energies, u_states
 
         except Exception as e:
             logger.error(f"本征值求解失败: {str(e)}")
