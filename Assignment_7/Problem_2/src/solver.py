@@ -212,34 +212,32 @@ class ShootingSolver:
             E = E_array[0]
             return objective(E)
 
-        # 调用优化方法
-        # result = minimize(
-        #     objective_wrapper,
-        #     x0=[E0],
-        #     bounds=[(E_min, E_max)],
-        #     method="L-BFGS-B",  # 可以尝试其他方法，如 'Nelder-Mead'
-        #     options={"ftol": 1e-8, "disp": True},
-        # )
-
         # 先粗优化
         E_grid = np.linspace(E_min, E_max, 10)  # 10 个能量点的网格
         errors = [objective(E) for E in E_grid]
         E_coarse = E_grid[np.argmin(errors)]  # 找到误差最小值对应的 E
 
+        # 调用优化方法
         result = minimize(
             objective_wrapper,
             x0=[E_coarse],
             bounds=[(E_min, E_max)],
-            method="Nelder-Mead",
-            options={"xatol": 1e-10, "disp": True},
+            method="L-BFGS-B",  # 可以尝试其他方法，如 'Nelder-Mead'
+            options={"ftol": 1e-8, "disp": True},
         )
+        # result = minimize(
+        #     objective_wrapper,
+        #     x0=[E_coarse],
+        #     bounds=[(E_min, E_max)],
+        #     method="Nelder-Mead",
+        #     options={"xatol": 1e-10, "disp": True},
+        # )
+        # 弃用的无导数''Nelder-Mead''方法，精度不高
 
         if result.success:
             optimal_E = result.x[0]
             # 重新计算对应的波函数
             u_optimal = self.integrate_inward(optimal_E)
-            # 对波函数进行归一化（如果需要）
-            u_optimal /= np.linalg.norm(u_optimal)
             return optimal_E, u_optimal
         else:
             raise RuntimeError("能量求解未收敛")
