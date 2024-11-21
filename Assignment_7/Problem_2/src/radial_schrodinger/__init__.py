@@ -9,6 +9,7 @@ from .utils import (
 from .solver import ShootingSolver, FiniteDifferenceSolver
 from .analysis import WavefunctionProcessor, EnergyAnalyzer, ConvergenceAnalyzer
 from .visualization import ResultVisualizer
+from .main import RadialSchrodingerSolver
 
 __all__ = [
     "SolverConfig",
@@ -23,4 +24,5 @@ __all__ = [
     "EnergyAnalyzer",
     "ConvergenceAnalyzer",
     "ResultVisualizer",
+    "RadialSchrodingerSolver",
 ]
