@@ -25,7 +25,7 @@ from typing import Dict
 # 添加src目录到Python路径
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.utils import (
+from radial_schrodinger.utils import (
     SolverConfig,
     RadialGrid,
     PotentialFunction,
@@ -33,9 +33,13 @@ from src.utils import (
     get_theoretical_values,
     get_energy_bounds,
 )
-from src.solver import ShootingSolver, FiniteDifferenceSolver
-from src.analysis import WavefunctionProcessor, EnergyAnalyzer, ConvergenceAnalyzer
-from src.visualization import ResultVisualizer
+from radial_schrodinger.solver import ShootingSolver, FiniteDifferenceSolver
+from radial_schrodinger.analysis import (
+    WavefunctionProcessor,
+    EnergyAnalyzer,
+    ConvergenceAnalyzer,
+)
+from radial_schrodinger.visualization import ResultVisualizer
 
 
 logger = logging.getLogger(__name__)
