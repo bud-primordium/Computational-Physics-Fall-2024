@@ -34,6 +34,8 @@ class SolverConfig:
     ----------
     r_max : float
         最大径向距离 (Bohr)
+    r_min : float
+        最小径向距离 (Bohr)
     j_max : int
         径向网格点数
     delta : float
@@ -53,15 +55,78 @@ class SolverConfig:
     """
 
     r_max: float = 30.0
-    r_min: float = 1e-5  # 添加最小半径
-    j_max: int = 1000
-    delta: float = 6 / j_max
+    r_min: float = 1e-5
+    j_max: Optional[int] = None  # 现在是可选的，由方法决定默认值
+    delta: Optional[float] = None  # 由j_max计算得到
     l: int = 0
     n: int = 1
     n_states: int = 3
     V_type: str = "hydrogen"
     method: str = "shooting"
     tol: float = 1e-8
+
+    def __post_init__(self):
+        """配置初始化后的验证和处理"""
+        # 验证输入参数
+        self._validate_inputs()
+
+        # 设置默认网格点数
+        if self.j_max is None:
+            self.j_max = self._get_default_j_max()
+
+        # 设置网格变换参数
+        if self.delta is None:
+            self.delta = 6 / self.j_max
+
+    def _validate_inputs(self):
+        """验证输入参数的有效性"""
+        # 验证量子数
+        if self.n <= 0:
+            raise ValueError("主量子数n必须为正整数")
+        if self.l < 0:
+            raise ValueError("角量子数l必须为非负整数")
+        if self.l >= self.n:
+            raise ValueError("角量子数l必须小于主量子数n")
+
+        # 验证势能类型
+        if self.V_type not in ["hydrogen", "lithium"]:
+            raise ValueError("不支持的势能类型")
+
+        # 验证求解方法
+        if self.method not in ["shooting", "fd"]:
+            raise ValueError("不支持的求解方法")
+
+        # 验证物理参数
+        if self.r_max <= self.r_min:
+            raise ValueError("r_max必须大于r_min")
+        if self.r_min <= 0:
+            raise ValueError("r_min必须为正数")
+
+        # 如果手动指定了j_max，验证其范围
+        if self.j_max is not None:
+            if self.method == "fd" and self.j_max > 640:
+                raise ValueError("有限差分法的j_max不能超过640")
+            if self.j_max < 50:
+                raise ValueError("网格点数过少，建议至少50个点")
+
+    def _get_default_j_max(self) -> int:
+        """根据求解方法返回默认的网格点数"""
+        if self.method == "shooting":
+            return 1000  # 打靶法默认使用1000个点
+        else:
+            return 300  # 有限差分法默认使用300个点
+
+    @property
+    def config_summary(self) -> str:
+        """返回配置摘要信息"""
+        return (
+            f"求解配置:\n"
+            f"  原子类型: {self.V_type}\n"
+            f"  量子数: n={self.n}, l={self.l}\n"
+            f"  求解方法: {self.method}\n"
+            f"  网格点数: {self.j_max}\n"
+            f"  网格范围: [{self.r_min:.1e}, {self.r_max:.1f}] Bohr"
+        )
 
 
 class RadialGrid:
