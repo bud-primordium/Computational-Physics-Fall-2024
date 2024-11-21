@@ -147,7 +147,18 @@ class WavefunctionProcessor:
         R = np.zeros_like(u_norm)
         nonzero_r = self.r > 1e-10
         R[nonzero_r] = u_norm[nonzero_r] / self.r[nonzero_r]
+        # 补丁，l>0时r=r_min处的处理
+        # 使用前几个点拟合
+        fit_indices = slice(1, 7)  # 使用 R 第2~7个点（索引从1到6）
+        r_fit = self.r[fit_indices]
+        R_fit = R[fit_indices]
 
+        # 执行拟合
+        popt, _ = curve_fit(r_behavior, r_fit, R_fit)
+
+        # 根据拟合结果外推 R_full[0]
+        R_full = np.copy(R)
+        R_full[0] = r_behavior(self.r[0], *popt)
         # # r=0处的处理
         # if self.l == 0:
         #     # 使用洛必达法则: lim(r→0) u(r)/r = du/dr(0)
