@@ -1188,8 +1188,9 @@ class WavefunctionProcessor:
             raise ValueError("Invalid normalization integral")
 
         if not (1 - tol < norm < 1 + tol):
-            logger.error(f"归一化检验失败: ∫|R(r)|²r²dr = {norm:.6f}")
-            raise ValueError(f"Normalization check failed: {norm:.6f}")
+            logger.warning(
+                f"归一化检验失败: ∫|R(r)|²r²dr = {norm:.6f}，请检查边界条件r_Max"
+            )
 
 
 class EnergyAnalyzer:

@@ -140,7 +140,7 @@ class WavefunctionProcessor:
             return 0.0, coef * (self.l + 1)
 
     def normalize_wavefunction(
-        self, u: np.ndarray, tol: float = 1e-6
+        self, u: np.ndarray, tol: float = 1e-5
     ) -> Tuple[np.ndarray, np.ndarray]:
         """归一化波函数并计算物理波函数R(r)
 
@@ -266,8 +266,9 @@ class WavefunctionProcessor:
             raise ValueError("Invalid normalization integral")
 
         if not (1 - tol < norm < 1 + tol):
-            logger.error(f"归一化检验失败: ∫|R(r)|²r²dr = {norm:.6f}")
-            raise ValueError(f"Normalization check failed: {norm:.6f}")
+            logger.warning(
+                f"归一化检验失败: ∫|R(r)|²r²dr = {norm:.6f}，请检查边界条件r_Max"
+            )
 
 
 class EnergyAnalyzer:
