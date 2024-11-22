@@ -156,6 +156,7 @@ Powered by \href{https://chatgpt.com/g/g-xJJAA2awf-latex-pseudocode-generator}{\
             \caption{Euler-Trapezoidal Method for Simple Harmonic Oscillator}
 \end{algorithm}
 \subsection{结果示例}
+以下结果均使用默认配置，即绳长$L = 1.0m$，质量$m = 1.0kg$，初始角度$\theta_0 = 1.0 rad$，初始角速度$\omega_0 = 0 rad/s$，重力加速度$g = 9.81 m/s^2$，时间步长$h = 0.05$，总步数$N = 1000$，总时间$T = 50.0s$。用户可以通过终端输入更改这些参数。在角速度随角度变化$\omega - \theta $图中，为凸显效果，增加时间步长至$h'=0.1s$，总步数不变，总时间至$T'=100.0s$.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{Problem_1/figs/terminal.png}
@@ -164,21 +165,27 @@ Powered by \href{https://chatgpt.com/g/g-xJJAA2awf-latex-pseudocode-generator}{\
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{Problem_1/figs/angle_time.png}
-    \caption{角度随时间变化}
+    \caption{角度随时间变化$\theta - t $图}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{Problem_1/figs/angle_velocity_time.png}
-    \caption{角速度随时间变化}
+    \includegraphics[width=0.8\textwidth]{Problem_1/figs/angle_velocity_time.png}
+    \caption{角速度随时间变化$\omega - t $图}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Problem_1/figs/angle_velocity_angle.png}
+    \caption{角速度随角度变化$\omega - \theta $图}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{Problem_1/figs/energy_time.png}
-    \caption{能量随时间漂移}
+    \includegraphics[width=0.7\textwidth]{Problem_1/figs/energy_time.png}
+    \caption{能量随时间漂移$E - t $图}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{Problem_1/figs/angle_error_time.png}
-    \caption{角度与解析解误差随时间变化}
+    \includegraphics[width=0.7\textwidth]{Problem_1/figs/angle_error_time.png}
+    \caption{角度与解析解误差随时间变化$\delta \theta - t $图}
 \end{figure}
-可以看出，四种方法对比中，RK4方法的能量漂移最小，角度与角速度误差也最小。中点法与欧拉-梯形法次之，虽然角度、角速度误差在长时间后才逐渐显现，但能量漂移较大。欧拉法误差最大，一段时间后就崩溃。综上，RK4方法最为精确且稳定。
+可以看出，四种方法对比中，RK4方法的能量漂移最小，角度与角速度误差也最小。中点法与欧拉-梯形法次之，虽然角度、角速度误差在长时间后才逐渐显现，但能量漂移较大。欧拉法误差最大，一段时间后就崩溃。综上，RK4方法最为精确且稳定。能量漂移图与角速度随角度变化的相空间演化图，均证明其保辛性良好。

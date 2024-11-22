@@ -4,7 +4,7 @@ from scipy.special import ellipj
 
 
 class Pendulum:
-    def __init__(self, length=1.0, mass=1.0, gravity=9.81, theta0=0.5, omega0=0.0):
+    def __init__(self, length=1.0, mass=1.0, gravity=9.81, theta0=1.0, omega0=0.0):
         """
         初始化简谐摆的参数。
 
@@ -282,19 +282,21 @@ def main():
         energies[name] = energy
         errors[name] = error
 
-    # 创建4个图表
+    # 创建5个图表
     fig1, ((ax11, ax12), (ax13, ax14)) = plt.subplots(2, 2, figsize=(10, 8))
     fig2, ((ax21, ax22), (ax23, ax24)) = plt.subplots(2, 2, figsize=(10, 8))
     fig3, ((ax31, ax32), (ax33, ax34)) = plt.subplots(2, 2, figsize=(10, 8))
     fig4, ((ax41, ax42), (ax43, ax44)) = plt.subplots(2, 2, figsize=(10, 8))
+    fig5, ((ax51, ax52), (ax53, ax54)) = plt.subplots(2, 2, figsize=(10, 8))
 
     axes1 = [ax11, ax12, ax13, ax14]  # 角度图
     axes2 = [ax21, ax22, ax23, ax24]  # 角速度图
     axes3 = [ax31, ax32, ax33, ax34]  # 能量图
     axes4 = [ax41, ax42, ax43, ax44]  # 误差图
+    axes5 = [ax51, ax52, ax53, ax54]  # 角度角速度图
 
-    for (name, theta), ax1, ax2, ax3, ax4 in zip(
-        results.items(), axes1, axes2, axes3, axes4
+    for (name, theta), ax1, ax2, ax3, ax4, ax5 in zip(
+        results.items(), axes1, axes2, axes3, axes4, axes5
     ):
         # 角度图
         ax1.plot(time, theta, label=name, color="blue", linewidth=1)
@@ -352,7 +354,15 @@ def main():
         ax4.legend()
         ax4.grid(True)
 
-    for fig in [fig1, fig2, fig3, fig4]:
+        # 角度角速度图
+        ax5.plot(theta, omegas[name], label=name, color="blue", linewidth=1)
+        ax5.set_xlabel("Angle (rad)")
+        ax5.set_ylabel("Angular Velocity (rad/s)")
+        ax5.set_title(f"{name} - Angle vs Angular Velocity")
+        ax5.legend()
+        ax5.grid(True)
+
+    for fig in [fig1, fig2, fig3, fig4, fig5]:
         fig.tight_layout()
     plt.show()
 
