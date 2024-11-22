@@ -418,6 +418,8 @@ def main():
         "--method", choices=["shooting", "fd"], default="shooting", help="求解方法"
     )
     parser.add_argument("--j-max", type=int, help="网格点数(可选)")
+    parser.add_argument("--r-max", type=float, default=30, help="网格最大半径")
+    parser.add_argument("--r-min", type=float, default=1e-5, help="网格最小半径")
     parser.add_argument("--example", action="store_true", help="运行示例计算")
     parser.add_argument("--convergence", action="store_true", help="进行网格收敛性分析")
 
@@ -437,6 +439,8 @@ def main():
                 "n": args.n,
                 "l": args.l,
                 "method": args.method,
+                "r_max": args.r_max,
+                "r_min": args.r_min,
             }
             if args.j_max is not None:
                 config_dict["j_max"] = args.j_max
@@ -469,6 +473,8 @@ def main():
                 "n": args.n,
                 "l": args.l,
                 "method": args.method,
+                "r_max": args.r_max,
+                "r_min": args.r_min,
             }
             if args.j_max is not None:
                 config_dict["j_max"] = args.j_max
