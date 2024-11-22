@@ -77,6 +77,7 @@ k_4^\omega = \frac{d\omega}{dt} \bigg|_{t_i + h, \theta_i + h k_3^\theta, \omega
 \omega_{i+1} = \omega_i + \frac{h}{2} \left( \frac{d\omega}{dt} \bigg|_{t_i} + \frac{d\omega}{dt} \bigg|_{\text{pred}} \right)
 \end{aligned}
 \]
+请在\texttt{Problem\_1/src}目录下运行\ccmd{python -u pendulum.py}查看结果，需安装辅助计算的\texttt{numpy,scipy}库与绘图的\texttt{matplotlib}库，其中\texttt{scipy}库请使用\texttt{1.13}以上版本，旧版本的特殊函数可能不在\texttt{scipy.special}模块中。运行程序后，会提示输入求解参数，用户可以键入回车选择使用默认值，或自定义参数。
 \subsection{伪代码}
 Powered by \href{https://chatgpt.com/g/g-xJJAA2awf-latex-pseudocode-generator}{\LaTeX \ pseudocode generator}
 
