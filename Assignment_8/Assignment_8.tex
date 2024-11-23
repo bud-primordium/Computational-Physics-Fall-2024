@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+
+% 页面设置
+\usepackage[top=1cm, bottom=2cm, left=1cm, right=1cm]{geometry}
+
+% 中文支持
+\usepackage{ctex}
+
+% 数学包
+\usepackage{amsmath, amssymb, amsthm}
+
+% 算法包
+\usepackage[linesnumbered, ruled]{algorithm2e}
+
+% 颜色和命令定义
+\usepackage{xcolor, xparse}
+
+% 代码显示
+\usepackage{listings}
+
+% 图形包
+\usepackage{graphicx}
+
+% 子图包
+\usepackage{subcaption}
+
+% 表格包
+\usepackage{booktabs}
+
+% 其他需要的包
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+\usepackage{forest}
+\usepackage[normalem]{ulem} % 保持 \emph 为斜体
+\usepackage{bm}
+\usepackage{multicol}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{pifont}
+\usepackage{enumitem} % 使用更多的列表标签
+
+% 添加 'soul' 包用于高亮和支持换行
+\usepackage{soul}
+
+% 定义自定义颜色
+\definecolor{cmdbg}{RGB}{220, 220, 220} % 浅灰色背景
+
+% 设置高亮颜色
+\sethlcolor{cmdbg}
+
+% 定义 \ccmd 命令，用于行内代码片段
+\newcommand{\ccmd}[1]{\texttt{\hl{#1}}}
+
+% 超链接（放在最后）
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+
+\author{
+    \makebox[0.8\textwidth]{%
+        \centering
+        杨远青 \quad 22300190015 \quad
+        \href{https://github.com/bud-primordium/Computational-Physics-Fall-2024}{\raisebox{-2pt}{\includegraphics[height=12pt]{../utils/comphys.pdf}}}
+    }
+}
+
+
+
+\title{计算物理作业8}
+
+\begin{document}
+\maketitle
+\textit{正面迎击ddl军团！}
+\section{题目 1：松弛法求解泊松方程}
+\input{Problem_1/problem_1.tex}
+
+\section{题目 2：含时薛定谔方程求解}
+\input{Problem_2/problem_2.tex}
+
+\section{题目 3：波动方程显式求解稳定条件}
+\input{Problem_3/problem_3.tex}
+
+\end{document}
