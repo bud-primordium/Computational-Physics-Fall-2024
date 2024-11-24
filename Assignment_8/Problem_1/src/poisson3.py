@@ -6,15 +6,6 @@ import logging
 from typing import Tuple, List, Optional
 from matplotlib.animation import FuncAnimation
 
-# 尝试导入 mplcursors
-try:
-    import mplcursors
-
-    MPLCURSORS_AVAILABLE = True
-except ImportError:
-    MPLCURSORS_AVAILABLE = False
-    logging.warning("mplcursors 模块未找到。等高线图将以静态方式显示。")
-
 
 def configure_matplotlib_fonts():
     """配置matplotlib的字体设置"""
