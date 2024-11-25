@@ -33,7 +33,7 @@ def configure_matplotlib_fonts():
     plt.rcParams["axes.unicode_minus"] = False
 
 
-def analytic_solution_case_a(x, y, Lx, Ly, V0, tol=1e-20, min_n=50, max_n=1000):
+def analytic_solution_case_a(x, y, Lx, Ly, V0, tol=1e-20, min_n=50, max_n=3000):
     """
     计算案例(a)的解析解，动态决定需要的傅里叶项数以满足指定的容差，同时确保至少使用min_n项。
     对于大的n值，使用指数近似来避免数值溢出。
@@ -91,7 +91,7 @@ def analytic_solution_case_a(x, y, Lx, Ly, V0, tol=1e-20, min_n=50, max_n=1000):
 
 
 def analytic_solution_case_b(
-    X, Y, Lx, Ly, rho_epsilon0, tol=1e-30, max_n=1000, max_m=1000
+    X, Y, Lx, Ly, rho_epsilon0, tol=1e-20, max_n=3000, max_m=3000
 ):
     """改进的案例(b)解析解计算
 
