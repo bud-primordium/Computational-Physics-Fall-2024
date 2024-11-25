@@ -13,8 +13,6 @@ cmap = colormaps.get_cmap("turbo")
 
 def configure_matplotlib_fonts():
     """配置matplotlib的字体设置"""
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
 
     system = platform.system()
     if system == "Darwin":  # macOS
