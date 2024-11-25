@@ -435,6 +435,41 @@ class PoissonSolver:
         return self.phi, history, it + 1, elapsed_time
 
 
+def find_max_deviation_point(phi_numeric, phi_analytic, X, Y):
+    """
+    找出数值解与解析解之间偏差最大的点的位置和偏差值
+    排除四个拐角点的比较
+
+    参数:
+        phi_numeric: 数值解
+        phi_analytic: 解析解
+        X, Y: 网格坐标
+
+    返回:
+        max_dev: 最大偏差值（不含拐角点）
+        x_max: 最大偏差点的x坐标
+        y_max: 最大偏差点的y坐标
+    """
+    # 计算偏差
+    deviation = np.abs(phi_numeric - phi_analytic)
+
+    # 创建掩码（排除拐角点）
+    mask = np.ones_like(deviation, dtype=bool)
+    # 排除四个角点
+    mask[0, 0] = False  # 左下角
+    mask[0, -1] = False  # 右下角
+    mask[-1, 0] = False  # 左上角
+    mask[-1, -1] = False  # 右上角
+
+    # 在非角点中找最大偏差
+    max_dev = np.max(deviation[mask])
+    max_idx = np.unravel_index(np.argmax(deviation[mask]), deviation.shape)
+    x_max = X[max_idx]
+    y_max = Y[max_idx]
+
+    return max_dev, x_max, y_max
+
+
 def animate_solution(
     X: np.ndarray,
     Y: np.ndarray,
@@ -594,7 +629,35 @@ def plot_final_results(
     fig, axs = plt.subplots(num_methods + 1, 2, figsize=(12, 4 * (num_methods + 1)))
 
     def setup_subplot(ax, phi, title, cmap=cmap, is_diff=False):
-        mesh = ax.pcolormesh(X, Y, phi, cmap=cmap, shading="gouraud")
+        # 创建掩码排除拐角点
+        mask = np.ones_like(phi, dtype=bool)
+        mask[0, 0] = False  # 左下角
+        mask[0, -1] = False  # 右下角
+        mask[-1, 0] = False  # 左上角
+        mask[-1, -1] = False  # 右上角
+
+        # 根据非拐角点的值确定colorbar范围
+        vmin = np.min(phi[mask])
+        vmax = np.max(phi[mask])
+
+        if is_diff:
+            # 对差异图使用对称的范围
+            abs_max = max(abs(vmin), abs(vmax))
+            mesh = ax.pcolormesh(
+                X,
+                Y,
+                phi,
+                cmap="seismic",
+                vmin=-abs_max,
+                vmax=abs_max,
+                shading="gouraud",
+            )
+        else:
+            # 对电势图使用从最小到最大的范围
+            mesh = ax.pcolormesh(
+                X, Y, phi, cmap=cmap, vmin=vmin, vmax=vmax, shading="gouraud"
+            )
+
         plt.colorbar(mesh, ax=ax, label="差异 (V)" if is_diff else "电势 (V)")
 
         # 自定义鼠标悬停显示格式
@@ -612,7 +675,7 @@ def plot_final_results(
 
         # 添加边界标注和线条
         if not is_diff:
-            # 添加带阴影背景的边界标注
+            # 添加边界标注
             ax.annotate(
                 f'φ = {problem_params["boundary_values"]["left"]}V',
                 xy=(0, 0.5),
@@ -727,8 +790,10 @@ def plot_final_results(
         ax = axs[idx, 0]
         result = results[method]
         title = f"{method.upper()}方法\n"
-        if result["error"] is not None:
-            title += f"相对误差: {result['error']:.2e}\n"
+
+        if result["max_deviation"] is not None:
+            max_dev, x_max, y_max = result["max_deviation"]
+            title += f"最大偏差: {max_dev:.2e}V\n位置: ({x_max:.3f}m, {y_max:.3f}m)\n"
         title += f"迭代次数: {result['iterations']}"
         setup_subplot(ax, result["phi"], title)
 
@@ -743,6 +808,21 @@ def plot_final_results(
                 cmap="seismic",
                 is_diff=True,
             )
+
+            # 确保在差异分布图上正确标注最大偏差点
+            if result["max_deviation"] is not None:
+                max_dev, x_max, y_max = result["max_deviation"]
+                # 使用黑色星号标记最大偏差点，并增加白色边框使其更容易看到
+                ax_diff.plot(
+                    x_max,
+                    y_max,
+                    "k*",
+                    markersize=10,
+                    markeredgecolor="white",
+                    markeredgewidth=1.5,
+                    label="最大偏差点",
+                )
+                ax_diff.legend(loc="upper right")
         else:
             ax_diff.text(0.5, 0.5, "无解析解", ha="center", va="center", fontsize=16)
             ax_diff.set_title(f"{method.upper()}方法与解析解差异分布")
@@ -849,8 +929,14 @@ def solve_and_visualize(problem_params: dict, case_name: str):
         )
 
         if phi_analytic is not None:
-            error = np.max(np.abs(phi - phi_analytic)) / np.max(np.abs(phi_analytic))
+            max_dev, x_max, y_max = find_max_deviation_point(phi, phi_analytic, X, Y)
+            print(f"最大偏差: {max_dev:.2e}V")
+            print(f"最大偏差位置: (x={x_max:.3f}m, y={y_max:.3f}m)")
+            error = None  # 不再使用相对误差
         else:
+            max_dev = None
+            x_max = None
+            y_max = None
             error = None
 
         results[method] = {
@@ -859,13 +945,12 @@ def solve_and_visualize(problem_params: dict, case_name: str):
             "iterations": iterations,
             "elapsed": elapsed,
             "error": error,
+            "max_deviation": (max_dev, x_max, y_max) if max_dev is not None else None,
             "phi_history": solver.phi_history,
         }
 
         print(f"迭代次数: {iterations}")
         print(f"求解时间: {elapsed:.4f}秒")
-        if error is not None:
-            print(f"相对误差: {error:.2e}")
 
         # 动画展示
         animate_solution(X, Y, solver.phi_history, method.upper(), problem_params)
