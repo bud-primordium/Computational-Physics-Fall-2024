@@ -6,5 +6,43 @@ Prove the stability condition of the explicit scheme of the 1D wave equation by 
 \]
 If \(c \Delta t / \Delta x \leq 1\), the explicit scheme is stable.
 
-\subsection{程序描述}
+\subsection{证明}
+好的，以下是证明一维波动方程显式差分格式稳定性条件 \( \frac{c \Delta t}{\Delta x} \leq 1 \) 的完整证明：
 
+使用中心差分离散化
+\[
+    \frac{u_{i,j+1} - 2u_{i,j} + u_{i,j-1}}{\Delta t^2} = c^2 \frac{u_{i+1,j} - 2u_{i,j} + u_{i-1,j}}{\Delta x^2}.
+\]
+令 \( \alpha = \frac{c \Delta t}{\Delta x} \)，则可改写为：
+\[
+    u_{i,j+1} = 2u_{i,j} - u_{i,j-1} + \alpha^2 (u_{i+1,j} - 2u_{i,j} + u_{i-1,j}).
+\]
+假设数值解为傅里叶模式形式 \( u_{i,j} = \xi^j e^{iK i \Delta x} \)，代入差分方程得到：
+\[
+    \xi^{j+1} e^{iK i \Delta x} = 2\xi^j e^{iK i \Delta x} - \xi^{j-1} e^{iK i \Delta x} + \alpha^2 \left( \xi^j e^{iK (i+1) \Delta x} - 2\xi^j e^{iK i \Delta x} + \xi^j e^{iK (i-1) \Delta x} \right).
+\]
+化简得到
+\[
+    \xi - 2 + 1/\xi = \alpha^2 (e^{iK \Delta x} + e^{-iK \Delta x} - 2) = -4\alpha^2 \sin^2\left(\frac{K \Delta x}{2}\right).
+\]
+设 \( \beta = 1 - 2\alpha^2 \sin^2\left(\frac{K \Delta x}{2}\right) \)，方程化为：
+\[
+    \xi^2 - 2\beta \xi + 1 = 0,
+\]
+其解为：
+\[
+    \xi = \beta \pm \sqrt{\beta^2 - 1}.
+\]
+根据冯·诺伊曼稳定性分析，为了数值方案稳定，要求放大因子 \( \xi \) 的模满足 \( |\xi| \leq 1 \).由于 \( \beta = 1 - 2\alpha^2 \sin^2\left(\frac{K \Delta x}{2}\right) \)，当 \( |\beta| \leq 1 \) 时，有 \( \beta^2 - 1 \leq 0 \)，此时 \( \xi = \beta \pm i\sqrt{1 - \beta^2} \)，模长恰好为：
+\[
+    |\xi| = \sqrt{\beta^2 + (1 - \beta^2)} = 1.
+\]
+而一旦 \( |\beta| > 1 \)，则 \( |\xi_{+}| > 1 \)，数值方案不稳定。因此，为了 \( |\xi| \leq 1 \)，需满足
+\[
+    0\leq\alpha^2\sin^2(\frac{K\Delta x}2)\leq1, \quad \forall K \in \mathbb{R}.
+\]
+亦即要求
+\[
+    \boxed{\alpha = \frac{c \Delta t}{\Delta x} \leq 1}
+\]
+此时一维波动方程的显式差分格式是稳定的。
