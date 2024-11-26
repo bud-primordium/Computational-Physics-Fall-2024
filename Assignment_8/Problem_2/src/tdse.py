@@ -125,7 +125,7 @@ class SchrodingerSolver:
 
     def solve(self):
         """求解完整时间演化"""
-        # 记录初始态
+        # 记录初态
         self.psi_history = [self.psi.copy()]
 
         # 进行时间演化
@@ -176,7 +176,7 @@ class CrankNicolsonSolver(SchrodingerSolver):
 
     def solve(self):
         """求解完整时间演化"""
-        self.psi_history = [self.psi.copy()]  # 记录初始态
+        self.psi_history = [self.psi.copy()]  # 记录初态
         for _ in range(self.params.nt - 1):
             self.step()
         return self.psi_history
@@ -224,7 +224,7 @@ class ExplicitSolver(SchrodingerSolver):
 
     def solve(self):
         """求解完整时间演化"""
-        self.psi_history = [self.psi.copy()]  # 记录初始态
+        self.psi_history = [self.psi.copy()]  # 记录初态
 
         # 使用CN方法计算第一步
         cn_first_step = CrankNicolsonSolver(self.params)
@@ -249,47 +249,147 @@ class Visualizer:
         configure_matplotlib_fonts()
 
     def plot_static(self):
-        """绘制静态图（波函数幅值相位、3D演化图和热图）"""
-        fig = plt.figure(figsize=(12, 10))
-        # 调整网格，减小行间距
+        """绘制静态图（初态、末态、3D演化图和热图）"""
+        fig = plt.figure(figsize=(12, 12))
         grid = plt.GridSpec(
-            4,
+            5,
             2,
-            height_ratios=[0.8, 1, 1, 0.8],  # 调整每行的相对高度
-            hspace=0.4,  # 增加行间距控制
+            height_ratios=[0.8, 0.8, 1, 1, 0.8],
+            hspace=0.4,
             wspace=0.3,
-        )  # 增加列间距控制
+        )
 
-        # 第一行：波函数幅值和相位
-        ax1 = fig.add_subplot(grid[0, :])
-        psi = self.solver.psi
-        amplitude = np.abs(psi)
-        phase = np.angle(psi)
+        # 第一行：初态的波函数幅值和相位
+        ax1_amp = fig.add_subplot(grid[0, :])
+        ax1_phase = ax1_amp.twinx()  # 创建共享x轴的次坐标轴
 
-        ax1.plot(self.solver.x, amplitude, label="幅值", color="blue", linewidth=2)
-        ax1.plot(self.solver.x, phase, label="相位", color="red", linewidth=2)
+        initial_psi = self.solver.psi
+        initial_amplitude = np.abs(initial_psi)
+        initial_prob = initial_amplitude**2  # 计算概率密度
+        initial_phase = np.angle(initial_psi)
 
-        # 绘制势场
+        # 绘制幅值和概率密度（使用左轴）
+        (line_amp,) = ax1_amp.plot(
+            self.solver.x, initial_amplitude, "b-", label="幅值", linewidth=2
+        )
+        (line_prob,) = ax1_amp.plot(
+            self.solver.x, initial_prob, "g-", label="概率密度", linewidth=2
+        )
+
+        # 绘制相位（使用右轴）
+        (line_phase,) = ax1_phase.plot(
+            self.solver.x,
+            initial_phase,
+            "r:",
+            label="相位",
+            linewidth=1.5,
+            marker=".",
+            markersize=3,
+            markevery=5,
+        )
+
+        # 绘制势场（使用左轴）
         V_scaled = self.solver.V / self.solver.params.well_depth
-        ax1.fill_between(self.solver.x, V_scaled, alpha=0.2, color="gray", label="势场")
+        ax1_amp.fill_between(
+            self.solver.x, V_scaled, alpha=0.2, color="gray", label="势场"
+        )
 
-        ax1.set_title("波函数幅值和相位")
-        ax1.set_xlabel("x")
-        ax1.set_ylabel("幅值/相位")
-        ax1.legend()
-        ax1.grid(True)
+        # 设置左轴（幅值和概率密度）
+        ax1_amp.set_xlabel("x")
+        ax1_amp.set_ylabel("幅值/概率密度", color="b")
+        ax1_amp.tick_params(axis="y", labelcolor="b")
+        ax1_amp.set_ylim(-0.1, 1.1)
+
+        # 设置右轴（相位）
+        ax1_phase.set_ylabel("相位 (rad)", color="r")
+        ax1_phase.tick_params(axis="y", labelcolor="r")
+        ax1_phase.set_ylim(-np.pi, np.pi)
+        ax1_phase.set_yticks([-np.pi, -np.pi / 2, 0, np.pi / 2, np.pi])
+        ax1_phase.set_yticklabels(["-π", "-π/2", "0", "π/2", "π"])
+
+        # 合并图例
+        lines1, labels1 = ax1_amp.get_legend_handles_labels()
+        lines2, labels2 = ax1_phase.get_legend_handles_labels()
+        ax1_amp.legend(
+            lines1 + lines2,
+            labels1 + labels2,
+            loc="upper right",
+            bbox_to_anchor=(0.98, 0.98),
+        )
+
+        ax1_amp.set_title("初态波函数")
+        ax1_amp.grid(True, alpha=0.3)
 
         # 求解获取时间演化
         if self.psi_history is None:
             self.psi_history = self.solver.solve()
 
-        # 第二行：3D图
+        # 第二行：末态的波函数幅值和相位
+        ax2_amp = fig.add_subplot(grid[1, :])
+        ax2_phase = ax2_amp.twinx()  # 创建共享x轴的次坐标轴
+
+        final_psi = self.psi_history[-1]
+        final_amplitude = np.abs(final_psi)
+        final_prob = final_amplitude**2  # 计算概率密度
+        final_phase = np.angle(final_psi)
+
+        # 绘制幅值和概率密度（使用左轴）
+        (line_amp,) = ax2_amp.plot(
+            self.solver.x, final_amplitude, "b-", label="幅值", linewidth=2
+        )
+        (line_prob,) = ax2_amp.plot(
+            self.solver.x, final_prob, "g-", label="概率密度", linewidth=2
+        )
+
+        # 绘制相位（使用右轴）
+        (line_phase,) = ax2_phase.plot(
+            self.solver.x,
+            final_phase,
+            "r:",
+            label="相位",
+            linewidth=1.5,
+            marker=".",
+            markersize=3,
+            markevery=5,
+        )
+
+        # 绘制势场（使用左轴）
+        ax2_amp.fill_between(
+            self.solver.x, V_scaled, alpha=0.2, color="gray", label="势场"
+        )
+
+        # 设置左轴（幅值和概率密度）
+        ax2_amp.set_xlabel("x")
+        ax2_amp.set_ylabel("幅值/概率密度", color="b")
+        ax2_amp.tick_params(axis="y", labelcolor="b")
+        ax2_amp.set_ylim(-0.1, 1.1)
+
+        # 设置右轴（相位）
+        ax2_phase.set_ylabel("相位 (rad)", color="r")
+        ax2_phase.tick_params(axis="y", labelcolor="r")
+        ax2_phase.set_ylim(-np.pi, np.pi)
+        ax2_phase.set_yticks([-np.pi, -np.pi / 2, 0, np.pi / 2, np.pi])
+        ax2_phase.set_yticklabels(["-π", "-π/2", "0", "π/2", "π"])
+
+        # 合并图例
+        lines1, labels1 = ax2_amp.get_legend_handles_labels()
+        lines2, labels2 = ax2_phase.get_legend_handles_labels()
+        ax2_amp.legend(
+            lines1 + lines2,
+            labels1 + labels2,
+            loc="upper right",
+            bbox_to_anchor=(0.98, 0.98),
+        )
+
+        ax2_amp.set_title("末态波函数")
+        ax2_amp.grid(True, alpha=0.3)
+
+        # 第三行和第四行：3D图
         # 坐标空间3D图
-        ax_3d_x = fig.add_subplot(grid[1:3, 0], projection="3d")
+        ax_3d_x = fig.add_subplot(grid[2:4, 0], projection="3d")
         X, T = np.meshgrid(self.solver.x, self.solver.t)
         prob_density = np.array([np.abs(psi) ** 2 for psi in self.psi_history])
 
-        # 使用surface plot with colormap
         surf = ax_3d_x.plot_surface(
             X,
             T,
@@ -298,21 +398,20 @@ class Visualizer:
             linewidth=0.5,
             antialiased=True,
             alpha=0.8,
-            rcount=100,  # 调整网格密度
+            rcount=100,
             ccount=100,
-        )  # 调整网格密度
+        )
 
         ax_3d_x.set_title("坐标空间概率密度演化")
         ax_3d_x.set_xlabel("位置 x")
         ax_3d_x.set_ylabel("时间 t")
         ax_3d_x.set_zlabel("|ψ(x)|²")
-        # 调整颜色条位置和大小
         cbar = fig.colorbar(surf, ax=ax_3d_x, shrink=0.5, aspect=10)
-        ax_3d_x.view_init(elev=25, azim=45)  # 调整视角
-        ax_3d_x.dist = 10  # 调整观察距离
+        ax_3d_x.view_init(elev=25, azim=45)
+        ax_3d_x.dist = 10
 
         # 动量空间3D图
-        ax_3d_k = fig.add_subplot(grid[1:3, 1], projection="3d")
+        ax_3d_k = fig.add_subplot(grid[2:4, 1], projection="3d")
 
         # 计算动量空间波函数
         k = np.fft.fftfreq(self.solver.params.nx, d=self.solver.params.dx) * 2 * np.pi
@@ -327,7 +426,6 @@ class Visualizer:
 
         psi_k_history = np.array(psi_k_history)
 
-        # 绘制动量空间3D图
         surf_k = ax_3d_k.plot_surface(
             K,
             T,
@@ -336,22 +434,21 @@ class Visualizer:
             linewidth=0.5,
             antialiased=True,
             alpha=0.8,
-            rcount=100,  # 调整网格密度
+            rcount=100,
             ccount=100,
-        )  # 调整网格密度
+        )
 
         ax_3d_k.set_title("动量空间概率密度演化")
         ax_3d_k.set_xlabel("动量 k")
         ax_3d_k.set_ylabel("时间 t")
         ax_3d_k.set_zlabel("|ψ(k)|²")
-        # 调整颜色条位置和大小
         cbar_k = fig.colorbar(surf_k, ax=ax_3d_k, shrink=0.5, aspect=10)
-        ax_3d_k.view_init(elev=25, azim=45)  # 调整视角
-        ax_3d_k.dist = 10  # 调整观察距离
+        ax_3d_k.view_init(elev=25, azim=45)
+        ax_3d_k.dist = 10
 
-        # 第四行：热图
+        # 第五行：热图
         # 坐标空间热图
-        ax_heat_x = fig.add_subplot(grid[3, 0])
+        ax_heat_x = fig.add_subplot(grid[4, 0])
         im_x = ax_heat_x.imshow(
             prob_density,
             aspect="auto",
@@ -371,7 +468,7 @@ class Visualizer:
         fig.colorbar(im_x, ax=ax_heat_x, label="|ψ(x)|²")
 
         # 动量空间热图
-        ax_heat_k = fig.add_subplot(grid[3, 1])
+        ax_heat_k = fig.add_subplot(grid[4, 1])
         im_k = ax_heat_k.imshow(
             psi_k_history,
             aspect="auto",
@@ -385,14 +482,14 @@ class Visualizer:
         ax_heat_k.set_ylabel("时间 t")
         fig.colorbar(im_k, ax=ax_heat_k, label="|ψ(k)|²")
 
-        # 使用fig.subplots_adjust()精确控制边距
+        # 调整整体布局
         fig.subplots_adjust(
-            top=0.95,  # 上边距
-            bottom=0.08,  # 下边距
-            left=0.1,  # 左边距
-            right=0.9,  # 右边距
-            hspace=0.4,  # 行间距
-            wspace=0.3,  # 列间距
+            top=0.95,
+            bottom=0.08,
+            left=0.1,
+            right=0.9,
+            hspace=0.4,
+            wspace=0.3,
         )
 
         return fig
