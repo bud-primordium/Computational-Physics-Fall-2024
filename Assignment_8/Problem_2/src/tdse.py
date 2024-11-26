@@ -54,8 +54,8 @@ class Parameters:
         self.nt = 10000
 
         # 势阱参数
-        self.well_depth = 1.0
-        self.well_width = 2.0
+        self.well_depth = 5.0
+        self.well_width = 3.0
         self.well_center = 0.0
 
         # 波包参数
@@ -250,8 +250,15 @@ class Visualizer:
 
     def plot_static(self):
         """绘制静态图（波函数幅值相位、3D演化图和热图）"""
-        fig = plt.figure(figsize=(15, 20))
-        grid = plt.GridSpec(4, 2, height_ratios=[1, 2, 2, 1.2])
+        fig = plt.figure(figsize=(12, 10))
+        # 调整网格，减小行间距
+        grid = plt.GridSpec(
+            4,
+            2,
+            height_ratios=[0.8, 1, 1, 0.8],  # 调整每行的相对高度
+            hspace=0.4,  # 增加行间距控制
+            wspace=0.3,
+        )  # 增加列间距控制
 
         # 第一行：波函数幅值和相位
         ax1 = fig.add_subplot(grid[0, :])
@@ -287,7 +294,7 @@ class Visualizer:
             X,
             T,
             prob_density,
-            cmap="turbo",
+            cmap=cmap,
             linewidth=0.5,
             antialiased=True,
             alpha=0.8,
@@ -301,8 +308,8 @@ class Visualizer:
         ax_3d_x.set_zlabel("|ψ(x)|²")
         # 调整颜色条位置和大小
         cbar = fig.colorbar(surf, ax=ax_3d_x, shrink=0.5, aspect=10)
-        ax_3d_x.view_init(elev=20, azim=45)  # 调整视角
-        ax_3d_x.dist = 11  # 调整观察距离
+        ax_3d_x.view_init(elev=25, azim=45)  # 调整视角
+        ax_3d_x.dist = 10  # 调整观察距离
 
         # 动量空间3D图
         ax_3d_k = fig.add_subplot(grid[1:3, 1], projection="3d")
@@ -325,7 +332,7 @@ class Visualizer:
             K,
             T,
             psi_k_history,
-            cmap="turbo",
+            cmap=cmap,
             linewidth=0.5,
             antialiased=True,
             alpha=0.8,
@@ -339,8 +346,8 @@ class Visualizer:
         ax_3d_k.set_zlabel("|ψ(k)|²")
         # 调整颜色条位置和大小
         cbar_k = fig.colorbar(surf_k, ax=ax_3d_k, shrink=0.5, aspect=10)
-        ax_3d_k.view_init(elev=20, azim=45)  # 调整视角
-        ax_3d_k.dist = 11  # 调整观察距离
+        ax_3d_k.view_init(elev=25, azim=45)  # 调整视角
+        ax_3d_k.dist = 10  # 调整观察距离
 
         # 第四行：热图
         # 坐标空间热图
@@ -355,7 +362,7 @@ class Visualizer:
                 0,
                 self.solver.params.t_max,
             ],
-            cmap="turbo",
+            cmap=cmap,
         )
 
         ax_heat_x.set_title("坐标空间概率密度演化")
@@ -370,7 +377,7 @@ class Visualizer:
             aspect="auto",
             origin="lower",
             extent=[k.min(), k.max(), 0, self.solver.params.t_max],
-            cmap="turbo",
+            cmap=cmap,
         )
 
         ax_heat_k.set_title("动量空间概率密度演化")
@@ -378,7 +385,16 @@ class Visualizer:
         ax_heat_k.set_ylabel("时间 t")
         fig.colorbar(im_k, ax=ax_heat_k, label="|ψ(k)|²")
 
-        plt.tight_layout()
+        # 使用fig.subplots_adjust()精确控制边距
+        fig.subplots_adjust(
+            top=0.95,  # 上边距
+            bottom=0.08,  # 下边距
+            left=0.1,  # 左边距
+            right=0.9,  # 右边距
+            hspace=0.4,  # 行间距
+            wspace=0.3,  # 列间距
+        )
+
         return fig
 
     def setup_animation(self):
@@ -386,54 +402,194 @@ class Visualizer:
         if self.psi_history is None:
             self.psi_history = self.solver.solve()
 
-        fig, ax = plt.subplots(figsize=(10, 6))
+        # 初始化动画状态
+        self.animation_running = True
+        self.current_frame = 0  # 添加current_frame变量
+
+        # 创建图形
+        fig = plt.figure(figsize=(12, 8))
+
+        # 创建主坐标轴和次坐标轴
+        ax1 = plt.subplot(111)
+        ax2 = ax1.twinx()  # 创建共享x轴的次坐标轴
+
+        # 添加滑动条
+        plt.subplots_adjust(bottom=0.15)  # 为滑动条留出空间
+        ax_time = plt.axes([0.2, 0.05, 0.6, 0.03])
+
+        # 计算准确的最大时间值
+        max_time = self.solver.params.t_max
+        time_slider = plt.Slider(
+            ax=ax_time,
+            label="时间 (ℏ/E₀)",
+            valmin=0,
+            valmax=max_time,
+            valinit=0,
+            valstep=self.solver.params.dt,
+        )
 
         # 绘制势场
         V_scaled = self.solver.V / self.solver.params.well_depth
-        ax.fill_between(self.solver.x, V_scaled, alpha=0.2, color="gray")
+        ax1.fill_between(self.solver.x, V_scaled, alpha=0.2, color="gray", label="势场")
 
-        # 初始化线条
-        (line_real,) = ax.plot([], [], "b-", label="实部")
-        (line_imag,) = ax.plot([], [], "r-", label="虚部")
-        (line_prob,) = ax.plot([], [], "g-", label="概率密度")
+        # 初始化线条（幅值和概率密度用左轴，相位用右轴）
+        (line_amp,) = ax1.plot([], [], "b-", label="幅值", linewidth=2)
+        (line_prob,) = ax1.plot([], [], "g-", label="概率密度", linewidth=2)
+        # 使用点线表示相位，降低密度
+        (line_phase,) = ax2.plot(
+            [],
+            [],
+            "r:",
+            label="相位",
+            linewidth=1.5,
+            marker=".",
+            markersize=3,
+            markevery=5,  # 每5个点显示一个标记
+        )
 
-        ax.set_xlim(self.solver.params.x_min, self.solver.params.x_max)
-        ax.set_ylim(-1.5, 1.5)
-        ax.set_xlabel("x")
-        ax.set_ylabel("波函数")
-        ax.legend()
-        ax.grid(True)
+        # 设置坐标轴
+        ax1.set_xlim(self.solver.params.x_min, self.solver.params.x_max)
+        ax1.set_ylim(-0.1, 1.1)  # 调整幅值和概率密度的范围
+        ax2.set_ylim(-np.pi, np.pi)  # 相位范围从-π到π
+
+        # 设置标签
+        ax1.set_xlabel("位置 x")
+        ax1.set_ylabel("幅值/概率密度", color="b")
+        ax2.set_ylabel("相位 (rad)", color="r")
+
+        # 设置刻度颜色
+        ax1.tick_params(axis="y", labelcolor="b")
+        ax2.tick_params(axis="y", labelcolor="r")
+
+        # 在相位轴上添加π刻度
+        ax2.set_yticks([-np.pi, -np.pi / 2, 0, np.pi / 2, np.pi])
+        ax2.set_yticklabels(["-π", "-π/2", "0", "π/2", "π"])
+
+        # 添加图例，调整位置和透明度
+        lines1, labels1 = ax1.get_legend_handles_labels()
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        ax1.legend(
+            lines1 + lines2,
+            labels1 + labels2,
+            loc="upper right",
+            bbox_to_anchor=(0.98, 0.98),
+            framealpha=0.8,
+        )
+
+        # 添加网格
+        ax1.grid(True, alpha=0.3)
 
         def init():
             """初始化动画"""
-            line_real.set_data([], [])
-            line_imag.set_data([], [])
+            line_amp.set_data([], [])
+            line_phase.set_data([], [])
             line_prob.set_data([], [])
-            return line_real, line_imag, line_prob
+            return line_amp, line_phase, line_prob
 
-        def animate(frame):
+        def update(frame):
             """更新动画帧"""
+            frame = int(frame)
+            if frame >= len(self.psi_history):
+                return line_amp, line_phase, line_prob
+
             psi = self.psi_history[frame]
-            line_real.set_data(self.solver.x, np.real(psi))
-            line_imag.set_data(self.solver.x, np.imag(psi))
-            line_prob.set_data(self.solver.x, np.abs(psi) ** 2)
-            ax.set_title(f"t = {frame * self.solver.params.dt:.2f}")
-            return line_real, line_imag, line_prob
+            amplitude = np.abs(psi)
+            phase = np.angle(psi)
+            prob = amplitude**2
 
-        return fig, init, animate
+            line_amp.set_data(self.solver.x, amplitude)
+            line_phase.set_data(self.solver.x, phase)
+            line_prob.set_data(self.solver.x, prob)
 
-    def animate(self):
+            # 更新标题，使用准确的时间值
+            current_time = frame * self.solver.params.dt
+            ax1.set_title(f"t = {current_time:.3f} ℏ/E₀")
+
+            # 更新滑动条位置而不触发事件
+            time_slider.eventson = False  # 禁用事件
+            time_slider.set_val(current_time)
+            time_slider.eventson = True  # 重新启用事件
+
+            return line_amp, line_phase, line_prob
+
+        def slider_update(val):
+            """滑动条更新函数"""
+            # 使用比例计算确保精确对应
+            frame = int((val / max_time) * (len(self.psi_history) - 1))
+            self.current_frame = frame  # 更新当前帧
+
+            # 如果动画正在运行，暂停它
+            if hasattr(fig, "_animation") and self.animation_running:
+                fig._animation.event_source.stop()
+
+            # 更新图形
+            update(frame)
+            fig.canvas.draw_idle()
+
+            # 如果动画之前在运行，恢复它
+            if hasattr(fig, "_animation") and self.animation_running:
+                fig._animation.event_source.start()
+
+        # 设置滑动条回调
+        time_slider.on_changed(slider_update)
+
+        # 添加暂停/继续按钮
+        pause_ax = plt.axes([0.85, 0.05, 0.1, 0.03])
+        pause_button = plt.Button(pause_ax, "Pause")
+
+        # 保存控件为图形的属性，防止被垃圾回收
+        fig.slider = time_slider
+        fig.pause_button = pause_button
+
+        # 创建帧生成器
+        def frame_generator():
+            while True:
+                yield self.current_frame
+                self.current_frame = (self.current_frame + 1) % len(self.psi_history)
+
+        # 保存动画数据
+        fig._animation_data = {
+            "init": init,
+            "update": update,
+            "lines": (line_amp, line_phase, line_prob),
+        }
+
+        return fig, init, update, pause_button, frame_generator  # 返回frame_generator
+
+    def animate(self, frame_interval=20):
         """创建和显示动画"""
-        fig, init, animate = self.setup_animation()
+        fig, init, update, pause_button, frame_generator = self.setup_animation()
+
+        def toggle_animation(event):
+            if hasattr(fig, "_animation"):
+                if self.animation_running:
+                    fig._animation.event_source.stop()
+                    pause_button.label.set_text("Continue")
+                else:
+                    fig._animation.event_source.start()
+                    pause_button.label.set_text("Pause")
+                self.animation_running = not self.animation_running
+
+        pause_button.on_clicked(toggle_animation)
+
+        # 设置窗口标题
+        fig.canvas.manager.set_window_title("波函数演化动画")
+
+        # 创建动画并保存引用
         anim = FuncAnimation(
             fig,
-            animate,
+            update,
             init_func=init,
-            frames=len(self.psi_history),
-            interval=50,  # 每帧间隔50ms
-            blit=True,
+            frames=frame_generator(),  # 使用自定义帧生成器
+            interval=frame_interval,
+            blit=False,
+            repeat=True,
+            save_count=len(self.psi_history),  # 保存所有帧
         )
-        plt.close(fig)  # 防止显示静态图
+
+        # 保存动画对象的引用到图形中
+        fig._animation = anim
+
         return anim
 
 
@@ -545,8 +701,16 @@ class SchrodingerGUI:
             frame, text="显式方法", variable=method_var, value="Explicit"
         ).grid(row=0, column=2)
 
-        def start_solve():
-            """开始求解"""
+        # 添加进度条
+        self.progress = ttk.Progressbar(frame, length=200, mode="determinate")
+        self.progress.grid(row=2, column=0, columnspan=3, pady=5)
+
+        # 添加状态标签
+        self.status_label = ttk.Label(frame, text="就绪")
+        self.status_label.grid(row=3, column=0, columnspan=3)
+
+        def show_static():
+            """显示静态图"""
             # 创建求解器
             if method_var.get() == "CN":
                 self.solver = CrankNicolsonSolver(self.params)
@@ -555,11 +719,56 @@ class SchrodingerGUI:
 
             # 创建可视化器并显示
             self.visualizer = Visualizer(self.solver)
-            fig = self.visualizer.plot_static()
+            fig_static = self.visualizer.plot_static()
             plt.show()
 
-        ttk.Button(frame, text="开始求解", command=start_solve).grid(
-            row=1, column=0, columnspan=3, pady=5
+        def show_animation():
+            """显示动画的函数"""
+            try:
+                self.status_label.config(text="正在准备动画...")
+                self.progress["value"] = 0
+                self.root.update()
+
+                # 创建求解器（如果需要）
+                if self.solver is None:
+                    if method_var.get() == "CN":
+                        self.solver = CrankNicolsonSolver(self.params)
+                    else:
+                        self.solver = ExplicitSolver(self.params)
+                    self.visualizer = Visualizer(self.solver)
+
+                # 计算时间演化
+                self.status_label.config(text="正在计算时间演化...")
+                self.root.update()
+
+                if self.visualizer.psi_history is None:
+                    total_steps = self.params.nt
+                    for i, _ in enumerate(self.solver.solve()):
+                        self.progress["value"] = (i + 1) / total_steps * 100
+                        if i % 100 == 0:  # 每100步更新一次UI
+                            self.root.update()
+
+                self.status_label.config(text="正在生成动画...")
+                self.root.update()
+
+                # 直接创建和显示动画，不创建额外的空白图形
+                anim = self.visualizer.animate()
+                plt.show()
+
+                self.status_label.config(text="动画已显示")
+                self.progress["value"] = 100
+                self.root.update()
+
+            except Exception as e:
+                self.status_label.config(text=f"错误: {str(e)}")
+                self.progress["value"] = 0
+
+        # 添加按钮
+        ttk.Button(frame, text="显示静态图", command=show_static).grid(
+            row=1, column=0, columnspan=2, pady=5
+        )
+        ttk.Button(frame, text="显示动画", command=show_animation).grid(
+            row=1, column=2, columnspan=1, pady=5
         )
 
     def run(self):
