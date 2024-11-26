@@ -384,6 +384,37 @@ class Visualizer:
         ax2_amp.set_title("末态波函数")
         ax2_amp.grid(True, alpha=0.3)
 
+        # 在第二行和第三行之间添加求解方法信息
+        method_name = (
+            "Crank-Nicolson"
+            if isinstance(self.solver, CrankNicolsonSolver)
+            else "显式方法"
+        )
+        info_text = (
+            f"求解方法：{method_name}    "
+            f"总时间步数：{self.solver.params.nt}    "
+            f"时间步长：{self.solver.params.dt:.2e} ℏ/E₀"
+        )
+
+        # 调整y位置到0.62（第二行和第三行之间），x位置保持在0.5（居中）
+        text_box = plt.figtext(
+            0.5,
+            0.62,
+            info_text,
+            ha="center",
+            va="center",
+            bbox=dict(
+                facecolor="white",
+                alpha=0.8,
+                edgecolor="lightgray",
+                boxstyle="round,pad=0.5",
+                linewidth=0.5,
+            ),
+            fontsize=9,
+        )
+
+        # 确保文本框不会被其他元素遮挡
+        text_box.set_zorder(1000)
         # 第三行和第四行：3D图
         # 坐标空间3D图
         ax_3d_x = fig.add_subplot(grid[2:4, 0], projection="3d")
