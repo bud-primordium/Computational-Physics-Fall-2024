@@ -47,21 +47,21 @@ class Parameters:
 
     def __init__(self):
         # 网格参数
-        self.x_min = -15.0
-        self.x_max = 15.0
-        self.nx = 300
-        self.t_max = 1.0
+        self.x_min = -20.0
+        self.x_max = 20.0
+        self.nx = 1000
+        self.t_max = 10.0
         self.nt = 1000
 
         # 势阱参数
-        self.well_depth = 10.0
-        self.well_width = 2.0
+        self.well_depth = 1.0
+        self.well_width = 4.0
         self.well_center = 0.0
 
         # 波包参数
-        self.x0 = -2.0  # 初始位置
-        self.k0 = 2.0  # 初始动量
-        self.sigma = 0.2  # 波包宽度
+        self.x0 = 5.0  # 初始位置
+        self.k0 = -1.0  # 初始动量
+        self.sigma = 1.0  # 波包宽度
 
         # 计算导出参数
         self.update_derived_params()
