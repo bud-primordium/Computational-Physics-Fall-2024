@@ -10,7 +10,8 @@ from typing import List, Set, Dict, Tuple, Optional
 from HeisenbergFCC import HeisenbergFCC
 import matplotlib.colors as mcolors
 from matplotlib.animation import FuncAnimation
-import colorsys  # 添加colorsys导入
+import colorsys
+import platform
 
 
 class Visualization:
@@ -22,6 +23,24 @@ class Visualization:
             "points": "gray",
             "clusters": self._generate_cluster_colors(20),  # 预生成20种不同的颜色
         }
+        self._configure_matplotlib_fonts()
+
+    def _configure_matplotlib_fonts():
+        """配置matplotlib的字体设置"""
+        system = platform.system()
+        if system == "Darwin":  # macOS
+            plt.rcParams["font.family"] = ["Arial Unicode MS"]
+        elif system == "Windows":
+            plt.rcParams["font.family"] = ["Microsoft YaHei"]
+        else:  # Linux
+            plt.rcParams["font.family"] = ["WenQuanYi Micro Hei"]
+        # 备用字体
+        plt.rcParams["font.sans-serif"] = [
+            "Arial Unicode MS",
+            "SimHei",
+            "DejaVu Sans",
+        ]
+        plt.rcParams["axes.unicode_minus"] = False
 
     def _generate_cluster_colors(self, n: int) -> List[str]:
         """生成n种视觉上易区分的颜色"""
@@ -44,7 +63,7 @@ class Visualization:
         return colors
 
     def plot_spins(
-        self, model: HeisenbergFCC, clusters: Optional[List[Set[int]]] = None
+        self, model: HeisenbergFCC, clusters: Optional[List[Set[int]]] = None, ax=None
     ) -> None:
         """
         绘制自旋构型，可选择性地显示簇
@@ -52,9 +71,13 @@ class Visualization:
         参数:
             model: HeisenbergFCC模型实例
             clusters: 可选的簇列表
+            ax: 可选的 Matplotlib Axes 对象
         """
-        fig = plt.figure(figsize=(10, 8))
-        ax = fig.add_subplot(111, projection="3d")
+        if ax is None:
+            fig = plt.figure(figsize=(10, 8))
+            ax = fig.add_subplot(111, projection="3d")
+        else:
+            ax.clear()
 
         coords = np.array([coord for coord in model._get_index_to_coord().values()])
         spins = model.spins
@@ -97,7 +120,9 @@ class Visualization:
         ax.set_ylabel("Y")
         ax.set_zlabel("Z")
         ax.set_title("Spin Configuration" + (" with Clusters" if clusters else ""))
-        plt.show()
+
+        if ax is None:
+            plt.show()
 
     def animate_update(
         self, model: HeisenbergFCC, updater, steps: int = 100
