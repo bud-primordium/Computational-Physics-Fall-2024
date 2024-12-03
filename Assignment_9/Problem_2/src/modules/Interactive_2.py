@@ -23,7 +23,8 @@ import numpy as np
 from Visualization import Visualization
 from HeisenbergFCC import HeisenbergFCC
 from updaters import create_updater
-from typing import Optional, List, Set
+from typing import Optional, List, Set, Dict
+from simulation import AnnealingSimulation
 
 
 class MplCanvas(FigureCanvas):
@@ -150,11 +151,57 @@ class InteractiveApp(QMainWindow):
         structure_layout.addWidget(self.structure_canvas)
         self.structure_tab.setLayout(structure_layout)
 
+        # 添加相变分析标签页
+        self.phase_transition_tab = QWidget()
+        phase_layout = QVBoxLayout()
+
+        # 控制面板
+        control_panel = QWidget()
+        control_grid = QGridLayout()
+
+        # 温度范围控制
+        control_grid.addWidget(QLabel("T start:"), 0, 0)
+        self.T_start_spin = QDoubleSpinBox()
+        self.T_start_spin.setRange(0.1, 10.0)
+        self.T_start_spin.setValue(1.0)
+        self.T_start_spin.setSingleStep(0.1)
+        control_grid.addWidget(self.T_start_spin, 0, 1)
+
+        control_grid.addWidget(QLabel("T end:"), 0, 2)
+        self.T_end_spin = QDoubleSpinBox()
+        self.T_end_spin.setRange(0.1, 10.0)
+        self.T_end_spin.setValue(10.0)
+        self.T_end_spin.setSingleStep(0.1)
+        control_grid.addWidget(self.T_end_spin, 0, 3)
+
+        control_grid.addWidget(QLabel("Cooling steps:"), 0, 4)
+        self.cooling_steps_spin = QSpinBox()
+        self.cooling_steps_spin.setRange(10, 1000)
+        self.cooling_steps_spin.setValue(200)
+        control_grid.addWidget(self.cooling_steps_spin, 0, 5)
+
+        # 运行按钮
+        self.run_annealing_button = QPushButton("Run Annealing")
+        self.run_annealing_button.clicked.connect(self.run_phase_transition_analysis)
+        control_grid.addWidget(self.run_annealing_button, 1, 0, 1, 2)
+
+        control_panel.setLayout(control_grid)
+        phase_layout.addWidget(control_panel)
+
+        # 结果显示区域
+        self.phase_canvas = MplCanvas(self, width=8, height=6)
+        self.phase_toolbar = NavigationToolbar(self.phase_canvas, self)
+        phase_layout.addWidget(self.phase_toolbar)
+        phase_layout.addWidget(self.phase_canvas)
+
+        self.phase_transition_tab.setLayout(phase_layout)
+
         # 添加标签页
         self.tabs.addTab(self.spins_tab, "Spin Configuration")
         self.tabs.addTab(self.evolution_tab, "Physical Quantities")
         self.tabs.addTab(self.correlation_tab, "Correlation Function")
         self.tabs.addTab(self.structure_tab, "Structure Factor")
+        self.tabs.addTab(self.phase_transition_tab, "Phase Transition")
 
         self.layout.addWidget(self.tabs)
 
@@ -220,15 +267,16 @@ class InteractiveApp(QMainWindow):
             ax1.plot(self.steps, self.energy_history, "b-", label="Energy/N")
             ax2.plot(self.steps, self.magnetization_history, "r-", label="|M|")
 
+            ax1.legend()
+            ax2.legend()
+
         ax1.set_xlabel("MC Steps")
         ax1.set_ylabel("Energy per Spin")
         ax1.grid(True)
-        ax1.legend()
 
         ax2.set_xlabel("MC Steps")
         ax2.set_ylabel("Magnetization")
         ax2.grid(True)
-        ax2.legend()
 
         fig.tight_layout()
         self.evolution_canvas.draw()
@@ -308,6 +356,69 @@ class InteractiveApp(QMainWindow):
 
         # 更新自旋构型显示
         self.plot_spins(clusters=clusters)
+
+    def run_phase_transition_analysis(self):
+        """执行相变分析"""
+        try:
+            # 获取参数
+            T_start = self.T_start_spin.value()
+            T_end = self.T_end_spin.value()
+            cooling_steps = self.cooling_steps_spin.value()
+
+            # 创建模拟实例
+            sim = AnnealingSimulation(
+                L=self.L,
+                T_start=T_start,
+                T_end=T_end,
+                cooling_steps=cooling_steps,
+                mc_steps_per_T=1000,  # 可以添加控制
+                thermalization_steps=100,  # 可以添加控制
+            )
+
+            # 运行模拟
+            results = sim.run()
+
+            # 显示结果
+            self.plot_phase_transition_results(results)
+
+        except Exception as e:
+            QMessageBox.warning(self, "Error", f"Failed to run analysis: {str(e)}")
+
+    def plot_phase_transition_results(self, results: Dict):
+        """绘制相变分析结果"""
+        self.phase_canvas.fig.clear()
+
+        # 创建2x2的子图
+        ((ax1, ax2), (ax3, ax4)) = self.phase_canvas.fig.subplots(2, 2)
+
+        T = results["temperature"]
+
+        # 能量
+        ax1.plot(T, results["energy"], "o-")
+        ax1.set_xlabel("Temperature")
+        ax1.set_ylabel("Energy per spin")
+        ax1.grid(True)
+
+        # 磁化强度
+        ax2.plot(T, results["magnetization"], "o-")
+        ax2.set_xlabel("Temperature")
+        ax2.set_ylabel("Magnetization")
+        ax2.grid(True)
+
+        # 比热容
+        ax3.plot(T, results["specific_heat"], "o-")
+        ax3.set_xlabel("Temperature")
+        ax3.set_ylabel("Specific Heat")
+        ax3.grid(True)
+
+        # 磁化率
+        ax4.plot(T, results["susceptibility"], "o-")
+        ax4.set_xlabel("Temperature")
+        ax4.set_ylabel("Susceptibility")
+        ax4.grid(True)
+
+        self.phase_canvas.fig.tight_layout()
+        self.phase_canvas.draw()
 
 
 if __name__ == "__main__":

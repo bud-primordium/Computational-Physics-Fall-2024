@@ -14,6 +14,24 @@ import colorsys
 import platform
 
 
+def configure_matplotlib_fonts():
+    """配置matplotlib的字体设置"""
+    system = platform.system()
+    if system == "Darwin":  # macOS
+        plt.rcParams["font.family"] = ["Arial Unicode MS"]
+    elif system == "Windows":
+        plt.rcParams["font.family"] = ["Microsoft YaHei"]
+    else:  # Linux
+        plt.rcParams["font.family"] = ["WenQuanYi Micro Hei"]
+    # 备用字体
+    plt.rcParams["font.sans-serif"] = [
+        "Arial Unicode MS",
+        "SimHei",
+        "DejaVu Sans",
+    ]
+    plt.rcParams["axes.unicode_minus"] = False
+
+
 class Visualization:
     def __init__(self):
         self.colormap = plt.cm.viridis
@@ -23,24 +41,7 @@ class Visualization:
             "points": "gray",
             "clusters": self._generate_cluster_colors(20),  # 预生成20种不同的颜色
         }
-        self._configure_matplotlib_fonts()
-
-    def _configure_matplotlib_fonts():
-        """配置matplotlib的字体设置"""
-        system = platform.system()
-        if system == "Darwin":  # macOS
-            plt.rcParams["font.family"] = ["Arial Unicode MS"]
-        elif system == "Windows":
-            plt.rcParams["font.family"] = ["Microsoft YaHei"]
-        else:  # Linux
-            plt.rcParams["font.family"] = ["WenQuanYi Micro Hei"]
-        # 备用字体
-        plt.rcParams["font.sans-serif"] = [
-            "Arial Unicode MS",
-            "SimHei",
-            "DejaVu Sans",
-        ]
-        plt.rcParams["axes.unicode_minus"] = False
+        configure_matplotlib_fonts()
 
     def _generate_cluster_colors(self, n: int) -> List[str]:
         """生成n种视觉上易区分的颜色"""
