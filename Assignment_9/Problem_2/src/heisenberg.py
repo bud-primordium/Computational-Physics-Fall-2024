@@ -765,7 +765,7 @@ class Simulation:
         T: float,
         updater_type: str,
         mc_steps: int = 1000,
-        thermalization_steps: int = 100,
+        thermalization_steps: int = 200,
     ):
         self.model = HeisenbergFCC(L=L, T=T)
         self.updater = create_updater(self.model, updater_type)
@@ -1345,7 +1345,7 @@ class InteractiveApp(QMainWindow):
         self.setGeometry(100, 100, 1200, 800)
 
         # 初始化模型参数
-        self.L = 4
+        self.L = 8
         self.T = 1.0
         self.algorithm = "wolff"
         self.measurement_interval = 10
