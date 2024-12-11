@@ -45,7 +45,6 @@ for $d=4$ and $d=5$, compare your results with the exact results.
     \item[（1）] 动画演示（仅2维或3维）
     \item[（2）] 简单均匀采样分析（1~20维），并可选择可视化采样点。
     \item[（3）] 重要性采样分析（1~20维），并可选择可视化采样点。
-    \item[（4）] 退出程序
 \end{itemize}
 在二级菜单中还将可以自定义一些参数，如采样点数、最大计算维度，提议分布标准差与试验次数等，详见下文的伪代码与结果示例。
 \subsection{伪代码}
@@ -59,30 +58,52 @@ Powered by \href{https://chatgpt.com/g/g-xJJAA2awf-latex-pseudocode-generator}{\
     \For{$d \gets 1$ \KwTo $max\_dim$}{
         $exact \gets exact\_volume(d)$; $estimates \gets []$\;
         \For{$trial \gets 1$ \KwTo $num\_trials$}{
-            $v \gets (method = \text{uniform}) ? monte\_carlo\_uniform(d, num\_samples) : importance\_sampling\_volume(d, num\_samples, \sigma)$\;
+            \If{$method = \text{uniform}$}{
+                $v \gets monte\_carlo\_uniform(d, num\_samples)$\;
+            }
+            \Else{
+                $v \gets importance\_sampling\_volume(d, num\_samples, \sigma)$\;
+            }
             $estimates.append(v)$\;
         }
         $mean, std, rel\_err \gets analyze(estimates, exact)$ \tcp*[r]{Compute statistics}
-        Store $mean$, $std$, $rel\_err$ for $d$\;
     }
     \Return{All results}\;
     \caption{Main Program}
 \end{algorithm}
 
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{$n$, $num\_samples$}
+    \KwOut{Estimated volume}
+
+    $points \gets \text{random uniform in } [-1, 1]^n$\;
+    $distances \gets ||points||^2$\;
+    $count \gets \text{sum}(distances \leq 1)$\;
+    \Return{$2^n \cdot (count / num\_samples)$}\;
+    \caption{Uniform Sampling}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{$n$, $num\_samples$, $\sigma$}
+    \KwOut{Estimated volume}
+
+    $samples \gets \text{normal}(mean=0, cov=\sigma^2I_n, num\_samples)$\;
+    $distances \gets ||samples||^2$\;
+    $f_x \gets (distances \leq 1)$; $q_x \gets (2\pi\sigma^2)^{-n/2} \cdot e^{-distances / (2\sigma^2)}$\;
+    $weights \gets f_x / q_x$\;
+    \Return{$\text{mean}(weights)$}\;
+    \caption{Importance Sampling}
+\end{algorithm}
 \subsection{结果示例}
 \subsubsection{简单均匀采样}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.55\textwidth]{Problem_1/figs/2d_anim.png}
-    \caption{二维简单采样动画截图}
+    \includegraphics[width=0.45\textwidth]{Problem_1/figs/2d_anim.png}
+    \includegraphics[width=0.45\textwidth]{Problem_1/figs/3d_anim.png}
+    \caption{二维与三维简单采样动画截图}
 \end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.65\textwidth]{Problem_1/figs/3d_anim.png}
-    \caption{三维简单采样动画截图}
-\end{figure}
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{Problem_1/figs/simple_terminal.png}
